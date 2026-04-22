@@ -1,0 +1,204 @@
+{% extends 'base.html' %}
+
+{% load static %}
+
+
+{% block title %} Login {% endblock %}
+
+
+{% block manu_nav %}
+
+
+<section class="auth-section register-page">
+  <div class="auth-container">
+
+    <!-- LEFT IMAGE -->
+    <div class="auth-left">
+      <img src="{% static './images/Cargomages/register & login.png' %}" alt="shipping">
+    </div>
+
+    <!-- RIGHT FORM -->
+    <div class="auth-right">
+
+      <!-- STEPS -->
+
+
+  <form id="loginForm">
+
+  <div class="form-step active">
+    <h2 class="login_h2" style="margin:0; font-size:24px; font-weight:600">Welcome Back </h2>
+    <p> Welcome Back ! please enter your Details</p>
+
+    <!-- EMAIL -->
+    <div class="input-box">
+
+      <input type="email" name="email" placeholder="Email" required>
+
+    </div>
+
+    <!-- PASSWORD -->
+    <div class="input-box password-box">
+      <input type="password" name="password" id="password" placeholder="Password" required>
+      <span class="toggle-password" id="togglePassword">👁️</span>
+      <small id="password-error" class="error-message"></small>
+    </div>
+
+
+    <!-- TERMS -->
+    <div class="condition">
+
+      <label>
+        <a href=" {% url 'reset' %}">Forget Password ?</a>
+  </label>
+    </div>
+
+    <!-- BUTTON -->
+    <div class="btn-group">
+      <button type="submit" class="submit-btn">Login</button>
+    </div>
+    <p style="text-align:center;">Don’t have an account? <a href="{% url 'register' %}">Register</a></p>
+  </div>
+
+</form>
+
+        <small class="error-message" id="confirm_password-error"></small>
+    </div>
+
+  </div>
+</section>
+
+
+
+<script>
+// 👁️ toggle password
+const togglePassword = document.getElementById("togglePassword");
+const passwordInput = document.getElementById("password");
+
+togglePassword.addEventListener("click", function () {
+    const type = passwordInput.getAttribute("type");
+
+    if (type === "password") {
+        passwordInput.setAttribute("type", "text");
+        this.textContent = "🙈";
+    } else {
+        passwordInput.setAttribute("type", "password");
+        this.textContent = "👁️";
+    }
+});
+
+
+document.addEventListener("DOMContentLoaded", function () {
+
+    const form = document.getElementById("loginForm");
+
+    form.addEventListener("submit", async function (e) {
+        e.preventDefault();
+
+        // 🧹 clear errors
+        document.querySelectorAll(".error-message").forEach(el => {
+            el.innerText = "";
+            el.classList.remove("active");
+        });
+
+        document.querySelectorAll("input").forEach(el => {
+            el.classList.remove("input-error");
+        });
+
+        // 🔥 safe remember (pa crash)
+        const rememberInput = form.querySelector('[name="remember"]');
+
+        const data = {
+            email: form.querySelector('[name="email"]').value,
+            password: form.querySelector('[name="password"]').value,
+            remember: rememberInput ? rememberInput.checked : false
+        };
+
+        try {
+            const response = await fetch("/api/login/", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                    "X-CSRFToken": getCSRFToken(),
+                },
+                body: JSON.stringify(data)
+            });
+
+            let resData;
+
+            // 🔥 safe JSON parse
+            try {
+                resData = await response.json();
+            } catch {
+                console.error("Server returned HTML (error)");
+                return;
+            }
+
+            console.log(resData);
+
+            // ❌ errors
+            if (!response.ok) {
+
+                for (let field in resData) {
+
+                    let message = Array.isArray(resData[field])
+                        ? resData[field][0]
+                        : resData[field];
+
+                    // 🔥 GLOBAL LOGIN ERROR
+                    if (field === "non_field_errors") {
+                        showError("email", message);
+                        showError("password", message);
+                    } else {
+                        showError(field, message);
+                    }
+                }
+
+                return;
+            }
+
+            // ✅ success
+            window.location.href = "/dashboard/";
+
+        } catch (error) {
+            console.error("Network error:", error);
+        }
+
+    });
+
+});
+
+
+// 🔥 show error
+function showError(fieldName, message) {
+    const input = document.querySelector(`[name="${fieldName}"]`);
+    const error = document.getElementById(fieldName + "-error");
+
+    if (input) {
+        input.classList.add("input-error");
+    }
+
+    if (error) {
+        error.innerText = message;
+        error.classList.add("active");
+    }
+}
+
+
+// CSRF
+function getCSRFToken() {
+    let cookieValue = null;
+    const cookies = document.cookie.split(';');
+
+    for (let cookie of cookies) {
+        cookie = cookie.trim();
+        if (cookie.startsWith('csrftoken=')) {
+            cookieValue = cookie.substring('csrftoken='.length);
+        }
+    }
+    return cookieValue;
+}
+</script>
+
+{% endblock %}
+
+

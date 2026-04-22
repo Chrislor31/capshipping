@@ -1,0 +1,67 @@
+/*** 
+
+==============================
+Section Title
+==============================
+
+***/
+.sec-title{
+    margin-bottom: 50px;
+    .section-sub-title{
+        .sub-title{
+            display: inline-block;
+            font-family: var(--title-font);
+            color: var(--theme-color2);
+            border: 1px solid var(--theme-color2);
+            border-radius: 30px;
+            font-weight: 500;
+            font-size: 18px;
+            padding: 5px 19px;
+            img{
+                margin-right: 10px;
+                position: relative;
+                top: -2px;
+            }
+        }
+    }
+    .section-title{
+        .title{
+            color: var(--heading-color);
+            font-family:var(--title-font);
+            font-weight: 700;
+            font-size: 50px;
+            line-height: 58px;
+            margin: 0;
+            @include media-breakpoint-only(xl){
+                font-size: 45px;
+                line-height: 52px;
+            }
+            @include media-breakpoint-only(lg){
+                font-size: 40px;
+                line-height: 48px;
+            }
+            @include media-breakpoint-only(md){
+                font-size: 35px;
+                line-height: 45px;
+            }
+            @include media-breakpoint-only(sm){
+                font-size: 30px;
+                line-height: 40px;
+            }
+        }
+    }
+    .section-desc{
+        p{
+            color:var(--theme-color3);
+            font-family:var(--text-font);
+            font-weight: 400;
+            font-size: 16px;
+            line-height: 26px;
+            width: 80%;
+            margin: 23px 0 35px;
+            @include media-breakpoint-only(lg){
+                width: 100%;
+            }
+        }
+    }
+}

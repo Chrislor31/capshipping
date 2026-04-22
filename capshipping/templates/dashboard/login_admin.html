@@ -1,0 +1,158 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+    <link rel="stylesheet" href="{% static 'css/dashboard/dashboard.css' %}">
+    <link rel="stylesheet" href="{% static 'css/dashboard/authentification.css'%}">
+    <title>dashboard</title>
+</head>
+<body>
+
+
+
+
+
+<body>
+
+    <section class="login_auth">
+
+<div class="login_container">
+
+  <div class="logo_login">
+   <h1>Admin Login</h1>
+  </div>
+    <p class="subtitle">Sign in to your account</p>
+
+    <form method="POST" class="login_form">
+        <!-- Django CSRF -->
+        {% csrf_token %}
+
+        <!-- EMAIL -->
+        <label>Email address</label>
+        <div class="input_group">
+            <i class='bx bx-envelope'></i>
+            <input type="email" name="email" placeholder="you@example.com" required>
+        </div>
+
+        <!-- PASSWORD -->
+        <label>Password</label>
+        <div class="input_group">
+            <i class='bx bx-lock-alt'></i>
+            <input type="password" name="password" id="password" placeholder="••••••••" required>
+            <i class='bx bx-show toggle_password' id="togglePassword"></i>
+        </div>
+
+        <!-- OPTIONS -->
+        <div class="options">
+            <label>
+                <input type="checkbox"> Remember me
+            </label>
+
+            <a href="#">Forgot password?</a>
+        </div>
+
+        <!-- BUTTON -->
+        <button type="submit" class="login_btn">
+            Sign in <i class='bx bx-right-arrow-alt'></i>
+        </button>
+
+    </form>
+
+
+    <div id="alertBox" class="alert hidden">
+    <div class="alert_content">
+        <i id="alertIcon" class='bx bx-check-circle'></i>
+        <span id="alertMessage">Message here</span>
+    </div>
+
+    <i class='bx bx-x close_alert' id="closeAlert"></i>
+</div>
+
+</div>
+
+</section>
+
+
+
+<script>const toggle = document.getElementById("togglePassword");
+const password = document.getElementById("password");
+
+toggle.addEventListener("click", () => {
+
+    if (password.type === "password") {
+        password.type = "text";
+        toggle.classList.replace("bx-show", "bx-hide");
+    } else {
+        password.type = "password";
+        toggle.classList.replace("bx-hide", "bx-show");
+    }
+
+});
+
+
+const alertBox = document.getElementById("alertBox");
+const alertMessage = document.getElementById("alertMessage");
+const alertIcon = document.getElementById("alertIcon");
+const closeAlert = document.getElementById("closeAlert");
+
+function showAlert(type, message) {
+
+    alertBox.classList.remove("hidden", "success", "error");
+    alertBox.classList.add(type);
+
+    alertMessage.textContent = message;
+
+    if (type === "success") {
+        alertIcon.className = "bx bx-check-circle";
+    } else {
+        alertIcon.className = "bx bx-error-circle";
+    }
+
+    alertBox.classList.add("show");
+
+    setTimeout(() => {
+        hideAlert();
+    }, 3000);
+}
+
+function hideAlert() {
+    alertBox.classList.remove("show");
+
+    setTimeout(() => {
+        alertBox.classList.add("hidden");
+    }, 300);
+}
+
+closeAlert.addEventListener("click", hideAlert);
+
+
+</script>
+
+
+{% if error %}
+<script>
+    showAlert("error", "{{ error }}");
+</script>
+{% endif %}
+
+{% if success %}
+<script>
+    showAlert("success", "{{ success }}");
+
+    setTimeout(() => {
+        window.location.href = "/panel/";
+    }, 1500);
+</script>
+{% endif %}
+    </body>
+
+
+
+</html>

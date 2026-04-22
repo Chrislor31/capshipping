@@ -1,0 +1,23 @@
+msgid ""
+msgstr ""
+"Language: ht\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+
+msgid "Hello"
+msgstr "Bonjou"
+
+msgid "Cap Shipping Distribution LLC"
+msgstr "Cap Shipping Distribution LLC"
+
+msgid "Shipping From"
+msgstr "Livrezon soti"
+
+msgid "the USA to Haiti"
+msgstr "Etazini pou Ayiti"
+
+msgid "and Other Countries"
+msgstr "ak lòt peyi"
+
+msgid "Track Your Package"
+msgstr "Swiv pakè ou"
+

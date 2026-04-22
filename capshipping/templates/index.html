@@ -1,0 +1,666 @@
+
+{% extends 'base.html' %}
+
+{% load i18n %}
+{% load static %}
+
+
+{% block title %} Home {% endblock %}
+{% block manu_nav %}
+
+		<!-- Banner Section home3-->
+		<div class="banner-section-home3">
+
+			    <div class="hero_shape">
+    <img src="{% static './images/Cargomages/airplane_dots_trail_big.png' %}" alt="">
+            </div>
+
+			<div class="auto-container">
+				<div class="row ">
+					<div class="col-xl-7">
+						<div class="banner-content-wrap">
+							<div class="banner-title">
+						<h1>{% trans "Cap Shipping Distribution LLC" %}</h1>
+
+<h2 class="text-anime-3">{% trans "Shipping From" %}</h2>
+<h2 class="text-anime-3">{% trans "the USA to Haiti" %}</h2>
+<h2 class="text-anime-3">{% trans "and Other Countries" %}</h2>
+
+</div>
+<div class="banner-autor-info">
+    <div class="auto-info">
+                                    <div class="track_my_package btn_Trc">
+                                        <input id="trkInput" type="search" placeholder="enter your TRK#">
+                                        <button id="trkBtn">Track <i class='bx bx-trending-up' style='color:#ffffff' ></i></button>
+                                    </div>
+                                    <!-- Trcak btn
+									<div class="banner-btn">
+										<a href="donation.html">Track Your Package<i class='bx bx-trending-up' style='color:#ffffff' ></i></a>
+									</div>
+                                     -->
+
+        <div class="autor-img-box">
+            <div class="autor-number">5k+</div>
+            <div class="autor-desc">
+                {% trans "Successful" %} <span>{% trans "Deliveries" %}</span>
+            </div>
+        </div>
+    </div>
+								<div class="banner-botton-since">
+									<div class="since-icon">
+										<img src="{% static 'images/transport-classic/since.png' %}" alt="since">
+									</div>
+									<div class="since-title">
+										<h3>5+ Years Experience</h3>
+										<h4>In Global Shipping</h4>
+									</div>
+								</div>
+
+								
+							</div>
+						</div>
+					</div>
+					<div class="col-xl-5">
+						<div class="banner-thumb-wrapper">
+							<div class="banner-thumb">
+								<figure class="reveal"><img src="{% static './images/Cargomages/edite chat.png' %}" alt="thumb"></figure>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<!--END Banner Section classic -->
+
+
+		<!-- work process-->
+
+
+		<section class="tp-process">
+    <div class="tp-container">
+
+        <!-- LEFT TEXT -->
+        <div class="tp-header">
+            <span class="tp-tag">HOW IT WORKS</span>
+            <h2>Our Working<br>Process in Transport</h2>
+            <p>
+                From Cap shipping Distribution LlC to supply chain optimization, 
+                we are committed to providing the services to ensure your success.
+            </p>
+
+			<div class="shape">
+				<img src="{% static './images/Cargomages/shape1.png'%}" alt="">
+			</div>
+        </div>
+
+        <!-- STEPS -->
+        <div class="tp-steps">
+
+            <!-- STEP 1 -->
+            <div class="tp-step">
+                <div class="tp-img">
+                    <img src="{% static './images/Cargomages/image package humain.png' %}" alt="">
+                    <div class="tp-icon"><i class='bx bx-box'></i></div>
+                </div>
+                <h3>Receive Packages</h3>
+                <p>We are committed to providing the best services to ensure your success.</p>
+            </div>
+
+            <!-- STEP 2 -->
+            <div class="tp-step">
+                <div class="tp-img">
+                    <img src="{% static './images/Cargomages/ChatGPT Image 15 mars 2026, 08_59_03.png' %}" alt="">
+                    <div class="tp-icon"><i class='bx bx-car'></i></div>
+                </div>
+                <h3>Transport Packages</h3>
+                <p>We are committed to providing the best services to ensure your success.</p>
+            </div>
+
+            <!-- STEP 3 -->
+            <div class="tp-step">
+                <div class="tp-img">
+                    <img src="{% static './images/Cargomages/plain.png' %}" alt="">
+                    <div class="tp-icon"><i class='bx bx-truck'></i></div>
+                </div>
+                <h3>Deliver Packages</h3>
+                <p>We are committed to providing the best services to ensure your success.</p>
+            </div>
+
+        </div>
+
+    </div>
+</section>
+
+
+
+		
+		<!--feature Section home3-->
+
+
+		<!-- About Section home3 -->
+		<section class="about-section-home3">
+			<div class="auto-container">
+				<div class="row align-items-center">
+					<div class="col-lg-6">
+						<div class="about-thumb-wrapper">
+							<div class="about-thumb">
+								<figure class="reveal"><img src="{% static './images/Cargomages/aboute image.png' %}" alt="about thumb">
+								</figure>
+							</div>
+							<div class="about-counter">
+								<h2 class="counter">30</h2>
+								<p>YEARS OF <br>EXPERIENCE</p>
+							</div>
+							<div class="about-shape-dot">
+								<img src="{% static 'images/home3/about-dot.png' %}" alt="dot">
+							</div>
+							<div class="about-shape-arrow">
+								<img src="{% static 'images/home3/about-arrow.png' %}" alt="arrow">
+							</div>
+						</div>
+					</div>
+					<div class="col-lg-6">
+						<!--section title-->
+						<div class="sec-title">
+							<div class="section-sub-title">
+								<h1 class="sub-title"><img src="{% static 'images/main-home/sub-title-icon.png' %}"
+										alt="sub-icon">About Us</h1>
+							</div>
+							<div class="section-title">
+						<h1 class="title title-anim">Reliable Cargo Shipping</h1>
+<h1 class="title title-anim">From USA to Haiti</h1>
+							</div>
+						</div>
+						<div class="about-item-box">
+							<div class="single-about-box fade-in">
+								<div class="about-wrap">
+									<div class="about-icon">
+										<img src="{% static 'images/home3/about-icon.png' %}" alt="icon">
+									</div>
+									<div class="title">
+										<h2>Freight Shipping</h2>
+									</div>
+								</div>
+								<div class="about-desc">
+									<p>We provide fast, secure, and reliable shipping solutions tailored to your business needs, ensuring your cargo arrives safely and on time.</p>
+								</div>
+							</div>
+							<div class="single-about-box two fade-in">
+								<div class="about-wrap">
+									<div class="about-icon">
+										<img src="{% static 'images/home3/about-icon2.png' %}" alt="icon">
+									</div>
+									<div class="title">
+										<h2>Intermodal Shipping</h2>
+									</div>
+								</div>
+								<div class="about-desc">
+									<p>
+Our intermodal transport combines sea, air, and land logistics to deliver cost-effective and efficient shipping across multiple regions.
+</p>
+								</div>
+							</div>
+							<div class="about-info-box fade-in">
+								<div class="about-btn">
+									<a href="about.html">More About Us<i class="fa-solid fa-arrow-right"></i></a>
+								</div>
+								<div class="about-call-info">
+									<h3 class="call-text">Call Us (Toll free)</h3>
+									<h4 class="call-number">+1-(609) 289 0277</h4>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="about-shape1">
+				<img src="{% static 'images/home3/about-shape1.png' %}" alt="about shape">
+			</div>
+			<div class="about-shape2">
+				<img src="{% static 'images/home3/about-shape2.png' %}" alt="about shape2">
+			</div>
+		</section>
+		<!--About Section home3 -->
+
+
+
+
+
+<section class="marquee-section">
+    <div class="marquee-track">
+        <h1>
+            ✈️ FAST AIR SHIPPING &nbsp;&nbsp;
+            🚢 GLOBAL OCEAN FREIGHT &nbsp;&nbsp;
+            📦 SECURE PACKAGE DELIVERY &nbsp;&nbsp;
+            ⚡ EXPRESS LOGISTICS &nbsp;&nbsp;
+        </h1>
+
+        <!-- duplicate pou infinite scroll -->
+        <h1>
+            ✈️ FAST AIR SHIPPING &nbsp;&nbsp;
+            🚢 GLOBAL OCEAN FREIGHT &nbsp;&nbsp;
+            📦 SECURE PACKAGE DELIVERY &nbsp;&nbsp;
+            ⚡ EXPRESS LOGISTICS &nbsp;&nbsp;
+        </h1>
+    </div>
+</section>
+
+
+
+
+
+		
+		<!-- Donations section home3 -->
+
+
+		<!-- mission vission section home3-->
+		<section class="mission-vission-section-home3">
+			<div class="auto-container">
+				<div class="row">
+					<div class="col-lg-6">
+						<div class="sec-title">
+							<div class="section-sub-title">
+								<h1 class="sub-title"><img src=" {% static 'images/main-home/sub-title-icon.png' %}"
+										alt="sub-icon">Mission & Vision</h1>
+							</div>
+							<div class="section-title">
+							<h1 class="title title-anim text-white">Delivering Reliable Cargo Services</h1>
+<h1 class="title title-anim text-white">Between USA and Haiti</h1>
+							</div>
+						</div>
+						<div class="tab">
+							<ul class="tabs">
+								<li><a href="#">Our Mission</a></li>
+								<li><a href="#">Our Vision</a></li>
+								<li><a href="#">Our History</a></li>
+							</ul>
+							<div class="tab_content">
+								<div class="tabs_item">
+									<div class="mision-vission-desc">
+										<p>loginet is a nonprofit main-homeal organizations maintaince and make
+											dedicated to protecting planet through sustainable and renewable target
+											community empowerment moderator.</p>
+									</div>
+								</div>
+
+								<!--tabs_item -->
+								<div class="tabs_item">
+									<div class="mision-vission-desc">
+										<p>loginet is a nonprofit main-homeal organizations maintaince and make
+											dedicated to protecting planet through sustainable and renewable target
+											community empowerment moderator.
+										</p>
+									</div>
+								</div>
+
+								<!--tabs_item -->
+								<div class="tabs_item">
+									<div class="mision-vission-desc">
+										<p>loginet is a nonprofit main-homeal organizations maintaince and make
+											dedicated to protecting planet through sustainable and renewable target
+											community empowerment moderator.
+										</p>
+									</div>
+								</div>
+							</div>
+						</div>
+						<div class="mission-vission-list">
+							<ul>
+								<li><span><svg width="16" height="14" viewBox="0 0 16 14" fill="none"
+											xmlns="http://www.w3.org/2000/svg">
+											<path
+												d="M7.38397 13.1797C7.34153 13.1797 7.29954 13.171 7.26066 13.1539C7.22178 13.1369 7.18683 13.1121 7.15803 13.0809L1.06612 6.49119C1.02551 6.44726 0.99859 6.39244 0.988651 6.33344C0.978712 6.27445 0.986187 6.21384 1.01016 6.15902C1.03414 6.10421 1.07357 6.05758 1.12364 6.02483C1.17371 5.99208 1.23223 5.97464 1.29206 5.97464H4.22437C4.26839 5.97464 4.31191 5.98409 4.35197 6.00234C4.39204 6.0206 4.42772 6.04723 4.45661 6.08045L6.49255 8.42273C6.71258 7.95239 7.13852 7.16925 7.88597 6.21497C8.99095 4.8042 11.0463 2.7294 14.5627 0.85642C14.6307 0.820227 14.7097 0.810833 14.7843 0.830094C14.8588 0.849355 14.9235 0.895871 14.9654 0.960456C15.0073 1.02504 15.0235 1.103 15.0108 1.17894C14.998 1.25488 14.9573 1.32328 14.8966 1.37064C14.8831 1.38113 13.5273 2.44882 11.967 4.40448C10.5309 6.20417 8.62191 9.14694 7.68255 12.946C7.66605 13.0128 7.62767 13.0721 7.57354 13.1144C7.5194 13.1568 7.45263 13.1799 7.38387 13.1799L7.38397 13.1797Z"
+												fill="white" />
+										</svg></span>Secure Packaging & Handling</li>
+								<li><span class="two"><svg width="16" height="14" viewBox="0 0 16 14" fill="none"
+											xmlns="http://www.w3.org/2000/svg">
+											<path
+												d="M7.38397 13.1797C7.34153 13.1797 7.29954 13.171 7.26066 13.1539C7.22178 13.1369 7.18683 13.1121 7.15803 13.0809L1.06612 6.49119C1.02551 6.44726 0.99859 6.39244 0.988651 6.33344C0.978712 6.27445 0.986187 6.21384 1.01016 6.15902C1.03414 6.10421 1.07357 6.05758 1.12364 6.02483C1.17371 5.99208 1.23223 5.97464 1.29206 5.97464H4.22437C4.26839 5.97464 4.31191 5.98409 4.35197 6.00234C4.39204 6.0206 4.42772 6.04723 4.45661 6.08045L6.49255 8.42273C6.71258 7.95239 7.13852 7.16925 7.88597 6.21497C8.99095 4.8042 11.0463 2.7294 14.5627 0.85642C14.6307 0.820227 14.7097 0.810833 14.7843 0.830094C14.8588 0.849355 14.9235 0.895871 14.9654 0.960456C15.0073 1.02504 15.0235 1.103 15.0108 1.17894C14.998 1.25488 14.9573 1.32328 14.8966 1.37064C14.8831 1.38113 13.5273 2.44882 11.967 4.40448C10.5309 6.20417 8.62191 9.14694 7.68255 12.946C7.66605 13.0128 7.62767 13.0721 7.57354 13.1144C7.5194 13.1568 7.45263 13.1799 7.38387 13.1799L7.38397 13.1797Z"
+												fill="white" />
+										</svg></span>Your goods are carefully handled, packed, and shipped with maximum safety and care.
+								</li>
+							</ul>
+						</div>
+						<div class="circle-progress-box">
+							<!-- circle-progress -->
+							<div class="circle-progress">
+								<div class="circle-outer">
+									<input type="text" class="dial" data-fgColor="#FF6D45" data-bgColor="#1F5A68"
+										data-width="70" data-height="70" data-linecap="normal" value="80">
+									<div class="count-box"><span class="count-text" data-stop="100K"
+											data-speed="2000"></span>%</div>
+									<h2 class="title">Packages Delivered</h2>
+								</div>
+							</div>
+							<!-- circle-progress -->
+							<div class="circle-progress">
+								<div class="circle-outer">
+									<input type="text" class="dial" data-fgColor="#FF853F" data-bgColor="#1F5A68"
+										data-width="70" data-height="70" data-linecap="normal" value="70">
+									<div class="count-box"><span class="count-text" data-stop="98"
+											data-speed="2000"></span>%</div>
+									<h2 class="title">Customer Satisfaction</h2>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="col-lg-6">
+						<div class="mission-vission-thumb-wrapper">
+							<div class="mission-vission-thumb1">
+								<figure class="reveal"><img src="{% static './images/Cargomages/contact main.png' %}" alt="thumb1"></figure>
+							</div>
+							<div class="mission-vission-thumb2">
+								<figure class="reveal"><img src="{% static './images/Cargomages/image-370.jpg' %}" alt="thumb2"></figure>
+							</div>
+							<div class="mission-vission-thumb3">
+								<figure class="reveal"><img src="{% static './images/Cargomages/356-image.jpg' %}" alt="thumb3"></figure>
+							</div>
+							<div class="mission-dot-shape">
+								<img src="images/home3/mission-dot.png" alt="dot">
+							</div>
+							<div class="mission-shape">
+								<img src="images/home3/mission-shape.png" alt="shape">
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="mission-shape1">
+				<img src="images/home3/mission-shape1.png" alt="shape1">
+			</div>
+		</section>
+		<!-- mission vission section home3-->
+
+
+		<!--donate love section home3-->
+		<div class="donate-love-section-home3">
+			<div class="container">
+				<div class="row">
+					<div class="col-lg-6">
+						<div class="donate-love-thumb reveal">
+							<img src="{% static 'images/home3/donation-love1.png' %}" alt="thumb">
+							<div class="donation-video-icon">
+								<a href="https://www.youtube.com/shorts/w9GR4w9NCH0" class="popup-video"
+									data-cursor-text="Play"><i class="fa-classic fa-solid fa-play fa-fw"></i></a>
+							</div>
+						</div>
+					</div>
+					<div class="col-lg-6">
+						<div class="single-donate-love-box">
+							<div class="donate-love-content">
+								<h1>Cap Shipping Distribution</h1>
+								<h2>Partner With Us for</h2>
+								<h2>Reliable Logistics</h2>
+								<h2>Success</h2>
+								<div class="donate-love-btn">
+									<a href="donation-details.html">About Us<i
+											class="fa-solid fa-arrow-right"></i></a>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<!-- mission vission section home3-->
+
+
+		<!--  Secure delivery home3 -->
+		
+
+
+		<!-- marquee section home3 -->
+		<div class="marquee-section-home3">
+			<div class="container-fluid">
+				<div class="row">
+					<div class="col-lg-12">
+						<div class="marquee">
+							<div class="marquee-block">
+								<h3><span><img src="{% static 'images/main-home/marquee-icon.png' %}" alt="icon"></span>SEA & AIR FREIGHT SOLUTIONS
+								</h3>
+								<h3><span><img src="{% static 'images/main-home/marquee-icon.png' %}" alt="icon"></span>WAREHOUSING & DISTRIBUTION</h3>
+								<h3><span><img src="{% static 'images/main-home/marquee-icon.png' %}" alt="icon"></span>REAL-TIME TRACKING SYSTEM
+									</h3>
+								<h3><span><img src="{% static 'images/main-home/marquee-icon.png' %}" alt="icon"></span>CUSTOM LOGISTICS SUPPORT</h3>
+							</div>
+                            <div class="marquee-block">
+								<h3><span><img src="{% static 'images/main-home/marquee-icon.png' %}" alt="icon"></span>SEA & AIR FREIGHT SOLUTIONS
+								</h3>
+								<h3><span><img src="{% static 'images/main-home/marquee-icon.png' %}" alt="icon"></span>WAREHOUSING & DISTRIBUTION</h3>
+								<h3><span><img src="{% static 'images/main-home/marquee-icon.png' %}" alt="icon"></span>REAL-TIME TRACKING SYSTEM
+									</h3>
+								<h3><span><img src="{% static 'images/main-home/marquee-icon.png' %}" alt="icon"></span>CUSTOM LOGISTICS SUPPORT</h3>
+							</div>
+					
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<!-- marquee section home3 -->
+
+
+<!--  Secure delivery home3 -->
+
+<section class="estimate">
+	<div class="estim">
+<h4>Fast & Trusted Shipping</h4>
+	</div>
+
+
+<h1>the USA to Haiti with Trusted, Fast and <br> Professional Delivery </h1>
+
+<div class="row_estimate">
+
+<div class="package">
+	<div class="icon_estimate">
+<i class='bx bx-package'></i>
+	</div>
+	
+	<h2 class="counters" data-target="3000">0</h2>
+	<h3>Packages Delivered</h3>
+	<p>Whether by plane or by boat, we are there for you</p>
+</div>
+
+
+<div class="package">
+	<div class="icon_estimate">
+<i class='bx bx-user'></i>
+	</div>
+	
+	<h2 class="counters" data-target="400">0</h2>
+	<h3>Satisfied Customers</h3>
+	<p>We guarantee the safety of packages and ensure fast delivery.</p>
+</div>
+
+
+
+
+<div class="package">
+	<div class="icon_estimate">
+<i class='bx bx-like'></i>
+	</div>
+	
+	<h2 class="counters" data-target="5">0+</h2>
+	<h3>Years of experience</h3>
+	<p>We are committed to providing you with quality service by meeting your expectations.</p>
+</div>
+
+
+
+</div>
+
+
+</section>
+
+
+
+<!----------------faq------------------->
+
+
+<section class="faq-modern" id="faq-modern">
+
+    <div class="faq-modern-container">
+
+        <!-- LEFT -->
+        <div class="faq-left">
+
+            <p class="tag">OUR FAQS</p>
+
+            <h2>
+                Frequently Asking <span>Any Question</span>
+            </h2>
+
+            <div class="faq-image-box">
+                <img src="https://images.unsplash.com/photo-1586528116311-ad8dd3c8310d?q=80" alt="">
+
+                <div class="experience">
+                    <h3>5+</h3>
+                    <p>Years of<br>experience</p>
+                </div>
+            </div>
+
+        </div>
+
+
+        <!-- RIGHT -->
+        <div class="faq-right">
+
+            <div class="faq-item">
+                <div class="faq-question">
+                    How do you handle returns or exchanges?
+                    <span>→</span>
+                </div>
+                <div class="faq-answer">
+                    We provide flexible return solutions depending on shipping conditions and agreements.
+                </div>
+            </div>
+
+            <div class="faq-item">
+                <div class="faq-question">
+                    What does logistics consulting include?
+                    <span>→</span>
+                </div>
+                <div class="faq-answer">
+                    Our consulting includes supply chain optimization and cost reduction strategies.
+                </div>
+            </div>
+
+            <div class="faq-item">
+                <div class="faq-question">
+                    Can I cancel a shipment after booking?
+                    <span>→</span>
+                </div>
+                <div class="faq-answer">
+                    Yes, cancellations are possible depending on shipment status and timing.
+                </div>
+            </div>
+
+            <div class="faq-item active">
+                <div class="faq-question">
+                    Can you assist with customs clearance procedures?
+                    <span>⌄</span>
+                </div>
+                <div class="faq-answer">
+                    We help manage documentation, compliance, and ensure smooth customs clearance.
+                </div>
+            </div>
+
+            <div class="faq-item">
+                <div class="faq-question">
+                    What is your delivery policy?
+                    <span>→</span>
+                </div>
+                <div class="faq-answer">
+                    We ensure fast, secure, and timely delivery across all destinations.
+                </div>
+            </div>
+
+			     <div class="faq-item">
+                <div class="faq-question">
+                    What is your delivery policy?
+                    <span>→</span>
+                </div>
+                <div class="faq-answer">
+                    We ensure fast, secure, and timely delivery across all destinations.
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+
+
+		<!--sign up section home3-->
+		<div class="sign-up-section-home3">
+			<div class="auto-container">
+				<div class="row align-items-center">
+					<div class="col-xl-6">
+						<div class="sign-up-title">
+							<h2 class="text-anime-3">Sign Up for—Update</h2>
+						</div>
+					</div>
+					<div class="col-xl-6">
+						<div class="sign-up">
+							<form action="https://formspree.io/f/myyleorq" method="POST">
+								<div class="sign-up-form">
+									<div class="form-input-bx">
+										<input type="email" name="email" placeholder="Enter Your E-Mail" required="">
+										<span><i class="fa-regular fa-envelope"></i></span>
+										<button type="submit">Singup Now <i class="fa-solid fa-arrow-right-long"></i>
+										</button>
+									</div>
+								</div>
+							</form>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<!--sign up section home3-->
+
+<script>
+document.addEventListener("DOMContentLoaded", function(){
+
+    const input = document.getElementById("trkInput");
+    const button = document.getElementById("trkBtn");
+
+    button.addEventListener("click", function(e){
+        e.preventDefault();
+
+        let trk = input.value.trim().toUpperCase();
+
+        if(trk === ""){
+            input.focus();
+            return;
+        }
+
+        // 🔥 REDIRECT
+        window.location.href = `/shipping/tracking/?tracking_number=${trk}`;
+    });
+
+    input.addEventListener("keypress", function(e){
+        if(e.key === "Enter"){
+            e.preventDefault();
+            button.click();
+        }
+    });
+
+});
+</script>
+
+{% endblock %}
+
+		<!--End Main Footer home2-->
+
+		<!-- Scroll To Top -->
+		<div class="scroll-to-top scroll-to-target" data-target="html"><span class="fa fa-angle-up"></span></div>
+
+	</div>
+</body>
+
+</html>

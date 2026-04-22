@@ -1,0 +1,270 @@
+{% extends 'base.html' %}
+
+{% load static %}
+
+{% block title %} Track {% endblock %}
+
+
+{% block manu_nav %}
+
+
+
+
+
+        <!----------package tracking -------->
+
+
+
+<section class="packages">
+
+
+
+<div class="packes_track_head">
+
+
+<div class="Trc_headers">
+
+    <div class="Trc_header">
+    <div class="title_track">
+        <div class="banner-title_track">
+								<h1>Cap Shipping Distribution LLC</h1>
+                                </div>
+        <h2>Track Your packages</h2>
+        <h5>
+            Enter your tracking number
+            to get real-time updates
+        </h5>
+    </div>
+
+    <div class="Trc_image">
+        <img src="{% static './images/Cargomages/Track image set.png' %}" alt="">
+    </div>
+</div>
+<form action="">
+    <div class="searcher_container">
+
+            <div class="input_container">
+     <i class='bx bx-search'></i><input type="search" id="trackingInput"  placeholder="enter tracking number" required>
+     </div>
+<div class="btn_Trc">
+    <button id="trackBtn">track Package</button>
+    </div>
+
+    </div>
+
+
+<div id="trackingAlert" class="alert hidden"></div>
+</form>
+</div>
+
+
+            </div>
+
+
+
+
+<!-- tracking-steps.html -->
+<div class="tracking-steps-container">
+  <div class="tracking-step">
+    <div class="step-icon-wrapper">
+      <div class="step-circle">
+        <img src="{% static './images/Cargomages/received_box.png' %}" alt="">
+      </div>
+
+      <div class="cheched_status">
+        <i class='bx bx-check' style='color:#ffffff' ></i>
+      </div>
+    </div>
+    <div class="step-details">
+      <div class="step-title">Package Received</div>
+        <div class="details_ship"> Orlando , FL 3289 Warehouse </div>
+      <div class="step-date">2 Days Ago, 3:00 PM</div>
+    </div>
+  </div>
+
+  <div class="tracking-step">
+    <div class="step-icon-wrapper">
+      <div class="step-circle">
+        <img src="{% static './images/Cargomages/truck in transit.png' %}" alt="">
+      </div>
+
+        <div class="cheched_status">
+        <i class='bx bx-check' style='color:#ffffff' ></i>
+      </div>
+    </div>
+    <div class="step-details">
+      <div class="step-title">In Transit (Air Freight)</div>
+        <div class="details_ship"> To HT , P-au-P </div>
+      <div class="step-date">Yesterday, 5:15 PM</div>
+    </div>
+  </div>
+
+  <div class="tracking-step">
+    <div class="step-icon-wrapper">
+      <div class="step-circle">
+        <img src="{% static './images/Cargomages/ready_for _pickup_box.png' %}" alt="">
+      </div>
+
+        <div class="cheched_status">
+        <i class='bx bx-check' style='color:#ffffff' ></i>
+      </div>
+    </div>
+    <div class="step-details">
+      <div class="step-title">Ready for Pickup</div>
+        <div class="details_ship"> HT , P-au-P Delma 32</div>
+      <div class="step-date">Today, 9:00 AM</div>
+    </div>
+  </div>
+
+  <div class="tracking-step">
+    <div class="step-icon-wrapper">
+      <div class="step-circle">
+        <img src="{% static './images/Cargomages/deivery_box.png' %}" alt="">
+      </div>
+        <div class="cheched_status">
+        <i class='bx bx-check' style='color:#ffffff' ></i>
+      </div>
+    </div>
+    <div class="step-details">
+      <div class="step-title">Package Delivered</div>
+        <div class="details_ship"> HT , P-au-P Delma 32</div>
+      <div class="step-date">Today, 11:30 AM</div>
+    </div>
+  </div>
+
+</div>
+
+            <div id="trackingError" style="display:none; color:red; margin-bottom:15px; font-weight:600;"></div>
+
+        </section>
+
+<script>
+
+
+document.addEventListener("DOMContentLoaded", function(){
+const locationEls = document.querySelectorAll(".details_ship");
+const steps = document.querySelectorAll(".tracking-step");
+const container = document.querySelector(".tracking-steps-container");
+const input = document.querySelector("input[type='search']");
+const button = document.querySelector(".btn_Trc button");
+const datesEl = document.querySelectorAll(".step-date");
+const alertBox = document.getElementById("trackingAlert");
+
+const statusMap = {
+    "received": 0,
+    "in_transit": 1,
+    "ready_pickup": 2,
+    "delivered": 3
+};
+
+const keys = ["received","in_transit","ready_pickup","delivered"];
+
+// 🔥 AUTO LOAD FROM URL
+const urlParams = new URLSearchParams(window.location.search);
+const trkFromUrl = urlParams.get("tracking_number");
+
+if(trkFromUrl){
+    input.value = trkFromUrl;
+    trackPackage(trkFromUrl);
+}
+
+// ALERT
+function showAlert(message, type="error"){
+    if(!alertBox) return;
+
+    alertBox.innerText = message;
+    alertBox.className = "alert show " + type;
+
+    setTimeout(()=>{
+        alertBox.classList.remove("show");
+    }, 3000);
+}
+
+// CLICK
+button.addEventListener("click", function(e){
+    e.preventDefault();
+
+    let trackingNumber = input.value.trim().toUpperCase();
+
+    if(trackingNumber === ""){
+        showAlert("Please enter a tracking number", "error");
+        return;
+    }
+
+    trackPackage(trackingNumber);
+});
+
+// ENTER
+input.addEventListener("keypress", function(e){
+    if(e.key === "Enter"){
+        e.preventDefault();
+        button.click();
+    }
+});
+
+function trackPackage(trk){
+
+    fetch(`/shipping/api/track/?tracking_number=${trk}`)
+    .then(res => res.json())
+    .then(data => {
+
+        // ❌ NOT FOUND
+        if(!data.success){
+
+            showAlert("Tracking number not found", "error");
+
+            container.classList.remove("show");
+
+            return;
+        }
+        console.log(container);
+        // ✅ SUCCESS
+        showAlert("Tracking loaded successfully", "success");
+
+        // 👉 AFFICHAGE
+        container.classList.add("show");
+
+        let currentStep = statusMap[data.status];
+
+        steps.forEach((step, index) => {
+
+            const check = step.querySelector(".cheched_status");
+
+            if(index <= currentStep){
+                check.classList.add("active");
+                step.classList.add("active");
+            } else {
+                check.classList.remove("active");
+                step.classList.remove("active");
+            }
+
+        });
+
+keys.forEach((key, index)=>{
+    // 📅 DATE
+    if(datesEl[index]){
+        datesEl[index].innerText = data.dates[key] || "";
+    }
+
+    // 📍 LOCATION (AFICHE SELMAN SI STEP LA AKTIF)
+    if(locationEls[index]){
+        if(index <= currentStep){
+            locationEls[index].innerText = data.locations[key] || "";
+        } else {
+            locationEls[index].innerText = ""; // ❌ pa montre anyen
+        }
+    }
+});
+
+    })
+    .catch(err => {
+        console.error(err);
+        showAlert("Something went wrong", "error");
+    });
+}
+
+});
+</script>
+
+
+{% endblock %}

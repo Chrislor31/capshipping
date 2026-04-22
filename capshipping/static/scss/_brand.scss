@@ -1,0 +1,35 @@
+
+// main-home brand area one
+.brand-area-one {
+    padding: 80px 0;
+    background:var(--theme-bg-color1);
+    .band-active{
+        overflow-x: hidden;
+        .brand-box{
+            width: 244px;
+            height: 120px;
+            line-height: 120px;
+            border-radius: 16px;
+            text-align: center;
+            background: var(--theme-color-white);
+        }
+    }
+}
+
+// main-home brand area classic
+
+.brand-area-classic {
+    padding: 80px 0;
+    background: var(--theme-bg-color1);
+    .band-active{
+        overflow-x: hidden;
+        .brand-box{
+            width: 244px;
+            height: 120px;
+            line-height: 120px;
+            border-radius: 16px;
+            text-align: center;
+            background: var(--theme-color-white);
+        }
+    }
+}

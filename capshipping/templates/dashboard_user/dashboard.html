@@ -1,0 +1,303 @@
+{% extends 'base.html' %}
+
+{% load static %}
+
+{% block title %}Dashboard {% endblock %}
+
+{% block manu_nav %}
+
+
+
+
+<section class="dasboard">
+
+<div class="side_nav active" data-page="dashboard">
+
+    <ul>
+        <li class="active" data-page="dashboard">
+            <i data-lucide="layout-dashboard"></i> <span>Dashboard</span>
+        </li>
+
+        <li data-page="addresses">
+            <i data-lucide="map-pin-house"></i> <span>Addresses</span>
+        </li>
+
+        <li data-page="calculator">
+            <i data-lucide="calculator"></i><span>Calculator</span>
+        </li>
+
+        <li data-page="chat">
+            <i data-lucide="message-circle-more"></i> <span>Chat</span>
+        </li>
+
+        <li data-page="settings">
+            <i data-lucide="settings"></i> <span>Settings</span>
+        </li>
+    </ul>
+
+</div>
+
+
+<div class="right_main page active" id="dashboard">
+
+<h2>Welcome Back , {{ user.first_name }} 👋 </h2>
+<p>Here's an Overview of your shipments</p>
+
+<div class="process_container">
+    <div class="process_1">
+        <div class="back_design">
+        <div class="pending">
+        <i data-lucide="loader"></i>
+        <span>Pending</span>
+        </div>
+        <h4>3 <span>shipments</span></h4>
+        </div>
+    </div>
+
+    <div class="process_1">
+        <div class="back_design">
+        <div class="pending">
+        <i data-lucide="truck"></i>
+        <span>in transit</span>
+        </div>
+        <h4>5 <span>shipments</span></h4>
+        </div>
+    </div>
+
+    <div class="process_1">
+        <div class="back_design">
+        <div class="pending">
+        <i data-lucide="circle-check-big"></i>
+        <span>Delevered</span>
+        </div>
+        <h4>7 <span>shipments</span></h4>
+        </div>
+    </div>
+
+    <div class="process_1">
+        <div class="back_design">
+        <div class="pending">
+        <i data-lucide="notepad-text"></i>
+        <span>Orders</span>
+        </div>
+        <h4>20 <span>All Time</span></h4>
+        </div>
+    </div>
+</div>
+
+<div class="shippements_tables">
+<div class="shippements_tab_left">
+    <h4>Recent Shipments</h4>
+
+    <table>
+        <thead>
+            <tr>
+                <th>Tracking No.</th>
+                <th>Status</th>
+                <th>Date</th>
+            </tr>
+        </thead>
+
+        <tbody>
+            <tr>
+                <td>#TRK12345</td>
+                <td><span class="status pending_status">Pending</span></td>
+                <td>Apr 03, 2026</td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+
+<div class="shippements_tab_right">
+    <h4>Shipment Overview</h4>
+    <canvas id="shipmentChart"></canvas>
+</div>
+</div>
+
+</div>
+
+<!-- ADDRESSES PAGE -->
+<div class="adresses_user page" id="addresses">
+
+<h2>Welcome Back , {{ user.first_name }} 👋 </h2>
+<p>Here are shipping addresses to use when purchasing online</p>
+
+<div class="tsetel">
+
+<div class="adresses_items">
+    <div class="trasports">
+
+        <div class="plane_address">
+            <div class="mode_title">
+                <i data-lucide="plane"></i> <span> Plane address</span>
+            </div>
+
+            <div class="details_address">
+                <h2>{{ user.first_name }} {{ user.last_name }} / HT215726</h2>
+                <p>1225 orwell av <br> Orlando , FL, 32089</p>
+
+                <div class="copy">
+                     <i data-lucide="copy"></i> <span>Copy address</span>
+                </div>
+            </div>
+
+            <div class="plane_address">
+                <div class="mode_title">
+                    <i data-lucide="ship"></i> <span> Boat address</span>
+                </div>
+
+                <div class="details_address">
+                    <h2>Chrislor Pierre / HT21572</h2>
+                    <p>1225 orwell av <br> Orlando , FL, 32089</p>
+
+                    <div class="copy">
+                        <i data-lucide="copy"></i> <span>Copy address</span>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+
+    <div class="additional_addresses">
+
+  <h2>Additional Warehouse Addresses</h2>
+  <p>You can also use one of our other warehouse locations below for delivering packages or shopping online.</p>
+
+  <div class="add_address_name">
+    <span>WEST DIXIE</span>
+    <i data-lucide="plus"></i>
+  </div>
+
+  <div class="add_address_content">
+    <p>1234 NW Street</p>
+    <p>Miami, FL 33166</p>
+  </div>
+
+</div>
+</div>
+
+
+<!-- ADDITIONAL -->
+
+
+</div>
+</div> <!-- 🔥 SA KI TE MANKE -->
+
+
+<!-- OTHER PAGES -->
+<div class="page" id="calculator">
+  <h3>Calculator Page</h3>
+</div>
+
+<div class="page" id="chat">
+  <h3>Tracking Page</h3>
+</div>
+
+<div class="setting_dash page" id="settings">
+  <h3>Settings</h3>
+
+  <div class="profiles">
+
+    <div class="profile_informations">
+        <div class="names_initials">
+            <h4>{{ user.first_name|slice:":1" }}{{ user.last_name|slice:":1" }}</h4>
+        </div>
+        <div class="profile_names">
+            <h5>{{ user.first_name }} {{ user.last_name }}</h5>
+            <div class="adress_profiles">
+            <p>{{ user.suite_code }} <span>|</span> {{ user.country }} , {{ user.city }}</p>
+            </div>
+            {% if user.is_active %}
+            <p>  <i data-lucide="shield-check"></i> <span>Active</span></p>
+            {% endif %}
+        </div>
+
+        <div class="edite">
+            <i data-lucide="pen"></i> <span>edite</span>
+        </div>
+    </div>
+
+
+<div class="suit_mail">
+
+    <div class="suits">
+        <p> <i data-lucide="id-card"></i><span>Pick up Address </span></p>
+        <h4><i data-lucide="map-pin"></i>{{ user.default_pickup_warehouse.type }} , {{ user.default_pickup_warehouse.area }} ,{{ user.default_pickup_warehouse.state }}</h4>
+    </div>
+
+     <div class="suits">
+        <p> <i data-lucide="mail"></i><span>Email </span></p>
+        <h4><i data-lucide="mail"></i> {{ user.email }}</h4>
+    </div>
+
+</div>
+
+
+  </div>
+
+
+
+<div class="update_profile">
+
+<div class="update_left">
+    <h4>edite profile</h4>
+<form method="POST">
+    {% csrf_token %}
+
+    <div class="last_fist">
+
+        <label>Last Name</label>
+        <input type="text" name="last_name" value="{{ user.last_name }}" disabled>
+
+        <label>First Name</label>
+        <input type="text" name="first_name" value="{{ user.first_name }}" disabled>
+
+        <label>Phone Number</label>
+        <input type="text" name="phone_number" value="{{ user.phone_number }}" disabled>
+
+        <label>Address</label>
+        <input type="text" name="address" value="{{ user.country }} , {{ user.city }} , {{  user.state }} " disabled>
+
+    </div>
+
+</form>
+</div>
+
+
+</div>
+
+<div class="update_left">
+    <h4>update password</h4>
+<form id="passwordForm">
+    {% csrf_token %}
+
+    <label>Current Password</label>
+    <input type="password" name="current_password" required>
+
+    <label>New Password</label>
+    <input type="password" name="new_password" required>
+
+    <label>Confirm New Password</label>
+    <input type="password" name="confirm_password" required>
+
+    <button type="submit">Update Password</button>
+
+    <p id="message"></p>
+</form>
+</div>
+
+
+
+
+
+</div>
+
+
+
+</section>
+
+
+{% endblock %}
+

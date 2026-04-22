@@ -1,0 +1,738 @@
+// work process section one main-home
+.work-process-section-one {
+    padding: 120px 0 100px;
+    background-color: var(--heading-color);
+    border-radius: 20px;
+    margin: 0 30px 0 30px;
+    position: relative;
+    z-index: 2;
+    overflow: hidden;
+
+    @include media-breakpoint-only(sm) {
+        border-radius: 0px;
+        margin: 0 0px 0 0px;
+    }
+
+    .sec-title {
+        margin-bottom: 80px;
+    }
+
+    .working-process-box {
+        text-align: center;
+        position: relative;
+        margin-bottom: 20px;
+
+        &::before {
+            position: absolute;
+            content: "";
+            width: 100%;
+            height: 100%;
+            right: 150px;
+            top: 45px;
+            background: url(../images/main-home/process-border.png);
+            background-repeat: no-repeat;
+
+            @include for-xxl {
+                display: none;
+            }
+        }
+
+        &::after {
+            position: absolute;
+            content: "";
+            width: 100%;
+            height: 100%;
+            right: -255px;
+            top: 66px;
+            background: url(../images/main-home/process-border.png);
+            background-repeat: no-repeat;
+            transform: rotate(20deg);
+
+            @include for-xxl {
+                display: none;
+            }
+        }
+
+        .before-transprent {
+            &::before {
+                background: transparent;
+            }
+        }
+
+        .process-icon {
+            width: 130px;
+            height: 130px;
+            line-height: 130px;
+            background-color: var(--theme-color4);
+            border-radius: 50%;
+            text-align: center;
+            margin: auto;
+            position: relative;
+            z-index: 1;
+
+            &::before {
+                position: absolute;
+                z-index: -1;
+                content: "";
+                left: 0;
+                top: 0;
+                height: 100%;
+                width: 100%;
+                transform: scale(0);
+                border-radius: 50%;
+                background-color: var(--theme-color2);
+                transition: all 300ms ease;
+            }
+
+            .process-shape {
+                position: absolute;
+                top: -53px;
+                left: -30px;
+                z-index: -1;
+
+                @include media-breakpoint-only(sm) {
+                    display: none;
+                }
+
+                &.last {
+                    top: -53px;
+                    right: -160px;
+                    transform: rotate(90deg);
+                }
+            }
+        }
+
+        &:hover .process-icon::before {
+            transform: scale(1);
+        }
+
+        &:hover .process-icon>img {
+            filter: brightness(0)invert(1);
+        }
+
+        .process-content {
+            h2 {
+                color: var(--theme-color-white);
+                font-weight: 600;
+                font-size: 32px;
+                line-height: 40px;
+                margin: 22px 0 15px;
+            }
+
+            p {
+                color: var(--theme-color3);
+                font-weight: 400;
+                font-size: 16px;
+                line-height: 26px;
+                width: 80%;
+                margin: 0 auto;
+
+                @include for-xxl {
+                    width: 100%;
+                }
+            }
+        }
+
+        &.first {
+            margin-top: 65px;
+
+            @include for-xxl {
+                margin-top: 0px;
+            }
+
+            &::before {
+                background: transparent;
+            }
+
+            &::after {
+                background: transparent;
+            }
+        }
+    }
+
+    .work-process-shape1 {
+        position: absolute;
+        top: 26%;
+        left: 0;
+        animation: upDown 1.5s ease-in-out 1.6s forwards infinite alternate;
+
+        @include for-xxl {
+            display: none;
+        }
+
+        @include media-breakpoint-between(sm, xl) {
+            display: none;
+        }
+    }
+
+    .work-process-shape2 {
+        position: absolute;
+        top: 0;
+        right: -70px;
+        animation: bounceleft 8s linear infinite;
+
+        @include for-xxl {
+            display: none;
+        }
+
+        @include media-breakpoint-between(sm, xl) {
+            display: none;
+        }
+    }
+}
+
+// work process section classic main-home
+
+.work-process-section-classic {
+    padding: 120px 0 100px;
+    background-image: url(../images/transport-classic/work-bg.png);
+    background-repeat: no-repeat;
+    background-position: center center;
+    background-size: cover;
+    position: relative;
+    z-index: 2;
+    overflow: hidden;
+
+    .worksp {
+        position: absolute;
+        top: 0;
+        left: 0;
+        z-index: -1;
+    }
+
+    .sec-title {
+        margin-bottom: 80px;
+    }
+
+    .working-process-box {
+        text-align: center;
+        position: relative;
+        margin-bottom: 20px;
+
+        .before-transprent {
+            &::before {
+                background: transparent;
+            }
+        }
+
+        .process-icon {
+            width: 130px;
+            height: 130px;
+            line-height: 130px;
+            background-color: #FAF0ED;
+            border-radius: 50%;
+            text-align: center;
+            margin: auto;
+            position: relative;
+            z-index: 1;
+
+            &::before {
+                position: absolute;
+                z-index: -1;
+                content: "";
+                left: 0;
+                top: 0;
+                height: 100%;
+                width: 100%;
+                transform: scale(0);
+                border-radius: 50%;
+                background-color: var(--theme-color2);
+                transition: all 300ms ease;
+            }
+
+            .process-shape {
+                position: absolute;
+                top: -53px;
+                left: -42px;
+                z-index: -1;
+
+                @include media-breakpoint-only(md) {
+                    display: none;
+                }
+
+                @include media-breakpoint-only(sm) {
+                    display: none;
+                }
+
+                &.last {
+                    top: -53px;
+                    right: -190px;
+                    transform: rotate(90deg);
+
+                    @include media-breakpoint-only(md) {
+                        display: none;
+                    }
+
+                    @include media-breakpoint-only(sm) {
+                        display: none;
+                    }
+                }
+            }
+        }
+
+        &:hover .process-icon::before {
+            transform: scale(1);
+        }
+
+        &:hover .process-icon>img {
+            filter: brightness(0)invert(1);
+        }
+
+        .process-content {
+            h2 {
+                color: var(--heading-color);
+                font-weight: 600;
+                font-size: 32px;
+                line-height: 40px;
+                margin: 22px 0 15px;
+            }
+
+            p {
+                color: var(--text-color);
+                font-weight: 400;
+                font-size: 16px;
+                line-height: 26px;
+                width: 80%;
+                margin: 0 auto;
+
+                @include media-breakpoint-down(xl) {
+                    width: 100%;
+                }
+            }
+        }
+
+        &.first {
+            margin-top: 65px;
+
+            @include for-xxl {
+                margin-top: 0px;
+            }
+
+            &::before {
+                background: transparent;
+            }
+
+            &::after {
+                background: transparent;
+            }
+        }
+    }
+
+    .work-process-shape1 {
+        position: absolute;
+        top: 0;
+        left: 0;
+        animation: upDown 1.5s ease-in-out 1.6s forwards infinite alternate;
+
+        @include for-xxl {
+            display: none;
+        }
+
+        @include media-breakpoint-between(sm, xl) {
+            display: none;
+        }
+    }
+
+    .work-process-shape2 {
+        position: absolute;
+        top: 45px;
+        right: 100px;
+        animation: bounceleft 8s linear infinite;
+
+        @include for-xxl {
+            display: none;
+        }
+
+        @include media-breakpoint-between(sm, xl) {
+            display: none;
+        }
+    }
+}
+
+// work process section home2
+
+.work-process-section-home2 {
+    padding: 120px 0 100px;
+    background-image: url(../images/home2/prosess-bg.png);
+    background-repeat: no-repeat;
+    background-position: center center;
+    background-size: cover;
+    position: relative;
+    z-index: 2;
+    overflow: hidden;
+    margin: 0 30px 0;
+    border-radius: 30px 30px 0px 0px;
+
+    @include media-breakpoint-only(sm) {
+        margin: 0 0px 0;
+        border-radius: 0px 0px 0px 0px;
+    }
+
+    .sec-title {
+        margin-bottom: 80px;
+    }
+
+    .working-process-box {
+        text-align: center;
+        position: relative;
+        margin-bottom: 20px;
+
+        .before-transprent {
+            &::before {
+                background: transparent;
+            }
+        }
+
+        .process-icon {
+            width: 130px;
+            height: 130px;
+            line-height: 130px;
+            background-color: #FAF0ED;
+            border-radius: 50%;
+            text-align: center;
+            margin: auto;
+            position: relative;
+            z-index: 1;
+
+            &::before {
+                position: absolute;
+                z-index: -1;
+                content: "";
+                left: 0;
+                top: 0;
+                height: 100%;
+                width: 100%;
+                transform: scale(0);
+                border-radius: 50%;
+                background-color: var(--theme-color2);
+                transition: all 300ms ease;
+            }
+
+            .process-shape {
+                position: absolute;
+                top: -53px;
+                left: -42px;
+                z-index: -1;
+
+                @include media-breakpoint-only(md) {
+                    display: none;
+                }
+
+                @include media-breakpoint-only(sm) {
+                    display: none;
+                }
+
+                &.last {
+                    top: -53px;
+                    right: -190px;
+                    transform: rotate(90deg);
+
+                    @include media-breakpoint-only(md) {
+                        display: none;
+                    }
+
+                    @include media-breakpoint-only(sm) {
+                        display: none;
+                    }
+                }
+            }
+        }
+
+        &:hover .process-icon::before {
+            transform: scale(1);
+        }
+
+        &:hover .process-icon>img {
+            filter: brightness(0)invert(1);
+        }
+
+        .process-content {
+            h2 {
+                color: var(--heading-color);
+                font-weight: 600;
+                font-size: 32px;
+                line-height: 40px;
+                margin: 22px 0 15px;
+            }
+
+            p {
+                color: var(--text-color);
+                font-weight: 400;
+                font-size: 16px;
+                line-height: 26px;
+                width: 80%;
+                margin: 0 auto;
+
+                @include media-breakpoint-only(xl) {
+                    width: 100%;
+                }
+            }
+        }
+
+        &.first {
+            margin-top: 65px;
+
+            @include for-xxl {
+                margin-top: 0px;
+            }
+
+            &::before {
+                background: transparent;
+            }
+
+            &::after {
+                background: transparent;
+            }
+        }
+    }
+
+    .work-process-shape1 {
+        position: absolute;
+        top: 0;
+        left: 0;
+        animation: upDown 1.5s ease-in-out 1.6s forwards infinite alternate;
+    }
+
+    .work-process-shape2 {
+        position: absolute;
+        top: 45px;
+        right: 100px;
+        animation: bounceleft 8s linear infinite;
+    }
+
+    .work-shap {
+        position: absolute;
+        top: 17%;
+        right: 15%;
+        animation: down-up 5s ease-in-out infinite;
+
+        @include for-xxl {
+            display: none;
+        }
+    }
+
+    .work-shape2 {
+        position: absolute;
+        left: 14%;
+        top: 23%;
+        animation: down-up 6s ease-in-out infinite;
+
+        @include for-xxl {
+            display: none;
+        }
+    }
+}
+
+// work process section home2 classic
+
+.work-process-section-home2-classic {
+    padding: 120px 0 100px;
+    background-image: url(../images/home2-classic/process-bg.png);
+    background-repeat: no-repeat;
+    background-position: center center;
+    background-size: cover;
+    position: relative;
+    z-index: 1;
+    overflow: hidden;
+
+    .sec-title {
+        margin-bottom: 80px;
+    }
+
+    .working-process-box {
+        text-align: center;
+        position: relative;
+        margin-bottom: 20px;
+
+        &::before {
+            position: absolute;
+            content: "";
+            width: 100%;
+            height: 100%;
+            right: 150px;
+            top: 45px;
+            background: url(../images/home2-classic/process-border.png);
+            background-repeat: no-repeat;
+
+            @include for-xxl {
+                display: none;
+            }
+        }
+
+        &::after {
+            position: absolute;
+            content: "";
+            width: 100%;
+            height: 100%;
+            right: -252px;
+            top: 69px;
+            background: url(../images/home2-classic/process-border.png);
+            background-repeat: no-repeat;
+            transform: rotate(21deg);
+
+            @include for-xxl {
+                display: none;
+            }
+        }
+
+        .before-transprent {
+            &::before {
+                background: transparent;
+            }
+        }
+
+        .process-icon {
+            width: 130px;
+            height: 130px;
+            line-height: 130px;
+            background-color: var(--theme-color-white);
+            border: 2px solid var(--theme-color2);
+            border-radius: 50%;
+            text-align: center;
+            margin: auto;
+            position: relative;
+            z-index: 1;
+
+            &::before {
+                position: absolute;
+                z-index: -1;
+                content: "";
+                left: 0;
+                top: 0;
+                height: 100%;
+                width: 100%;
+                transform: scale(0);
+                border-radius: 50%;
+                background-color: var(--theme-color2);
+                transition: all 300ms ease;
+            }
+
+            .process-shape {
+                position: absolute;
+                top: -53px;
+                left: -42px;
+                z-index: -1;
+
+                @include media-breakpoint-only(md) {
+                    display: none;
+                }
+
+                @include media-breakpoint-only(sm) {
+                    display: none;
+                }
+
+                &.last {
+                    top: -53px;
+                    right: -190px;
+                    transform: rotate(90deg);
+
+                    @include media-breakpoint-only(md) {
+                        display: none;
+                    }
+
+                    @include media-breakpoint-only(sm) {
+                        display: none;
+                    }
+                }
+            }
+        }
+
+        &:hover .process-icon::before {
+            transform: scale(1);
+        }
+
+        &:hover .process-icon>img {
+            filter: brightness(0)invert(1);
+        }
+
+        .process-content {
+            h2 {
+                color: var(--heading-color);
+                font-weight: 600;
+                font-size: 32px;
+                line-height: 40px;
+                margin: 22px 0 15px;
+            }
+
+            p {
+                color: var(--text-color);
+                font-weight: 400;
+                font-size: 16px;
+                line-height: 26px;
+                width: 80%;
+                margin: 0 auto;
+
+                @include media-breakpoint-only(xl) {
+                    width: 100%;
+                }
+            }
+        }
+
+        &.first {
+            margin-top: 65px;
+
+            @include for-xxl {
+                margin-top: 0px;
+            }
+
+            &::before {
+                background: transparent;
+            }
+
+            &::after {
+                background: transparent;
+            }
+        }
+    }
+
+    .work-process-shape1 {
+        position: absolute;
+        top: 0;
+        left: 0;
+        animation: upDown 1.5s ease-in-out 1.6s forwards infinite alternate;
+
+        @include for-xxl {
+            display: none;
+        }
+    }
+
+    .work-process-shape2 {
+        position: absolute;
+        top: 45px;
+        right: 100px;
+        animation: bounceleft 8s linear infinite;
+
+        @include for-xxl {
+            display: none;
+        }
+
+        @include media-breakpoint-between(md, xl) {
+            display: none;
+        }
+    }
+
+    .work-shap {
+        position: absolute;
+        right: 14%;
+        top: 16%;
+        animation: down-up 5s ease-in-out infinite;
+
+
+        @include for-xxl {
+            display: none;
+        }
+    }
+
+    .work-shape2 {
+        position: absolute;
+        left: 14%;
+        top: 16%;
+        animation: down-up 4s ease-in-out infinite;
+
+
+        @include for-xxl {
+            display: none;
+        }
+    }
+
+}

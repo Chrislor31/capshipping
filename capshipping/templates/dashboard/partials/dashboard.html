@@ -1,0 +1,90 @@
+<section class="main_dashboard">
+
+    <div class="dash_home">
+        <i class='bx bx-home-alt-2'></i>
+        <span> / Dashboard</span>
+    </div>
+
+    <h2>Dashboard</h2>
+    <p>Welcome back</p>
+
+    <div class="box_items_dashboard">
+
+        <div class="total_rev_box">
+            <p>Total revenue</p>
+            <h1>${{ total_revenue|floatformat:2 }}</h1>
+             <p>
+            <span class="{% if revenue_change > 0 %}up{% else %}down{% endif %}">
+                {{ revenue_change }}%
+            </span>
+            vs last Month
+        </p>
+            <div class="sign_rev">
+                <i class='bx bx-dollar'></i>
+            </div>
+        </div>
+
+        <div class="total_rev_box">
+            <p>Active Users</p>
+            <h1>{{ active_users }}</h1>
+            <p><span class="{% if users_change > 0 %}up{% else %}down{% endif %}">
+    {{ users_change }}%
+</span> vs last Month</p>
+            <div class="sign_rev">
+                <i class='bx bx-user-check'></i>
+            </div>
+        </div>
+
+        <div class="total_rev_box">
+            <p>Total Shipments</p>
+            <h1>{{ total_shipments }}</h1>
+            <p><span class="{% if shipments_change > 0 %}up{% elif shipments_change < 0 %}down{% else %}neutral{% endif %}">
+        {{ shipments_change }}%
+    </span> vs last Month</p>
+            <div class="sign_rev">
+                <i class='bx bx-package'></i>
+            </div>
+        </div>
+
+        <div class="total_rev_box">
+            <p>Total Delivered</p>
+            <h1>{{ delivered_shipments }}</h1>
+            <p><span class="{% if delivered_change > 0 %}up{% elif delivered_change < 0 %}down{% else %}neutral{% endif %}">
+        {{ delivered_change }}%
+    </span> vs last Month</p>
+            <div class="sign_rev">
+                <i class='bx bx-chart'></i>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- charts -->
+    <div class="analystics">
+
+        <div class="revenu_Overview">
+            <h2>Revenue Overview</h2>
+            <div class="chart_wrapper">
+                <canvas id="revenueChart"></canvas>
+            </div>
+        </div>
+
+        <div class="revenu_Overview">
+            <h2>Profit vs Expenses</h2>
+            <div class="chart_wrapper">
+                <canvas id="profitChart"></canvas>
+            </div>
+        </div>
+
+    </div>
+
+
+{{ chart_labels|json_script:"labels-data" }}
+{{ chart_revenue|json_script:"revenue-data" }}
+{{ chart_shipments|json_script:"shipments-data" }}
+
+
+
+</section>
+
+

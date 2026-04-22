@@ -1,0 +1,718 @@
+{% load static %}
+
+<html>
+<head>
+
+<script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+
+<script src="https://unpkg.com/lucide@latest"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="css/scan.css">
+    <title>Scan Package</title>
+
+<script src="https://unpkg.com/@zxing/library@latest"></script>
+</head>
+
+<body>
+
+<body>
+
+
+<div id="scanner-container">
+    <video id="reader"></video>
+
+    <!-- ou te genyen sa -->
+    <div class="scan-frame">
+        <!-- NOU AJOUTE SA SELMAN -->
+        <div class="scan-line"></div>
+    </div>
+</div>
+
+
+<p id="result"></p>
+
+<div id="scan-data" class="scan-data hidden">
+
+    <div class="scan-item">
+        <span class="icon"><i data-lucide="package-check"></i></span>
+        <p><strong>TRX:</strong> <span id="trx"></span></p>
+    </div>
+
+    <div class="scan-item">
+        <span class="icon"><i data-lucide="package-check"></i></span>
+        <p><strong>Status:</strong> <span id="status"></span></p>
+    </div>
+
+    <div class="scan-item">
+        <span class="icon"><i data-lucide="package-check"></i></span>
+        <p><strong>Destination:</strong> <span id="destination"></span></p>
+    </div>
+
+</div>
+
+<div class="barmenu_scan">
+    <button> <i data-lucide="house"></i></button>
+<button class="start-btn" onclick="startScanner()"><i data-lucide="scan-line"></i></button>
+
+<button><i data-lucide="shield-check"></i></button>
+</div>
+
+
+<!---------popup delivery ---------->
+
+
+<div id="delivery-modal" class="delivery-modal hidden">
+
+    <div class="delivery-box">
+
+        <h3>Confirm Delivery</h3>
+
+        <p><strong>TRX:</strong> <span id="popup-trx"></span></p>
+
+        <!-- CHECKBOX -->
+        <label class="check">
+            <input type="checkbox" id="confirmCheck" required>
+            I confirm delivery
+        </label>
+
+        <!-- SIGNATURE -->
+
+
+        <canvas id="signature-pad"></canvas>
+
+        <div class="actions">
+            <button onclick="closeModal()">Cancel</button>
+            <button onclick="confirmDelivery()">Confirm</button>
+        </div>
+
+    </div>
+
+</div>
+
+
+<div id="success-screen" class="success-screen hidden">
+
+    <div class="success-content">
+        <img src="{% static 'images/Cargomages/Acer Juara Success Page.gif' %}" alt="success">
+
+        <h3>Package Delivered</h3>
+        <p>Delivery completed successfully</p>
+    </div>
+
+</div>
+
+<style>
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family: Arial, sans-serif;
+}
+
+body{
+    background: linear-gradient(135deg, #0f172a, #1e293b);
+    text-align:center;
+}
+
+/* CONTAINER */
+#scanner-container {
+    position: relative;
+    width: 100%;
+    height: 80vh;
+    overflow: hidden;
+    border-radius: 20px;
+    background: transparent;
+}
+
+/* VIDEO */
+#reader {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    filter: brightness(0.7) contrast(1.2);
+}
+
+/* 🔥 FRAME RESPONSIVE (MENM DESIGN OU) */
+.scan-frame {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 90%;
+    max-width: 600px;
+    aspect-ratio: 16 / 9; /* kenbe pwopòsyon */
+    transform: translate(-50%, -50%);
+    border-radius: 0px;
+
+    border: 4px solid rgba(255,255,255,0.1);
+
+    box-shadow:
+        0 0 30px rgba(99,102,241,0.4),
+        inset 0 0 20px rgba(99,102,241,0.2);
+}
+
+/* CORNER STYLE */
+.scan-frame::before,
+.scan-frame::after{
+    content:"";
+    position:absolute;
+    width:60px;
+    height:60px;
+    border:3px solid #fdfdfd;
+}
+
+.scan-frame::before{
+    top:-3px;
+    left:-3px;
+    border-right:none;
+    border-bottom:none;
+    border-radius:10px 0 0 0;
+}
+
+.scan-frame::after{
+    bottom:-3px;
+    right:-3px;
+    border-left:none;
+    border-top:none;
+    border-radius:0 0 10px 0;
+}
+
+/* SCAN LINE */
+.scan-line{
+    position:absolute;
+    top:50%;
+    left:0;
+    width:100%;
+    height:3px;
+    background: linear-gradient(90deg, transparent, #6366f1, transparent);
+    box-shadow:0 0 20px #6366f1;
+    animation: scan-horizontal 2s infinite ease-in-out;
+}
+
+@keyframes scan-horizontal{
+    0%{ left:-100%; }
+    50%{ left:0%; }
+    100%{ left:100%; }
+}
+
+/* RESULT */
+#result{
+    color:#cbd5f5;
+    margin:15px 0;
+    font-size:14px;
+}
+
+.barmenu_scan{
+    width: 95%;
+    max-width: 700px; /* ogmante limit */
+    height: auto;
+    background-color: #090b0e94;
+    display: flex;
+    align-items: center;
+    justify-content: space-around; /* pi balanse */
+    margin: 15px auto;
+    border-radius: 25px;
+    gap: 20px;
+    border: 0.5px solid #cbd5f5;
+    padding: 15px 10px; /* pi gwo padding */
+}
+
+/* BUTTONS */
+.barmenu_scan button{
+    border: none;
+    outline: none;
+    background: transparent;
+    color: white;
+    font-size: 18px; /* 🔥 SA KI ENPÒTAN */
+    padding: 10px;
+}
+
+/* ACTIVE BUTTON */
+button:nth-child(2){
+    padding:10px 15px;
+    border-radius:12px;
+    background: #6366f1;
+    color:white;
+    font-weight:500;
+    cursor:pointer;
+    box-shadow:0 10px 30px rgba(99,102,241,0.5);
+    transition:0.3s;
+}
+button:hover{
+    transform:scale(1.05);
+}
+
+/* 📱 MOBILE FIX */
+@media(max-width:600px){
+    #scanner-container{
+        height: 70vh;
+    }
+@media(max-width:600px){
+
+    .barmenu_scan{
+        width: 95%;
+        padding: 18px 10px;
+        gap: 15px;
+    }
+
+    .barmenu_scan button{
+        font-size: 20px; /* fè li pi gwo sou phone */
+    }
+
+    button:nth-child(2){
+        padding:12px 18px;
+    }
+}
+    .scan-frame{
+        width: 95%;
+        max-width: 320px;
+    }
+}
+
+/* 📱 TABLET */
+@media (max-width:1024px){
+    .scan-frame{
+        width: 85%;
+        max-width: 500px;
+    }
+}
+
+
+
+    .scan-data{
+    width: 90%;
+    max-width: 420px;
+    margin: 15px auto;
+}
+
+/* EACH LINE */
+.scan-item{
+    display:flex;
+    align-items:center;
+    gap:5px;
+
+    padding:8px 10px;
+    margin-bottom:8px;
+
+    background: rgba(15,23,42,0.9);
+    border-radius:10px;
+
+    border:1px solid rgba(255,255,255,0.05);
+
+    opacity:0;
+    transform: translateY(10px);
+    animation: fadeUp 0.4s ease forwards;
+}
+
+/* DELAY */
+.scan-item:nth-child(1){ animation-delay:0.2s; }
+.scan-item:nth-child(2){ animation-delay:0.4s; }
+.scan-item:nth-child(3){ animation-delay:0.6s; }
+
+/* ICON LEFT */
+.icon{
+    width:15px;
+    height:15px;
+    border-radius:50%;
+    background:#22c55e;
+
+    display:flex;
+    align-items:center;
+    justify-content:center;
+}
+
+.icon svg{
+    width:13px;
+    height:13px;
+    color:white;
+}
+
+/* TEXT */
+.scan-item p{
+    margin:0;
+    font-size:14px;
+    color:white;
+}
+
+/* ANIMATION */
+@keyframes fadeUp{
+    to{
+        opacity:1;
+        transform: translateY(0);
+    }
+}
+
+/* HIDE */
+.hidden{
+    display:none;
+}
+
+
+
+
+
+/* BACKDROP */
+.delivery-modal{
+    position:fixed;
+    top:0;
+    left:0;
+    width:100%;
+    height:100%;
+    background:rgba(0,0,0,0.7);
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    z-index:9999;
+}
+
+/* BOX */
+.delivery-box{
+    background:#0f172a;
+    padding:20px;
+    border-radius:15px;
+    width:90%;
+    max-width:350px;
+    color:white;
+    text-align:center;
+    animation: pop 0.3s ease;
+}
+
+/* SIGNATURE */
+#signature-pad{
+    width:100%;
+    height:120px;
+    background:white;
+    border-radius:10px;
+    margin:10px 0;
+}
+
+/* BUTTONS */
+.actions{
+    display:flex;
+    gap:10px;
+    justify-content:center;
+}
+
+.actions button{
+    padding:10px 15px;
+    border:none;
+    border-radius:10px;
+    cursor:pointer;
+}
+
+.actions button:first-child{
+    background:#ef4444;
+}
+
+.actions button:last-child{
+    background:#22c55e;
+}
+
+/* ANIMATION */
+@keyframes pop{
+    from{transform:scale(0.8); opacity:0;}
+    to{transform:scale(1); opacity:1;}
+}
+
+/* HIDDEN */
+.hidden{
+    display:none;
+}
+
+
+
+/* FULL SCREEN */
+.success-screen{
+    position: fixed;
+    top:0;
+    left:0;
+    width:100%;
+    height:100%;
+    background: rgba(0,0,0,0.85);
+
+    display:flex;
+    justify-content:center;
+    align-items:center;
+
+    z-index:10000;
+}
+
+/* CONTENT BOX */
+.success-content{
+    text-align:center;
+    color:white;
+
+    animation: fadeInScale 0.4s ease;
+}
+
+/* GIF */
+.success-content img{
+    width:120px;
+    margin-bottom:15px;
+}
+
+/* TEXT */
+.success-content h3{
+    font-size:18px;
+    margin-bottom:5px;
+}
+
+.success-content p{
+    font-size:14px;
+    opacity:0.8;
+}
+
+/* ANIMATION */
+@keyframes fadeInScale{
+    from{
+        opacity:0;
+        transform: scale(0.7);
+    }
+    to{
+        opacity:1;
+        transform: scale(1);
+    }
+}
+
+/* HIDDEN */
+.hidden{
+    display:none;
+}
+
+
+
+
+
+
+</style>
+
+<script>
+let isScanning = false;
+let codeReader;
+
+function getCookie(name) {
+    let cookieValue = null;
+    if (document.cookie) {
+        let cookies = document.cookie.split(';');
+        for (let cookie of cookies) {
+            cookie = cookie.trim();
+            if (cookie.startsWith(name + '=')) {
+                cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+            }
+        }
+    }
+    return cookieValue;
+}
+
+function startScanner() {
+
+    codeReader = new ZXing.BrowserMultiFormatReader();
+
+    codeReader.listVideoInputDevices()
+        .then(devices => {
+
+            if (!devices.length) {
+                alert("No camera found");
+                return;
+            }
+
+            const selectedDeviceId = devices[devices.length - 1].deviceId;
+
+            codeReader.decodeFromVideoDevice(selectedDeviceId, 'reader', (result, err) => {
+
+                // 🔥 HANDLE RESULT
+                if (result && !isScanning) {
+
+                    isScanning = true;
+
+                    console.log("SCANNED:", result.text);
+
+                    document.getElementById("result").innerText =
+                        "📦 Scanned: " + result.text;
+
+                    fetch("/shipping/scan-package/", {
+                        method: "POST",
+                        headers: {
+                            "Content-Type": "application/json",
+                            "X-CSRFToken": getCookie("csrftoken")
+                        },
+                        body: JSON.stringify({
+                            barcode: result.text
+                        })
+                    })
+                    .then(res => res.json())
+                    .then(data => {
+
+                        if (data.success) {
+
+                            // 🟢 SUCCESS SOUND
+                            try {
+                                new Audio("{% static 'sounds/freesound_community-store-scanner-beep-90395.mp3' %}").play();
+                            } catch(e){}
+
+                            // 🟢 GREEN FLASH
+                            document.body.style.background = "#0f0";
+
+                            // 👉 TEXT SIMPLE
+                            document.getElementById("result").innerText =
+                                "" + data.status;
+
+                            // 🔥 👉 DISPLAY DATA (SAN KRAZE ANYEN)
+                            try {
+                                document.getElementById("trx").innerText = data.trx || "N/A";
+                                document.getElementById("status").innerText = data.status || "N/A";
+                                document.getElementById("destination").innerText = data.destination || "N/A";
+
+                                document.getElementById("scan-data").classList.remove("hidden");
+
+                                // refresh icons
+                                lucide.createIcons();
+
+                            } catch(e){
+                                console.log("UI error:", e);
+                            }
+
+
+                            if(data.status === "ready_pickup"){
+                                document.getElementById("delivery-modal").classList.remove("hidden");
+                                document.getElementById("popup-trx").innerText = data.trx;
+                            }
+
+                        } else {
+
+                            // 🔴 ERROR SOUND
+                            try {
+                                new Audio("{% static 'sounds/error.mp3' %}").play();
+                            } catch(e){}
+
+                            // 🔴 RED FLASH
+                            document.body.style.background = "#f00";
+
+                            if (navigator.vibrate) {
+                                navigator.vibrate([200,100,200]);
+                            }
+
+                            document.getElementById("result").innerText =
+                                "❌ " + data.error;
+
+                            // 👉 HIDE DATA SI ERROR
+                            try {
+                                document.getElementById("scan-data").classList.add("hidden");
+                            } catch(e){}
+                        }
+
+                        setTimeout(() => {
+                            document.body.style.background = "";
+                            isScanning = false;
+                        }, 2000);
+
+                    });
+                }
+
+                // 🔥 HANDLE ERROR (METE LI NAN BON PLAS)
+                if (err && !(err instanceof ZXing.NotFoundException)) {
+                    console.error(err);
+                }
+
+            });
+
+        })
+        .catch(err => {
+            console.error(err);
+            alert("Camera error");
+        });
+}
+
+
+
+
+
+function confirmDelivery(){
+
+    let checked = document.getElementById("confirmCheck").checked;
+
+    if(!checked){
+        return;
+    }
+
+    const trx = document.getElementById("popup-trx").innerText;
+
+    fetch("/shipping/confirm-delivery/", {
+        method:"POST",
+        headers:{
+            "Content-Type":"application/json",
+            "X-CSRFToken": getCookie("csrftoken")
+        },
+        body: JSON.stringify({
+            trx: trx
+        })
+    })
+    .then(res => res.json())
+    .then(data => {
+
+        if(data.success){
+
+            // 👉 FÈ POPUP LA FÈMEN
+            closeModal();
+
+            // 👉 MONTRE ANIMASYON AN
+            document.getElementById("success-screen").classList.remove("hidden");
+
+            // 👉 APRE 2 SEGOND LI DISPARÈT
+            setTimeout(()=>{
+                document.getElementById("success-screen").classList.add("hidden");
+            },2000);
+
+        }
+
+    });
+
+}
+
+let canvas = document.getElementById("signature-pad");
+let ctx = canvas.getContext("2d");
+
+let drawing = false;
+
+// 👉 TOUCH START
+canvas.addEventListener("touchstart", (e) => {
+    drawing = true;
+});
+
+// 👉 TOUCH END
+canvas.addEventListener("touchend", () => {
+    drawing = false;
+    ctx.beginPath();
+});
+
+// 👉 TOUCH MOVE (FIX)
+canvas.addEventListener("touchmove", (e) => {
+    if (!drawing) return;
+
+    e.preventDefault(); // 🔥 SA KI FIX PROBLEM NAN
+
+    const rect = canvas.getBoundingClientRect();
+    const touch = e.touches[0];
+
+    const x = touch.clientX - rect.left;
+    const y = touch.clientY - rect.top;
+
+    ctx.lineWidth = 2;
+    ctx.lineCap = "round";
+    ctx.strokeStyle = "black";
+
+    ctx.lineTo(x, y);
+    ctx.stroke();
+    ctx.beginPath();
+    ctx.moveTo(x, y);
+}, { passive: false }); // 🔥 TRÈ ENPÒTAN
+
+// 👉 PA TOUCHE SA
+function closeModal(){
+    document.getElementById("delivery-modal").classList.add("hidden");
+}
+
+
+
+     lucide.createIcons();
+</script>

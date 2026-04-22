@@ -1,0 +1,427 @@
+{% extends 'base.html' %}
+
+{% load i18n %}
+{% load static %}
+
+
+{% block title %} Register {% endblock %}
+
+
+{% block manu_nav %}
+
+
+<section class="auth-section register-page">
+  <div class="auth-container">
+
+    <!-- LEFT IMAGE -->
+    <div class="auth-left">
+      <img src="{% static './images/Cargomages/register & login.png' %}" alt="shipping">
+    </div>
+
+    <!-- RIGHT FORM -->
+    <div class="auth-right" style="min-width: 45%;">
+
+      <!-- STEPS -->
+      <div class="steps">
+        <div class="step active" data-step="0">1</div>
+        <div class="line"></div>
+        <div class="step" data-step="1">2</div>
+        <div class="line"></div>
+        <div class="step" data-step="2">3</div>
+      </div>
+
+
+
+  <form id="multiForm">
+
+  <!-- STEP 1 -->
+  <div class="form-step active">
+
+    <h2>Personal information</h2>
+
+    <div class="input-row">
+      <input type="text" placeholder="First name" name="first_name" required>
+      <input type="text" placeholder="Last name" name="last_name" required>
+    </div>
+
+    <div class="input-row phone-group">
+      <input id="phone" type="number" placeholder="Phone number" name="phone_number" required>
+    </div>
+
+    <input type="email" placeholder="Email" name="email" required>
+
+    <div class="input-row">
+      <input type="password" placeholder="Password" name="password" required>
+      <input type="password" placeholder="Confirm Password" name="confirm_password" required>
+    </div>
+
+    <button type="button" class="next-btn">Next</button>
+  </div>
+
+
+  <!-- STEP 2 -->
+  <div class="form-step">
+    <h2>Your Addresses</h2>
+
+    <!-- COUNTRY -->
+    <div class="input-box">
+      <select class="custom-select" id="country" name="country">
+        <option value="" disabled selected hidden>Select Country</option>
+      </select>
+    </div>
+
+    <!-- STATE -->
+    <div class="input-box">
+      <select class="custom-select" id="state" name="state" disabled>
+        <option value="" disabled selected hidden>State / Region</option>
+      </select>
+    </div>
+
+    <!-- CITY -->
+    <div class="input-box">
+      <select class="custom-select" id="city" name="city" disabled>
+        <option value="" disabled selected hidden>Select your city of residence</option>
+      </select>
+    </div>
+
+    <!-- FULL ADDRESS -->
+    <input type="text" name="full_address" placeholder="Full address" required>
+
+    <div class="btn-group">
+      <button type="button" class="prev-btn">Back</button>
+      <button type="button" class="next-btn">Next</button>
+    </div>
+  </div>
+
+
+  <!-- STEP 3 -->
+  <div class="form-step">
+    <h2>Delivery Address</h2>
+
+    <div class="input-box">
+      <select class="custom-select" id="Delevery_country" name="Delevery_country">
+        <option value="" disabled selected hidden>Delivery country</option>
+        <option value="Haiti">Haiti</option>
+      </select>
+    </div>
+
+    <div class="input-box">
+      <select class="custom-select" id="Delevery_city" name="Delevery_city">
+        <option value="" disabled selected hidden>Delivery city</option>
+
+        {% for wh in haiti_warehouses %}
+          <option value="{{ wh.id }}">{{ wh.city }}</option>
+        {% endfor %}
+
+      </select>
+    </div>
+
+    <div class="condition" style=" display: flex;
+  align-items: center;
+  justify-content: center;">
+      <label>
+        <input type="checkbox" required name="terms" style=" display: flex;
+  width: 20px;
+  height: 20px;
+  border-radius: 5px;align-items: center;
+justify-content: center;">
+       <span> I have read and accept <a href="">the terms and conditions</a></span>
+      </label>
+    </div>
+
+    <div class="btn-group">
+      <button type="button" class="prev-btn">Back</button>
+      <button type="submit" class="submit-btn">Submit</button>
+    </div>
+  </div>
+
+</form>
+
+
+<!-- STEP 2: OTP -->
+    <div class="form-step" id="otpStep" style="display:none;">
+      <h2 class="login_h2">Enter verification code</h2>
+      <p>Enter the 6-digit code sent to your email</p>
+
+<div class="otp-container">
+ <input maxlength="1" class="otp" type="text" inputmode="numeric">
+<input maxlength="1" class="otp" type="text" inputmode="numeric">
+<input maxlength="1" class="otp" type="text" inputmode="numeric">
+<input maxlength="1" class="otp" type="text" inputmode="numeric">
+<input maxlength="1" class="otp" type="text" inputmode="numeric">
+<input maxlength="1" class="otp" type="text" inputmode="numeric">
+</div>
+
+<input type="hidden" id="otp-full">
+
+      <p style="margin-top:10px;">
+  Didn’t receive code?
+  <span id="resendOtp" style="color:orange; cursor:pointer;">Resend</span>
+</p>
+<button id="verifyRegisterOtp" class="submit-btn">Verify</button>
+
+      <small id="otp-error" style="display:none; " class="error-message"></small>
+    </div>
+
+  </div>
+</div>
+
+
+</section>
+
+
+
+
+<style>
+
+    .error-message {
+    color: #dc2626; /* red-600 */
+    font-size: 14px;
+    margin-top: 6px;
+    display: none;
+    font-weight: 600;
+
+}
+
+.error-message.active {
+    display: block;
+}
+
+.input-error {
+    border: 1.5px solid #dc2626 !important;
+    background-color: #fef2f2; /* light red background */
+}
+
+/* optional: smooth effect */
+input, select {
+    transition: all 0.2s ease;
+}
+
+
+
+
+
+   .otp-container{
+    display:flex;
+    justify-content:center;
+    gap:10px;
+    margin:20px 0;
+}
+
+.otp{
+    width:45px;
+    height:50px;
+    border-radius:8px;
+    border:2px solid #ddd;
+    text-align:center;
+    font-size:20px;
+    outline:none;
+    transition:0.2s;
+}
+
+.otp:focus{
+    border-color:#f59e0b;
+    box-shadow:0 0 5px rgba(245,158,11,0.5);
+}
+
+  /* container right side */
+.auth-right {
+    width: 100%;
+    max-width: 400px;
+    margin: auto;
+}
+
+/* form */
+#multiForm {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+/* title */
+.form-step h2 {
+    font-size: 24px;
+    font-weight: 600;
+    margin-bottom: 10px;
+}
+
+/* input style */
+#multiForm input {
+    width: 100%;
+    padding: 12px 14px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    font-size: 14px;
+    outline: none;
+    transition: 0.2s ease;
+}
+
+/* focus */
+#multiForm input:focus {
+    border-color: #2563eb;
+    box-shadow: 0 0 0 2px rgba(37, 99, 235, 0.1);
+}
+
+/* input row */
+.input-row {
+    display: flex;
+    gap: 10px;
+}
+
+/* button */
+.submit-btn {
+    width: 100%;
+    padding: 12px;
+    border: none;
+    background: #DE8333;
+    color: white;
+    font-weight: 600;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: 0.2s ease;
+}
+
+.submit-btn:hover {
+    background: #DE8333;
+}
+
+/* checkbox */
+.condition {
+    font-size: 13px;
+    color: #555;
+}
+
+.condition a {
+    color: #2563eb;
+    text-decoration: none;
+}
+
+/* error style (improved) */
+.error-message {
+    color: #dc2626;
+    font-size: 12px;
+    margin-top: 3px;
+    display: none;
+}
+
+.error-message.active {
+    display: block;
+}
+
+/* input error */
+.input-error {
+    border: 1.5px solid #dc2626 !important;
+    background-color: #fef2f2;
+}
+
+
+
+  .msg{
+    text-align:center;
+    font-size:14px;
+    margin-top:10px;
+}
+
+.msg.success{
+    color:#16a34a; /* vèt */
+}
+
+.msg.error{
+    color:#dc2626; /* wouj */
+}
+
+
+
+
+.login_h2{
+
+font-size:600;
+}
+
+
+/* responsive */
+@media (max-width: 768px) {
+    .auth-container {
+        flex-direction: column;
+    }
+
+    .auth-left {
+        display: none;
+    }
+}
+
+    .error-message {
+    color: #dc2626; /* red-600 */
+    font-size: 14px;
+    margin-top: 6px;
+    display: none;
+    font-weight: 600;
+
+}
+
+.error-message.active {
+    display: block;
+}
+
+.input-error {
+    border: 1.5px solid #dc2626 !important;
+    background-color: #fef2f2; /* light red background */
+}
+
+/* optional: smooth effect */
+input, select {
+    transition: all 0.2s ease;
+}
+
+
+  /* input box */
+.input-box {
+    position: relative;
+    width: 100%;
+}
+
+/* password eye icon */
+.password-box {
+    position: relative;
+}
+
+.toggle-password {
+    position: absolute;
+    right: 12px;
+    top: 50%;
+    transform: translateY(-50%);
+    cursor: pointer;
+    font-size: 16px;
+}
+
+/* remember me */
+.remember-me {
+    font-size: 13px;
+    color: #555;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+
+/* checkbox style */
+.remember-me input {
+    cursor: pointer;
+}
+
+/* spacing */
+.form-step {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+</style>
+
+
+
+
+{% endblock %}
+
+
+
+

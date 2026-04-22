@@ -1,0 +1,231 @@
+
+{% extends 'base.html' %}
+
+{% load static %}
+
+
+{% block title %} About {% endblock %}
+
+
+{% block manu_nav %}
+			<!-- breadcumb Section-->
+			<div class="breadcumb-area">
+				<div class="container">
+					<div class="row align-items-center">
+						<div class="col-lg-12 text-center">
+							<div class="breadcumb-content">
+								<div class="breadcumb-title">
+									<h4>About Us</h4>
+								</div>
+								<ul>
+									<li><a href="{% url 'home' %}">home</a></li>
+									<li>About Us</li>
+								</ul>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<!--breadcumb Section-->
+
+
+			<!-- About Section home2 -->
+			<section class="about-section-home2 inner">
+				<div class="auto-container">
+					<div class="row">
+						<div class="col-lg-6">
+							<div class="sec-title">
+								<div class="section-sub-title">
+									<h1 class="sub-title"><img src="{% static 'images/main-home/sub-title-icon.png' %}"
+											alt="sub-icon">About Us</h1>
+								</div>
+								<div class="section-title">
+									<h1 class="title title-anim">Reliable Freight & Logistics</h1>
+<h1 class="title title-anim">Between the U.S. and Haiti</h1>
+								</div>
+							</div>
+							<div class="about-thumb">
+								<figure class="reveal"><img src="{% static './images/Cargomages/about second.png' %}" alt="about thumb">
+								</figure>
+							</div>
+						</div>
+						<div class="col-lg-6">
+							<!--about counter-->
+							<div class="about-counter-wrapper">
+								<div class="about-counter">
+								<h2 class="counter">500</h2>
+								<span>+</span>
+								<p>Shipments Delivered Successfully</p>
+							</div>
+
+							<div class="about-counter two">
+								<h2 class="counter">98</h2>
+								<span>%</span>
+								<p>Customer Satisfaction Rate</p>
+							</div>
+							</div>
+							<div class="about-item-box">
+							<div class="single-about-box fade-in">
+								<div class="about-wrap">
+									<div class="about-icon">
+										<img src="{% static 'images/home2/about-icon1.png' %}" alt="icon">
+									</div>
+									<div class="title">
+										<h2>Reliable Freight Services</h2>
+									</div>
+								</div>
+								<div class="about-desc">
+									<p>
+										We provide fast, secure, and dependable shipping solutions,
+										ensuring your cargo is handled with care from origin to destination.
+									</p>
+								</div>
+							</div>
+
+							<div class="single-about-box two fade-in">
+								<div class="about-wrap">
+									<div class="about-icon">
+										<img src="{% static 'images/home2/about-icon2.png'%}" alt="icon">
+									</div>
+									<div class="title">
+										<h2>24/7 Customer Support</h2>
+									</div>
+								</div>
+								<div class="about-desc">
+									<p>
+										Our dedicated support team is available at all times to assist you,
+										provide updates, and ensure a smooth shipping experience.
+									</p>
+								</div>
+							</div>
+
+							<div class="about-info-box fade-in">
+								<div class="about-btn">
+									<a href="about.html">More About Us<i class="fa-solid fa-arrow-right"></i></a>
+								</div>
+								<div class="about-call-info">
+									<h2 class="call-text">Call Us (Toll Free)</h2>
+									<h3 class="call-number">+1 (551) 795-3802</h3>
+								</div>
+							</div>
+						</div>
+						</div>
+					</div>
+				</div>
+			</section>
+			<!--About Section home2 -->
+
+
+
+
+<!-- work process section one -->
+<section class="work-process-section-one">
+    <div class="auto-container">
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="sec-title text-center">
+                    <div class="section-sub-title">
+                        <h1 class="sub-title"><img src="{% static 'images/main-home/sub-title-icon.png' %}"
+                                alt="sub-icon">Working Process</h1>
+                    </div>
+                    <div class="section-title">
+                        <h1 class="title text-white text-anime-3">Simple, Fast & Reliable</h1>
+                        <h1 class="title text-white text-anime-3">Shipping Process</h1>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-xl-4 col-lg-6 col-md-6">
+                <div class="working-process-box first before-transprent after-transprent fade-in">
+                    <div class="process-icon">
+                        <img src="{% static 'images/main-home/process-icon.png' %}" alt="icon">
+                    </div>
+                    <div class="process-content">
+                        <h2>Request & Booking</h2>
+                        <p>
+                            Submit your shipment details and receive a clear quote.
+                            Our team ensures a smooth and transparent booking process.
+                        </p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-xl-4 col-lg-6 col-md-6">
+                <div class="working-process-box after-transprent fade-in">
+                    <div class="process-icon">
+                        <img src="{% static 'images/main-home/process-icon2.png' %}" alt="icon">
+                    </div>
+                    <div class="process-content">
+                        <h2>Processing & Shipping</h2>
+                        <p>
+                            We carefully handle, pack, and ship your cargo using reliable
+                            sea and air freight solutions with real-time updates.
+                        </p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-xl-4 col-lg-6 col-md-6">
+                <div class="working-process-box first before-transprent fade-in">
+                    <div class="process-icon">
+                        <img src="{% static 'images/main-home/process-icon3.png' %}" alt="icon">
+                    </div>
+                    <div class="process-content">
+                        <h2>Delivery & Confirmation</h2>
+                        <p>
+                            Your shipment is delivered safely to its destination,
+                            with confirmation and full customer satisfaction.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="work-process-shape1">
+            <img src="{% static 'images/main-home/process-shape1.png' %}" alt="shape1">
+        </div>
+        <div class="work-process-shape2">
+            <img src="{% static 'images/main-home/process-shape2.png' %}" alt="shape2">
+        </div>
+    </div>
+</section>
+<!-- work process section one -->
+
+
+<!-- marquee section classic -->
+		<div class="marquee-section-one classic">
+			<div class="container-fluid">
+				<div class="row">
+					<div class="col-lg-12">
+						<div class="marquee">
+							<div class="marquee-block">
+								<h3><span><img src="{% static 'images/main-home/marque-icon.png' %}" alt="icon"></span>GLOBAL SHIPPING
+								</h3>
+								<h3><span><img src="{% static 'images/main-home/marque-icon2.png' %}" alt="icon"></span>CARGO SERVICES
+								</h3>
+								<h3><span><img src="{% static 'images/main-home/marque-icon3.png' %}" alt="icon"></span>FAST DELIVERY
+								</h3>
+								<h3><span><img src="{% static 'images/main-home/marque-icon4.png' %}" alt="icon"></span>SUPPLY CHAIN
+								</h3>
+								<h3><span><img src="{% static 'images/main-home/marque-icon5.png' %}" alt="icon"></span>WAREHOUSING
+								</h3>
+							</div>
+								<div class="marquee-block">
+								<h3><span><img src="{% static 'images/main-home/marque-icon.png' %}" alt="icon"></span>GLOBAL SHIPPING
+								</h3>
+								<h3><span><img src="{% static 'images/main-home/marque-icon2.png' %}" alt="icon"></span>CARGO SERVICES
+								</h3>.
+								<h3><span><img src="{% static 'images/main-home/marque-icon3.png' %}" alt="icon"></span>FAST DELIVERY
+								</h3>
+								<h3><span><img src="{% static 'images/main-home/marque-icon4.png' %}" alt="icon"></span>SUPPLY CHAIN
+								</h3>
+								<h3><span><img src="{% static 'images/main-home/marque-icon5.png' %}" alt="icon"></span>WAREHOUSING
+								</h3>
+							</div>
+
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+<!-- marquee section one -->
+{% endblock %}
+

@@ -1,0 +1,129 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!-- Icons -->
+    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+
+    <!-- Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+    <!-- Charts -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+    <!-- CSS -->
+    <link rel="stylesheet" href="{% static 'css/dashboard/dashboard.css' %}">
+
+    <title>Dashboard</title>
+</head>
+<body>
+
+<header class="header">
+
+    <!-- SIDEBAR -->
+    <div class="side_lift">
+        {% include 'dashboard/sidebar.html' %}
+    </div>
+
+    <!-- MAIN CONTENT -->
+    <div class="main_content">
+
+        <!-- TOPBAR -->
+        {% include 'dashboard/topbar.html' %}
+
+        <!-- 🔥 DYNAMIC CONTENT (SPA ZONE) -->
+        <div id="main-content">
+
+        </div>
+
+    </div>
+
+</header>
+
+<!-- JS -->
+
+
+<script src="{% static 'js/dashboard/dashboard.js' %}"></script>
+
+<script>
+    window.chartLabels = JSON.parse('{{ chart_labels|escapejs }}');
+    window.chartRevenue = JSON.parse('{{ chart_revenue|escapejs }}');
+    window.chartShipments = JSON.parse('{{ chart_shipments|escapejs }}');
+</script>
+
+<script>
+    document.addEventListener("click", function(e) {
+    console.log("CLICK GLOBAL");
+
+    const sidebar = document.querySelector(".side_lift");
+
+    if (!sidebar) return;
+
+    // 🔥 OPEN
+    if (e.target.closest("#menuBtn")) {
+        console.log("OPEN CLICK");
+        sidebar.classList.add("active");
+    }
+
+    // 🔥 CLOSE
+    if (e.target.closest("#closeMenu")) {
+        console.log("CLOSE CLICK");
+        sidebar.classList.remove("active");
+    }
+});
+
+
+
+window.addEventListener("load", function () {
+
+    const toggle = document.getElementById("userToggle");
+    const dropdown = document.getElementById("userDropdown");
+
+    console.log("DROPDOWN INIT", toggle, dropdown);
+
+    if (!toggle || !dropdown) return;
+
+    toggle.onclick = function (e) {
+        e.stopPropagation();
+        dropdown.classList.toggle("active");
+        console.log("CLICK OK");
+    };
+
+    document.body.onclick = function () {
+        dropdown.classList.remove("active");
+    };
+
+});
+
+
+
+    // log out
+
+
+    document.addEventListener("click", function(e) {
+
+    const logoutBtn = e.target.closest("#logoutBtn");
+
+    if (logoutBtn) {
+        const url = logoutBtn.dataset.url;
+
+        // 🔥 redirect dirèk
+        window.location.href = url;
+    }
+
+});
+</script>
+
+</body>
+
+
+
+
+
+
+
+
+</html>

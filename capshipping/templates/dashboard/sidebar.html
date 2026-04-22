@@ -1,0 +1,96 @@
+{% load static %}
+   <div class="logo">
+       <img src="{% static './images/Cargomages/logo_simple.png' %}" alt="">
+
+       <h2> Cap shipping <span>distribution</span></h2>
+    <i class='bx bx-menu-alt-right' id="closeMenu"></i>
+
+    </div>
+
+    <div class="nav_links">
+        <ul>
+
+            <!-- Dashboard -->
+            <li class="active nav-item"   onclick="window.location.href='/panel/dashboard/'">
+                <i class='bx bxs-dashboard'></i>
+                <span>Dashboard</span>
+            </li>
+
+            <!-- Shipments -->
+            <li class="dwop_users">
+
+                <div class="dropdown_header">
+                    <i class='bx bx-signal-5'></i>
+                    <span>Shipements</span>
+                    <i class='bx bx-chevron-down'></i>
+                </div>
+
+                <ul>
+                    <li><i class='bx bx-plus'></i> Add Shipment</li>
+                    <li><i class='bx bx-package'></i>All Shipements</li>
+                </ul>
+
+            </li>
+
+            <!-- Users -->
+            <li class="dwop_users">
+
+                <div class="dropdown_header">
+                    <i class='bx bxs-user-detail'></i>
+                    <span>Accounts</span>
+                    <i class='bx bx-chevron-down'></i>
+                </div>
+
+                <ul>
+                     <li class="nav-item" data-url="/panel/users/"><i class='bx bx-group'></i> All Users</li>
+                    <li><i class='bx bx-user-plus'></i> Add User</li>
+
+                </ul>
+
+            </li>
+
+            <!-- Others -->
+            <li>
+                <i class='bx bx-building-house'></i>
+                <span>Warehouses</span>
+            </li>
+
+            <li>
+                <i class='bx bx-map-pin'></i>
+                <span>Tracking Update</span>
+            </li>
+
+            <li>
+                <i class='bx bx-category-alt'></i>
+                <span>Categories</span>
+            </li>
+
+            <li>
+                <i class='bx bxs-phone-incoming'></i>
+                <span>Contacts</span>
+            </li>
+
+            <li>
+                <i class='bx bxs-purchase-tag'></i>
+                <span>Pricing</span>
+            </li>
+
+            <li>
+                <i class='bx bxs-cog'></i>
+                <span>Settings</span>
+            </li>
+
+        </ul>
+
+        <!-- USER -->
+        <div class="user_botton user_botton_side">
+            <div class="user_head">
+                <span class="INT">CP</span>
+                <div class="mail_user">
+                    <span>Admin User</span>
+                    <p>Pchrislor2001@gmail.com</p>
+                </div>
+            </div>
+        </div>
+
+    </div>

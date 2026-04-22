@@ -1,0 +1,41 @@
+.breadcumb-area{
+    background-image: url(../images/inner-image/breadcumb-bg.jpg);
+    background-repeat: no-repeat;
+    background-position: center center;
+    background-size: cover;
+    padding: 180px 0 185px;
+    .breadcumb-content{
+        .breadcumb-title{
+            h4 {
+            font-size: 46px;
+            font-weight: 800;
+            color:var(--theme-color-white);
+            margin: 0;
+            }
+        }
+        ul{
+            li{
+                display: inline-block;
+                margin: 0 19px;
+                color:var(--theme-color-white);
+                a{
+                    display: inline-block;
+                    font-size: 16px;
+                    color:var(--theme-color-white);
+                    font-weight: 500;
+                    position: relative;
+                    &::before{
+                        position: absolute;
+                        content: "";
+                        width: 17px;
+                        height: 2px;
+                        right: -30px;
+                        top: 13px;
+                        background:var(--theme-color-white);
+                    }
+                }
+            }
+        }
+    }
+    
+}

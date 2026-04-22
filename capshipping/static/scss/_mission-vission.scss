@@ -1,0 +1,411 @@
+// mission vission section home3
+.mission-vission-section-home3 {
+    padding: 215px 0 370px;
+    background: #0B4654;
+    position: relative;
+    z-index: 1;
+    margin-top: -115px;
+    overflow: hidden;
+
+
+    .sec-title{
+        margin-bottom: 40px;
+    }
+
+    /* === mission Tab === */
+    .tab {
+        position: relative;
+        -webkit-font-smoothing: antialiased;
+    .tabs {
+        display: inline-block;
+        li{
+            display: inline-block;
+        a{
+            outline: none;
+            padding: 8px 30px;
+            transition: all 0.2s ease-in-out;
+            display: inline-block;
+            margin: 0 7px;
+            color: var(--theme-color-white);
+            background: rgb(24, 47, 36,0.15);
+            font-family:var(--title-font);
+            border: 1.5px solid rgb(255, 255, 255,0.15);
+            border-radius: 45px;
+            font-weight: 500;
+            font-size: 18px;
+            line-height: 28px;
+        } 
+        }
+        li.current a {
+            color:var(--theme-color-white);
+            border-radius: 45px;
+            background:var(--theme-color2);
+        }
+    }
+    .tab_content{
+        .tabs_item{
+            display: none;
+            padding: 8px 0 0;
+            .mision-vission-desc{
+                p{
+                    color: var(--theme-color3);
+                    font-weight: 400;
+                    font-size: 16px;
+                    line-height: 26px;
+                    width: 90%;
+                    margin: 20px 0 26px;
+                }
+            }
+            &:first-child{
+                display: block;
+            }
+        }
+    }
+    }
+    .mission-vission-list{
+        border-bottom: 1px solid rgb(255 255 255 / 15%);
+        padding-bottom: 26px;
+        li{
+            color: var(--theme-color-white);
+            font-family: var(--title-font);
+            font-weight: 500;
+            font-size: 18px;
+            margin-bottom: 13px;
+            span{
+                display: inline-block;
+                width: 22px;
+                height: 22px;
+                line-height: 20px;
+                background: var(--theme-color2);
+                border-radius: 50%;
+                margin-right: 13px;
+                text-align: center;
+                svg{
+                font-size: 13px;    
+                }
+            &.two{
+                background: var(--theme-color7);
+            }
+            }
+        }
+    }
+    .circle-progress-box{
+        display: flex;
+        align-items: center;
+        gap:100px;
+        padding: 40px 0 0;
+        .circle-progress{
+            position: relative;
+            .circle-outer{
+                display: flex;
+                align-items: center;
+                gap: 25px;
+                @include media-breakpoint-only(xl){
+                    gap: 15px;
+                }
+                .count-box{
+                    position: absolute;
+                    left: -85px;
+                    top: 0px;
+                    height: 100%;
+                    width: 100%;
+                    display: -webkit-box;
+                    display: -ms-flexbox;
+                    display: flex;
+                    -webkit-box-align: center;
+                    -ms-flex-align: center;
+                    align-items: center;
+                    -webkit-box-pack: center;
+                    -ms-flex-pack: center;
+                    justify-content: center;
+                    font-size: 18px;
+                    color: var(--theme-color-white);
+                    font-family: var(--title-font);
+                    font-weight: 500;
+                    line-height: 28px;
+                    @include media-breakpoint-only(lg){
+                        left: -195px;
+                    }
+                    @include media-breakpoint-only(md){
+                        left: -326px;
+                    }
+                    @include media-breakpoint-only(sm){
+                        left: -230px;
+                    }
+                }
+                .title{
+                    color: var(--theme-color-white);
+                    font-weight: 500;
+                    font-size: 22px;
+                    line-height: 30px;
+                }
+            }
+        }
+    }
+    .mission-vission-thumb-wrapper{
+        position: relative;
+        margin-left: 105px;
+        @include for-xxl{
+            margin-left: 0px;
+        }
+        @include media-breakpoint-only(md){
+            text-align: center;
+        }
+        @include media-breakpoint-only(sm){
+            display: none;
+        }
+        .mission-vission-thumb1{
+        }
+        .mission-vission-thumb2{
+            position: absolute;
+            z-index: 1;
+            top: 265px;
+            left: 0;
+            @include media-breakpoint-only(md){
+                top: 115px;
+                left: 45px;
+            }
+        }
+        .mission-vission-thumb3{
+            position: absolute;
+            right: -90px;
+            top: 130px;
+            @include for-xxl{
+                right: 0px;
+            }
+        }
+        .mission-shape {
+            position: absolute;
+            top: 25px;
+            right: 50px;
+            animation: bounceleft 6s linear infinite;
+            @include for-xxl{
+                display: none;
+            }
+        }
+        .mission-dot-shape {
+            position: absolute;
+            bottom: -240px;
+            right: 30px;
+            animation: bounceleft 8s linear infinite;
+            @include for-xxl{
+                display: none;
+            }
+        }
+    }
+    .mission-shape1{
+        position: absolute;
+        top: -210px;
+        left: -20px;
+        animation: upDown 1.5s ease-in-out 1.5s forwards infinite alternate;
+        @include for-xxl{
+            display: none;
+        }
+    }
+}
+
+// mission vission section home3 classic
+.mission-vission-section-home3-classic {
+    padding: 130px 0 370px;
+    background: var(--heading-color);
+    position: relative;
+    overflow: hidden;
+    .sec-title{
+        margin-bottom: 40px;
+    }
+
+    /* === mission Tab === */
+    .tab {
+        position: relative;
+        -webkit-font-smoothing: antialiased;
+    .tabs {
+        display: inline-block;
+        li{
+            display: inline-block;
+        a{
+            outline: none;
+            padding: 8px 30px;
+            transition: all 0.2s ease-in-out;
+            display: inline-block;
+            margin: 0 7px;
+            color: var(--theme-color-white);
+            background: rgb(24, 47, 36,0.15);
+            font-family:var(--title-font);
+            border: 1.5px solid rgb(255, 255, 255,0.15);
+            border-radius: 45px;
+            font-weight: 500;
+            font-size: 18px;
+            line-height: 28px;
+        } 
+        }
+        li.current a {
+            color:var(--theme-color-white);
+            border-radius: 45px;
+            background:var(--theme-color2);
+        }
+    }
+    .tab_content{
+        .tabs_item{
+            display: none;
+            padding: 8px 0 0;
+            .mision-vission-desc{
+                p{
+                    color: var(--theme-color3);
+                    font-weight: 400;
+                    font-size: 16px;
+                    line-height: 26px;
+                    width: 90%;
+                    margin: 20px 0 26px;
+                }
+            }
+            &:first-child{
+                display: block;
+            }
+        }
+    }
+    }
+    .mission-vission-list{
+        border-bottom: 1px solid rgb(255 255 255 / 15%);
+        padding-bottom: 26px;
+        li{
+            color: var(--theme-color-white);
+            font-family: var(--title-font);
+            font-weight: 500;
+            font-size: 18px;
+            margin-bottom: 13px;
+            span{
+                display: inline-block;
+                width: 22px;
+                height: 22px;
+                line-height: 20px;
+                background: var(--theme-color2);
+                border-radius: 50%;
+                margin-right: 13px;
+                text-align: center;
+                svg{
+                font-size: 13px;    
+                }
+            &.two{
+                background: var(--theme-color7);
+            }
+            }
+        }
+    }
+    .circle-progress-box{
+        display: flex;
+        align-items: center;
+        gap:100px;
+        padding: 40px 0 0;
+        .circle-progress{
+            position: relative;
+            .circle-outer{
+                display: flex;
+                align-items: center;
+                gap: 25px;
+                @include media-breakpoint-only(xl){
+                    gap: 15px;
+                }
+                @include media-breakpoint-only(sm){
+                    display: block;
+                }
+                .count-box{
+                    position: absolute;
+                    left: -85px;
+                    top: 0px;
+                    height: 100%;
+                    width: 100%;
+                    display: -webkit-box;
+                    display: -ms-flexbox;
+                    display: flex;
+                    -webkit-box-align: center;
+                    -ms-flex-align: center;
+                    align-items: center;
+                    -webkit-box-pack: center;
+                    -ms-flex-pack: center;
+                    justify-content: center;
+                    font-size: 18px;
+                    color: var(--theme-color-white);
+                    font-family: var(--title-font);
+                    font-weight: 500;
+                    line-height: 28px;
+                    @include media-breakpoint-only(md){
+                        left: -85px;
+                    }
+                    @include media-breakpoint-only(sm){
+                        left: -35px;
+                        top: -40px;
+                    }
+                }
+                .title{
+                    color: var(--theme-color-white);
+                    font-weight: 500;
+                    font-size: 22px;
+                    line-height: 30px;
+                }
+            }
+        }
+    }
+    .mission-vission-thumb-wrapper{
+        position: relative;
+        margin-left: 105px;
+        @include for-xxl{
+            margin-left: 0px;
+        }
+        @include media-breakpoint-only(lg){
+            display: none;
+        }
+        @include media-breakpoint-only(md){
+            display: none;
+        }
+        @include media-breakpoint-only(sm){
+            display: none;
+        }
+        .mission-vission-thumb1{
+        }
+        .mission-vission-thumb2{
+            position: absolute;
+            z-index: 1;
+            top: 265px;
+            left: 0;
+            @include media-breakpoint-only(md){
+                top: 115px;
+                left: 45px;
+            }
+        }
+        .mission-vission-thumb3{
+            position: absolute;
+            right: -90px;
+            top: 130px;
+            @include for-xxl{
+                right: 0px;
+            }
+        }
+        .mission-shape {
+            position: absolute;
+            top: 25px;
+            right: 50px;
+            animation: bounceleft 6s linear infinite;
+            @include for-xxl{
+                display: none;
+            }
+        }
+        .mission-dot-shape {
+            position: absolute;
+            bottom: -240px;
+            right: 30px;
+            animation: bounceleft 8s linear infinite;
+            @include for-xxl{
+                display: none;
+            }
+        }
+    }
+    .mission-shape1{
+        position: absolute;
+        top: -210px;
+        left: -20px;
+        animation: upDown 1.5s ease-in-out 1.5s forwards infinite alternate;
+        @include for-xxl{
+            display: none;
+        }
+    }
+}

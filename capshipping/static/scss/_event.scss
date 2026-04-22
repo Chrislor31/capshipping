@@ -1,0 +1,283 @@
+
+// home3 event section
+.joint-event-section-home3 {
+    padding: 410px 0 90px;
+    position: relative;
+    @include media-breakpoint-only(md){
+        padding: 100px 0 90px;
+    }
+    @include media-breakpoint-only(sm){
+        padding: 100px 0 90px;
+    }
+    .sec-title{
+        margin-bottom: 60px;
+    }
+    .loginet-button{
+        float: right;
+        @include media-breakpoint-only(md){
+            float: left;
+            margin-bottom: 30px;
+        }
+        @include media-breakpoint-only(sm){
+            float: left;
+            margin-bottom: 30px;
+        }
+        a{
+            padding: 14px 36px;
+            background: var(--heading-color);
+            &::before{
+                position: absolute;
+                content: "";
+                height: 16px;
+                width: 1px;
+                background-color: var(--theme-color-white);
+                left: 180px;
+                top: 22px;
+            }
+            span{
+                display: inline-block;
+                background: var(--theme-color2);
+            }
+        }
+    }
+    .joint-event-box{
+        display: grid;
+        grid-gap: 0px;
+        background: #F8F9F5;
+        border-radius: 20px;
+        padding: 55px 35px 45px 50px;
+        grid-template-columns: 250px 2fr 2fr 200px;
+        align-items: self-start;
+        position: relative;
+        margin-bottom: 25px;
+        transition: 0.5s;
+        @include media-breakpoint-only(xl){
+            padding: 55px 20px 45px 20px;
+        }
+        @include media-breakpoint-only(lg){
+            grid-template-columns: 180px 2fr 2fr 200px;
+        }
+        @include media-breakpoint-only(md){
+            display: block;
+            margin-bottom: 30px;
+        }
+        @include media-breakpoint-only(sm){
+            display: block;
+            margin-bottom: 30px;
+        }
+    &.active::before{
+        width: 280px;
+        @include media-breakpoint-only(md){
+            top: 80px;
+            left: 390px;
+        }
+        @include media-breakpoint-only(sm){
+            display: none;
+        }
+    }
+    &.active .joint-event-btn a{
+        background: var(--theme-color7);
+        color: var(--theme-color-white);
+    }
+    &.active{
+        background: var(--heading-color);
+    }
+    &.active .event-title h3{
+        color: var(--theme-color-white);
+    }
+    &.active .event-location li{
+        color: var(--theme-color3);
+    }
+    &.active .event-location li img{
+        filter: invert(59%) sepia(64%) saturate(1044%) hue-rotate(332deg) brightness(102%) contrast(95%);
+    }
+    &::before{
+        position: absolute;
+        content: "";
+        width: 0;
+        height: 300px;
+        left: 70%;
+        top: -60px;
+        background: url(../images/home3/home3-event-img.png);
+        background-repeat: no-repeat;
+        background-position: center center;
+        background-size: auto;
+        transition: 0.5s;
+        z-index: 1;
+        }
+        .event-inner-box{
+            @include media-breakpoint-only(md){
+                margin-bottom: 30px;
+            }
+            @include media-breakpoint-only(sm){
+                margin-bottom: 30px;
+            }
+            &.first{
+                display: flex;
+                align-items: anchor-center;
+                gap: 16px;
+            }
+            .joint-event-date{
+                h1{
+                    color: var(--theme-color2);
+                    font-weight: 600;
+                    font-size: 74px;
+                    margin: 0;
+                    transition: 0.5s;
+                }
+            }
+            .joint-event-month{
+                h2{
+                    color: var(--heading-color);
+                    font-weight: 500;
+                    font-size: 18px;
+                    margin: 0;
+                    transition: 0.5s;
+                }
+                p{
+                    color: var(--heading-color);
+                    font-weight: 500;
+                    font-size: 18px;
+                    margin: 0;
+                    transition: 0.5s;
+                }
+            }
+        }
+        .event-title{
+            h3{
+                color: var(--heading-color);
+                font-weight: 500;
+                font-size: 28px;
+                line-height: 36px;
+                margin: 0;
+                transition: 0.5s;
+                a{
+                    display: inline-block;
+                    transition: 0.5s;
+                }
+                @include media-breakpoint-only(xl){
+                    font-size: 24px;
+                }
+                @include media-breakpoint-only(lg){
+                    font-size: 20px;
+                    line-height: 30px;
+                }
+            }
+        }
+        .event-location{
+            text-align: center;
+            @include media-breakpoint-only(md){
+                text-align: left;
+            }
+            @include media-breakpoint-only(sm){
+                text-align: left;
+            }
+            li{
+                color: var(--text-color);
+                font-family:var(--text-font);
+                font-weight: 400;
+                font-size: 16px;
+                line-height: 26px;
+                margin-bottom: 12px;
+                transition: 0.5s;
+                img{
+                    margin-right: 10px;
+                    transition: 0.5s;
+                }
+            }
+        }
+        .joint-event-btn{
+            a{
+                display: inline-block;
+                color: var(--heading-color);
+                font-family:var(--title-font);
+                font-weight: 500;
+                font-size: 18px;
+                border:1px solid rgb(12, 35, 24,0.15);
+                border-radius: 45px;
+                padding: 10px 33px;
+                transition: 0.5s;
+                position: relative;
+                z-index: 1;
+                overflow: hidden;
+                top: 8px;
+                i{
+                    display: inline-block;
+                    margin-left: 10px;
+                    transition: 0.5s;
+                }
+                &::before{
+                    content: "";
+                    display: block;
+                    position: absolute;
+                    top: 0;
+                    bottom: 0;
+                    left: -15%;
+                    right: 0;
+                    width: 0;
+                    height: 106%;
+                    background: var(--theme-color7);
+                    transform: skew(45deg);
+                    transition: all 0.4s ease-in-out;
+                    z-index: -1;
+                }
+            }
+        }
+        &:hover .joint-event-btn a::before{
+            width: 100%;
+            transform: skew(0deg);
+            left: 0;
+        }
+        &:hover .joint-event-btn a{
+            color: var(--theme-color-white);
+        }
+        &:hover{
+            background: var(--heading-color);
+        }
+        &:hover .joint-event-date h1{
+            color: var(--theme-color7);
+        }
+        &:hover .joint-event-month h2{
+            color: var(--theme-color3);
+        }
+        &:hover .joint-event-month p{
+            color: var(--theme-color3);
+        }
+        &:hover .event-title h3 a{
+            color: var(--theme-color-white);
+        }
+        &:hover .event-location li{
+            color: var(--theme-color3);
+        }
+        &:hover .event-location li img{
+            filter: invert(59%) sepia(64%) saturate(1044%) hue-rotate(332deg) brightness(102%) contrast(95%);
+        }
+        &.active .joint-event-date h1{
+            color:var(--theme-color7);
+        }
+        &.active .joint-event-month h2{
+            color: var(--theme-color3);
+        }
+        &.active .joint-event-month p{
+            color: var(--theme-color3);
+        }
+    }
+    .event-shape{
+        position: absolute;
+        left: 0;
+        bottom: 0;
+        animation: bounceleft 8s linear infinite;
+        @include for-xxl{
+            display: none;
+        }
+    }
+    .event-shape2{
+        position: absolute;
+        right: 750px;
+        top: 450px;
+        animation: bounceleft 8s linear infinite;
+        @include for-xxl{
+            display: none;
+        }
+    }
+}

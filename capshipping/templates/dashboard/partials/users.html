@@ -1,0 +1,216 @@
+
+
+
+
+<section class="users_managements">
+
+<div class="title_head">
+   
+        <i class="bx bx-user-plus"></i>
+        <p>User Management</p>
+
+        <span>Manage your team members and their account permissions
+
+</span>
+</div>
+
+<div class="botton_add_download">
+<button>Export</button>
+
+<button><i class="bx bx-user-plus"></i> <span>Add user</span></button>
+</div>
+
+
+<div class="all_boxs_users">
+    <div class="box_user">
+    <p>Total Users</p>
+    <span>{{ total_users }}</span>
+
+    <span class="sign">
+        <i class='bx bx-check-double'></i>
+    </span>
+    </div>
+
+
+     <div class="box_user">
+ <p>Active Users</p>
+ <span>{{ active_users }}</span>
+ <span class="sign">
+     <i class='bx bxs-badge-check'></i>
+ </span>
+ </div>
+
+
+  <div class="box_user">
+ <p>pending</p>
+ <span>{{ pending_users }}</span>
+ <span class="sign">
+     <i class='bx bxs-chart' ></i>
+ </span>
+ </div>
+
+  <div class="box_user">
+ <p>Staff</p>
+ <span>{{ staff_users }}</span>
+ <span class="sign">
+     <i class='bx bx-check-shield'></i>
+ </span>
+ </div>
+</div>
+
+
+<!-------user tablo -->
+<div class="user_tableau">
+
+    <!-- 🔍 TOP BAR -->
+    <div class="table_header">
+
+       <form id="searchForm" class="search_users">
+
+          <input type="text" name="q" id="searchInput" placeholder="Search users...">
+
+         <button type="submit">Search</button>
+
+      </form>
+
+        <div class="table_actions">
+            <button id="deleteSelected"><i class='bx bxs-trash-alt'></i> Delete Selected</button>
+        </div>
+
+    </div>
+
+
+    <!-- 📊 TABLE -->
+
+    <div class="table_wrapper">
+    <table class="users_table">
+
+
+        <thead>
+            <tr>
+                <th><input type="checkbox" id="selectAll"></th>
+                <th>Name</th>
+                <th>Email</th>
+                <th>Role</th>
+                <th>Status</th>
+                <th>Last Login</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+<tbody id="userTableBody">
+
+{% for user in users %}
+<tr>
+
+    <td><input type="checkbox" class="rowCheck"></td>
+<td class="user_info">
+
+    <!-- avatar -->
+    <div class="avatar">
+        {{ user.first_name|slice:":1"|upper }}{{ user.last_name|slice:":1"|upper }}
+    </div>
+
+    <!-- name + suite -->
+    <div>
+        <span>{{ user.first_name }} {{ user.last_name }}</span><br>
+        <span class="suit_code">{{ user.suite_code }}</span>
+    </div>
+
+</td>
+
+    <td>{{ user.email }}</td>
+
+<td>
+    {% if user.is_superuser %}
+        <span class="role admin">Admin</span>
+    {% else %}
+        <span class="role {{ user.role }}">
+            {{ user.role|title }}
+        </span>
+    {% endif %}
+</td>
+
+    <td>
+        <span class="status {% if user.is_active %}active{% else %}inactive{% endif %}">
+            {% if user.is_active %}Active{% else %}Inactive{% endif %}
+        </span>
+    </td>
+
+    <td>
+        {{ user.last_login|date:"M d, Y" }}
+    </td>
+
+    <td class="action_cell">
+
+        <button class="more_btn" data-user-id="{{ user.id }}">
+            •••
+        </button>
+
+        <div class="dropdown_menu">
+            <div class="dropdown_item" data-action="view">
+                <i class='bx bx-show'></i>
+                <span>View Details</span>
+            </div>
+
+            <div class="dropdown_item" data-action="edit">
+                <i class='bx bx-edit'></i>
+                <span>Edit User</span>
+            </div>
+
+            <div class="dropdown_item danger" data-action="delete">
+                <i class='bx bx-trash'></i>
+                <span>Delete</span>
+            </div>
+        </div>
+
+    </td>
+
+</tr>
+{% empty %}
+<tr>
+    <td colspan="7" style="text-align:center;">No users found</td>
+</tr>
+{% endfor %}
+
+</tbody>
+
+    </table>
+
+        </div>
+
+<div class="pagination">
+
+    <div class="page_info">
+        Showing {{ page_obj.start_index }}–{{ page_obj.end_index }} of {{ page_obj.paginator.count }} users
+    </div>
+
+    <div class="page_controls">
+
+        {% if page_obj.has_previous %}
+            <button data-url="?page={{ page_obj.previous_page_number }}">Prev</button>
+        {% else %}
+            <button disabled>Prev</button>
+        {% endif %}
+
+        {% for num in page_obj.paginator.page_range %}
+            <button
+                class="{% if page_obj.number == num %}active{% endif %}"
+                data-url="?page={{ num }}">
+                {{ num }}
+            </button>
+        {% endfor %}
+
+        {% if page_obj.has_next %}
+            <button data-url="?page={{ page_obj.next_page_number }}">Next</button>
+        {% else %}
+            <button disabled>Next</button>
+        {% endif %}
+
+    </div>
+
+</div>
+
+</div>
+</section>
+
+
