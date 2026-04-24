@@ -43,7 +43,7 @@
 
                 <ul>
                      <li class="nav-item" data-url="/panel/users/"><i class='bx bx-group'></i> All Users</li>
-                    <li><i class='bx bx-user-plus'></i> Add User</li>
+                    <li class="nav-item" data-url="/panel/add-user/"><i class='bx bx-user-plus'></i> Add User</li>
 
                 </ul>
 
@@ -85,10 +85,24 @@
         <!-- USER -->
         <div class="user_botton user_botton_side">
             <div class="user_head">
-                <span class="INT">CP</span>
+                <span class="INT">
+                    {% if user.first_name %}
+                        {{ user.first_name|slice:":1"|upper }}{{ user.last_name|slice:":1"|upper }}
+                    {% else %}
+                        {{ user.email|slice:":2"|upper }}
+                    {% endif %}
+                </span>
                 <div class="mail_user">
-                    <span>Admin User</span>
-                    <p>Pchrislor2001@gmail.com</p>
+                    <span>
+                            {% if user.is_superuser %}
+                                Admin User
+                            {% elif user.is_staff %}
+                                Staff User
+                            {% else %}
+                                Customer
+                            {% endif %}
+                        </span>
+                    <p>{{ user.email }}</p>
                 </div>
             </div>
         </div>

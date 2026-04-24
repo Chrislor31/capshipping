@@ -28,10 +28,24 @@
 
     <!-- OU PA CHANJE DESIGN OU -->
     <div class="user_head user_toggle" id="userToggle">
-        <span class="INT">CP</span>
-        <div class="mail_user">
-            <span>Admin User</span>
-            <p>pchrislor2001@gmail.com</p>
+        <span class="INT">
+                    {% if user.first_name %}
+                        {{ user.first_name|slice:":1"|upper }}{{ user.last_name|slice:":1"|upper }}
+                    {% else %}
+                        {{ user.email|slice:":2"|upper }}
+                    {% endif %}
+                </span>
+                <div class="mail_user">
+                    <span>
+                            {% if user.is_superuser %}
+                                Admin User
+                            {% elif user.is_staff %}
+                                Staff User
+                            {% else %}
+                                Customer
+                            {% endif %}
+                        </span>
+                    <p>{{ user.email }}</p>
         </div>
     </div>
 

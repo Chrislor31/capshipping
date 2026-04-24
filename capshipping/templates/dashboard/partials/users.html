@@ -17,7 +17,10 @@
 <div class="botton_add_download">
 <button>Export</button>
 
-<button><i class="bx bx-user-plus"></i> <span>Add user</span></button>
+<button type="button" data-url="/panel/add-user/">
+    <i class="bx bx-user-plus"></i>
+    <span>Add user</span>
+</button>
 </div>
 
 
@@ -75,6 +78,9 @@
 
         <div class="table_actions">
             <button id="deleteSelected"><i class='bx bxs-trash-alt'></i> Delete Selected</button>
+
+    <!-- 🔥 COUNTER -->
+    <span id="selectedCount">0 of {{ page_obj.paginator.count }} selected</span>
         </div>
 
     </div>
@@ -93,6 +99,7 @@
                 <th>Email</th>
                 <th>Role</th>
                 <th>Status</th>
+                 <th>Date joined</th>
                 <th>Last Login</th>
                 <th>Actions</th>
             </tr>
@@ -100,9 +107,9 @@
 <tbody id="userTableBody">
 
 {% for user in users %}
-<tr>
+<tr data-user-id="{{ user.id }}">
 
-    <td><input type="checkbox" class="rowCheck"></td>
+    <td><input type="checkbox" class="rowCheck" value="{{ user.id }}"></td>
 <td class="user_info">
 
     <!-- avatar -->
@@ -136,6 +143,10 @@
         </span>
     </td>
 
+     <td>
+        {{ user.date_joined|date:"M d, Y" }}
+    </td>
+
     <td>
         {{ user.last_login|date:"M d, Y" }}
     </td>
@@ -152,7 +163,7 @@
                 <span>View Details</span>
             </div>
 
-            <div class="dropdown_item" data-action="edit">
+            <div class="dropdown_item" data-action="edit" data-url="/panel/edit-user/{{ user.id }}/">
                 <i class='bx bx-edit'></i>
                 <span>Edit User</span>
             </div>
@@ -177,7 +188,6 @@
     </table>
 
         </div>
-
 <div class="pagination">
 
     <div class="page_info">
@@ -186,31 +196,46 @@
 
     <div class="page_controls">
 
+        <!-- PREV -->
         {% if page_obj.has_previous %}
-            <button data-url="?page={{ page_obj.previous_page_number }}">Prev</button>
+            <button type="button"
+                    data-url="/panel/users/?page={{ page_obj.previous_page_number }}">
+                ← Prev
+            </button>
         {% else %}
-            <button disabled>Prev</button>
+            <button type="button" disabled>← Prev</button>
         {% endif %}
 
-        {% for num in page_obj.paginator.page_range %}
-            <button
-                class="{% if page_obj.number == num %}active{% endif %}"
-                data-url="?page={{ num }}">
-                {{ num }}
-            </button>
-        {% endfor %}
+        <!-- CURRENT PAGE -->
+        <span class="current_page">
+            Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}
+        </span>
 
+        <!-- NEXT -->
         {% if page_obj.has_next %}
-            <button data-url="?page={{ page_obj.next_page_number }}">Next</button>
+            <button type="button"
+                    data-url="/panel/users/?page={{ page_obj.next_page_number }}">
+                Next →
+            </button>
         {% else %}
-            <button disabled>Next</button>
+            <button type="button" disabled>Next →</button>
         {% endif %}
 
     </div>
 
 </div>
-
 </div>
+
+
+            <div id="alertBox" class="alert hidden">
+            <div class="alert_content">
+                <i id="alertIcon" class='bx bx-check-circle'></i>
+                <span id="alertMessage">Message here</span>
+            </div>
+
+            <i class='bx bx-x close_alert' id="closeAlert"></i>
+        </div>
+
 </section>
 
 

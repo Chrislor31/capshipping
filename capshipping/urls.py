@@ -57,6 +57,15 @@ urlpatterns = [
 
     path('panel/dashboard/', views.dashboard),
     path('panel/users/', views.users),
+    path('panel/add-user/', views.add_users),
+    # 🔹 EDIT (GET)
+    path('panel/edit-user/<int:id>/', views.edit_user, name='edit_user'),
+
+    # 🔹 UPDATE (POST)
+    path('panel/update-user/<int:id>/', views.update_user, name='update_user'),
+
+    path("panel/delete-users/", views.delete_users),
+
     path('panel/shipments/', views.shipments),
 
     path('panel/login/', views.login_view, name='panel_login'),

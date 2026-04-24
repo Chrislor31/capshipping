@@ -558,6 +558,310 @@ def users(request):
 
 
 
+
+@login_required
+def add_users(request):
+
+    # =====================
+    # GET (FORM LOAD)
+    # =====================
+    if request.method == "GET":
+
+        roles = [
+            ("admin", "Admin"),
+            ("staff", "Staff"),
+            ("customer", "Customer"),
+        ]
+
+        warehouses = Warehouse.objects.all()
+
+        context = {
+            "roles": roles,
+            "warehouses": warehouses
+        }
+
+        if request.headers.get('x-requested-with') == 'XMLHttpRequest':
+            return render(request, 'dashboard/partials/add_users.html', context)
+
+        return render(request, 'dashboard/base.html', context)
+
+    # =====================
+    # POST (CREATE USER)
+    # =====================
+    if request.method == "POST":
+
+        data = request.POST
+        errors = {}
+
+        # 🔹 BASIC
+        email = data.get("email")
+        first_name = data.get("first_name")
+        last_name = data.get("last_name")
+        phone = data.get("phone_number")
+        role = data.get("role")
+
+        # 🔹 ADDRESS
+        country = data.get("country")
+        state = data.get("state")
+        city = data.get("city")
+        address = data.get("full_address")
+
+        # 🔹 PASSWORD
+        password = data.get("password")
+        confirm = data.get("confirm_password")
+
+        # 🔹 WAREHOUSE
+        default_wh_id = data.get("default_pickup_warehouse")
+        staff_wh_id = data.get("staff_warehouse")
+
+        # 🔹 CHECKBOX
+        is_active = True if data.get("status") == "on" else False
+        send_welcome = True if data.get("welcome_sms") == "on" else False
+
+        # =====================
+        # VALIDATIONS
+        # =====================
+
+        if not email:
+            errors["email"] = "Email is required"
+        elif Accounts.objects.filter(email=email).exists():
+            errors["email"] = "Email already exists"
+
+        if not role or role == "select role":
+            errors["role"] = "Please select a role"
+
+        if not password:
+            errors["password"] = "Password is required"
+        elif len(password) < 6:
+            errors["password"] = "Password must be at least 6 characters"
+
+        if password != confirm:
+            errors["confirm_password"] = "Passwords do not match"
+
+        # =====================
+        # WAREHOUSE VALIDATION
+        # =====================
+
+        default_warehouse = None
+        staff_warehouse = None
+
+        if default_wh_id:
+            try:
+                default_warehouse = Warehouse.objects.get(id=default_wh_id)
+            except Warehouse.DoesNotExist:
+                errors["default_pickup_warehouse"] = "Invalid warehouse"
+
+        if staff_wh_id:
+            try:
+                staff_warehouse = Warehouse.objects.get(id=staff_wh_id)
+            except Warehouse.DoesNotExist:
+                errors["staff_warehouse"] = "Invalid staff warehouse"
+
+        # =====================
+        # STOP IF ERRORS
+        # =====================
+        if errors:
+            return JsonResponse({
+                "success": False,
+                "errors": errors
+            })
+
+        # =====================
+        # 🔥 ROLE LOGIC (AJOUTE ISIT)
+        # =====================
+
+        is_staff_flag = False
+        is_superuser_flag = False
+
+        if role == "admin":
+            is_staff_flag = True
+            is_superuser_flag = True
+
+        elif role == "staff":
+            is_staff_flag = True
+
+        elif role == "customer":
+            is_staff_flag = False
+
+
+        # =====================
+        # CREATE USER
+        # =====================
+
+        user = Accounts.objects.create(
+            email=email,
+            first_name=first_name,
+            last_name=last_name,
+            phone_number=phone,
+            role=role,
+
+            country=country,
+            state=state,
+            city=city,
+            full_address=address,
+
+            default_pickup_warehouse=default_warehouse,
+            staff_warehouse=staff_warehouse,
+
+            is_active=is_active,
+            is_staff=is_staff_flag,
+            is_superuser=is_superuser_flag,
+            password=make_password(password),
+        )
+
+        # =====================
+        # 🔥 SEND WELCOME EMAIL
+        # =====================
+
+        if send_welcome:
+            send_welcome_email(user)  # ✅ ISIT
+
+        # =====================
+        # OPTIONAL ACTION
+        # =====================
+        if send_welcome:
+            print(f"Send welcome email to {email}")
+
+        return JsonResponse({
+            "success": True,
+            "message": "User created successfully"
+        })
+
+
+# === USER UPDATE
+
+
+def update_user(request, id):
+
+    user = get_object_or_404(Accounts, id=id)
+
+    if request.method == "POST":
+
+        data = request.POST
+        errors = {}
+
+        # 🔹 BASIC
+        email = data.get("email")
+        role = data.get("role")
+
+        if not email:
+            errors["email"] = "Email is required"
+
+        # 🔹 STOP IF ERRORS
+        if errors:
+            return JsonResponse({
+                "success": False,
+                "errors": errors
+            })
+
+        # 🔹 UPDATE FIELDS
+        user.email = email
+        user.first_name = data.get("first_name")
+        user.last_name = data.get("last_name")
+        user.phone_number = data.get("phone_number")
+        user.role = role
+
+        user.country = data.get("country")
+        user.state = data.get("state")
+        user.city = data.get("city")
+        user.full_address = data.get("full_address")
+
+        user.is_active = True if data.get("status") == "on" else False
+
+        # =====================
+        # 🔥 ROLE LOGIC
+        # =====================
+        is_staff_flag = False
+        is_superuser_flag = False
+
+        if role == "admin":
+            is_staff_flag = True
+            is_superuser_flag = True
+
+        elif role == "staff":
+            is_staff_flag = True
+
+        elif role == "customer":
+            is_staff_flag = False
+
+        user.is_staff = is_staff_flag
+        user.is_superuser = is_superuser_flag
+
+        # =====================
+        # 🔥 PASSWORD (OPTIONAL)
+        # =====================
+        password = data.get("password")
+        if password:
+            user.set_password(password)
+
+        user.save()
+
+        return JsonResponse({
+            "success": True,
+            "message": "User updated successfully"
+        })
+
+    return JsonResponse({
+        "success": False,
+        "error": "Invalid request method"
+    })
+
+
+
+from django.shortcuts import render, get_object_or_404
+
+def edit_user(request, id):
+
+    user = get_object_or_404(Accounts, id=id)
+
+    roles = [
+        ("admin", "Admin"),
+        ("staff", "Staff"),
+        ("customer", "Customer"),
+    ]
+
+    warehouses = Warehouse.objects.all()
+
+    context = {
+        "user": user,
+        "roles": roles,
+        "warehouses": warehouses,
+        "mode": "edit",
+        "selected_role": user.role
+
+    }
+
+    if request.headers.get('x-requested-with') == 'XMLHttpRequest':
+        return render(request, 'dashboard/partials/add_users.html', context)
+
+    return render(request, 'dashboard/base.html', context)
+
+
+#=====end user update
+
+
+
+
+#==== delete user tableau
+
+
+import json
+from django.http import JsonResponse
+
+def delete_users(request):
+    if request.method == "POST":
+        data = json.loads(request.body)
+        user_ids = data.get("user_ids", [])
+
+        Accounts.objects.filter(id__in=user_ids).delete()
+
+        return JsonResponse({"success": True})
+
+    return JsonResponse({"success": False})
+
+
+#====end delete
+
 def shipments(request):
     if request.headers.get('x-requested-with') == 'XMLHttpRequest':
         return render(request, 'dashboard/partials/shipments.html')

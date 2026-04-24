@@ -13,9 +13,14 @@
 
     <!-- Charts -->
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/intl-tel-input@18.2.1/build/css/intlTelInput.css">
+    <script src="https://cdn.jsdelivr.net/npm/intl-tel-input@18.2.1/build/js/intlTelInput.min.js"></script>
+
 
     <!-- CSS -->
     <link rel="stylesheet" href="{% static 'css/dashboard/dashboard.css' %}">
+
+    <link rel="stylesheet" href="{% static 'css/dashboard/dashboard_responsive.css' %}">
 
     <title>Dashboard</title>
 </head>
@@ -47,6 +52,7 @@
 
 
 <script src="{% static 'js/dashboard/dashboard.js' %}"></script>
+<script src="{% static 'js/dashboard/add_users.js' %}"></script>
 
 <script>
     window.chartLabels = JSON.parse('{{ chart_labels|escapejs }}');
@@ -115,6 +121,12 @@ window.addEventListener("load", function () {
     }
 
 });
+
+
+
+
+
+
 </script>
 
 </body>

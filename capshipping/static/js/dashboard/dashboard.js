@@ -5,6 +5,244 @@
 let revenueChartInstance = null;
 let profitChartInstance = null;
 
+
+document.addEventListener("submit", function (e) {
+
+    if (e.target && e.target.id === "addUserForm") {
+
+        e.preventDefault();
+
+        console.log("STEP 1 ✅ SUBMIT CAPTURED");
+
+        const form = e.target;
+        const formData = new FormData(form);
+
+        const mode = form.dataset.mode;
+        const userId = form.dataset.userId;
+
+        // 🔥 CHOOSE URL
+        let url = "/panel/add-user/";
+
+        if (mode === "edit" && userId) {
+            url = `/panel/update-user/${userId}/`;
+        }
+
+        console.log("MODE:", mode);
+        console.log("URL:", url);
+
+        fetch(url, {
+            method: "POST",
+            headers: {
+                "X-CSRFToken": getCookie("csrftoken"),
+            },
+            body: formData
+        })
+        .then(res => {
+            console.log("STEP 2 ✅ RESPONSE RECEIVED");
+            return res.json();
+        })
+        .then(data => {
+
+            console.log("DATA:", data);
+
+            const alertBox = document.getElementById("alertBox");
+            const alertMessage = document.getElementById("alertMessage");
+            const alertIcon = document.getElementById("alertIcon");
+
+            alertBox.classList.remove("hidden", "success", "error");
+
+            if (data.success === true) {
+
+                alertBox.classList.add("success", "show");
+
+                // 🔥 MESSAGE DIFFERENT
+                if (mode === "edit") {
+                    alertMessage.textContent = data.message || "User updated successfully";
+                } else {
+                    alertMessage.textContent = data.message || "User created successfully";
+                    form.reset(); // reset sèlman lè se add
+                }
+
+                alertIcon.className = "bx bx-check-circle";
+
+            } else {
+
+                alertBox.classList.add("error", "show");
+
+                let firstError = "Something went wrong";
+
+                if (data.errors) {
+                    firstError = Object.values(data.errors)[0];
+                } else if (data.error) {
+                    firstError = data.error;
+                }
+
+                alertMessage.textContent = firstError;
+                alertIcon.className = "bx bx-error-circle";
+            }
+
+            setTimeout(() => {
+                alertBox.classList.remove("show");
+            }, 4000);
+        });
+    }
+});
+
+
+function getCookie(name) {
+    let cookieValue = null;
+
+    if (document.cookie && document.cookie !== "") {
+        const cookies = document.cookie.split(";");
+
+        for (let i = 0; i < cookies.length; i++) {
+            const cookie = cookies[i].trim();
+
+            if (cookie.startsWith(name + "=")) {
+                cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                break;
+            }
+        }
+    }
+
+    return cookieValue;
+}
+
+
+function initAddUserPage() {
+
+    console.log("INIT ADD USER PAGE 🔥");
+
+    // =====================
+    // PHONE INPUT
+    // =====================
+    const phoneInput = document.querySelector("#phone");
+
+    if (phoneInput) {
+        window.intlTelInput(phoneInput, {
+            initialCountry: "us",
+            separateDialCode: true,
+        });
+    }
+
+const container = document.getElementById("main-content");
+
+if (!container) {
+    console.log("NO MAIN CONTENT ❌");
+    return;
+}
+
+const countrySelect = container.querySelector("#country");
+const stateSelect = container.querySelector("#state");
+const citySelect = container.querySelector("#city");
+
+if (countrySelect) {
+
+    fetch("https://countriesnow.space/api/v0.1/countries/positions")
+    .then(res => res.json())
+    .then(data => {
+
+        countrySelect.innerHTML = `<option value="">Select Country</option>`;
+
+        data.data.forEach(c => {
+            let option = document.createElement("option");
+            option.value = c.name;
+            option.textContent = c.name;
+            countrySelect.appendChild(option);
+        });
+
+        // 🔥 PREFILL COUNTRY APRE LOAD
+ });
+}
+
+// =====================
+// EVENTS
+// =====================
+if (countrySelect) {
+
+    countrySelect.addEventListener("change", () => {
+
+        const country = countrySelect.value;
+
+        stateSelect.innerHTML = `<option value="">Select state</option>`;
+        citySelect.innerHTML = `<option value="">Select city</option>`;
+
+        stateSelect.disabled = true;
+        citySelect.disabled = true;
+
+        if (!country) return;
+
+        fetch("https://countriesnow.space/api/v0.1/countries/states", {
+            method: "POST",
+            headers: {"Content-Type": "application/json"},
+            body: JSON.stringify({ country })
+        })
+        .then(res => res.json())
+        .then(data => {
+
+            stateSelect.disabled = false;
+
+            data.data.states.forEach(s => {
+                let option = document.createElement("option");
+                option.value = s.name;
+                option.textContent = s.name;
+                stateSelect.appendChild(option);
+            });
+            // 🔥 PREFILL STATE
+            if (selectedState) {
+                stateSelect.value = selectedState;
+                stateSelect.dispatchEvent(new Event("change"));
+            }
+        });
+    });
+}
+if (stateSelect) {
+
+    stateSelect.addEventListener("change", () => {
+
+        const country = countrySelect.value;
+        const state = stateSelect.value;
+
+        citySelect.innerHTML = `<option value="">Select city</option>`;
+        citySelect.disabled = true;
+
+        if (!state) return;
+
+        fetch("https://countriesnow.space/api/v0.1/countries/state/cities", {
+            method: "POST",
+            headers: {"Content-Type": "application/json"},
+            body: JSON.stringify({ country, state })
+        })
+        .then(res => res.json())
+        .then(data => {
+
+            citySelect.disabled = false;
+
+            data.data.forEach(city => {
+                let option = document.createElement("option");
+                option.value = city;
+                option.textContent = city;
+                citySelect.appendChild(option);
+            });
+
+
+        });
+    });
+}
+
+    // =====================
+    // ALERT CLOSE ONLY
+    // =====================
+    const closeBtn = document.getElementById("closeAlert");
+
+    if (closeBtn) {
+        closeBtn.onclick = () => {
+            document.getElementById("alertBox").classList.remove("show");
+        };
+    }
+
+}
+
 function initCharts() {
 
     const revenueCanvas = document.getElementById('revenueChart');
@@ -102,7 +340,16 @@ console.log("SHIPMENTS:", window.chartShipments);
     }
 }
 
+// =====================
+// LOAD PAGE (CLEAN 🔥)
+// =====================
 function loadPage(url) {
+
+    // 🔥 normalize URL (kenbe query string)
+    const fullUrl = new URL(url, window.location.origin);
+    url = fullUrl.pathname + fullUrl.search;
+
+    console.log("LOADING:", url);
 
     fetch(url, {
         headers: { 'X-Requested-With': 'XMLHttpRequest' }
@@ -110,13 +357,14 @@ function loadPage(url) {
     .then(res => res.text())
     .then(data => {
 
+        // 🔥 Parse HTML (pou charts sèlman)
         const parser = new DOMParser();
         const doc = parser.parseFromString(data, 'text/html');
 
-        // 🔥 mete HTML
-        document.getElementById('main-content').innerHTML = doc.body.innerHTML;
+        // 🔥 Mete HTML (san parse body)
+        document.getElementById('main-content').innerHTML = data;
 
-        // 🔥 pran script data yo
+        // 🔥 Rekipere chart data
         const labelsScript = doc.getElementById('labels-data');
         const revenueScript = doc.getElementById('revenue-data');
         const shipmentsScript = doc.getElementById('shipments-data');
@@ -127,30 +375,40 @@ function loadPage(url) {
             window.chartShipments = JSON.parse(shipmentsScript.textContent);
         }
 
+        // 🔥 Update URL
         history.pushState(null, '', url);
+
+        // 🔥 Active menu
         setActive(url);
 
-        // 🔥 relanse charts
-        setTimeout(() => {
-            initCharts();
-        }, 100);
+        // 🔥 Relanse scripts
+setTimeout(() => {
+    initCharts();
+    initAddUserPage();
+}, 100);
 
     });
 }
 
-// ================== CLICK EVENTS ==================
-document.addEventListener('DOMContentLoaded', () => {
+// =====================
+// 🔥 GLOBAL CLICK (YON SEL)
+// =====================
+document.body.addEventListener("click", function(e) {
 
-    document.querySelectorAll('[data-url]').forEach(item => {
-        item.addEventListener('click', function () {
-            loadPage(this.getAttribute('data-url'));
-        });
-    });
+    const el = e.target.closest("[data-url]");
+    if (!el) return;
 
+    e.preventDefault();
+
+    let url = el.getAttribute("data-url");
+
+    loadPage(url);
 });
 
 
-// ================== ACTIVE MENU ==================
+// =====================
+// ACTIVE MENU
+// =====================
 function setActive(url) {
     document.querySelectorAll('[data-url]').forEach(item => {
         item.classList.remove('active');
@@ -162,40 +420,13 @@ function setActive(url) {
 }
 
 
-// ================== HANDLE REFRESH ==================
-window.addEventListener('load', () => {
 
-    let path = window.location.pathname;
-
-    // 🔥 SI SE ROOT → ALE DASHBOARD
-    if (path === "/panel/" || path === "/panel") {
-        path = "/panel/dashboard/";
-    }
-
-    // 🔥 LOAD CONTENT TOUJOU
-    fetch(path, {
-        headers: { 'X-Requested-With': 'XMLHttpRequest' }
-    })
-    .then(res => res.text())
-    .then(data => {
-
-        document.getElementById('main-content').innerHTML = data;
-
-        setActive(path);
-
-        // 🔥 INIT CHART APRÈ CONTENT ANTRE
-        setTimeout(() => {
-            initCharts();
-        }, 100);
-    });
-
-});
-
-// ================== BACK BUTTON ==================
+// =====================
+// BACK BUTTON
+// =====================
 window.addEventListener('popstate', () => {
     loadPage(window.location.pathname);
 });
-
 
 //========dark mode==========
 const btn = document.querySelector(".light-dark");
@@ -331,7 +562,9 @@ window.addEventListener('load', () => {
         // 🔥 FORCE CHART LOAD
       setTimeout(() => {
     initCharts();
-    initDropdowns(); // 🔥 AJOUTE SA
+    initAddUserPage();
+    initDropdowns();
+    // 🔥 AJOUTE SA
 }, 100);
 
         return;
@@ -390,65 +623,156 @@ initDropdowns();
 
 
 
-
-
-
-
-
-
-
 // pagination for user tableau
 
+document.addEventListener("submit", function (e) {
 
+    const form = e.target;
 
-document.addEventListener('click', function (e) {
+    if (form.id === "searchForm") {
 
-    const btn = e.target.closest('[data-url]');
-
-    if (btn) {
         e.preventDefault();
 
-        const url = btn.getAttribute('data-url');
+        const query = form.querySelector("input[name='q']").value.trim();
 
-        // 🔥 kenbe URL base + page
-        loadPage('/panel/users/' + url);
+        console.log("SEARCH:", query);
+
+        if (!query) {
+            loadPage('/panel/users/');
+            return;
+        }
+
+        loadPage(`/panel/users/?q=${encodeURIComponent(query)}`);
     }
 
 });
 
 
-// search for users
+
+// =====================
+// 🔥 UPDATE COUNTER
+// =====================
+function updateSelectedCount() {
+
+    const selected = document.querySelectorAll(".rowCheck:checked").length;
+    const total = document.querySelectorAll(".rowCheck").length;
+
+    const counter = document.getElementById("selectedCount");
+
+    if (counter) {
+        counter.textContent = `${selected} of ${total} selected`;
+
+        if (selected > 0) {
+            counter.classList.add("active");
+        } else {
+            counter.classList.remove("active");
+        }
+    }
+}
+
+// =====================
+// 🔥 LIVE CHECKBOX UPDATE
+// =====================
+document.addEventListener("change", function(e) {
+
+    if (e.target.classList.contains("rowCheck")) {
+        updateSelectedCount();
+    }
+});
 
 
-let searchTimeout;
 
-document.addEventListener('input', function (e) {
 
-    if (e.target.id === 'searchInput') {
+// =====================
+// 🔥 DELETE USERS
+// =====================
 
-        const query = e.target.value.trim();
+// =====================
+// 🔥 SELECT ALL + SYNC
+// =====================
+document.addEventListener("change", function(e) {
 
-        clearTimeout(searchTimeout);
+    // 🔥 SELECT ALL
+    if (e.target.id === "selectAll") {
 
-        searchTimeout = setTimeout(() => {
+        const checked = e.target.checked;
 
-            // 🔥 si vid → retounen tout users
-            if (query === "") {
-                loadPage('/panel/users/');
-                return;
+        document.querySelectorAll(".rowCheck").forEach(cb => {
+            cb.checked = checked;
+        });
+
+        updateSelectedCount();
+    }
+
+    // 🔥 SI YON TI CHECKBOX CHANJE
+    if (e.target.classList.contains("rowCheck")) {
+
+        const all = document.querySelectorAll(".rowCheck");
+        const checked = document.querySelectorAll(".rowCheck:checked");
+
+        const selectAll = document.getElementById("selectAll");
+
+        if (selectAll) {
+            selectAll.checked = all.length === checked.length;
+        }
+
+        updateSelectedCount();
+    }
+});
+
+
+document.addEventListener("click", function(e) {
+
+    const deleteBtn = e.target.closest('[data-action="delete"]');
+
+    if (deleteBtn) {
+
+        // 🔥 jwenn row la
+        const row = deleteBtn.closest("tr");
+
+        if (!row) return;
+
+        const userId = row.dataset.userId;
+
+        const alertBox = document.getElementById("alertBox");
+        const alertMessage = document.getElementById("alertMessage");
+        const alertIcon = document.getElementById("alertIcon");
+
+        fetch("/panel/delete-users/", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+                "X-CSRFToken": getCookie("csrftoken"),
+            },
+            body: JSON.stringify({ user_ids: [userId] })
+        })
+        .then(res => res.json())
+        .then(data => {
+
+            if (data.success) {
+
+                row.style.transition = "0.3s";
+                row.style.opacity = "0";
+                setTimeout(() => row.remove(), 300);
+
+                updateSelectedCount();
+
+                alertBox.classList.remove("hidden", "error");
+                alertBox.classList.add("success", "show");
+
+                alertMessage.textContent = "User deleted successfully";
+                alertIcon.className = "bx bx-check-circle";
+
+            } else {
+
+                alertBox.classList.remove("hidden", "success");
+                alertBox.classList.add("error", "show");
+
+                alertMessage.textContent = "Error deleting user";
+                alertIcon.className = "bx bx-error-circle";
             }
 
-            // 🔥 live search pandan wap ekri
-            loadPage(`/panel/users/?q=${query}`);
-
-        }, 300); // 🔥 ti delay pou li pa twò rapid
+            setTimeout(() => alertBox.classList.remove("show"), 3000);
+        });
     }
-
 });
-
-
-
-
-
-
-
