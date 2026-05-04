@@ -7,13 +7,14 @@ from accounts.serializers import RegisterSerializer ,LoginSerializer
 
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
+
 from django.contrib.auth import login, update_session_auth_hash
 
 from accounts.utils import generate_otp, send_otp_email,send_welcome_email
 from django.http import JsonResponse
 from django.contrib.auth import get_user_model
 
-from shipping.models import Package
+from shipping.models import Package, Contact, Category
 
 
 #==== reset password
@@ -374,7 +375,6 @@ from calendar import month_abbr
 
 from accounts.models import Accounts
 
-
 def is_admin(user):
     return user.is_staff or user.is_superuser
 
@@ -383,22 +383,18 @@ def is_admin(user):
 @user_passes_test(is_admin, login_url='/panel/login/')
 def dashboard(request):
 
-    # ================= USERS =================
     active_users = Accounts.objects.filter(is_active=True).count()
 
-    # ================= SHIPMENTS =================
     total_shipments = Package.objects.count()
 
     delivered_shipments = Package.objects.filter(
         status='delivered'
     ).count()
 
-    # ================= REVENUE =================
     total_revenue = Package.objects.aggregate(
         total=Sum(F('price') + F('extra_fee'))
     )['total'] or 0
 
-    # ================= LAST MONTH =================
     today = now()
     last_month = today - timedelta(days=30)
 
@@ -408,46 +404,27 @@ def dashboard(request):
         total=Sum(F('price') + F('extra_fee'))
     )['total'] or 0
 
-    if last_month_revenue > 0:
-        revenue_change = ((total_revenue - last_month_revenue) / last_month_revenue) * 100
-    else:
-        revenue_change = 0
+    revenue_change = ((total_revenue - last_month_revenue) / last_month_revenue) * 100 if last_month_revenue > 0 else 0
 
-    # ================== USERS CHANGE ==================
     last_month_users = Accounts.objects.filter(
         is_active=True,
         date_joined__lt=last_month
     ).count()
 
-    if last_month_users > 0:
-        users_change = ((active_users - last_month_users) / last_month_users) * 100
-    else:
-        users_change = 0
+    users_change = ((active_users - last_month_users) / last_month_users) * 100 if last_month_users > 0 else 0
 
-    # ================== SHIPMENTS CHANGE ==================
     last_month_shipments = Package.objects.filter(
         created_at__lt=last_month
     ).count()
 
-    if last_month_shipments > 0:
-        shipments_change = ((total_shipments - last_month_shipments) / last_month_shipments) * 100
-    else:
-        shipments_change = 0
+    shipments_change = ((total_shipments - last_month_shipments) / last_month_shipments) * 100 if last_month_shipments > 0 else 0
 
-    # ================== DELIVERED CHANGE ==================
     last_month_delivered = Package.objects.filter(
         status='delivered',
         created_at__lt=last_month
     ).count()
 
-    if last_month_delivered > 0:
-        delivered_change = ((delivered_shipments - last_month_delivered) / last_month_delivered) * 100
-    else:
-        delivered_change = 0
-
-    # ================== CHART DATA ==================
-
-
+    delivered_change = ((delivered_shipments - last_month_delivered) / last_month_delivered) * 100 if last_month_delivered > 0 else 0
 
     context = {
         'total_revenue': total_revenue,
@@ -458,10 +435,9 @@ def dashboard(request):
         'users_change': round(users_change, 1),
         'shipments_change': round(shipments_change, 1),
         'delivered_change': round(delivered_change, 1),
-
     }
 
-    # ================== MONTHLY DATA ==================
+    # ================== CHART DATA ==================
     monthly_data = (
         Package.objects
         .annotate(month=TruncMonth('created_at'))
@@ -473,7 +449,6 @@ def dashboard(request):
         .order_by('month')
     )
 
-    # ================== FORCE 12 MONTHS ==================
     months = [month_abbr[i] for i in range(1, 13)]
 
     revenue_map = {
@@ -486,23 +461,18 @@ def dashboard(request):
         for item in monthly_data
     }
 
-    labels = months
-    revenue_data = [revenue_map.get(m, 0) for m in months]
-    shipment_data = [shipment_map.get(m, 0) for m in months]
-
-    # ================== ADD TO CONTEXT ==================
     context.update({
-        'chart_labels': labels,
-        'chart_revenue': revenue_data,
-        'chart_shipments': shipment_data,
+        'chart_labels': months,
+        'chart_revenue': [revenue_map.get(m, 0) for m in months],
+        'chart_shipments': [shipment_map.get(m, 0) for m in months],
     })
-    # 🔥 SI SE AJAX → voye data + partial
+
+    # 🔥 AJAX
     if request.headers.get('x-requested-with') == 'XMLHttpRequest':
         return render(request, 'dashboard/partials/dashboard.html', context)
 
-    # 🔥 SI SE NORMAL LOAD → base sèlman
-    return render(request, 'dashboard/base.html')
-
+    # 🔥 NORMAL LOAD (FIXED)
+    return render(request, 'dashboard/base.html', context)
 
 
 from django.core.paginator import Paginator
@@ -842,6 +812,36 @@ def edit_user(request, id):
 
 
 
+#========details user ======
+
+
+from django.shortcuts import render, get_object_or_404
+from django.contrib.auth.decorators import login_required
+
+
+@login_required
+def user_details(request, id):
+
+    user = get_object_or_404(Accounts, id=id)
+
+    packages = Package.objects.filter(user=user)
+
+    context = {
+        "user": user,
+        "total_shipments": packages.count(),
+        "in_transit": packages.filter(status='in_transit').count(),
+        "ready_pickup": packages.filter(status='ready_pickup').count(),
+        "canceled": packages.filter(status='canceled').count(),  # si ou gen li
+    }
+
+    # 🔥 SPA PARTIAL
+    if request.headers.get('x-requested-with') == 'XMLHttpRequest':
+        return render(request, "dashboard/partials/user_details.html", context)
+
+    # 🔥 FULL LOAD (fallback)
+    return render(request, "dashboard/base.html", context)
+
+
 #==== delete user tableau
 
 
@@ -862,8 +862,215 @@ def delete_users(request):
 
 #====end delete
 
-def shipments(request):
-    if request.headers.get('x-requested-with') == 'XMLHttpRequest':
-        return render(request, 'dashboard/partials/shipments.html')
 
-    return render(request, 'dashboard/base.html')
+
+from django.db.models import Q, Count
+from django.core.paginator import Paginator
+
+def shipment_list(request):
+
+    # 🔥 GET QUERY SAFE
+    query = request.GET.get("q", "").strip()
+
+    packages = Package.objects.select_related(
+        "origin_warehouse",
+        "destination_warehouse",
+        "created_by"
+    ).order_by("-created_at")
+
+    # 🔥 FIX q=None + empty
+    if query and query.lower() != "none":
+        packages = packages.filter(
+            Q(tracking_number__icontains=query) |
+            Q(code__icontains=query)
+        )
+
+    # 🔥 PAGINATION SAFE
+    paginator = Paginator(packages, 10)
+    page_number = request.GET.get("page")
+
+    page_obj = paginator.get_page(page_number)
+
+    # 🔥 STATS
+    stats = Package.objects.aggregate(
+        total=Count('id'),
+        in_transit=Count('id', filter=Q(status='in_transit')),
+        ready_pickup=Count('id', filter=Q(status='ready_pickup')),
+        delivered=Count('id', filter=Q(status='delivered')),
+    )
+
+    context = {
+        "packages": page_obj,
+        "page_obj": page_obj,
+        "query": query,
+
+        "total_shipments": stats['total'],
+        "in_transit": stats['in_transit'],
+        "ready_pickup": stats['ready_pickup'],
+        "delivered": stats['delivered'],
+    }
+
+    if request.headers.get('x-requested-with') == 'XMLHttpRequest':
+        return render(request, "dashboard/partials/shipment_table.html", context)
+
+    return render(request, "dashboard/base.html", context)
+
+
+
+
+
+#===== shipment CRUD add =============
+
+def add_shipment(request):
+
+    warehouses = Warehouse.objects.all()
+    categories = Category.objects.all()
+
+    context = {
+        "warehouses": warehouses,
+        "categories": categories,
+        "shipping_types": Package.SHIPPING_TYPE_CHOICES
+    }
+
+    if request.headers.get('x-requested-with') == 'XMLHttpRequest':
+        return render(request, "dashboard/partials/add_shipment.html", context)
+
+    return render(request, "dashboard/base.html", context)
+
+
+# 🔍 SEARCH USERS
+@api_view(['GET'])
+def search_users(request):
+    q = request.GET.get('q', '')
+
+    users = User.objects.filter(first_name__icontains=q) | User.objects.filter(email__icontains=q)
+
+    data = [
+        {
+            "id": u.id,
+            "name": f"{u.first_name} {u.last_name}",
+            "email": u.email,
+        }
+        for u in users[:10]
+    ]
+
+    return Response(data)
+
+@api_view(['GET'])
+def user_contacts(request):
+
+    q = request.GET.get('q', '')
+
+    contacts = Contact.objects.all()
+
+    if q:
+        contacts = contacts.filter(name__icontains=q)
+
+    data = [
+        {
+            "id": c.id,
+            "name": c.name,
+            "phone": c.phone,
+        }
+        for c in contacts[:10]
+    ]
+
+    return Response(data)
+
+
+from rest_framework.decorators import api_view, permission_classes
+from rest_framework.permissions import IsAuthenticated
+
+@api_view(['POST'])
+@permission_classes([IsAuthenticated])  # 🔥 enpòtan
+def create_shipment(request):
+
+    data = request.data
+
+    try:
+        package = Package.objects.create(
+            user_id=data.get("user") or None,
+            sender_id=data.get("sender"),
+            receiver_id=data.get("receiver"),
+
+            origin_warehouse_id=data.get("origin_warehouse"),
+            destination_warehouse_id=data.get("destination_warehouse"),
+            category_id=data.get("category"),
+            shipping_type=data.get("shipping_type"),
+
+            weight=float(data.get("weight") or 0),
+            length=float(data.get("length") or 0),
+            width=float(data.get("width") or 0),
+            height=float(data.get("height") or 0),
+            quantity=int(data.get("quantity") or 1),
+            extra_fee=float(data.get("extra_fee") or 0),
+
+            description=data.get("description") or "",
+
+            # 🔥 SA A KI ENPÒTAN
+            created_by=request.user
+        )
+
+        return Response({
+            "tracking": package.tracking_number,
+            "pkg": package.code,
+            "price": package.price,
+            "id": package.id,
+        })
+
+    except Exception as e:
+        return Response({"error": str(e)}, status=400)
+
+
+
+@api_view(['POST'])
+def create_contact(request):
+
+    data = request.data
+
+    contact = Contact.objects.create(
+        user_id=data.get("user"),
+        name=data.get("name"),
+        phone=data.get("phone"),
+        email=data.get("email"),
+        address=data.get("address"),
+        is_guest=data.get("is_guest")
+    )
+
+    return Response({
+        "id": contact.id,
+        "name": contact.name,
+        "phone": contact.phone
+    })
+
+
+@api_view(['POST'])
+def create_contact(request):
+
+    data = request.data
+
+    raw_user = data.get("user")
+
+    # 🔥 normalize boolean
+    is_guest = data.get("is_guest") in ["true", "on", True, "1"]
+
+    # 🔥 normalize user
+    try:
+        user_id = int(raw_user) if raw_user not in ["", None, "null"] else None
+    except:
+        user_id = None
+
+    contact = Contact.objects.create(
+        user_id=user_id if not is_guest else None,
+        name=(data.get("name") or "").strip(),
+        phone=(data.get("phone") or "").strip(),
+        email=(data.get("email") or "").strip(),
+        address=(data.get("address") or "").strip(),
+        is_guest=is_guest
+    )
+
+    return Response({
+        "success": True,
+        "user_received": raw_user,   # 🔥 DEBUG
+        "user_saved": user_id       # 🔥 DEBUG
+    })

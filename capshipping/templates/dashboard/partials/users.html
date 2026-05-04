@@ -158,7 +158,7 @@
         </button>
 
         <div class="dropdown_menu">
-            <div class="dropdown_item" data-action="view">
+            <div class="dropdown_item" data-action="view" data-url="/panel/user-details/{{ user.id }}/">
                 <i class='bx bx-show'></i>
                 <span>View Details</span>
             </div>
@@ -168,10 +168,12 @@
                 <span>Edit User</span>
             </div>
 
-            <div class="dropdown_item danger" data-action="delete">
-                <i class='bx bx-trash'></i>
-                <span>Delete</span>
-            </div>
+           <div class="dropdown_item danger"
+     data-action="delete"
+     data-url="/api/delete-shipment/{{ pkg.id }}/">
+    <i class='bx bx-trash'></i>
+    <span>Delete</span>
+</div>
         </div>
 
     </td>

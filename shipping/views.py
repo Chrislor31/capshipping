@@ -1,3 +1,8 @@
+import string
+
+import random as rand
+import threading
+
 from django.shortcuts import render
 
 import json
@@ -12,6 +17,14 @@ from .utils import send_shipping_email, send_shipping_sms, send_whatsapp
 @login_required
 def scan_page(request):
     return render(request, "shipping/scan.html")
+
+def send_notifications_async(package):
+    try:
+        send_shipping_email(package)
+        send_whatsapp(package)
+        send_shipping_sms(package)
+    except Exception as e:
+        print("Notification error:", e)
 
 
 @login_required
@@ -62,16 +75,17 @@ def scan_package(request):
         else:
             new_status = "in_transit"
 
-        # 🔥 AJOUTE SA ISIT
         if new_status == "ready_pickup" and not package.pickup_code:
-            package.generate_pickup_code()
+            package.pickup_code = str(rand.randint(100000, 999999))
+            package.save(update_fields=["pickup_code"])
 
         package.status = new_status
         package.save()
 
-        send_shipping_email(package)
-        send_whatsapp(package)
-        send_shipping_sms(package)
+        threading.Thread(
+            target=send_notifications_async,
+            args=(package,)
+        ).start()
 
         # 🔥 TRACK HISTORY
         TrackingUpdate.objects.create(

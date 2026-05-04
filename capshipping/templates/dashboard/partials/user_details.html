@@ -1,0 +1,215 @@
+
+<section class="view_details_users">
+
+
+<div class="head_views_detail">
+
+    <div class="title_details">
+        <h2>User Details</h2>
+
+        <span>Dashboard > Users > User Details </span>
+    </div>
+
+    <div class="back_to_user">
+        <button class="nav-item" data-url="/panel/users/"> < back to user</button>
+    </div>
+
+</div>
+
+<div class="item_grid_details_user">
+
+
+<!---------head info -------->
+
+<div class="head-info">
+
+    <div class="head-initials">
+    <div class="initial-user">
+        <span> {{ user.first_name|slice:":1"|upper }}{{ user.last_name|slice:":1"|upper }}</span>
+    </div>
+
+    <div class="name-suit_code">
+        <h2>{{ user.first_name }} {{ user.last_name }}</h2>
+        <p>{{ user.email }}</p>
+        <p> {{ user.suite_code }} <span class="role_details {{ user.role|lower }}">
+    {{ user.role }}
+</span></p>
+    </div>
+
+    </div>
+<div class="edite_btn_details" data-action="edit" data-url="/panel/edit-user/{{ user.id }}/">
+    <button><i class='bx bxs-edit-alt'></i> <span>edite user</span></button>
+    </div>
+
+</div>
+
+
+<!---------personal info -------->
+
+<div class="pesonal-information">
+    <h3> Personal information</h3>
+
+    <div class="left_right_details">
+    <div class="left_info">
+
+        <p><i class='bx bx-user'></i> First Name <span>{{ user.first_name }}</span></p>
+        <p><i class='bx bx-user-pin'></i> Last Name <span>{{ user.last_name }}</span></p>
+        <p><i class='bx bx-envelope'></i> Email <span>{{ user.email }}</span></p>
+        <p><i class='bx bx-phone'></i> Phone <span>{{ user.phone_number }}</span></p>
+        <p><i class='bx bx-barcode'></i> Suit Code <span>{{ user.suite_code }}</span></p>
+
+    </div>
+
+     <div class="right_info">
+
+            <p>
+            <i class='bx bx-shield'></i>
+            Role
+            <span class="role_details {{ user.role }}">{{ user.role }}</span>
+        </p>
+
+        <p>
+            <i class='bx bx-check-circle'></i>
+            Status
+    <span class="status_details {% if user.is_active %}active{% else %}inactive{% endif %}">
+        {% if user.is_active %}Active{% else %}Inactive{% endif %}
+    </span>
+        </p>
+               <p>
+            <i class='bx bx-calendar-plus'></i>
+            Date Joined
+            <span>{{ user.date_joined|date:"F d, Y h:iA" }}</span>
+        </p>
+
+       <p>
+            <i class='bx bx-time'></i>
+            Last Login
+            <span>
+                {{ user.last_login|date:"F d, Y h:iA"|default:"Never logged in" }}
+            </span>
+        </p>
+                        <p>
+    <i class='bx bx-id-card'></i>
+            KYC
+            <span class="kyc_details {{ user.kyc_status|lower }}">
+                {{ user.kyc_status }}
+            </span>
+        </p>
+    </div>
+
+    </div>
+</div>
+
+
+<!----address info and account statistics  -->
+
+
+<div class="address_and_statistic">
+
+<div class="address_details">
+    <h2><i class='bx bx-map'></i> Address Information</h2>
+
+    <p>
+        <i class='bx bx-globe'></i>
+        Country
+        <span>{{ user.country|default:"N/A" }}</span>
+    </p>
+
+    <p>
+        <i class='bx bx-map-pin'></i>
+        State / Province
+        <span>{{ user.state|default:"N/A" }}</span>
+    </p>
+
+    <p>
+        <i class='bx bx-buildings'></i>
+        City
+        <span>{{ user.city|default:"N/A" }}</span>
+    </p>
+
+    <p>
+        <i class='bx bx-home-alt'></i>
+        Full Address
+        <span>{{ user.address|default:"N/A" }}</span>
+    </p>
+</div>
+
+    <div class="statistic_details">
+    <h2>account statistic </h2>
+
+    <div class="statistic_grid">
+
+          <div class="item_shipment">
+            <div class="icon_statistic">
+                <i class='bx bx-package'></i>
+            </div>
+            <div class="item_shipment_name">
+            <span>{{ total_shipments }}</span>
+            <p>total shipments</p>
+            </div>
+        </div>
+
+        <div class="item_shipment">
+            <div class="icon_statistic">
+               <i class='bx bxs-truck'></i>
+            </div>
+            <div class="item_shipment_name">
+            <span>{{ in_transit }}</span>
+            <p>total intransit </p>
+            </div>
+        </div>
+
+          <div class="item_shipment">
+            <div class="icon_statistic">
+                <i class='bx bx-check-circle'></i>
+            </div>
+            <div class="item_shipment_name">
+            <span>{{ ready_pickup }}</span>
+            <p>ready for pickup </p>
+            </div>
+        </div>
+
+          <div class="item_shipment">
+            <div class="icon_statistic">
+                <i class='bx bx-x-circle'></i>
+            </div>
+            <div class="item_shipment_name">
+            <span>{{ canceled }}</span>
+            <p>total Canceled</p>
+            </div>
+        </div>
+
+    </div>
+
+
+    </div>
+
+
+
+
+</div>
+
+
+<!----------action------->
+
+<div class="actions_details">
+
+    <div class="delete" data-action="delete">
+        <button> <i class='bx bx-trash-alt'></i> delete User</button>
+    </div>
+
+     <div class="disable">
+        <button> <i class='bx bx-lock-alt'></i> disable account</button>
+    </div>
+
+</div>
+
+
+
+</div>
+
+
+
+
+
+</section>

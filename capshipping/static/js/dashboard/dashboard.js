@@ -1,5 +1,14 @@
 
 
+function safeInit(fn, name) {
+    try {
+        if (typeof fn === "function") {
+            fn();
+        }
+    } catch (e) {
+        console.error(name + " crashed:", e);
+    }
+}
 
 
 let revenueChartInstance = null;
@@ -108,8 +117,10 @@ function getCookie(name) {
     return cookieValue;
 }
 
-
 function initAddUserPage() {
+
+    const form = document.getElementById("addUserForm");
+    if (!form) return; // 🔥 PA SOU PAGE LA → STOP
 
     console.log("INIT ADD USER PAGE 🔥");
 
@@ -118,168 +129,190 @@ function initAddUserPage() {
     // =====================
     const phoneInput = document.querySelector("#phone");
 
-    if (phoneInput) {
+    if (phoneInput && !phoneInput.dataset.init) {
         window.intlTelInput(phoneInput, {
             initialCountry: "us",
             separateDialCode: true,
         });
+
+        phoneInput.dataset.init = "true"; // 🔥 evite double init
     }
 
-const container = document.getElementById("main-content");
+    const container = document.getElementById("main-content");
+    if (!container) return;
 
-if (!container) {
-    console.log("NO MAIN CONTENT ❌");
-    return;
-}
-
-const countrySelect = container.querySelector("#country");
-const stateSelect = container.querySelector("#state");
-const citySelect = container.querySelector("#city");
-
-if (countrySelect) {
-
-    fetch("https://countriesnow.space/api/v0.1/countries/positions")
-    .then(res => res.json())
-    .then(data => {
-
-        countrySelect.innerHTML = `<option value="">Select Country</option>`;
-
-        data.data.forEach(c => {
-            let option = document.createElement("option");
-            option.value = c.name;
-            option.textContent = c.name;
-            countrySelect.appendChild(option);
-        });
-
-        // 🔥 PREFILL COUNTRY APRE LOAD
- });
-}
-
-// =====================
-// EVENTS
-// =====================
-if (countrySelect) {
-
-    countrySelect.addEventListener("change", () => {
-
-        const country = countrySelect.value;
-
-        stateSelect.innerHTML = `<option value="">Select state</option>`;
-        citySelect.innerHTML = `<option value="">Select city</option>`;
-
-        stateSelect.disabled = true;
-        citySelect.disabled = true;
-
-        if (!country) return;
-
-        fetch("https://countriesnow.space/api/v0.1/countries/states", {
-            method: "POST",
-            headers: {"Content-Type": "application/json"},
-            body: JSON.stringify({ country })
-        })
-        .then(res => res.json())
-        .then(data => {
-
-            stateSelect.disabled = false;
-
-            data.data.states.forEach(s => {
-                let option = document.createElement("option");
-                option.value = s.name;
-                option.textContent = s.name;
-                stateSelect.appendChild(option);
-            });
-            // 🔥 PREFILL STATE
-            if (selectedState) {
-                stateSelect.value = selectedState;
-                stateSelect.dispatchEvent(new Event("change"));
-            }
-        });
-    });
-}
-if (stateSelect) {
-
-    stateSelect.addEventListener("change", () => {
-
-        const country = countrySelect.value;
-        const state = stateSelect.value;
-
-        citySelect.innerHTML = `<option value="">Select city</option>`;
-        citySelect.disabled = true;
-
-        if (!state) return;
-
-        fetch("https://countriesnow.space/api/v0.1/countries/state/cities", {
-            method: "POST",
-            headers: {"Content-Type": "application/json"},
-            body: JSON.stringify({ country, state })
-        })
-        .then(res => res.json())
-        .then(data => {
-
-            citySelect.disabled = false;
-
-            data.data.forEach(city => {
-                let option = document.createElement("option");
-                option.value = city;
-                option.textContent = city;
-                citySelect.appendChild(option);
-            });
-
-
-        });
-    });
-}
+    const countrySelect = container.querySelector("#country");
+    const stateSelect = container.querySelector("#state");
+    const citySelect = container.querySelector("#city");
 
     // =====================
-    // ALERT CLOSE ONLY
+    // LOAD COUNTRIES
+    // =====================
+    if (countrySelect && !countrySelect.dataset.loaded) {
+
+        fetch("https://countriesnow.space/api/v0.1/countries/positions")
+        .then(res => res.json())
+        .then(data => {
+
+            countrySelect.innerHTML = `<option value="">Select Country</option>`;
+
+            data.data.forEach(c => {
+                const option = document.createElement("option");
+                option.value = c.name;
+                option.textContent = c.name;
+                countrySelect.appendChild(option);
+            });
+
+            countrySelect.dataset.loaded = "true"; // 🔥 evite reload
+        })
+        .catch(err => console.error("Country load error:", err));
+    }
+
+    // =====================
+    // COUNTRY CHANGE
+    // =====================
+    if (countrySelect && !countrySelect.dataset.event) {
+
+        countrySelect.addEventListener("change", () => {
+
+            const country = countrySelect.value;
+
+            stateSelect.innerHTML = `<option value="">Select state</option>`;
+            citySelect.innerHTML = `<option value="">Select city</option>`;
+
+            stateSelect.disabled = true;
+            citySelect.disabled = true;
+
+            if (!country) return;
+
+            fetch("https://countriesnow.space/api/v0.1/countries/states", {
+                method: "POST",
+                headers: {"Content-Type": "application/json"},
+                body: JSON.stringify({ country })
+            })
+            .then(res => res.json())
+            .then(data => {
+
+                stateSelect.disabled = false;
+
+                data.data.states.forEach(s => {
+                    const option = document.createElement("option");
+                    option.value = s.name;
+                    option.textContent = s.name;
+                    stateSelect.appendChild(option);
+                });
+
+            })
+            .catch(err => console.error("State load error:", err));
+
+        });
+
+        countrySelect.dataset.event = "true";
+    }
+
+    // =====================
+    // STATE CHANGE
+    // =====================
+    if (stateSelect && !stateSelect.dataset.event) {
+
+        stateSelect.addEventListener("change", () => {
+
+            const country = countrySelect.value;
+            const state = stateSelect.value;
+
+            citySelect.innerHTML = `<option value="">Select city</option>`;
+            citySelect.disabled = true;
+
+            if (!state) return;
+
+            fetch("https://countriesnow.space/api/v0.1/countries/state/cities", {
+                method: "POST",
+                headers: {"Content-Type": "application/json"},
+                body: JSON.stringify({ country, state })
+            })
+            .then(res => res.json())
+            .then(data => {
+
+                citySelect.disabled = false;
+
+                data.data.forEach(city => {
+                    const option = document.createElement("option");
+                    option.value = city;
+                    option.textContent = city;
+                    citySelect.appendChild(option);
+                });
+
+            })
+            .catch(err => console.error("City load error:", err));
+
+        });
+
+        stateSelect.dataset.event = "true";
+    }
+
+    // =====================
+    // ALERT CLOSE
     // =====================
     const closeBtn = document.getElementById("closeAlert");
 
-    if (closeBtn) {
-        closeBtn.onclick = () => {
-            document.getElementById("alertBox").classList.remove("show");
-        };
+    if (closeBtn && !closeBtn.dataset.event) {
+        closeBtn.addEventListener("click", () => {
+            document.getElementById("alertBox")?.classList.remove("show");
+        });
+
+        closeBtn.dataset.event = "true";
     }
 
 }
+
+// ===== initcharts===
 
 function initCharts() {
 
     const revenueCanvas = document.getElementById('revenueChart');
     const profitCanvas = document.getElementById('profitChart');
 
-    console.log("LABELS:", window.chartLabels);
-console.log("REVENUE:", window.chartRevenue);
-console.log("SHIPMENTS:", window.chartShipments);
-
-    // 🔥 si pa sou dashboard → netwaye
+    // 🔥 si pa sou dashboard → destroy + stop
     if (!revenueCanvas && !profitCanvas) {
+
         if (revenueChartInstance) {
             revenueChartInstance.destroy();
             revenueChartInstance = null;
         }
+
         if (profitChartInstance) {
             profitChartInstance.destroy();
             profitChartInstance = null;
         }
+
         return;
     }
 
-    // 🔥 SAFE DATA (evite crash)
-    const labels = window.chartLabels || [];
-    const revenue = window.chartRevenue || [];
-    const shipments = window.chartShipments || [];
+    // 🔥 verify Chart.js egziste
+    if (typeof Chart === "undefined") {
+        console.error("Chart.js pa load ❌");
+        return;
+    }
+
+    // 🔥 SAFE DATA
+    const labels = Array.isArray(window.chartLabels) ? window.chartLabels : [];
+    const revenue = Array.isArray(window.chartRevenue) ? window.chartRevenue : [];
+    const shipments = Array.isArray(window.chartShipments) ? window.chartShipments : [];
 
     console.log("Chart Data:", labels, revenue, shipments);
 
-    // ===== REVENUE =====
+    // =====================
+    // REVENUE LINE CHART
+    // =====================
     if (revenueCanvas) {
 
+        const ctx = revenueCanvas.getContext('2d');
+        if (!ctx) return;
+
+        // 🔥 destroy old
         if (revenueChartInstance) {
             revenueChartInstance.destroy();
         }
-
-        const ctx = revenueCanvas.getContext('2d');
 
         const gradient = ctx.createLinearGradient(0, 0, 0, 350);
         gradient.addColorStop(0, "rgba(59,130,246,0.4)");
@@ -306,14 +339,18 @@ console.log("SHIPMENTS:", window.chartShipments);
         });
     }
 
-    // ===== BAR CHART =====
+    // =====================
+    // BAR CHART
+    // =====================
     if (profitCanvas) {
 
+        const ctx2 = profitCanvas.getContext('2d');
+        if (!ctx2) return;
+
+        // 🔥 destroy old
         if (profitChartInstance) {
             profitChartInstance.destroy();
         }
-
-        const ctx2 = profitCanvas.getContext('2d');
 
         profitChartInstance = new Chart(ctx2, {
             type: 'bar',
@@ -342,10 +379,91 @@ console.log("SHIPMENTS:", window.chartShipments);
 
 // =====================
 // LOAD PAGE (CLEAN 🔥)
+
+
+
+
+
+function initPage() {
+
+    console.log("INIT PAGE GLOBAL");
+
+    // 🔥 helper pou evite crash si fonksyon pa egziste
+    function run(fn, name){
+        try{
+            if (typeof fn === "function"){
+                fn();
+                console.log("✅ INIT:", name);
+            } else {
+                console.log("⛔ SKIP:", name);
+            }
+        }catch(e){
+            console.error("❌ ERROR in", name, e);
+        }
+    }
+
+    // =====================
+    // 🔥 GLOBAL SAFE MODULES
+    // =====================
+    run(window.initDropdowns, "Dropdowns");
+
+    // =====================
+    // 🔥 DASHBOARD (Charts)
+    // =====================
+    if (document.getElementById("revenueChart") || document.getElementById("profitChart")){
+        run(window.initCharts, "Charts");
+    }
+
+    // =====================
+    // 🔥 USERS PAGE
+    // =====================
+    if (document.querySelector(".users_page") || document.getElementById("usersTable")){
+        run(window.initUsersPage, "Users");
+    }
+
+    // =====================
+    // 🔥 ADD USER PAGE
+    // =====================
+    if (document.getElementById("addUserForm")){
+        run(window.initAddUserPage, "AddUser");
+    }
+
+    // =====================
+    // 🔥 SHIPMENTS PAGE
+    // =====================
+        if (document.querySelector(".shipment_packages") || document.querySelector(".shipment_manage")){
+    run(window.initShipmentsPage, "Shipments");
+}
+    // =====================
+    // 🔥 CONTACT MODULE
+    // =====================
+    if (document.querySelector(".add_contact")){
+        run(window.initContactModule, "Contact");
+    }
+
+    // =====================
+// 🔥 ADD SHIPMENT PAGE
+// =====================
+if (document.querySelector(".left_content_add")){
+    run(window.initUserModule, "UserModule");
+    run(window.initSenderReceiver, "SenderReceiver");
+}
+
+if (document.getElementById("userSearchBox")){
+    run(window.initUserModule, "UserModule");
+}
+
+if (document.getElementById("shipmentForm")){
+    run(window.initShipmentSubmit, "ShipmentSubmit");
+}
+
+
+}
+
+
 // =====================
 function loadPage(url) {
 
-    // 🔥 normalize URL (kenbe query string)
     const fullUrl = new URL(url, window.location.origin);
     url = fullUrl.pathname + fullUrl.search;
 
@@ -354,72 +472,91 @@ function loadPage(url) {
     fetch(url, {
         headers: { 'X-Requested-With': 'XMLHttpRequest' }
     })
-    .then(res => res.text())
+    .then(res => {
+        if (!res.ok) throw new Error("Network error");
+        return res.text();
+    })
     .then(data => {
 
-        // 🔥 Parse HTML (pou charts sèlman)
+        const container = document.getElementById('main-content');
+        if (!container) return;
+
+        // 🔥 PARSE HTML
         const parser = new DOMParser();
         const doc = parser.parseFromString(data, 'text/html');
 
-        // 🔥 Mete HTML (san parse body)
-        document.getElementById('main-content').innerHTML = data;
+        // 🔥 INJECT ONLY BODY CONTENT (sa evite script pwoblèm)
+        const newContent = doc.body.innerHTML;
+        container.innerHTML = newContent;
 
-        // 🔥 Rekipere chart data
+        // =====================
+        // 🔥 SAFE JSON FUNCTION
+        // =====================
+        function safeJSON(script){
+            try{
+                if (!script) return [];
+                const txt = script.textContent?.trim();
+                if (!txt) return [];
+                return JSON.parse(txt);
+            }catch{
+                return [];
+            }
+        }
+
+        // =====================
+        // 🔥 GET CHART DATA
+        // =====================
         const labelsScript = doc.getElementById('labels-data');
         const revenueScript = doc.getElementById('revenue-data');
         const shipmentsScript = doc.getElementById('shipments-data');
 
-        if (labelsScript) {
-            window.chartLabels = JSON.parse(labelsScript.textContent);
-            window.chartRevenue = JSON.parse(revenueScript.textContent);
-            window.chartShipments = JSON.parse(shipmentsScript.textContent);
-        }
+        window.chartLabels = safeJSON(labelsScript);
+        window.chartRevenue = safeJSON(revenueScript);
+        window.chartShipments = safeJSON(shipmentsScript);
 
-        // 🔥 Update URL
+        console.log("Chart Data:", window.chartLabels, window.chartRevenue, window.chartShipments);
+
+        // =====================
+        // 🔥 UPDATE URL
+        // =====================
         history.pushState(null, '', url);
 
-        // 🔥 Active menu
+        // =====================
+        // 🔥 ACTIVE MENU
+        // =====================
         setActive(url);
 
-        // 🔥 Relanse scripts
-setTimeout(() => {
-    initCharts();
-    initAddUserPage();
-}, 100);
+        // =====================
+        // 🔥 INIT MODULES (NO setTimeout)
+        // =====================
+        initPage();
 
+    })
+    .catch(err => {
+        console.error("Load page error:", err);
     });
 }
-
-// =====================
-// 🔥 GLOBAL CLICK (YON SEL)
-// =====================
-document.body.addEventListener("click", function(e) {
-
-    const el = e.target.closest("[data-url]");
-    if (!el) return;
-
-    e.preventDefault();
-
-    let url = el.getAttribute("data-url");
-
-    loadPage(url);
-});
 
 
 // =====================
 // ACTIVE MENU
 // =====================
 function setActive(url) {
-    document.querySelectorAll('[data-url]').forEach(item => {
+
+    const items = document.querySelectorAll('[data-url]');
+    if (!items.length) return;
+
+    items.forEach(item => {
         item.classList.remove('active');
 
-        if (item.getAttribute('data-url') === url) {
+        const itemUrl = item.getAttribute('data-url');
+        if (!itemUrl) return;
+
+        if (url.startsWith(itemUrl)) {
             item.classList.add('active');
         }
     });
 }
-
-
 
 // =====================
 // BACK BUTTON
@@ -482,6 +619,7 @@ allItems.forEach(item => {
     });
 });
 
+
 // 🔁 CLICK DROPDOWN (open/close)
 dropdowns.forEach(drop => {
     drop.addEventListener("click", function (e) {
@@ -524,64 +662,131 @@ document.querySelectorAll(".dwop_users ul li").forEach(sub => {
     // page without reload
 
 
+function initUsersPage() {
 
-// 🔥 CLICK EVENTS (SIDEBAR)
+    const table = document.querySelector(".users_table");
+    if (!table) return; // 🔥 pa sou users page
+
+    console.log("INIT USERS PAGE");
+
+    // =====================
+    // 🔥 DELETE USER
+    // =====================
+    document.addEventListener("click", function(e) {
+
+        const deleteBtn = e.target.closest('[data-action="delete"]');
+        if (!deleteBtn) return;
+
+        const row = deleteBtn.closest("tr");
+        if (!row) return;
+
+        const userId = row.dataset.userId;
+
+        fetch("/panel/delete-users/", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+                "X-CSRFToken": getCookie("csrftoken"),
+            },
+            body: JSON.stringify({ user_ids: [userId] })
+        })
+        .then(res => res.json())
+        .then(data => {
+
+            if (data.success) {
+
+                row.style.transition = "0.3s";
+                row.style.opacity = "0";
+
+                setTimeout(() => row.remove(), 300);
+
+                updateSelectedCount();
+
+                showAlert("User deleted successfully", "success");
+
+            } else {
+                showAlert("Error deleting user", "error");
+            }
+        });
+    });
+
+
+    // =====================
+    // 🔥 VIEW DETAILS
+    // =====================
+    document.addEventListener("click", function(e) {
+
+        const btn = e.target.closest('[data-action="view"]');
+        if (!btn) return;
+
+        const userId = btn.dataset.userId;
+
+        loadPage(`/panel/user-details/${userId}/`);
+    });
+
+}
+
+
 document.addEventListener('DOMContentLoaded', () => {
 
     document.querySelectorAll('.nav-item').forEach(item => {
-        item.addEventListener('click', function () {
+        item.addEventListener('click', function (e) {
 
-            let url = this.getAttribute('data-url');
+            const url = this.getAttribute('data-url');
+            if (!url) return;
+
+            e.preventDefault(); // 🔥 ENPÒTAN
+            e.stopPropagation(); // 🔥 evite double click
+
             loadPage(url);
 
         });
     });
 
 });
-
-
-// 🔥 ACTIVE MENU FUNCTION
+// 🔥 ACTIVE MENU
 function setActive(url) {
-    document.querySelectorAll('.nav-item').forEach(item => {
+
+    const items = document.querySelectorAll('.nav-item');
+    if (!items.length) return;
+
+    items.forEach(item => {
         item.classList.remove('active');
 
-        if (item.getAttribute('data-url') === url) {
+        const itemUrl = item.getAttribute('data-url');
+        if (!itemUrl) return;
+
+        if (url.startsWith(itemUrl)) {
             item.classList.add('active');
         }
     });
 }
 
+
+// 🔥 PAGE LOAD
 window.addEventListener('load', () => {
 
     let path = window.location.pathname;
 
-    // 🔥 SI SE ROOT PAGE (/panel/)
+    // 🔥 DEFAULT DASHBOARD
     if (path === "/panel/" || path === "/panel") {
-        setActive('/panel/dashboard/');
-
-        // 🔥 FORCE CHART LOAD
-      setTimeout(() => {
-    initCharts();
-    initAddUserPage();
-    initDropdowns();
-    // 🔥 AJOUTE SA
-}, 100);
-
-        return;
+        path = "/panel/dashboard/";
     }
 
-    // 🔥 LOT PAGE
+    setActive(path);
+
+    // 🔥 LOAD PAGE SPA
     loadPage(path);
 });
 
-// 🔥 BACK & FORWARD BUTTON SUPPORT
+
+// 🔥 BACK / FORWARD
 window.addEventListener('popstate', () => {
     loadPage(window.location.pathname);
 });
-
-
-
 function initDropdowns() {
+
+    if (document.body.dataset.dropdownInit) return;
 
     document.addEventListener('click', function (e) {
 
@@ -589,20 +794,16 @@ function initDropdowns() {
 
         if (btn) {
 
-            console.log("CLICKED"); // 🔥 test
-
             e.stopPropagation();
 
             const menu = btn.nextElementSibling;
+            if (!menu) return;
 
             document.querySelectorAll('.dropdown_menu').forEach(m => {
                 if (m !== menu) m.classList.remove('active');
             });
 
-            if (menu) {
-                menu.classList.toggle('active');
-            }
-
+            menu.classList.toggle('active');
             return;
         }
 
@@ -612,14 +813,42 @@ function initDropdowns() {
 
     });
 
+    document.body.dataset.dropdownInit = "true";
 }
 
-// 🔥 SA TE MANKE
-initDropdowns();
 
 
 
 
+
+// =====================
+// 🔥 INIT SHIPMENTS PAGE
+// =====================
+function initShipmentsPage(){
+
+    const table = document.querySelector(".shipment_packages");
+    if (!table) {
+        console.log("⛔ NOT SHIPMENT PAGE");
+        return;
+    }
+
+    console.log("✅ INIT SHIPMENTS PAGE");
+
+    // 🔥 ACTION DROPDOWN CLICK (VIEW / EDIT)
+    table.addEventListener("click", function(e){
+
+        const item = e.target.closest(".dropdown_item");
+        if (!item) return;
+
+        const url = item.getAttribute("data-url");
+
+        if (url){
+            e.preventDefault();
+            loadPage(url);
+        }
+    });
+
+}
 
 
 
@@ -721,58 +950,213 @@ document.addEventListener("change", function(e) {
 });
 
 
-document.addEventListener("click", function(e) {
+document.addEventListener("DOMContentLoaded", function(){
 
-    const deleteBtn = e.target.closest('[data-action="delete"]');
+let deleteTargetRows = [];
+let deleteUserIds = [];
 
-    if (deleteBtn) {
+// =====================
+// 🧠 CSRF
+// =====================
+function getCookie(name) {
+    let cookieValue = null;
+    if (document.cookie && document.cookie !== '') {
+        const cookies = document.cookie.split(';');
+        for (let cookie of cookies) {
+            cookie = cookie.trim();
+            if (cookie.startsWith(name + '=')) {
+                cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                break;
+            }
+        }
+    }
+    return cookieValue;
+}
 
-        // 🔥 jwenn row la
-        const row = deleteBtn.closest("tr");
+// =====================
+// 🔓 OPEN MODAL
+// =====================
+function openDeleteModal(rows, ids){
 
+    deleteTargetRows = rows;
+    deleteUserIds = ids;
+
+    const modal = document.getElementById("deleteModal");
+    const msg = document.getElementById("deleteMessage");
+
+    if (!modal) {
+        console.error("❌ Modal not found");
+        return;
+    }
+
+    if (ids.length === 1){
+        msg.innerText = "Are you sure you want to delete this user?";
+    } else {
+        msg.innerText = `Are you sure you want to delete ${ids.length} users?`;
+    }
+
+    modal.classList.remove("hidden");
+}
+
+// =====================
+// 🔒 CLOSE MODAL
+// =====================
+function closeDeleteModal(){
+    document.getElementById("deleteModal")?.classList.add("hidden");
+    deleteTargetRows = [];
+    deleteUserIds = [];
+}
+
+// =====================
+// 🎯 ONE CLICK HANDLER
+// =====================
+document.addEventListener("click", function(e){
+
+    // 🔥 SINGLE DELETE (dropdown)
+    const singleDelete = e.target.closest('[data-action="delete"]');
+    if (singleDelete){
+
+        const row = singleDelete.closest("tr");
         if (!row) return;
 
         const userId = row.dataset.userId;
 
-        const alertBox = document.getElementById("alertBox");
-        const alertMessage = document.getElementById("alertMessage");
-        const alertIcon = document.getElementById("alertIcon");
+        console.log("🗑️ single:", userId);
 
-        fetch("/panel/delete-users/", {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json",
-                "X-CSRFToken": getCookie("csrftoken"),
-            },
-            body: JSON.stringify({ user_ids: [userId] })
-        })
-        .then(res => res.json())
-        .then(data => {
+        openDeleteModal([row], [userId]);
+        return;
+    }
 
-            if (data.success) {
+    // 🔥 BULK DELETE (button)
+    const bulkDelete = e.target.closest("#deleteSelected");
+    if (bulkDelete){
 
-                row.style.transition = "0.3s";
+        console.log("🔥 bulk click");
+
+        const checked = document.querySelectorAll(".rowCheck:checked");
+
+        if (checked.length === 0){
+            alert("Select at least one user");
+            return;
+        }
+
+        let rows = [];
+        let ids = [];
+
+        checked.forEach(cb => {
+            const row = cb.closest("tr");
+            if (row){
+                rows.push(row);
+                ids.push(cb.value);
+            }
+        });
+
+        console.log("🗑️ bulk:", ids);
+
+        openDeleteModal(rows, ids);
+        return;
+    }
+
+    // ❌ CANCEL
+    if (e.target.id === "cancelDelete"){
+        closeDeleteModal();
+    }
+
+    // ❌ CLICK OUTSIDE
+    if (e.target.id === "deleteModal"){
+        closeDeleteModal();
+    }
+
+});
+
+// =====================
+// ❌ CONFIRM DELETE
+// =====================
+document.getElementById("confirmDelete")?.addEventListener("click", function(){
+
+    if (deleteUserIds.length === 0){
+        console.warn("❌ nothing to delete");
+        return;
+    }
+
+    fetch("/panel/delete-users/", {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json",
+            "X-CSRFToken": getCookie("csrftoken"),
+        },
+        body: JSON.stringify({ user_ids: deleteUserIds })
+    })
+    .then(res => res.json())
+    .then(data => {
+
+        if (data.success){
+
+            deleteTargetRows.forEach(row => {
                 row.style.opacity = "0";
                 setTimeout(() => row.remove(), 300);
+            });
 
-                updateSelectedCount();
+            updateSelectedCount?.();
+        }
 
-                alertBox.classList.remove("hidden", "error");
-                alertBox.classList.add("success", "show");
+        closeDeleteModal();
+    })
+    .catch(() => closeDeleteModal());
 
-                alertMessage.textContent = "User deleted successfully";
-                alertIcon.className = "bx bx-check-circle";
+});
 
-            } else {
+});
 
-                alertBox.classList.remove("hidden", "success");
-                alertBox.classList.add("error", "show");
 
-                alertMessage.textContent = "Error deleting user";
-                alertIcon.className = "bx bx-error-circle";
-            }
 
-            setTimeout(() => alertBox.classList.remove("show"), 3000);
-        });
+// click button to url ///
+
+
+
+    document.addEventListener("click", function(e){
+
+    const btn = e.target.closest("[data-url]");
+
+    if (btn){
+
+        const url = btn.getAttribute("data-url");
+
+        if (!url) return;
+
+        console.log("🚀 loading:", url);
+
+        // 🔥 si w gen loadPage()
+        if (typeof loadPage === "function"){
+            loadPage(url);
+        } else {
+            // fallback si pa SPA
+            window.location.href = url;
+        }
+
     }
+
+});
+
+
+
+document.addEventListener("click", function(e){
+
+    const btn = e.target.closest("[data-print-url]");
+
+    if (btn){
+        const url = btn.dataset.printUrl;
+
+        if (!url){
+            alert("Shipment not ready yet");
+            return;
+        }
+
+        const win = window.open(url, "_blank");
+
+        win.onload = function(){
+            win.print();
+        };
+    }
+
 });

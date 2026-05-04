@@ -16,26 +16,34 @@ import random
 import string
 
 def generate_tracking_number():
-    letters = string.ascii_uppercase
-    digits = string.digits
+    return "CSD" + ''.join(random.choices(string.digits, k=7))
 
-    return (
-        random.choice(letters) +
-        random.choice(digits) +
-        random.choice(letters) +
-        ''.join(random.choices(digits, k=6))
+
+
+from django.conf import settings
+from django.db import models
+
+class Contact(models.Model):
+    user = models.ForeignKey(
+        settings.AUTH_USER_MODEL,
+        on_delete=models.CASCADE,
+        null=True,
+        blank=True,
+        related_name="contacts"
     )
 
-
-# 👤 CONTACT (Sender & Receiver)
-class Contact(models.Model):
     name = models.CharField(max_length=100)
     phone = models.CharField(max_length=20)
+
     email = models.EmailField(blank=True, null=True)
-    address = models.TextField()
+    address = models.TextField(blank=True, null=True)
+
+    is_guest = models.BooleanField(default=True)
+
+    created_at = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
-        return self.name
+        return f"{self.name} ({self.phone})"
 
 
 # 🏷️ CATEGORY
@@ -99,9 +107,10 @@ class Package(models.Model):
 
     STATUS_CHOICES = [
         ('received', 'Received'),
-        ('in_transit', 'In Transit'),
-        ('ready_pickup', 'Ready for Pickup'),
+        ('in_transit', 'In_Transit'),
+        ('ready_pickup', 'Ready_Pickup'),
         ('delivered', 'Delivered'),
+        ('canceled','canceled')
     ]
 
     SHIPPING_TYPE_CHOICES = [
@@ -119,8 +128,8 @@ class Package(models.Model):
 
     category = models.ForeignKey(Category, on_delete=models.SET_NULL, null=True)
     shipping_type = models.CharField(max_length=10, choices=SHIPPING_TYPE_CHOICES)
-
-    # 📦 Details
+    code = models.CharField(max_length=20, blank=True, null=True)
+    #  Details
     weight = models.FloatField()
     length = models.FloatField()
     width = models.FloatField()
@@ -147,8 +156,7 @@ class Package(models.Model):
         null=True,
         related_name="created_packages"
     )
-    # 🔥 AUTO PRICE
-
+    pickup_code = models.CharField(max_length=10, blank=True, null=True)
 
     def save(self, *args, **kwargs):
         # 🔥 AUTO PRICE
@@ -166,7 +174,14 @@ class Package(models.Model):
         if not self.barcode:
             self.barcode = uuid.uuid4().hex[:12].upper()
 
+        # 👉 premye save pou jwenn ID
+        is_new = self.pk is None
         super().save(*args, **kwargs)
+
+        # 🔥 GENERATE PKG CODE (APRE ID GENERE)
+        if is_new and not self.code:
+            self.code = f"PKG-{str(self.id).zfill(4)}"
+            super().save(update_fields=['code'])
 
         # 🔥 Generate barcode IMAGE
         if not self.barcode_image:
@@ -175,13 +190,13 @@ class Package(models.Model):
             writer = ImageWriter()
 
             options = {
-                "module_width": 0.2,  # balans pafè
+                "module_width": 0.2,
                 "module_height": 12.0,
                 "quiet_zone": 1.3,
-                "font_size": 0,  # ❌ retire text anba barcode
-                "text_distance": 0,  # ❌ pa kite espas pou text
+                "font_size": 0,
+                "text_distance": 0,
                 "dpi": 300,
-                "write_text": False  # 🔥 pi enpòtan an (pa ekri text ditou)
+                "write_text": False
             }
 
             code = CODE128(self.barcode, writer=writer)
@@ -193,13 +208,6 @@ class Package(models.Model):
             self.barcode_image = f'barcodes/{self.barcode}.png'
 
             super().save(update_fields=['barcode_image'])
-
-    pickup_code = models.CharField(max_length=6, blank=True, null=True)
-
-    def generate_pickup_code(self):
-        if not self.pickup_code:
-            self.pickup_code = str(random.randint(100000, 999999))
-
 
 # 📜 TRACKING HISTORY
 class TrackingUpdate(models.Model):

@@ -66,7 +66,25 @@ urlpatterns = [
 
     path("panel/delete-users/", views.delete_users),
 
-    path('panel/shipments/', views.shipments),
+    path("panel/user-details/<int:id>/", views.user_details, name="user_details"),
+
+    # 📦 LIST SHIPMENTS
+    path('panel/shipments/', views.shipment_list, name='shipment_list'),
+ # no SPA
+    path('panel/add-shipments/', views.add_shipment, name='add_shipment'),
+
+    # 📦 SHIPMENTS
+    path('api/shipments/create/', views.create_shipment),
+
+    # 👤 USERS
+    path('api/search-users/', views.search_users),
+
+    # 📞 CONTACTS
+    path('api/user-contacts/', views.user_contacts),
+    path('api/create-contact/', views.create_contact),
+
+
+   # path('panel/shipments/', views.shipments),
 
     path('panel/login/', views.login_view, name='panel_login'),
     path('panel/logout/', logout_view, name='logout'),

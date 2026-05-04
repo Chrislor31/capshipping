@@ -1614,7 +1614,9 @@ justify-content: center;
     }
 
 }
-
+td {
+    white-space: nowrap;
+}
 
 
 
@@ -1674,4 +1676,624 @@ justify-content: center;
 #selectedCount.active {
     color: #3b82f6;
     font-weight: 500;
+}
+
+
+
+
+
+
+
+
+/*=============dashboard details accounts =========== */
+
+
+.view_details_users{
+    position: relative;
+}
+
+
+.head_views_detail {
+    display: flex;
+
+    align-items: center;
+    width: 100%;
+}
+
+
+.title_details h2{
+    color: var(--White_Title);
+    font-size: 20px;
+    display: flex;
+    padding: 10px 0;
+    text-transform: capitalize;
+}
+
+.title_details span{
+    color: var(--White_Title);
+    opacity: 60%;
+    font-size: 15px;
+   font-weight: 300;
+}
+
+.back_to_user{
+    position: absolute;
+    right: 50px;
+    top: 30px;
+
+}
+
+.back_to_user button{
+    border: none;
+    background-color: var(--blue_secondery);
+    color: var(--White_Title);
+    padding: 10px 20px;
+    border-radius: 10px;
+    border:  0.5px solid var(--boder_color);
+    cursor: pointer;
+    text-transform: capitalize;
+}
+
+
+
+.item_grid_details_user{
+     display: flex;
+     flex-direction: column;
+     gap: 15px;
+}
+.head-info {
+    width: 100%;
+    padding: 20px 10px;
+    display: flex;
+    background-color: var(--blue_secondery);
+    border-radius: 10px;
+    border:  0.5px solid var(--boder_color);
+    margin-top: 20px;
+}
+
+.head-initials {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    width: 100%;
+
+}
+
+.edite_btn_details {
+    width: 200px;
+    height: 100px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.edite_btn_details button{
+   background-color: var(--blue_sky);
+   color: var(--White_Title);
+   outline: none;
+   border: none;
+   font-size: 14px;
+   font-weight: 300;
+   padding: 10px 15px;
+   text-transform: capitalize;
+
+}
+.initial-user{
+    width: 70px;
+    height: 70px;
+    border-radius: 50%;
+    background-color: var(--boder_color);
+    object-fit: cover;
+    border: 0.5px solid var(--color_blu_premey);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.initial-user span{
+    color: var(--White_Title);
+    font-size: 24px;
+    font-weight: 600;
+
+}
+
+.name-suit_code h2{
+    color: var(--White_Title);
+    font-size: 20px;
+    font-weight: 500;
+    display: flex;
+    padding: 5px 0;
+}
+
+.name-suit_code p{
+    color: var(--White_Title);
+    opacity: 80%;
+    font-weight: 300;
+    display: flex;
+    padding: 2px 0;
+    align-items: center;
+}
+
+.name-suit_code p span{
+    background-color: var(--Orange_premery);
+    margin-left: 8px;
+    padding: 2px 5px;
+    border-radius: 5px;
+    font-size: 12px;
+}
+
+
+/*======personal information */
+
+
+.pesonal-information{
+    width: 100%;
+    padding: 20px;
+    background-color: var(--blue_secondery);
+    border-radius: 10px;
+    border: 0.5px solid var(--boder_color);
+}
+
+.pesonal-information h3{
+    color: var(--White_Title);
+    font-size: 18px;
+    padding: 15px 0;
+    text-transform: capitalize;
+}
+
+.left_right_details{
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+.left_right_details p{
+    color: var(--gray_Title);
+    font-size: 14px;
+    font-weight: 200;
+    display: flex;
+    align-items: center;
+  margin: 10px 0;
+
+}
+.left_right_details i{
+    margin-right: 5px;
+}
+
+.left_right_details p span{
+    color: var(--White_Title);
+    opacity: 100%;
+    font-size: 14px;
+    display: flex;
+    margin-left: 30px;
+    align-items: center;
+  font-weight: 400;
+
+}
+
+.left_info , .right_info{
+    width: 100%;
+    padding: 10px;
+}
+
+.right_info {
+
+    border-left: 0.5px solid var(--boder_color);
+
+}
+
+.role_details{
+    display: flex;
+    padding: 2px 4px;
+    background-color: var(--blue_sky);
+    border-radius: 5px;
+
+}
+
+.role_details.admin {
+    background-color: var(--blue_sky);
+}
+
+.role_details.customer {
+    background-color: orange;
+}
+
+.role_details.staff {
+    background-color: purple;
+}
+
+
+.status_details {
+    display: flex;
+    padding: 2px 4px;
+    background-color: var(--green-premery);
+    border-radius: 5px;
+
+}
+
+.status_details.active {
+    background-color: var(--green-premery);
+}
+
+.status_details.inactive {
+    background-color: red;
+}
+
+
+
+.kyc_details.verified {
+    background-color: var(--green-premery); /* green */
+}
+
+.kyc_details.pending {
+    background-color: orange;
+}
+
+.kyc_details.rejected {
+    background-color: red;
+}
+
+/*========address_and_statistic ======*/
+
+
+.address_and_statistic{
+    width: 100%;
+
+    display: flex;
+    gap: 15px;
+
+}
+
+.address_and_statistic h2{
+    color: var(--White_Title);
+    font-size: 18px;
+    display: flex;
+    padding: 10px 0;
+}
+
+.address_details , .statistic_details{
+    width: 100%;
+      background-color: var(--blue_secondery);
+    padding: 20px;
+    border-radius:10px;
+    border: 0.5px solid var(--boder_color);
+}
+
+
+.address_and_statistic p{
+    color: var(--gray_Title);
+    font-size: 14px;
+    font-weight: 200;
+    display: flex;
+    align-items: center;
+  margin: 10px 0;
+
+}
+.address_and_statistic i{
+    margin-right: 5px;
+}
+
+.address_and_statistic p span{
+    color: var(--White_Title);
+    opacity: 100%;
+    font-size: 14px;
+    display: flex;
+    margin-left: 30px;
+    align-items: center;
+  font-weight: 400;
+
+}
+
+
+.statistic_grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 10px;
+}
+
+.item_shipment {
+    width: 100%;
+    background-color: var(--flat_blue);
+    padding: 10px;
+    border-radius:5px ;
+}
+
+.item_shipment {
+    display: flex;
+    align-items: center;
+    gap: 25px;
+}
+
+.icon_statistic{
+    padding: 15px;
+    height: 50px;
+    width: 50px;
+    border-radius: 50%;
+    color: var(--White_Title);
+    display: flex;
+
+    object-fit: cover;
+}
+
+.icon_statistic i{
+    text-align: center;
+    font-size: 20px;
+    font-weight: 400;
+
+}
+
+
+
+.item_shipment:nth-child(1) .icon_statistic {
+    background-color: var(--blue_sky);
+}
+
+.item_shipment:nth-child(2) .icon_statistic {
+    background-color: var(--Orange_premery);
+}
+
+.item_shipment:nth-child(3) .icon_statistic {
+    background-color: var(--green-premery);
+}
+
+.item_shipment:nth-child(4) .icon_statistic {
+    background-color: red;
+}
+
+.item_shipment_name span{
+    font-size: 25px;
+    color: var(--White_Title);
+    font-weight: 600;
+
+}
+
+.item_shipment_name p{
+    color: var(--White_Title);
+    text-transform: capitalize;
+}
+
+/*======actions_details======*/
+
+
+.actions_details {
+    width: 100%;
+    padding: 10px;
+    background-color: var(--blue_secondery);
+    border-radius: 10px;
+    border:0.5px solid var(--boder_color);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+}
+
+.delete , .disable{
+    padding: 10px;
+    width: 200px;
+}
+
+.delete button{
+    outline: none;
+    border: 0.5px solid red;
+    padding: 8px 20px ;
+    color: red;
+    background: transparent;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: 0.5s all ease-in;
+
+}
+
+.delete button:hover{
+    color: var(--White_Title);
+    background: red;
+    border: 0.5px solid var(--White_Title);
+}
+
+
+
+.disable button{
+    border: 0.5px solid var(--boder_color);
+    background-color: var(--flat_blue);
+    padding: 8px 20px;
+    color: var(--White_Title);
+    border-radius: 5px;
+}
+
+/*===== responsive details section =====*/
+
+
+@media (max-width: 576px){
+
+    .back_to_user{
+    position: absolute;
+    right: 10px;
+    top: 20px;
+
+}
+
+
+.edite_btn_details button span{
+    display: none;
+}
+
+
+.left_right_details {
+    flex-direction: column;
+}
+
+.right_info {
+    border-top: 0.5px solid var(--boder_color);
+     border-left: none;
+}
+
+.address_and_statistic{
+    width: 100%;
+
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+
+
+
+}
+
+.statistic_details{
+    width: 100%;
+    object-fit: cover;
+}
+.statistic_grid{
+    width: 100%;
+    align-items: center;
+    justify-content: center;
+}
+
+}
+
+
+
+@media (max-width: 778px){
+
+    .back_to_user{
+    position: absolute;
+    right: 10px;
+    top: 20px;
+
+}
+
+
+.edite_btn_details button span{
+    display: none;
+}
+
+
+.left_right_details {
+    flex-direction: column;
+}
+
+.right_info {
+    border-top: 0.5px solid var(--boder_color);
+     border-left: none;
+}
+
+.address_and_statistic{
+    width: 100%;
+
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+
+
+
+}
+
+.statistic_details{
+    width: 100%;
+    object-fit: cover;
+}
+.statistic_grid{
+    width: 100%;
+    align-items: center;
+    justify-content: center;
+}
+
+
+}
+
+
+
+/*=========shipments management =====*/
+
+
+
+.shiment_title p{
+    display: flex;
+    padding: 10px 0;
+
+}
+
+.static_shipments{
+    display: flex;
+    padding: 30px 0;
+}
+
+
+
+.static_shipments .item_shipment{
+    height: 100px;
+}
+
+.table_shipment tr td{
+    padding: 10px 15px;
+}
+
+.table_shipment tr:nth-child(even){
+    background-color: var(--color_blu_premey);
+
+}
+
+
+.static_shipments .item_shipment:nth-child(4) .icon_statistic {
+    background-color: green;
+}
+
+
+
+/* BASE STYLE */
+.shipment_packages .status {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 4px 10px;
+    border-radius: 20px;
+    font-size: 12px;
+    font-weight: 500;
+    color: #fff;
+    text-transform: capitalize;
+}
+
+/* RECEIVED */
+.shipment_packages .status.received {
+    background-color: #3498db;
+}
+
+/* IN TRANSIT */
+.shipment_packages .status.in_transit {
+    background-color: #f39c12;
+}
+
+/* READY FOR PICKUP */
+.shipment_packages .status.ready_pickup {
+    background-color: #2ecc71;
+}
+
+/* DELIVERED */
+.shipment_packages .status.delivered {
+    background-color: #9b59b6;
+}
+
+/* CANCELED */
+.shipment_packages .status.canceled {
+    background-color: #e74c3c;
+}
+
+
+@media (max-width: 576px){
+
+    .static_shipments{
+    display: flex;
+    padding: 30px 0;
+    flex-direction: column;
+
+}
+
+}
+
+
+.dropdown_menu {
+    display: none;
+}
+
+.dropdown_menu.active {
+    display: block;
 }

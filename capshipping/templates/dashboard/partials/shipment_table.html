@@ -1,0 +1,233 @@
+
+
+<section class="users_managements shipment_manage">
+
+<div class="title_head shiment_title">
+
+        <p>Shipement</p>
+
+        <span> manage shipments
+
+</span>
+</div>
+
+<div class="botton_add_download">
+<button>Export</button>
+
+<button  data-url="/panel/add-shipments/"><i class="bx bx-user-plus"></i> <span>Add shipment</span></button>
+</div>
+<div class="statistic_grid static_shipments">
+
+    <div class="item_shipment">
+        <div class="icon_statistic">
+            <i class='bx bx-package'></i>
+        </div>
+        <div class="item_shipment_name">
+            <span>{{ total_shipments }}</span>
+            <p>total shipments</p>
+        </div>
+    </div>
+
+    <div class="item_shipment">
+        <div class="icon_statistic">
+            <i class='bx bxs-truck'></i>
+        </div>
+        <div class="item_shipment_name">
+            <span>{{ in_transit }}</span>
+            <p>in transit</p>
+        </div>
+    </div>
+
+    <div class="item_shipment">
+        <div class="icon_statistic">
+            <i class='bx bx-check-circle'></i>
+        </div>
+        <div class="item_shipment_name">
+            <span>{{ ready_pickup }}</span>
+            <p>ready for pickup</p>
+        </div>
+    </div>
+
+    <div class="item_shipment">
+        <div class="icon_statistic">
+            <i class='bx bx-check-circle'></i>
+        </div>
+        <div class="item_shipment_name">
+            <span>{{ delivered }}</span>
+            <p>delivered</p>
+        </div>
+    </div>
+
+</div>
+
+
+
+<!-------user tablo -->
+<div class="user_tableau">
+
+    <!-- 🔍 TOP BAR -->
+    <div class="table_header">
+
+       <div class="search_users">
+
+    <input type="text" class="search-input" placeholder="Search TRK# PKG ID...">
+
+    <button class="search-btn">Search</button>
+
+</div>
+
+        <div class="table_actions">
+            <button id="deleteSelected">Delete Selected</button>
+        </div>
+
+    </div>
+
+<div class="table_wrapper">
+   <!-- 📦 SHIPMENT TABLE -->
+<table class="users_table shipment_packages">
+
+    <thead>
+        <tr>
+            <th><input type="checkbox" id="selectAll"></th>
+            <th>Tracking #</th>
+            <th>Status</th>
+            <th>Origin</th>
+            <th>Destination</th>
+            <th>Price</th>
+            <th>Created At</th>
+            <th>Created By</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+
+<tbody class="table_shipment">
+
+{% for package in packages %}
+<tr>
+    <td>
+        <input type="checkbox" class="rowCheck" value="{{ package.id }}">
+    </td>
+
+    <!-- Tracking -->
+    <td class="user_info">
+        <div class="avatar">
+            <i class='bx bx-package'></i>
+        </div>
+
+        <div>
+            <span>{{ package.tracking_number }}</span><br>
+            <span class="suit_code">{{ package.code }}</span>
+        </div>
+    </td>
+
+    <!-- Status -->
+    <td>
+        <span class="status {{ package.status }}">
+            {{ package.get_status_display }}
+        </span>
+    </td>
+
+    <!-- Origin -->
+    <td>{{ package.origin_warehouse }}</td>
+
+    <!-- Destination -->
+    <td>{{ package.destination_warehouse }}</td>
+
+    <!-- Price -->
+    <td>${{ package.price }}</td>
+
+    <!-- Created At -->
+    <td>{{ package.created_at|date:"M d, Y" }}</td>
+
+    <!-- Created By -->
+    <td>{{ package.created_by }}</td>
+
+    <!-- Actions -->
+    <td class="action_cell">
+
+        <button class="more_btn">
+            •••
+        </button>
+
+        <div class="dropdown_menu">
+
+            <div class="dropdown_item"
+                 data-url="/panel/shipment-details/{{ package.id }}/">
+                <i class='bx bx-show'></i>
+                <span>View Details</span>
+            </div>
+
+            <div class="dropdown_item"
+                 data-url="/panel/edit-shipment/{{ package.id }}/">
+                <i class='bx bx-edit'></i>
+                <span>Edit Shipment</span>
+            </div>
+
+          <div class="dropdown_item" data-print-url="/package/{{ package.id }}/label/">
+    <i class='bx bx-barcode'></i>
+    <span>Print Label</span>
+</div>
+            <div class="dropdown_item danger">
+                <i class='bx bx-trash'></i>
+                <span>Delete</span>
+            </div>
+
+        </div>
+
+    </td>
+</tr>
+
+{% empty %}
+<tr>
+    <td colspan="9" style="text-align:center;">
+        No shipments found
+    </td>
+</tr>
+{% endfor %}
+
+</tbody>
+
+</table>
+</div>
+
+    <!-- 📄 PAGINATION -->
+<div class="pagination">
+
+    <div class="page_info">
+        Showing {{ page_obj.start_index }}–{{ page_obj.end_index }} of {{ page_obj.paginator.count }} shipments
+    </div>
+
+    <div class="page_controls">
+
+        <!-- PREV -->
+        {% if page_obj.has_previous %}
+            <button type="button"
+                    data-url="/panel/shipments/?page={{ page_obj.previous_page_number }}">
+                ← Prev
+            </button>
+        {% else %}
+            <button type="button" disabled>← Prev</button>
+        {% endif %}
+
+        <!-- CURRENT PAGE -->
+        <span class="current_page">
+            Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}
+        </span>
+
+        <!-- NEXT -->
+        {% if page_obj.has_next %}
+            <button type="button"
+                    data-url="/panel/shipments/?page={{ page_obj.next_page_number }}&q={{ query }}">
+                Next →
+            </button>
+        {% else %}
+            <button type="button" disabled>Next →</button>
+        {% endif %}
+
+    </div>
+
+</div>
+
+</div>
+
+</section>

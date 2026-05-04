@@ -26,6 +26,31 @@
 </head>
 <body>
 
+
+<!-- 🔥 DELETE CONFIRM MODAL -->
+<div id="deleteModal" class="modal_overlay hidden">
+    <div class="modal_box">
+
+        <div class="modal_header">
+            <i class='bx bx-error-circle'></i>
+            <h3>Confirm Delete</h3>
+        </div>
+
+        <div class="modal_body">
+            <p id="deleteMessage">
+                Are you sure you want to delete this item?
+            </p>
+            <small>This action cannot be undone.</small>
+        </div>
+
+        <div class="modal_footer">
+            <button id="cancelDelete" class="btn_cancel">Cancel</button>
+            <button id="confirmDelete" class="btn_delete">Delete</button>
+        </div>
+
+    </div>
+</div>
+
 <header class="header">
 
     <!-- SIDEBAR -->
@@ -52,83 +77,129 @@
 
 
 <script src="{% static 'js/dashboard/dashboard.js' %}"></script>
+<script src="{% static 'js/dashboard/shipment-manager.js' %}"></script>
 <script src="{% static 'js/dashboard/add_users.js' %}"></script>
 
-<script>
-    window.chartLabels = JSON.parse('{{ chart_labels|escapejs }}');
-    window.chartRevenue = JSON.parse('{{ chart_revenue|escapejs }}');
-    window.chartShipments = JSON.parse('{{ chart_shipments|escapejs }}');
-</script>
 
 <script>
-    document.addEventListener("click", function(e) {
-    console.log("CLICK GLOBAL");
+document.addEventListener("click", function(e) {
 
+    // =====================
+    // 🔥 SIDEBAR
+    // =====================
     const sidebar = document.querySelector(".side_lift");
 
-    if (!sidebar) return;
+    if (sidebar) {
 
-    // 🔥 OPEN
-    if (e.target.closest("#menuBtn")) {
-        console.log("OPEN CLICK");
-        sidebar.classList.add("active");
+        // OPEN
+        if (e.target.closest("#menuBtn")) {
+            sidebar.classList.add("active");
+            return;
+        }
+
+        // CLOSE BUTTON
+        if (e.target.closest("#closeMenu")) {
+            sidebar.classList.remove("active");
+            return;
+        }
+
+        // 🔥 CLICK SOU ITEM → FÈMEN
+        if (e.target.closest(".side_lift .nav-item") || e.target.closest(".side_lift a")) {
+            sidebar.classList.remove("active");
+            return;
+        }
+
+        // 🔥 CLICK DEYO SIDEBAR → FÈMEN
+        if (!e.target.closest(".side_lift")) {
+            sidebar.classList.remove("active");
+        }
     }
 
-    // 🔥 CLOSE
-    if (e.target.closest("#closeMenu")) {
-        console.log("CLOSE CLICK");
-        sidebar.classList.remove("active");
+    // =====================
+    // 🔥 LOGOUT
+    // =====================
+    const logoutBtn = e.target.closest("#logoutBtn");
+    if (logoutBtn) {
+        const url = logoutBtn.dataset.url;
+        window.location.href = url;
+        return;
     }
+
+    // =====================
+    // 🔥 USER DROPDOWN
+    // =====================
+    const dropdown = document.getElementById("userDropdown");
+
+    if (dropdown) {
+
+        // TOGGLE
+        if (e.target.closest("#userToggle")) {
+            dropdown.classList.toggle("active");
+            return;
+        }
+
+        // CLICK DEYO → FÈMEN
+        if (!e.target.closest("#userDropdown")) {
+            dropdown.classList.remove("active");
+        }
+    }
+
 });
-
-
-
-window.addEventListener("load", function () {
+// =====================
+// 🔥 USER DROPDOWN INIT
+// =====================
+function initUserDropdown(){
 
     const toggle = document.getElementById("userToggle");
     const dropdown = document.getElementById("userDropdown");
 
-    console.log("DROPDOWN INIT", toggle, dropdown);
-
     if (!toggle || !dropdown) return;
 
-    toggle.onclick = function (e) {
+    // 🔥 evite double event
+    if (toggle.dataset.init) return;
+    toggle.dataset.init = "true";
+
+    console.log("✅ USER DROPDOWN INIT");
+
+    toggle.addEventListener("click", function(e){
         e.stopPropagation();
         dropdown.classList.toggle("active");
-        console.log("CLICK OK");
-    };
+    });
+}
 
-    document.body.onclick = function () {
-        dropdown.classList.remove("active");
-    };
 
+// =====================
+// 🔥 INIT ON LOAD (SPA SAFE)
+// =====================
+window.addEventListener("load", function () {
+    initUserDropdown();
 });
+</script>
 
 
+<script>
 
-    // log out
+    document.addEventListener("click", function(e){
 
+    const btn = e.target.closest("[data-print-url]");
 
-    document.addEventListener("click", function(e) {
+    if (btn){
 
-    const logoutBtn = e.target.closest("#logoutBtn");
+        const url = btn.dataset.printUrl;
 
-    if (logoutBtn) {
-        const url = logoutBtn.dataset.url;
+        console.log("🖨️ printing:", url);
 
-        // 🔥 redirect dirèk
-        window.location.href = url;
+        // 🔥 open popup
+        const printWindow = window.open(url, "_blank");
+
+        // 🔥 auto print
+        printWindow.onload = function(){
+            printWindow.print();
+        };
     }
 
 });
-
-
-
-
-
-
 </script>
-
 </body>
 
 
