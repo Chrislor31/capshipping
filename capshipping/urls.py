@@ -70,11 +70,202 @@ urlpatterns = [
 
     # 📦 LIST SHIPMENTS
     path('panel/shipments/', views.shipment_list, name='shipment_list'),
- # no SPA
+
     path('panel/add-shipments/', views.add_shipment, name='add_shipment'),
 
+    path("panel/edit-shipment/<int:id>/", views.edit_shipment, name="edit_shipment"),
+    path("api/update-shipment/<int:id>/", views.update_shipment, name="update_shipment_api"),
+    path("api/delete-shipment/<int:id>/", views.delete_shipment),
+
+ ## warehouse
+
+path(
+    "panel/warehouses/",
+    views.warehouses,
+    name="warehouses"
+),
+
+#==== add warehouse
+
+path(
+    "api/add-warehouse/",
+    views.add_warehouse,
+    name="add_warehouse"
+),
+
+ #=== edite warehouse
+
+path(
+    "api/edit-warehouse/<int:id>/",
+    views.edit_warehouse,
+    name="edit_warehouse"
+),
+
+ #=== delete warehouse
+
+path(
+    "api/delete-warehouse/<int:id>/",
+    views.delete_warehouse,
+    name="delete_warehouse"
+),
+
+
+    ##==== update tracking
+
+path(
+    "panel/tracking-updates/",
+    views.tracking_updates,
+    name="tracking_updates"
+),
+
+
+path(
+    "api/delete-tracking-update/<int:id>/",
+    views.delete_tracking_update,
+    name="delete_tracking_update"
+),
+
+
+
+# CATEGORY
+path(
+    "panel/categories/",
+    views.categories,
+    name="categories"
+),
+
+path(
+    "api/add-category/",
+    views.add_category,
+    name="add_category"
+),
+
+path(
+    "api/edit-category/<int:id>/",
+    views.edit_category,
+    name="edit_category"
+),
+
+path(
+    "api/update-category/",
+    views.update_category,
+    name="update_category"
+),
+
+path(
+    "api/delete-category/<int:id>/",
+    views.delete_category,
+    name="delete_category"
+),
+
+
+
+# CONTACTS
+path(
+    "panel/contacts/",
+    views.contacts,
+    name="contacts"
+),
+
+
+path(
+    "api/edit-contact/<int:id>/",
+    views.edit_contact,
+    name="edit_contact"
+),
+
+
+path(
+    "api/update-contact/",
+    views.update_contact,
+    name="update_contact"
+),
+
+
+path(
+    "api/delete-contact/<int:id>/",
+    views.delete_contact,
+    name="delete_contact"
+),
+
+
+   #==== pricing_rules
+
+
+path(
+    "panel/pricing-rules/",
+    views.pricing_rules,
+    name="pricing_rules"
+),
+
+path(
+    "api/create-pricing-rule/",
+    views.create_pricing_rule,
+    name="create_pricing_rule"
+),
+
+
+# EDIT
+path(
+    "api/edit-pricing-rule/<int:id>/",
+    views.edit_pricing_rule,
+    name="edit_pricing_rule"
+),
+
+
+# UPDATE
+path(
+    "api/update-pricing-rule/",
+    views.update_pricing_rule,
+    name="update_pricing_rule"
+),
+
+path(
+    "api/delete-pricing-rule/<int:id>/",
+    views.delete_pricing_rule,
+    name="delete_pricing_rule"
+),
+
+
+# ROUTE PRICING PAGE
+path(
+    "panel/route-pricings/",
+    views.route_pricings,
+    name="route_pricings"
+),
+
+# CREATE
+path(
+    "api/create-route-pricing/",
+    views.create_route_pricing,
+    name="create_route_pricing"
+),
+
+# EDIT
+path(
+    "api/edit-route-pricing/<int:id>/",
+    views.edit_route_pricing,
+    name="edit_route_pricing"
+),
+
+# UPDATE
+path(
+    "api/update-route-pricing/",
+    views.update_route_pricing,
+    name="update_route_pricing"
+),
+
+# DELETE
+path(
+    "api/delete-route-pricing/<int:id>/",
+    views.delete_route_pricing,
+    name="delete_route_pricing"
+),
     # 📦 SHIPMENTS
     path('api/shipments/create/', views.create_shipment),
+    path('panel/shipment-details/<int:id>/', views.shipment_details, name='shipment_details'),
+    path("api/admin-track/", views.admin_track_package, name="admin_track_package"),
+
 
     # 👤 USERS
     path('api/search-users/', views.search_users),

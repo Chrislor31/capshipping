@@ -530,6 +530,10 @@ function loadPage(url) {
         // 🔥 INIT MODULES (NO setTimeout)
         // =====================
         initPage();
+         // 🔥 TRACKING (MEN LI 👇)
+        loadTracking();
+        initPaymentToggle();
+        initDeleteShipment();
 
     })
     .catch(err => {
@@ -1160,3 +1164,313 @@ document.addEventListener("click", function(e){
     }
 
 });
+
+
+// ===============================
+// 🔥 FULL TRACKING JS (ADMIN)
+// ===============================
+function loadTracking(){
+
+    const container = document.querySelector(".tracking_timeline");
+    if (!container) return;
+
+    const trackingNumber = container.dataset.tracking;
+
+    container.innerHTML = "<p style='color:#999'>Loading...</p>";
+
+    fetch(`/api/admin-track/?tracking_number=${trackingNumber}`)
+    .then(res => res.json())
+    .then(data => {
+
+        if(!data.success){
+            container.innerHTML = `<p style="color:red">${data.error}</p>`;
+            return;
+        }
+
+        container.innerHTML = "";
+
+        // 🔥 jwenn current step (dènye done)
+        let lastDoneIndex = -1;
+
+        data.timeline.forEach((item, i) => {
+            if(item.done) lastDoneIndex = i;
+        });
+
+        data.timeline.forEach((item, index) => {
+
+            const isLast = index === data.timeline.length - 1;
+            const isActive = item.done;
+            const isCurrent = index === lastDoneIndex;
+
+            const html = `
+            <div class="timeline_item ${isLast ? 'last' : ''}
+                ${isActive ? 'active' : ''}
+                ${isCurrent ? 'current' : ''}">
+
+                <div class="timeline_left">
+                    <div class="dot">
+                        <i class='bx bx-check'></i>
+                    </div>
+                </div>
+
+                <div class="timeline_content">
+                    <h5>${item.status}</h5>
+                    ${item.warehouse ? `<p>${item.warehouse}</p>` : ""}
+                </div>
+
+                <div class="timeline_date">
+                    ${item.date ? `<p>${item.date}</p>` : ""}
+                    ${item.time ? `<span>${item.time}</span>` : ""}
+                </div>
+
+            </div>
+            `;
+
+            container.insertAdjacentHTML("beforeend", html);
+        });
+
+    });
+}
+
+
+
+//=====update shipment
+
+
+
+document.addEventListener("submit", function(e){
+
+    const form = e.target;
+
+    if(form.id !== "shipmentForm") return;
+
+    e.preventDefault();
+
+    const formData = new FormData(form);
+
+    const shipmentId = form.dataset.id; // 🔥 enpòtan pou edit
+
+    const url = shipmentId
+        ? `/api/update-shipment/${shipmentId}/`
+        : `/api/create-shipment/`;
+
+    fetch(url, {
+        method: "POST",
+        headers: {
+            "X-CSRFToken": getCookie("csrftoken")
+        },
+        body: formData
+    })
+    .then(res => res.json())
+    .then(data => {
+
+        if(data.success || data.tracking){
+
+            console.log("SUCCESS:", data);
+
+            // 🔥 update summary (right panel)
+            document.getElementById("sum_tracking").innerText = data.tracking || "";
+            document.getElementById("sum_pkg").innerText = data.pkg || "";
+            document.getElementById("sum_price").innerText = "$" + (data.price || 0);
+
+        } else {
+            console.error(data);
+        }
+
+    })
+    .catch(err => console.error(err));
+
+});
+
+// =======================
+// 🔥 GLOBAL STATE
+// =======================
+let deleteTargetRows = [];
+let deleteUrls = [];
+
+
+// =======================
+// 🔓 OPEN MODAL
+// =======================
+function openDeleteModal(rows, urls){
+
+    deleteTargetRows = rows;
+    deleteUrls = urls;
+
+    const modal = document.getElementById("deleteModal");
+    const msg = document.getElementById("deleteMessage");
+
+    if (!modal) return;
+
+    if (urls.length === 1){
+        msg.innerText = "Are you sure you want to delete this shipment?";
+    } else {
+        msg.innerText = `Are you sure you want to delete ${urls.length} shipments?`;
+    }
+
+    modal.classList.remove("hidden");
+}
+
+
+// =======================
+// 🔒 CLOSE MODAL
+// =======================
+function closeDeleteModal(){
+
+    const modal = document.getElementById("deleteModal");
+
+    if (modal){
+        modal.classList.add("hidden");
+    }
+
+    deleteTargetRows = [];
+    deleteUrls = [];
+}
+
+
+// =======================
+// 🎯 CLICK HANDLER
+// =======================
+document.addEventListener("click", function(e){
+
+    // ===================
+    // 🔥 SINGLE DELETE
+    // ===================
+    const singleDelete = e.target.closest('[data-action="delete"]');
+
+    if (singleDelete){
+
+        const row = singleDelete.closest("tr");
+        const url = singleDelete.dataset.url;
+
+        if (!row || !url){
+            console.error("Missing row or url");
+            return;
+        }
+
+        openDeleteModal([row], [url]);
+        return;
+    }
+
+
+    // ===================
+    // 🔥 BULK DELETE
+    // ===================
+    const bulkDelete = e.target.closest("#deleteSelected");
+
+    if (bulkDelete){
+
+        const checked = document.querySelectorAll(".rowCheck:checked");
+
+        if (checked.length === 0){
+            alert("Select at least one shipment");
+            return;
+        }
+
+        let rows = [];
+        let urls = [];
+
+        checked.forEach(cb => {
+
+            const row = cb.closest("tr");
+
+            if (!row) return;
+
+            const deleteBtn = row.querySelector('[data-action="delete"]');
+
+            if (!deleteBtn) return;
+
+            rows.push(row);
+            urls.push(deleteBtn.dataset.url);
+
+        });
+
+        console.log("🔥 BULK URLS:", urls);
+
+        openDeleteModal(rows, urls);
+
+        return;
+    }
+
+
+    // ===================
+    // ❌ CANCEL
+    // ===================
+    if (e.target.id === "cancelDelete"){
+        closeDeleteModal();
+    }
+
+
+    // ===================
+    // ❌ CLICK OUTSIDE
+    // ===================
+    if (e.target.id === "deleteModal"){
+        closeDeleteModal();
+    }
+
+});
+
+
+// =======================
+// ❌ CONFIRM DELETE
+// =======================
+function initDeleteShipment(){
+
+    const btn = document.getElementById("confirmDelete");
+
+    if (!btn) return;
+
+    btn.onclick = async function(){
+
+        if (deleteUrls.length === 0){
+            console.warn("❌ nothing to delete");
+            return;
+        }
+
+        try{
+
+            // 🔥 delete one by one
+            for (const url of deleteUrls){
+
+                console.log("🚀 deleting:", url);
+
+                const res = await fetch(url, {
+                    method: "POST",
+                    headers: {
+                        "X-CSRFToken": getCookie("csrftoken"),
+                    }
+                });
+
+                const data = await res.json();
+
+                console.log("SERVER:", data);
+            }
+
+            // 🔥 remove rows from UI
+            deleteTargetRows.forEach(row => {
+
+                row.style.opacity = "0";
+
+                setTimeout(() => {
+                    row.remove();
+                }, 300);
+
+            });
+
+        }
+        catch(err){
+
+            console.error(err);
+
+        }
+        finally{
+
+            closeDeleteModal();
+
+        }
+
+    };
+
+}
+
+

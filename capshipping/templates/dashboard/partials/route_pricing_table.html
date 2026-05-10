@@ -1,0 +1,712 @@
+<section class="users_managements route_pricing_management">
+
+
+    <!-- TITLE -->
+    <div class="title_head"
+         style="padding:0px 0px 50px 0">
+
+        <p>Route Pricings</p>
+
+        <span style="display:flex;
+                     padding:10px 0px;
+                     opacity:60%;
+                     font-size:13px">
+
+            dashboard/route-pricings
+
+        </span>
+
+    </div>
+
+
+
+
+
+    <!-- STATS -->
+    <div class="statistic_grid static_shipments">
+
+        <!-- TOTAL -->
+        <div class="item_shipment">
+
+            <div class="icon_statistic">
+
+                <i class='bx bx-transfer'></i>
+
+            </div>
+
+            <div class="item_shipment_name">
+
+                <span>
+
+                    {{ total_routes }}
+
+                </span>
+
+                <p>
+
+                    Total Routes
+
+                </p>
+
+            </div>
+
+        </div>
+
+
+
+
+        <!-- AIR -->
+        <div class="item_shipment">
+
+            <div class="icon_statistic">
+
+                <i class='bx bx-plane'></i>
+
+            </div>
+
+            <div class="item_shipment_name">
+
+                <span>
+
+                    {{ air_routes }}
+
+                </span>
+
+                <p>
+
+                    Air Routes
+
+                </p>
+
+            </div>
+
+        </div>
+
+
+
+
+        <!-- SEA -->
+        <div class="item_shipment">
+
+            <div class="icon_statistic">
+
+                <i class='bx bx-ship'></i>
+
+            </div>
+
+            <div class="item_shipment_name">
+
+                <span>
+
+                    {{ sea_routes }}
+
+                </span>
+
+                <p>
+
+                    Sea Routes
+
+                </p>
+
+            </div>
+
+        </div>
+
+
+
+
+        <!-- LAST -->
+        <div class="item_shipment">
+
+            <div class="icon_statistic">
+
+                <i class='bx bx-time'></i>
+
+            </div>
+
+            <div class="item_shipment_name">
+
+                <span>
+
+                    {% if latest_route %}
+
+                        {{ latest_route.id }}
+
+                    {% else %}
+
+                        0
+
+                    {% endif %}
+
+                </span>
+
+                <p>
+
+                    Latest Route
+
+                </p>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+
+
+
+    <!-- ADD BUTTON -->
+    <div class="botton_add_download">
+
+        <button type="button"
+                id="openRoutePricingModal">
+
+            <i class="bx bx-plus"></i>
+
+            <span>
+
+                Add Route Pricing
+
+            </span>
+
+        </button>
+
+    </div>
+
+
+
+
+
+    <!-- TABLE -->
+    <div class="user_tableau">
+
+
+        <!-- TOP BAR -->
+        <div class="table_header">
+
+            <form id="routePricingSearchForm"
+                  class="search_users">
+
+                <input type="text"
+                       name="q"
+                       id="routePricingSearchInput"
+                       placeholder="Search route pricing..."
+                       value="{{ q }}">
+
+                <button type="submit">
+
+                    Search
+
+                </button>
+
+            </form>
+
+
+
+            <!-- ACTIONS -->
+            <div class="table_actions">
+
+                <button id="deleteSelectedRoute">
+
+                    <i class='bx bxs-trash-alt'></i>
+
+                    Delete Selected
+
+                </button>
+
+                <span id="selectedCount">
+
+                    0 of
+
+                    {{ page_obj.paginator.count }}
+
+                    selected
+
+                </span>
+
+            </div>
+
+        </div>
+
+
+
+
+
+        <!-- TABLE -->
+        <div class="table_wrapper">
+
+            <table class="users_table">
+
+                <thead>
+
+                    <tr>
+
+                        <th>
+
+                            <input type="checkbox"
+                                   id="selectAll">
+
+                        </th>
+
+                        <th>Route</th>
+                        <th>Shipping</th>
+                        <th>Price/LB</th>
+                        <th>Actions</th>
+
+                    </tr>
+
+                </thead>
+
+
+
+<tbody>
+
+{% for route in route_pricings %}
+
+<tr data-route-id="{{ route.id }}">
+
+    <!-- CHECK -->
+    <td>
+
+        <input type="checkbox"
+               class="rowCheck"
+               value="{{ route.id }}"
+               data-url="/api/delete-route-pricing/{{ route.id }}/">
+
+    </td>
+
+
+
+
+    <!-- ROUTE -->
+    <td class="user_info">
+
+        <div class="avatar">
+
+            <i class='bx bx-transfer'></i>
+
+        </div>
+
+        <div>
+
+            <span>
+
+                {{ route.origin_type }}
+
+                →
+
+                {{ route.destination_type }}
+
+            </span>
+
+            <br>
+
+            <span class="suit_code">
+
+                Route pricing
+
+            </span>
+
+        </div>
+
+    </td>
+
+
+
+
+    <!-- SHIPPING -->
+    <td>
+
+        {% if route.shipping_type == "air" %}
+
+            <span class="status delivered">
+
+                Air
+
+            </span>
+
+        {% else %}
+
+            <span class="status pending">
+
+                Sea
+
+            </span>
+
+        {% endif %}
+
+    </td>
+
+
+
+
+    <!-- PRICE -->
+    <td>
+
+        ${{ route.price_per_lb }}
+
+    </td>
+
+
+
+
+    <!-- ACTION -->
+    <td class="action_cell">
+
+        <button class="more_btn">
+
+            •••
+
+        </button>
+
+        <div class="dropdown_menu">
+
+            <!-- EDIT -->
+            <div class="dropdown_item edit_route_btn"
+                 data-id="{{ route.id }}">
+
+                <i class='bx bx-edit'></i>
+
+                <span>
+
+                    Edit Route Pricing
+
+                </span>
+
+            </div>
+
+
+
+            <!-- DELETE -->
+            <div class="dropdown_item danger"
+                 data-action="delete"
+                 data-url="/api/delete-route-pricing/{{ route.id }}/">
+
+                <i class='bx bx-trash'></i>
+
+                <span>
+
+                    Delete
+
+                </span>
+
+            </div>
+
+        </div>
+
+    </td>
+
+</tr>
+
+{% empty %}
+
+<tr>
+
+    <td colspan="5"
+        style="text-align:center;">
+
+        No route pricing found
+
+    </td>
+
+</tr>
+
+{% endfor %}
+
+</tbody>
+
+            </table>
+
+        </div>
+
+    </div>
+
+
+
+
+
+    <!-- ================================= -->
+    <!-- ROUTE PRICING MODAL -->
+    <!-- ================================= -->
+
+    <div class="warehouse_modal"
+         id="routePricingModal">
+
+        <div class="warehouse_modal_content">
+
+            <!-- CLOSE -->
+            <div class="close_modal"
+                 id="closeRoutePricingModal">
+
+                <i class='bx bx-x'></i>
+
+            </div>
+
+
+
+
+            <!-- FORM -->
+            <form id="routePricingForm">
+
+                {% csrf_token %}
+
+                <!-- UPDATE ID -->
+                <input type="hidden"
+                       name="route_id"
+                       id="route_id">
+
+
+
+
+                <div class="grid_layout">
+
+                    <!-- LEFT -->
+                    <div class="left_content_add">
+
+                        <div class="warehouse_information">
+
+                            <h3 id="routePricingTitle">
+
+                                Route pricing information
+
+                            </h3>
+
+
+
+
+                            <!-- ORIGIN -->
+                            <label>
+
+                                Origin Type
+
+                            </label>
+
+                            <select name="origin_type">
+
+                                <option value="">
+
+                                    Select origin
+
+                                </option>
+
+                                <option value="USA">
+
+                                    USA
+
+                                </option>
+
+                                <option value="HT">
+
+                                    Haiti
+
+                                </option>
+
+                                <option value="RD">
+
+                                    Dominican Republic
+
+                                </option>
+
+                            </select>
+
+
+
+
+                            <!-- DESTINATION -->
+                            <label>
+
+                                Destination Type
+
+                            </label>
+
+                            <select name="destination_type">
+
+                                <option value="">
+
+                                    Select destination
+
+                                </option>
+
+                                <option value="USA">
+
+                                    USA
+
+                                </option>
+
+                                <option value="HT">
+
+                                    Haiti
+
+                                </option>
+
+                                <option value="RD">
+
+                                    Dominican Republic
+
+                                </option>
+
+                            </select>
+
+
+
+
+                            <!-- SHIPPING -->
+                            <label>
+
+                                Shipping Type
+
+                            </label>
+
+                            <select name="shipping_type">
+
+                                <option value="">
+
+                                    Select shipping
+
+                                </option>
+
+                                <option value="air">
+
+                                    Air Freight
+
+                                </option>
+
+                                <option value="sea">
+
+                                    Sea Freight
+
+                                </option>
+
+                            </select>
+
+
+
+
+                            <!-- PRICE -->
+                            <label>
+
+                                Price per LB
+
+                            </label>
+
+                            <input type="number"
+                                   step="0.01"
+                                   name="price_per_lb"
+                                   placeholder="e.g 4.50">
+
+                        </div>
+
+                    </div>
+
+
+
+
+                    <!-- RIGHT -->
+                    <div class="right_content_add">
+
+
+                        <!-- ALERT -->
+                        <div id="alertBox"
+                             class="alert hidden">
+
+                            <div class="alert_content">
+
+                                <i id="alertIcon"
+                                   class='bx bx-check-circle'></i>
+
+                                <span id="alertMessage">
+
+                                    Route pricing created
+
+                                </span>
+
+                            </div>
+
+                            <i class='bx bx-x close_alert'
+                               id="closeAlert"></i>
+
+                        </div>
+
+
+
+
+                        <!-- ACTION -->
+                        <div class="action">
+
+                            <span>
+
+                                Action
+
+                            </span>
+
+
+
+
+                            <!-- SAVE -->
+                            <button type="submit"
+                                    id="save_route_pricing"
+                                    class="save_user">
+
+                                <i class='bx bx-save'></i>
+
+                                Save Route Pricing
+
+                            </button>
+
+
+
+
+                            <!-- CANCEL -->
+                            <button type="button"
+                                    id="cancelRoutePricing"
+                                    class="cancel_process">
+
+                                <i class='bx bx-x'></i>
+
+                                Cancel
+
+                            </button>
+
+                        </div>
+
+
+
+
+                        <!-- INFO -->
+                        <div class="informations">
+
+                            <div class="warning">
+
+                                <i class='bx bx-info-circle'></i>
+
+                                <h4>
+
+                                    information
+
+                                </h4>
+
+                            </div>
+
+                            <p>
+
+                                Route pricing allows
+                                automatic shipping cost
+                                calculations between
+                                countries.
+
+                            </p>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </form>
+
+        </div>
+
+    </div>
+
+</section>

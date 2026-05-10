@@ -27,6 +27,239 @@
 <body>
 
 
+
+
+
+
+
+<!-- 🔥 OVERLAY -->
+<div class="contact_overlay"></div>
+
+
+
+<form id="contactForm">
+
+    {% csrf_token %}
+
+    <!-- 🔥 UPDATE ID -->
+    <input type="hidden"
+           name="contact_id"
+           id="contact_id">
+
+
+
+    <div class="add_contact">
+
+        <h3 id="contactModalTitle">
+
+            Add Contact
+
+        </h3>
+
+
+
+        <div class="contact_form">
+
+
+
+            <!-- USER -->
+            <div class="select_user">
+
+                <label>
+
+                    User
+
+                </label>
+
+
+
+                <div class="custom_user_select">
+
+                    <div class="selected_user">
+
+                        <span id="selectedUserText2">
+
+                            select user (optional)
+
+                        </span>
+
+                        <i class='bx bx-chevron-down'></i>
+
+                    </div>
+
+
+
+                    <div class="dropdown_user">
+
+                        <div class="input_search">
+
+                            <i class='bx bx-search'></i>
+
+                            <input type="search"
+                                   class="searchUserInput2"
+                                   placeholder="search user...">
+
+                        </div>
+
+
+
+                        <div class="user_options">
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+
+                <input type="hidden"
+                       name="user"
+                       id="userHiddenInput2">
+
+            </div>
+
+
+
+
+            <!-- NAME -->
+            <div class="contact_name">
+
+                <label>
+
+                    Name
+
+                </label>
+
+                <input type="text"
+                       name="name"
+                       placeholder="name">
+
+            </div>
+
+
+
+
+            <!-- PHONE -->
+            <div class="contact_phone">
+
+                <label>
+
+                    Phone
+
+                </label>
+
+                <input type="number"
+                       name="phone"
+                       placeholder="Phone #">
+
+            </div>
+
+
+
+
+            <!-- EMAIL -->
+            <div class="contact_email">
+
+                <label>
+
+                    Email
+
+                </label>
+
+                <input type="email"
+                       name="email"
+                       placeholder="email">
+
+            </div>
+
+
+
+
+            <!-- ADDRESS -->
+            <div class="contact_address">
+
+                <label>
+
+                    Full address
+
+                </label>
+
+                <textarea name="address"></textarea>
+
+            </div>
+
+
+
+
+            <!-- GUEST -->
+            <div class="contact_is_guest">
+
+                <input type="checkbox"
+                       name="is_guest"
+                       id="is_guest">
+
+                <span>
+
+                    is_guest
+
+                </span>
+
+            </div>
+
+
+
+
+            <!-- ACTION -->
+            <div class="action_save">
+
+                <button type="submit"
+                        id="saveContactBtn">
+
+                    <i class='bx bx-save'></i>
+
+                    Save Contact
+
+                </button>
+
+
+
+                <button type="button"
+                        id="cancelContact">
+
+                    Cancel
+
+                </button>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</form>
+
+
+
+<div id="alertBox" class="alert hidden">
+
+    <div class="alert_content">
+
+        <i id="alertIcon"
+           class='bx bx-check-circle'></i>
+
+        <span id="alertMessage">
+            Message here
+        </span>
+
+    </div>
+
+    <i class='bx bx-x close_alert'
+       id="closeAlert"></i>
+
+</div>
+
+
 <!-- 🔥 DELETE CONFIRM MODAL -->
 <div id="deleteModal" class="modal_overlay hidden">
     <div class="modal_box">

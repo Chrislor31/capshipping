@@ -68,8 +68,8 @@ class RoutePricing(models.Model):
     destination_type = models.CharField(max_length=10, choices=TYPE_CHOICES)
 
     SHIPPING_TYPE_CHOICES = [
-        ('air', 'Air'),
-        ('sea', 'Sea'),
+        ('air', 'Air Freight'),
+        ('sea', 'Sea Freight'),
     ]
 
     shipping_type = models.CharField(max_length=10, choices=SHIPPING_TYPE_CHOICES)
@@ -118,6 +118,16 @@ class Package(models.Model):
         ('sea', 'Sea'),
     ]
 
+    PAYMENT_STATUS_CHOICES = [
+        ("paid", "Paid"),
+        ("unpaid", "Unpaid"),
+    ]
+
+    Shipment_TYPE_CHOICES = [
+        ("standard", "Standard"),
+        ("express", "Express"),
+    ]
+
     user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.SET_NULL, null=True, blank=True)
 
     sender = models.ForeignKey(Contact, on_delete=models.CASCADE, related_name="sent_packages")
@@ -148,6 +158,17 @@ class Package(models.Model):
     barcode_image = models.ImageField(upload_to='barcodes/', blank=True, null=True)
 
     status = models.CharField(max_length=20, choices=STATUS_CHOICES, default='received')
+    payment_status = models.CharField(
+        max_length=10,
+        choices=PAYMENT_STATUS_CHOICES,
+        default="unpaid"
+    )
+
+    shipment_type = models.CharField(
+        max_length=10,
+        choices=Shipment_TYPE_CHOICES,
+        default="standard"
+    )
 
     created_at = models.DateTimeField(auto_now_add=True)
     created_by = models.ForeignKey(

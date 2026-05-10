@@ -14,7 +14,7 @@ from accounts.utils import generate_otp, send_otp_email,send_welcome_email
 from django.http import JsonResponse
 from django.contrib.auth import get_user_model
 
-from shipping.models import Package, Contact, Category
+from shipping.models import Package, Contact, Category, TrackingUpdate, PricingRule, RoutePricing
 
 
 #==== reset password
@@ -763,7 +763,21 @@ def update_user(request, id):
         password = data.get("password")
         if password:
             user.set_password(password)
+        # =====================
+        # 🔥 WAREHOUSE FIX (IMPORTANT)
+        # =====================
+        pickup_id = data.get("default_pickup_warehouse")
+        staff_id = data.get("staff_warehouse")
 
+        user.default_pickup_warehouse = (
+            Warehouse.objects.get(id=pickup_id)
+            if pickup_id else None
+        )
+
+        user.staff_warehouse = (
+            Warehouse.objects.get(id=staff_id)
+            if staff_id else None
+        )
         user.save()
 
         return JsonResponse({
@@ -797,8 +811,7 @@ def edit_user(request, id):
         "roles": roles,
         "warehouses": warehouses,
         "mode": "edit",
-        "selected_role": user.role
-
+        "selected_role": user.role,
     }
 
     if request.headers.get('x-requested-with') == 'XMLHttpRequest':
@@ -998,6 +1011,10 @@ def create_shipment(request):
             category_id=data.get("category"),
             shipping_type=data.get("shipping_type"),
 
+            # 🔥 IMPORTANT
+            shipment_type=data.get("shipment_type") or "standard",
+            payment_status=data.get("payment_status") or "unpaid",
+
             weight=float(data.get("weight") or 0),
             length=float(data.get("length") or 0),
             width=float(data.get("width") or 0),
@@ -1074,3 +1091,2043 @@ def create_contact(request):
         "user_received": raw_user,   # 🔥 DEBUG
         "user_saved": user_id       # 🔥 DEBUG
     })
+
+
+
+
+
+#======== detail shipments =====
+
+
+
+
+def shipment_details(request, id):
+    package = get_object_or_404(Package, id=id)
+
+    # 🔥 pran tout updates
+    updates = package.updates.all().order_by('created_at')
+
+    # 🔥 kenbe sèlman dènye pa status
+    seen = {}
+    for u in updates:
+        seen[u.status] = u  # overwrite → kenbe dènye a
+
+    # 🔥 convert + re-order
+    tracking = list(seen.values())
+    tracking.sort(key=lambda x: x.created_at)
+
+    # 🔥 LAST UPDATE LOGIC
+    last_update = package.updates.order_by('-created_at').first()
+
+    if not last_update:
+        last_update_date = package.created_at
+    else:
+        last_update_date = last_update.created_at
+
+    context = {
+        "package": package,
+        "tracking": tracking,
+        "last_update": last_update_date,
+    }
+
+    if request.headers.get('x-requested-with') == 'XMLHttpRequest':
+        return render(request, "dashboard/partials/shipment_details.html", context)
+
+    return render(request, "dashboard/base.html", context)
+
+
+
+
+
+#==== track admin panel
+def admin_track_package(request):
+    tracking_number = request.GET.get("tracking_number", "").strip()
+
+    try:
+        package = Package.objects.get(tracking_number__iexact=tracking_number)
+
+        updates = package.updates.all().order_by("created_at")
+
+        STATUS_ORDER = [
+            "received",
+            "in_transit",
+            "ready_pickup",
+            "delivered"
+        ]
+
+        timeline = []
+
+        for status in STATUS_ORDER:
+
+            # 🔥 SPECIAL CASE → RECEIVED
+            if status == "received":
+                timeline.append({
+                    "status": "Received",
+                    "warehouse": package.origin_warehouse.name if package.origin_warehouse else "N/A",
+                    "date": package.created_at.strftime("%b %d, %Y") if package.created_at else "",
+                    "time": package.created_at.strftime("%I:%M %p") if package.created_at else "",
+                    "done": True  # 🔥 toujou premye step fèt
+                })
+                continue
+
+            # 🔥 lòt status yo
+            last = updates.filter(status=status).last()
+
+            if last:
+                timeline.append({
+                    "status": status.replace("_", " ").title(),
+                    "warehouse": last.warehouse.name if last.warehouse else "N/A",
+                    "date": last.created_at.strftime("%b %d, %Y"),
+                    "time": last.created_at.strftime("%I:%M %p"),
+                    "done": True
+                })
+            else:
+                timeline.append({
+                    "status": status.replace("_", " ").title(),
+                    "warehouse": "",
+                    "date": "",
+                    "time": "",
+                    "done": False
+                })
+
+        return JsonResponse({
+            "success": True,
+            "timeline": timeline
+        })
+
+    except Package.DoesNotExist:
+        return JsonResponse({
+            "success": False,
+            "error": "Tracking number not found"
+        })
+
+
+
+
+
+
+
+#==== update shipment
+
+def edit_shipment(request, id):
+
+    package = get_object_or_404(Package, id=id)
+
+    context = {
+        "package": package,
+        "warehouses": Warehouse.objects.all(),
+        "categories": Category.objects.all(),
+        "shipping_types": Package.SHIPPING_TYPE_CHOICES
+    }
+
+    if request.headers.get('x-requested-with') == 'XMLHttpRequest':
+        return render(request, "dashboard/partials/add_shipment.html", context)
+
+    return render(request, "dashboard/base.html", context)
+
+
+@api_view(['POST'])
+@permission_classes([IsAuthenticated])
+def update_shipment(request, id):
+
+    package = get_object_or_404(Package, id=id)
+
+    data = request.data
+
+    try:
+        # =====================
+        # 🔹 BASIC RELATIONS
+        # =====================
+        package.user_id = data.get("user") or None
+        package.sender_id = data.get("sender") or None
+        package.receiver_id = data.get("receiver") or None
+
+        package.origin_warehouse_id = data.get("origin_warehouse")
+        package.destination_warehouse_id = data.get("destination_warehouse")
+        package.category_id = data.get("category")
+        package.shipping_type = data.get("shipping_type")
+
+        # =====================
+        # 🔹 DIMENSIONS
+        # =====================
+        # 🔥 IMPORTANT
+
+        package.shipment_type = data.get("shipment_type") or "standard"
+        package.payment_status = data.get("payment_status") or "unpaid"
+        package.status = data.get("status") or "received"
+        package.weight = float(data.get("weight") or 0)
+        package.length = float(data.get("length") or 0)
+        package.width = float(data.get("width") or 0)
+        package.height = float(data.get("height") or 0)
+        package.quantity = int(data.get("quantity") or 1)
+
+        # =====================
+        # 🔹 FEES
+        # =====================
+        package.extra_fee = float(data.get("extra_fee") or 0)
+
+        # =====================
+        # 🔹 DESCRIPTION
+        # =====================
+        package.description = data.get("description") or ""
+
+        # 🔥 SI OU GEN AUTO PRICE LOGIC → li ap rekalkile otomatik
+        package.save()
+
+        return Response({
+            "success": True,
+            "message": "Shipment updated successfully",
+            "tracking": package.tracking_number,
+            "pkg": package.code,
+            "price": package.price,
+        })
+
+    except Exception as e:
+        return Response({
+            "success": False,
+            "error": str(e)
+        }, status=400)
+
+
+
+
+
+##======= delete shipment ====
+
+@api_view(['POST'])
+@permission_classes([IsAuthenticated])
+def delete_shipment(request, id):
+
+    package = get_object_or_404(Package, id=id)
+    package.delete()
+
+    return Response({
+        "success": True
+    })
+
+
+
+
+
+# =========================
+# 📦 WAREHOUSE LIST
+# =========================
+def warehouses(request):
+
+    q = request.GET.get("q", "")
+
+    warehouses = Warehouse.objects.all().order_by("-id")
+
+    # 🔍 SEARCH
+    if q:
+        warehouses = warehouses.filter(
+            Q(name__icontains=q) |
+            Q(city__icontains=q) |
+            Q(state__icontains=q) |
+            Q(area__icontains=q) |
+            Q(type__icontains=q)
+        )
+
+    # 📄 PAGINATION
+    paginator = Paginator(warehouses, 10)
+    page_number = request.GET.get("page")
+    page_obj = paginator.get_page(page_number)
+
+    context = {
+        "warehouses": page_obj,
+        "page_obj": page_obj,
+        "q": q,
+    }
+
+    # 🔥 PARTIAL LOAD
+    if request.headers.get("x-requested-with") == "XMLHttpRequest":
+        return render(
+            request,
+            "dashboard/partials/warehouse_table.html",
+            context
+        )
+
+    return render(
+        request,
+        "dashboard/base.html",
+        context
+    )
+
+
+
+
+## add warehouses
+
+
+from django.http import JsonResponse
+from django.views.decorators.http import require_POST
+@require_POST
+def add_warehouse(request):
+
+    warehouse_id =request.POST.get("warehouse_id")
+
+    name =request.POST.get("name")
+
+    city =request.POST.get("city")
+
+    state =request.POST.get("state")
+
+    area =request.POST.get("area")
+
+    zip_code =request.POST.get("zip_code")
+
+    address =request.POST.get("address")
+
+    warehouse_type =request.POST.get("type")
+
+    label_code =request.POST.get("label_code")
+
+    errors = {}
+
+    # VALIDATION
+    if not name:
+        errors["name"] ="Warehouse name is required"
+
+    if not city:
+        errors["city"] ="City is required"
+
+    if not state:
+        errors["state"] ="State is required"
+
+    if not area:
+        errors["area"] ="Area is required"
+
+    if not address:
+        errors["address"] ="Address is required"
+
+    if not warehouse_type:
+        errors["type"] ="Warehouse type is required"
+
+    if not label_code:
+        errors["label_code"] ="Label code is required"
+
+    # ERRORS
+    if errors:
+
+        return JsonResponse({
+
+            "success": False,
+            "errors": errors
+
+        })
+
+
+    # ====================================
+    # UPDATE
+    # ====================================
+    if warehouse_id:
+
+        warehouse =Warehouse.objects.get(
+            id=warehouse_id
+        )
+
+        warehouse.name = name
+        warehouse.city = city
+        warehouse.state = state
+        warehouse.area = area
+        warehouse.zip_code = zip_code
+        warehouse.address = address
+        warehouse.type = warehouse_type
+        warehouse.label_code = (
+            label_code.upper()
+        )
+
+        warehouse.save()
+
+        return JsonResponse({
+
+            "success": True,
+
+            "message":
+            "Warehouse updated successfully"
+
+        })
+
+
+    # ====================================
+    # CREATE
+    # ====================================
+    warehouse =Warehouse.objects.create(
+
+        name=name,
+        city=city,
+        state=state,
+        area=area,
+        zip_code=zip_code,
+        address=address,
+        type=warehouse_type,
+        label_code=label_code.upper()
+
+    )
+
+    return JsonResponse({
+
+        "success": True,
+
+        "message":
+        "Warehouse added successfully",
+
+        "warehouse_id":
+        warehouse.id
+
+    })
+
+
+
+
+def edit_warehouse(request, id):
+
+    warehouse = get_object_or_404(
+        Warehouse,
+        id=id
+    )
+
+    data = {
+
+        "id": warehouse.id,
+        "name": warehouse.name,
+        "type": warehouse.type,
+        "city": warehouse.city,
+        "state": warehouse.state,
+        "area": warehouse.area,
+        "zip_code": warehouse.zip_code,
+        "label_code": warehouse.label_code,
+        "address": warehouse.address,
+
+    }
+
+    return JsonResponse(data)
+
+
+
+## delete warehouse
+
+@require_POST
+def delete_warehouse(request, id):
+
+    try:
+
+        warehouse =Warehouse.objects.get(id=id)
+
+        warehouse.delete()
+
+        return JsonResponse({
+
+            "success": True,
+            "message":
+            "Warehouse deleted successfully"
+
+        })
+
+    except Warehouse.DoesNotExist:
+
+        return JsonResponse({
+
+            "success": False,
+            "message":
+            "Warehouse not found"
+
+        })
+
+
+
+
+
+
+
+## Tracking update
+
+def tracking_updates(request):
+
+    q =request.GET.get("q", "")
+
+    tracking_updates =TrackingUpdate.objects.select_related(
+        "package",
+        "warehouse",
+        "updated_by"
+    ).order_by("-created_at")
+
+
+    # SEARCH
+    if q:
+
+        tracking_updates =tracking_updates.filter(
+
+            Q(
+                package__tracking_number__icontains=q
+            )
+
+            |
+
+            Q(
+                package__code__icontains=q
+            )
+
+        )
+
+
+    # PAGINATION
+    paginator =Paginator(tracking_updates, 20)
+
+    page_number =request.GET.get("page")
+
+    page_obj =paginator.get_page(page_number)
+
+
+    # STATS
+    total_updates =tracking_updates.count()
+
+    in_transit =tracking_updates.filter(
+        status="in_transit"
+    ).count()
+
+    delivered =tracking_updates.filter(
+        status="delivered"
+    ).count()
+
+    latest_update =tracking_updates.first()
+
+
+    context = {
+
+        "tracking_updates":
+        page_obj,
+
+        "page_obj":
+        page_obj,
+
+        "q":
+        q,
+
+        "total_updates":
+        total_updates,
+
+        "in_transit":
+        in_transit,
+
+        "delivered":
+        delivered,
+
+        "latest_update":
+        latest_update,
+
+    }
+
+
+    # AJAX LOAD
+    if request.headers.get(
+        "x-requested-with"
+    ) == "XMLHttpRequest":
+
+        return render(
+
+            request,
+
+            "dashboard/partials/tracking_tableau.html",
+
+            context
+
+        )
+
+
+    return render(
+
+        request,
+
+        "dashboard/base.html",
+
+        context
+
+    )
+
+
+
+# =========================================
+# DELETE TRACKING UPDATE
+# =========================================
+
+@require_POST
+def delete_tracking_update(request, id):
+
+    tracking =get_object_or_404(
+        TrackingUpdate,
+        id=id
+    )
+
+    tracking.delete()
+
+    return JsonResponse({
+
+        "success": True,
+
+        "message":
+        "Tracking update deleted"
+
+    })
+
+
+
+
+
+
+# =========================================
+# CATEGORY LIST
+# =========================================
+
+def categories(request):
+
+    q = request.GET.get("q", "")
+
+    categories = (
+        Category.objects
+        .all()
+        .order_by("-id")
+    )
+
+
+
+    # SEARCH
+    if q:
+
+        categories = (
+            categories.filter(
+                Q(name__icontains=q)
+            )
+        )
+
+
+
+    # PAGINATION
+    paginator = Paginator(
+        categories,
+        10
+    )
+
+    page_number =request.GET.get("page")
+
+    page_obj =paginator.get_page(page_number)
+
+
+
+    context = {
+
+        "categories":
+        page_obj,
+
+        "page_obj":
+        page_obj,
+
+        "q":
+        q,
+
+    }
+
+
+
+    # AJAX LOAD
+    if request.headers.get(
+        "x-requested-with"
+    ) == "XMLHttpRequest":
+
+        return render(
+
+            request,
+
+            "dashboard/partials/category_table.html",
+
+            context
+
+        )
+
+
+
+    return render(
+
+        request,
+
+        "dashboard/base.html",
+
+        context
+
+    )
+
+
+
+
+
+# =========================================
+# ADD CATEGORY
+# =========================================
+
+@require_POST
+def add_category(request):
+
+    name =request.POST.get("name")
+
+    surcharge =request.POST.get("surcharge")
+
+    errors = {}
+
+
+
+    # VALIDATION
+    if not name:
+
+        errors["name"] ="Category name required"
+
+
+
+    if not surcharge:
+
+        errors["surcharge"] ="Surcharge required"
+
+
+
+    # RETURN ERRORS
+    if errors:
+
+        return JsonResponse({
+
+            "success": False,
+
+            "errors": errors
+
+        })
+
+
+
+    # CREATE
+    category =Category.objects.create(
+
+        name=name,
+
+        surcharge=surcharge
+
+    )
+
+
+
+    return JsonResponse({
+
+        "success": True,
+
+        "message":
+        "Category added successfully",
+
+        "category_id":
+        category.id
+
+    })
+
+
+
+
+
+# =========================================
+# EDIT CATEGORY
+# =========================================
+
+def edit_category(request, id):
+
+    category =get_object_or_404(
+        Category,
+        id=id
+    )
+
+
+
+    data = {
+
+        "id":
+        category.id,
+
+        "name":
+        category.name,
+
+        "surcharge":
+        str(category.surcharge),
+
+    }
+
+
+
+    return JsonResponse(data)
+
+
+
+
+
+# =========================================
+# UPDATE CATEGORY
+# =========================================
+
+@require_POST
+def update_category(request):
+
+    category_id =request.POST.get(
+        "category_id"
+    )
+
+
+
+    category =get_object_or_404(
+        Category,
+        id=category_id
+    )
+
+
+
+    name =request.POST.get("name")
+
+    surcharge =request.POST.get("surcharge")
+
+
+
+    errors = {}
+
+
+
+    # VALIDATION
+    if not name:
+
+        errors["name"] ="Category name required"
+
+
+
+    if not surcharge:
+
+        errors["surcharge"] ="Surcharge required"
+
+
+
+    if errors:
+
+        return JsonResponse({
+
+            "success": False,
+
+            "errors": errors
+
+        })
+
+
+
+    # UPDATE
+    category.name = name
+
+    category.surcharge = surcharge
+
+    category.save()
+
+
+
+    return JsonResponse({
+
+        "success": True,
+
+        "message":
+        "Category updated successfully"
+
+    })
+
+
+
+
+
+# =========================================
+# DELETE CATEGORY
+# =========================================
+
+@require_POST
+def delete_category(request, id):
+
+    category =get_object_or_404(
+        Category,
+        id=id
+    )
+
+    category.delete()
+
+
+
+    return JsonResponse({
+
+        "success": True,
+
+        "message":
+        "Category deleted successfully"
+
+    })
+
+
+
+
+
+
+
+# =========================================
+# CONTACTS PAGE
+# =========================================
+
+
+
+def contacts(request):
+
+    q = request.GET.get("q", "")
+
+    contacts = (
+        Contact.objects
+        .select_related("user")
+        .order_by("-created_at")
+    )
+
+
+
+    # SEARCH
+    if q:
+
+        contacts = (
+            contacts.filter(
+
+                Q(name__icontains=q)
+
+                |
+
+                Q(phone__icontains=q)
+
+                |
+
+                Q(email__icontains=q)
+
+            )
+        )
+
+
+
+    # PAGINATION
+    paginator = Paginator(
+        contacts,
+        10
+    )
+
+    page_number =request.GET.get("page")
+
+    page_obj =paginator.get_page(page_number)
+
+
+
+    # STATS
+    total_contacts =contacts.count()
+
+    guest_contacts =contacts.filter(
+        is_guest=True
+    ).count()
+
+    registered_contacts =contacts.filter(
+        is_guest=False
+    ).count()
+
+    latest_contact =contacts.first()
+
+
+
+    # CONTEXT
+    context = {
+
+        "contacts":
+        page_obj,
+
+        "page_obj":
+        page_obj,
+
+        "q":
+        q,
+
+        "total_contacts":
+        total_contacts,
+
+        "guest_contacts":
+        guest_contacts,
+
+        "registered_contacts":
+        registered_contacts,
+
+        "latest_contact":
+        latest_contact,
+
+    }
+
+
+
+    # AJAX LOAD
+    if request.headers.get(
+        "x-requested-with"
+    ) == "XMLHttpRequest":
+
+        return render(
+
+            request,
+
+            "dashboard/partials/contact_table.html",
+
+            context
+
+        )
+
+
+
+    return render(
+
+        request,
+
+        "dashboard/base.html",
+
+        context
+
+    )
+
+
+
+
+
+# =========================================
+# EDIT CONTACT
+# =========================================
+
+def edit_contact(request, id):
+
+    contact =get_object_or_404(
+        Contact,
+        id=id
+    )
+
+
+
+    data = {
+
+        "id":
+        contact.id,
+
+        "name":
+        contact.name,
+
+        "phone":
+        contact.phone,
+
+        "email":
+        contact.email,
+
+        "address":
+        contact.address,
+
+        "is_guest":
+        contact.is_guest,
+
+        "user":
+        contact.user.id
+        if contact.user else None,
+
+        "user_name":
+        contact.user.username
+        if contact.user else "",
+
+    }
+
+
+
+    return JsonResponse(data)
+
+
+
+
+# =========================================
+# UPDATE CONTACT
+# =========================================
+
+@require_POST
+def update_contact(request):
+
+    try:
+
+        # CONTACT ID
+        contact_id =request.POST.get(
+            "contact_id"
+        )
+
+
+
+        contact =get_object_or_404(
+
+            Contact,
+
+            id=contact_id
+
+        )
+
+
+
+
+        # USER
+        user_id =request.POST.get(
+            "user"
+        )
+
+
+
+        user = None
+
+        if user_id:
+
+            user =User.objects.filter(
+                id=user_id
+            ).first()
+
+
+
+
+        # UPDATE DATA
+        contact.user = user
+
+        contact.name =request.POST.get(
+            "name"
+        )
+
+        contact.phone =request.POST.get(
+            "phone"
+        )
+
+        contact.email =request.POST.get(
+            "email"
+        )
+
+        contact.address =request.POST.get(
+            "address"
+        )
+
+
+
+        # GUEST
+        contact.is_guest = (
+            True
+            if request.POST.get(
+                "is_guest"
+            )
+            else False
+        )
+
+
+
+
+        # SAVE
+        contact.save()
+
+
+
+
+        return JsonResponse({
+
+            "success": True,
+
+            "message":
+            "Contact updated successfully"
+
+        })
+
+
+
+
+    except Exception as e:
+
+        print(
+            "UPDATE CONTACT ERROR:",
+            e
+        )
+
+
+
+        return JsonResponse({
+
+            "success": False,
+
+            "message": str(e)
+
+        })
+
+
+
+
+
+# =========================================
+# DELETE CONTACT
+# =========================================
+
+@require_POST
+def delete_contact(request, id):
+
+    try:
+
+        contact =get_object_or_404(
+            Contact,
+            id=id
+        )
+
+
+
+        contact.delete()
+
+
+
+        return JsonResponse({
+
+            "success": True,
+
+            "message":
+            "Contact deleted successfully"
+
+        })
+
+
+
+    except Exception as e:
+
+        return JsonResponse({
+
+            "success": False,
+
+            "message": str(e)
+
+        })
+
+
+
+
+
+
+
+
+
+# =========================================
+# PRICING RULES PAGE
+# =========================================
+
+def pricing_rules(request):
+
+    q = request.GET.get("q", "")
+
+
+
+    pricing_rules =PricingRule.objects.all().order_by("-id")
+
+
+
+    # SEARCH
+    if q:
+
+        pricing_rules =pricing_rules.filter(
+
+            Q(
+                shipping_type__icontains=q
+            )
+
+        )
+
+
+
+    # PAGINATION
+    paginator =Paginator(
+        pricing_rules,
+        10
+    )
+
+
+
+    page_number =request.GET.get("page")
+
+
+
+    page_obj =paginator.get_page(page_number)
+
+
+
+
+    # STATS
+    total_rules =pricing_rules.count()
+
+
+
+
+    air_rules =pricing_rules.filter(
+        shipping_type="air"
+    ).count()
+
+
+
+
+    sea_rules =pricing_rules.filter(
+        shipping_type="sea"
+    ).count()
+
+
+
+
+    latest_rule =pricing_rules.first()
+
+
+
+
+    context = {
+
+        "pricing_rules":
+        page_obj,
+
+        "page_obj":
+        page_obj,
+
+        "q":
+        q,
+
+        "total_rules":
+        total_rules,
+
+        "air_rules":
+        air_rules,
+
+        "sea_rules":
+        sea_rules,
+
+        "latest_rule":
+        latest_rule,
+
+    }
+
+
+
+
+    # AJAX
+    if request.headers.get(
+        "x-requested-with"
+    ) == "XMLHttpRequest":
+
+        return render(
+
+            request,
+
+            "dashboard/partials/pricing_rule_table.html",
+
+            context
+
+        )
+
+
+
+
+    return render(
+
+        request,
+
+        "dashboard/base.html",
+
+        context
+
+    )
+
+
+
+
+
+# =========================================
+# CREATE PRICING RULE
+# =========================================
+
+@require_POST
+def create_pricing_rule(request):
+
+    shipping_type = request.POST.get(
+        "shipping_type"
+    )
+
+    price_per_lb = request.POST.get(
+        "price_per_lb"
+    )
+
+    volumetric_divisor = request.POST.get(
+        "volumetric_divisor"
+    )
+
+    minimum_charge = request.POST.get(
+        "minimum_charge"
+    )
+
+
+
+    errors = {}
+
+
+
+    # VALIDATION
+    if not shipping_type:
+
+        errors["shipping_type"] ="Shipping type required"
+
+
+
+    if not price_per_lb:
+
+        errors["price_per_lb"] ="Price required"
+
+
+
+    if not volumetric_divisor:
+
+        errors["volumetric_divisor"] ="Volumetric divisor required"
+
+
+
+    if not minimum_charge:
+
+        errors["minimum_charge"] ="Minimum charge required"
+
+
+
+
+    # ERRORS
+    if errors:
+
+        return JsonResponse({
+
+            "success": False,
+
+            "errors": errors
+
+        })
+
+
+
+
+    # CREATE
+    PricingRule.objects.create(
+
+        shipping_type=
+        shipping_type,
+
+        price_per_lb=
+        price_per_lb,
+
+        volumetric_divisor=
+        volumetric_divisor,
+
+        minimum_charge=
+        minimum_charge,
+
+    )
+
+
+
+
+    return JsonResponse({
+
+        "success": True,
+
+        "message":
+        "Pricing rule created successfully"
+
+    })
+
+
+
+
+
+# =========================================
+# EDIT PRICING RULE
+# =========================================
+
+def edit_pricing_rule(request, id):
+
+    pricing =get_object_or_404(
+
+        PricingRule,
+
+        id=id
+
+    )
+
+
+
+    data = {
+
+        "id":
+        pricing.id,
+
+        "shipping_type":
+        pricing.shipping_type,
+
+        "price_per_lb":
+        str(
+            pricing.price_per_lb
+        ),
+
+        "volumetric_divisor":
+        pricing.volumetric_divisor,
+
+        "minimum_charge":
+        str(
+            pricing.minimum_charge
+        ),
+
+    }
+
+
+
+    return JsonResponse(data)
+
+
+
+
+
+# =========================================
+# UPDATE PRICING RULE
+# =========================================
+
+@require_POST
+def update_pricing_rule(request):
+
+    try:
+
+        pricing_id =request.POST.get(
+            "pricing_id"
+        )
+
+
+
+        pricing =get_object_or_404(
+
+            PricingRule,
+
+            id=pricing_id
+
+        )
+
+
+
+        pricing.shipping_type =request.POST.get(
+            "shipping_type"
+        )
+
+
+
+        pricing.price_per_lb =request.POST.get(
+            "price_per_lb"
+        )
+
+
+
+        pricing.volumetric_divisor =request.POST.get(
+            "volumetric_divisor"
+        )
+
+
+
+        pricing.minimum_charge =request.POST.get(
+            "minimum_charge"
+        )
+
+
+
+        pricing.save()
+
+
+
+
+        return JsonResponse({
+
+            "success": True,
+
+            "message":
+            "Pricing rule updated successfully"
+
+        })
+
+
+
+    except Exception as e:
+
+        return JsonResponse({
+
+            "success": False,
+
+            "message": str(e)
+
+        })
+
+
+
+
+
+# =========================================
+# DELETE PRICING RULE
+# =========================================
+
+@require_POST
+def delete_pricing_rule(request, id):
+
+    try:
+
+        pricing =get_object_or_404(
+
+            PricingRule,
+
+            id=id
+
+        )
+
+
+
+        pricing.delete()
+
+
+
+
+        return JsonResponse({
+
+            "success": True,
+
+            "message":
+            "Pricing rule deleted successfully"
+
+        })
+
+
+
+    except Exception as e:
+
+        return JsonResponse({
+
+            "success": False,
+
+            "message": str(e)
+
+        })
+
+
+
+
+
+
+
+# =========================================
+# ROUTE PRICING PAGE
+# =========================================
+
+def route_pricings(request):
+
+    q = request.GET.get("q", "")
+
+
+
+    route_pricings =RoutePricing.objects.all().order_by("-id")
+
+
+
+    # SEARCH
+    if q:
+
+        route_pricings =route_pricings.filter(
+
+            Q(
+                origin_type__icontains=q
+            )
+
+            |
+
+            Q(
+                destination_type__icontains=q
+            )
+
+            |
+
+            Q(
+                shipping_type__icontains=q
+            )
+
+        )
+
+
+
+    # PAGINATION
+    paginator =Paginator(
+        route_pricings,
+        10
+    )
+
+
+
+    page_number =request.GET.get("page")
+
+
+
+    page_obj =paginator.get_page(page_number)
+
+
+
+
+    # STATS
+    total_routes =route_pricings.count()
+
+
+
+
+    air_routes =route_pricings.filter(
+        shipping_type="air"
+    ).count()
+
+
+
+
+    sea_routes =route_pricings.filter(
+        shipping_type="sea"
+    ).count()
+
+
+
+
+    latest_route =route_pricings.first()
+
+
+
+
+    context = {
+
+        "route_pricings":
+        page_obj,
+
+        "page_obj":
+        page_obj,
+
+        "q":
+        q,
+
+        "total_routes":
+        total_routes,
+
+        "air_routes":
+        air_routes,
+
+        "sea_routes":
+        sea_routes,
+
+        "latest_route":
+        latest_route,
+
+    }
+
+
+
+
+    # AJAX
+    if request.headers.get(
+        "x-requested-with"
+    ) == "XMLHttpRequest":
+
+        return render(
+
+            request,
+
+            "dashboard/partials/route_pricing_table.html",
+
+            context
+
+        )
+
+
+
+
+    return render(
+
+        request,
+
+        "dashboard/base.html",
+
+        context
+
+    )
+
+
+
+
+
+# =========================================
+# CREATE ROUTE PRICING
+# =========================================
+
+@require_POST
+def create_route_pricing(request):
+
+    origin_type =request.POST.get(
+        "origin_type"
+    )
+
+
+
+    destination_type =request.POST.get(
+        "destination_type"
+    )
+
+
+
+    shipping_type =request.POST.get(
+        "shipping_type"
+    )
+
+
+
+    price_per_lb =request.POST.get(
+        "price_per_lb"
+    )
+
+
+
+    errors = {}
+
+
+
+    if not origin_type:
+
+        errors["origin_type"] ="Origin required"
+
+
+
+    if not destination_type:
+
+        errors["destination_type"] ="Destination required"
+
+
+
+    if not shipping_type:
+
+        errors["shipping_type"] ="Shipping type required"
+
+
+
+    if not price_per_lb:
+
+        errors["price_per_lb"] ="Price required"
+
+
+
+
+    if errors:
+
+        return JsonResponse({
+
+            "success": False,
+
+            "errors": errors
+
+        })
+
+
+
+
+    RoutePricing.objects.create(
+
+        origin_type=
+        origin_type,
+
+        destination_type=
+        destination_type,
+
+        shipping_type=
+        shipping_type,
+
+        price_per_lb=
+        price_per_lb,
+
+    )
+
+
+
+
+    return JsonResponse({
+
+        "success": True,
+
+        "message":
+        "Route pricing created successfully"
+
+    })
+
+
+
+
+
+# =========================================
+# EDIT ROUTE PRICING
+# =========================================
+
+def edit_route_pricing(request, id):
+
+    route =get_object_or_404(
+
+        RoutePricing,
+
+        id=id
+
+    )
+
+
+
+    data = {
+
+        "id":
+        route.id,
+
+        "origin_type":
+        route.origin_type,
+
+        "destination_type":
+        route.destination_type,
+
+        "shipping_type":
+        route.shipping_type,
+
+        "price_per_lb":
+        str(
+            route.price_per_lb
+        ),
+
+    }
+
+
+
+    return JsonResponse(data)
+
+
+
+
+# =========================================
+# UPDATE ROUTE PRICING
+# =========================================
+
+@require_POST
+def update_route_pricing(request):
+
+    try:
+
+        route_id =request.POST.get(
+            "route_id"
+        )
+
+
+
+        route =get_object_or_404(
+
+            RoutePricing,
+
+            id=route_id
+
+        )
+
+
+
+        route.origin_type =request.POST.get(
+            "origin_type"
+        )
+
+
+
+        route.destination_type =request.POST.get(
+            "destination_type"
+        )
+
+
+
+        route.shipping_type =request.POST.get(
+            "shipping_type"
+        )
+
+
+
+        route.price_per_lb =request.POST.get(
+            "price_per_lb"
+        )
+
+
+
+        route.save()
+
+
+
+
+        return JsonResponse({
+
+            "success": True,
+
+            "message":
+            "Route pricing updated successfully"
+
+        })
+
+
+
+    except Exception as e:
+
+        return JsonResponse({
+
+            "success": False,
+
+            "message": str(e)
+
+        })
+
+
+
+
+# =========================================
+# DELETE ROUTE PRICING
+# =========================================
+
+@require_POST
+def delete_route_pricing(request, id):
+
+    try:
+
+        route =get_object_or_404(
+
+            RoutePricing,
+
+            id=id
+
+        )
+
+
+
+        route.delete()
+
+
+
+
+        return JsonResponse({
+
+            "success": True,
+
+            "message":
+            "Route pricing deleted successfully"
+
+        })
+
+
+
+    except Exception as e:
+
+        return JsonResponse({
+
+            "success": False,
+
+            "message": str(e)
+
+        })

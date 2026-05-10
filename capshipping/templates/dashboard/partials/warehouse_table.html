@@ -1,0 +1,449 @@
+<section class="users_managements">
+
+
+
+
+
+
+<div class="title_head" style="padding:0px 0px 50px 0">
+
+
+        <p>Shipment Warehouse</p>
+
+    <span style="display:flex; padding:10px 0px ; opacity:60% ; font-size:13px">dashboard/warehouses</span>
+
+
+</div>
+
+<div class="botton_add_download">
+
+<button type="button" id="openWarehouseModal">
+    <i class="bx bx-user-plus"></i>
+    <span>Add warehouse</span>
+</button>
+</div>
+
+    <div class="user_tableau">
+
+    <!-- 🔍 TOP BAR -->
+    <div class="table_header">
+
+       <form id="searchForm" class="search_users">
+
+          <input type="text"
+                 name="q"
+                 id="searchInput"
+                 placeholder="Search warehouse..."
+                 value="{{ q }}">
+
+         <button type="submit">Search</button>
+
+      </form>
+
+        <div class="table_actions">
+            <button id="deleteSelected">
+                <i class='bx bxs-trash-alt'></i>
+                Delete Selected
+            </button>
+
+            <span id="selectedCount">
+                0 of {{ page_obj.paginator.count }} selected
+            </span>
+        </div>
+
+    </div>
+
+
+    <!-- 📊 TABLE -->
+    <div class="table_wrapper">
+
+    <table class="users_table">
+
+        <thead>
+            <tr>
+                <th>
+                    <input type="checkbox" id="selectAll">
+                </th>
+
+                <th>Warehouse</th>
+                <th>Type</th>
+                <th>City</th>
+                <th>Area</th>
+                <th>Zip Code</th>
+                <th>Label</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+
+<tbody>
+
+{% for warehouse in warehouses %}
+
+<tr data-warehouse-id="{{ warehouse.id }}">
+
+    <!-- CHECKBOX -->
+    <td>
+        <input type="checkbox"
+               class="rowCheck"
+               value="{{ warehouse.id }}">
+    </td>
+
+    <!-- NAME -->
+    <td class="user_info">
+
+        <div class="avatar">
+            {{ warehouse.name|slice:":1"|upper }}
+        </div>
+
+        <div>
+            <span>{{ warehouse.name }}</span><br>
+            <span class="suit_code">
+                {{ warehouse.address|truncatechars:35 }}
+            </span>
+        </div>
+
+    </td>
+
+    <!-- TYPE -->
+    <td>
+        <span class="role admin">
+            {{ warehouse.type }}
+        </span>
+    </td>
+
+    <!-- CITY -->
+    <td>{{ warehouse.city }}</td>
+
+    <!-- AREA -->
+    <td>{{ warehouse.area }}</td>
+
+    <!-- ZIP -->
+    <td>{{ warehouse.zip_code }}</td>
+
+    <!-- LABEL -->
+    <td>{{ warehouse.label_code }}</td>
+
+    <!-- ACTIONS -->
+    <td class="action_cell">
+
+        <button class="more_btn">
+            •••
+        </button>
+
+        <div class="dropdown_menu">
+
+            <!-- VIEW -->
+            <div class="dropdown_item edit_warehouse_btn"
+     data-id="{{ warehouse.id }}">
+
+                <i class='bx bx-show'></i>
+                <span>View Details</span>
+
+            </div>
+
+            <!-- EDIT -->
+            <div class="dropdown_item edit_warehouse_btn"
+     data-id="{{ warehouse.id }}">
+
+    <i class='bx bx-edit'></i>
+
+    <span>Edit Warehouse</span>
+
+</div>
+
+            <!-- DELETE -->
+            <div class="dropdown_item danger"
+                 data-action="delete"
+                 data-url="/api/delete-warehouse/{{ warehouse.id }}/">
+
+                <i class='bx bx-trash'></i>
+                <span>Delete</span>
+
+            </div>
+
+        </div>
+
+    </td>
+
+</tr>
+
+{% empty %}
+
+<tr>
+    <td colspan="8" style="text-align:center;">
+        No warehouses found
+    </td>
+</tr>
+
+{% endfor %}
+
+</tbody>
+
+    </table>
+
+    </div>
+
+
+<!-- 📄 PAGINATION -->
+<div class="pagination">
+
+    <div class="page_info">
+        Showing
+        {{ page_obj.start_index }}–{{ page_obj.end_index }}
+        of
+        {{ page_obj.paginator.count }}
+        warehouses
+    </div>
+
+    <div class="page_controls">
+
+        <!-- PREV -->
+        {% if page_obj.has_previous %}
+            <button type="button"
+                    data-url="/panel/warehouses/?page={{ page_obj.previous_page_number }}">
+                ← Prev
+            </button>
+        {% else %}
+            <button type="button" disabled>
+                ← Prev
+            </button>
+        {% endif %}
+
+        <!-- CURRENT -->
+        <span class="current_page">
+            Page {{ page_obj.number }}
+            of
+            {{ page_obj.paginator.num_pages }}
+        </span>
+
+        <!-- NEXT -->
+        {% if page_obj.has_next %}
+            <button type="button"
+                    data-url="/panel/warehouses/?page={{ page_obj.next_page_number }}">
+                Next →
+            </button>
+        {% else %}
+            <button type="button" disabled>
+                Next →
+            </button>
+        {% endif %}
+
+    </div>
+
+</div>
+
+</div>
+
+
+
+
+
+    <!---------pop up add warehouse --------->
+
+
+    <!-- ========================= -->
+<!-- WAREHOUSE MODAL -->
+<!-- ========================= -->
+
+<div class="warehouse_modal" id="warehouseModal">
+
+    <div class="warehouse_modal_content">
+
+        <!-- CLOSE -->
+        <div class="close_modal" id="closeWarehouseModal">
+            <i class='bx bx-x'></i>
+        </div>
+
+        <form id="warehouseForm" method="POST">
+
+            {% csrf_token %}
+            <input type="hidden"
+       name="warehouse_id"
+       id="warehouse_id">
+
+            <div class="grid_layout">
+
+                <!-- LEFT SIDE -->
+                <div class="left_content_add">
+
+                    <!-- WAREHOUSE INFO -->
+                    <div class="warehouse_information">
+
+                        <h3>Warehouse information</h3>
+
+                        <!-- NAME -->
+                        <label>Warehouse name</label>
+
+                        <input type="text"
+                               name="name"
+                               placeholder="e.g Miami warehouse">
+
+                        <!-- TYPE -->
+                        <label>Warehouse type</label>
+
+                        <select name="type">
+
+                            <option value="">Select warehouse type</option>
+
+                            <option value="USA">🇺🇸 USA</option>
+
+                            <option value="HT">🇭🇹 Haiti</option>
+
+                            <option value="RD">🇩🇴 Dominican Republic</option>
+
+                        </select>
+
+                        <!-- CITY / STATE -->
+                        <div class="countr_state_city">
+
+                            <div class="city">
+
+                                <label>City</label>
+
+                                <input type="text"
+                                       name="city"
+                                       placeholder="e.g Miami">
+
+                            </div>
+
+                            <div class="state">
+
+                                <label>State</label>
+
+                                <input type="text"
+                                       name="state"
+                                       placeholder="e.g Florida">
+
+                            </div>
+
+                        </div>
+
+                        <!-- AREA / ZIP -->
+                        <div class="countr_state_city">
+
+                            <div class="city">
+
+                                <label>Area</label>
+
+                                <input type="text"
+                                       name="area"
+                                       placeholder="e.g Delmas 32">
+
+                            </div>
+
+                            <div class="state">
+
+                                <label>Zip code</label>
+
+                                <input type="text"
+                                       name="zip_code"
+                                       placeholder="e.g 33166">
+
+                            </div>
+
+                        </div>
+
+                        <!-- LABEL -->
+                        <label>Label code</label>
+
+                        <input type="text"
+                               name="label_code"
+                               maxlength="3"
+                               placeholder="e.g MIA">
+
+                        <!-- ADDRESS -->
+                        <label>Full address</label>
+
+                        <textarea name="address"
+                                  placeholder="Enter full warehouse address"></textarea>
+
+                    </div>
+
+                </div>
+
+                <!-- RIGHT SIDE -->
+                <div class="right_content_add">
+
+                    <!-- ALERT -->
+                    <div id="alertBox" class="alert hidden">
+
+                        <div class="alert_content">
+
+                            <i id="alertIcon"
+                               class='bx bx-check-circle'></i>
+
+                            <span id="alertMessage">
+                                Warehouse created successfully
+                            </span>
+
+                        </div>
+
+                        <i class='bx bx-x close_alert'
+                           id="closeAlert"></i>
+
+                    </div>
+
+                    <!-- ACTION -->
+                    <div class="action">
+
+                        <span>Action</span>
+
+                        <!-- SAVE -->
+                        <button type="submit"
+                                id="save_warehouse"
+                                class="save_user">
+
+                            <i class='bx bx-save'></i>
+                            Save warehouse
+
+                        </button>
+
+                        <!-- CANCEL -->
+                        <button type="button"
+                                id="cancelWarehouse"
+                                class="cancel_process">
+
+                            <i class='bx bx-x'></i>
+                            Cancel
+
+                        </button>
+
+                    </div>
+
+
+
+
+                    <!-- INFO -->
+                    <div class="informations">
+
+                        <div class="warning">
+
+                            <i class='bx bx-info-circle'></i>
+
+                            <h4>information</h4>
+
+                        </div>
+
+                        <p>
+                            Warehouses are used to manage shipment locations,
+                            pickup operations, and package tracking.
+                        </p>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </form>
+
+    </div>
+
+</div>
+
+
+
+</section>
+
+
+

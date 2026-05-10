@@ -1,0 +1,544 @@
+<section class="users_managements shipment_manage contact_management">
+
+    <!-- ========================= -->
+    <!-- PAGE HEADER -->
+    <!-- ========================= -->
+
+    <div class="title_head shiment_title">
+
+        <p>Shipment Contacts</p>
+
+        <span>
+
+            manage customer and guest contacts
+
+        </span>
+
+    </div>
+
+
+
+
+    <!-- ========================= -->
+    <!-- STATS -->
+    <!-- ========================= -->
+
+    <div class="statistic_grid static_shipments">
+
+        <!-- TOTAL CONTACTS -->
+        <div class="item_shipment">
+
+            <div class="icon_statistic">
+
+                <i class='bx bx-user'></i>
+
+            </div>
+
+            <div class="item_shipment_name">
+
+                <span>
+
+                    {{ total_contacts }}
+
+                </span>
+
+                <p>
+
+                    Total Contacts
+
+                </p>
+
+            </div>
+
+        </div>
+
+
+
+
+        <!-- GUEST CONTACTS -->
+        <div class="item_shipment">
+
+            <div class="icon_statistic">
+
+                <i class='bx bx-user-x'></i>
+
+            </div>
+
+            <div class="item_shipment_name">
+
+                <span>
+
+                    {{ guest_contacts }}
+
+                </span>
+
+                <p>
+
+                    Guest Contacts
+
+                </p>
+
+            </div>
+
+        </div>
+
+
+
+
+        <!-- REGISTERED USERS -->
+        <div class="item_shipment">
+
+            <div class="icon_statistic">
+
+                <i class='bx bx-user-check'></i>
+
+            </div>
+
+            <div class="item_shipment_name">
+
+                <span>
+
+                    {{ registered_contacts }}
+
+                </span>
+
+                <p>
+
+                    Registered Users
+
+                </p>
+
+            </div>
+
+        </div>
+
+
+
+
+        <!-- LAST CONTACT -->
+        <div class="item_shipment">
+
+            <div class="icon_statistic">
+
+                <i class='bx bx-time'></i>
+
+            </div>
+
+            <div class="item_shipment_name">
+
+                <span>
+
+                    {% if latest_contact %}
+
+                        {{ latest_contact.created_at|timesince }}
+
+                    {% else %}
+
+                        0 min
+
+                    {% endif %}
+
+                </span>
+
+                <p>
+
+                    Last Contact
+
+                </p>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+
+
+
+    <!-- ========================= -->
+    <!-- ADD BUTTON -->
+    <!-- ========================= -->
+
+    <div class="botton_add_download">
+
+        <button type="button"
+                id="openContactModal">
+
+            <i class="bx bx-user-plus"></i>
+
+            <span>
+
+                Add Contact
+
+            </span>
+
+        </button>
+
+    </div>
+
+
+
+
+
+    <!-- ========================= -->
+    <!-- TABLE -->
+    <!-- ========================= -->
+
+    <div class="user_tableau">
+
+
+        <!-- TOP BAR -->
+        <div class="table_header">
+
+            <!-- SEARCH -->
+            <form id="contactSearchForm"
+                  class="search_users">
+
+                <input type="text"
+                       name="q"
+                       id="contactSearchInput"
+                       placeholder="Search contact..."
+                       value="{{ q }}">
+
+                <button type="submit">
+
+                    Search
+
+                </button>
+
+            </form>
+
+
+
+            <!-- ACTIONS -->
+            <div class="table_actions">
+
+                <button id="deleteSelectedContact">
+
+                    <i class='bx bxs-trash-alt'></i>
+
+                    Delete Selected
+
+                </button>
+
+
+                <span id="selectedCount">
+
+                    0 of
+
+                    {{ page_obj.paginator.count }}
+
+                    selected
+
+                </span>
+
+            </div>
+
+        </div>
+
+
+
+
+
+        <!-- TABLE -->
+        <div class="table_wrapper">
+
+           <table class="users_table shipment_packages">
+
+    <thead>
+
+        <tr>
+
+            <th>
+
+                <input type="checkbox"
+                       id="selectAll">
+
+            </th>
+
+            <th>Contact</th>
+            <th>Phone</th>
+            <th>Email</th>
+            <th>Status</th>
+            <th>Created</th>
+            <th>Actions</th>
+
+        </tr>
+
+    </thead>
+
+
+
+
+    <tbody>
+
+    {% for contact in contacts %}
+
+    <tr data-contact-id="{{ contact.id }}">
+
+        <!-- CHECKBOX -->
+        <td>
+
+            <input type="checkbox"
+                   class="rowCheck"
+                   value="{{ contact.id }}"
+                   data-url="/api/delete-contact/{{ contact.id }}/">
+
+        </td>
+
+
+
+
+        <!-- CONTACT -->
+        <td class="user_info">
+
+            <div class="avatar">
+
+                {{ contact.name|slice:":1"|upper }}
+
+            </div>
+
+            <div>
+
+                <span>
+
+                    {{ contact.name }}
+
+                </span>
+
+                <br>
+
+                <span class="suit_code">
+
+                    {{ contact.address|truncatechars:35 }}
+
+                </span>
+
+            </div>
+
+        </td>
+
+
+
+
+        <!-- PHONE -->
+        <td>
+
+            {{ contact.phone }}
+
+        </td>
+
+
+
+
+        <!-- EMAIL -->
+        <td>
+
+            {% if contact.email %}
+
+                {{ contact.email }}
+
+            {% else %}
+
+                N/A
+
+            {% endif %}
+
+        </td>
+
+
+
+
+        <!-- STATUS -->
+        <td>
+
+            {% if contact.is_guest %}
+
+                <span class="status pending">
+
+                    Guest
+
+                </span>
+
+            {% else %}
+
+                <span class="status delivered">
+
+                    Registered
+
+                </span>
+
+            {% endif %}
+
+        </td>
+
+
+
+
+        <!-- CREATED -->
+        <td>
+
+            {{ contact.created_at|date:"M d, Y" }}
+
+        </td>
+
+
+
+
+        <!-- ACTIONS -->
+        <td class="action_cell">
+
+            <button class="more_btn">
+
+                •••
+
+            </button>
+
+            <div class="dropdown_menu">
+
+                <!-- EDIT -->
+                <div class="dropdown_item edit_contact_btn"
+                     data-id="{{ contact.id }}">
+
+                    <i class='bx bx-edit'></i>
+
+                    <span>
+
+                        Edit Contact
+
+                    </span>
+
+                </div>
+
+
+
+                <!-- DELETE -->
+                <div class="dropdown_item danger"
+                     data-action="delete"
+                     data-url="/api/delete-contact/{{ contact.id }}/">
+
+                    <i class='bx bx-trash'></i>
+
+                    <span>
+
+                        Delete
+
+                    </span>
+
+                </div>
+
+            </div>
+
+        </td>
+
+    </tr>
+
+    {% empty %}
+
+    <tr>
+
+        <td colspan="7"
+            style="text-align:center;">
+
+            No contacts found
+
+        </td>
+
+    </tr>
+
+    {% endfor %}
+
+    </tbody>
+
+</table>
+            </table>
+
+        </div>
+
+
+
+
+
+        <!-- PAGINATION -->
+        <div class="pagination">
+
+            <div class="page_info">
+
+                Showing
+
+                {{ page_obj.start_index }}–
+
+                {{ page_obj.end_index }}
+
+                of
+
+                {{ page_obj.paginator.count }}
+
+                contacts
+
+            </div>
+
+            <div class="page_controls">
+
+                {% if page_obj.has_previous %}
+
+                    <button type="button"
+                            data-url="/panel/contacts/?page={{ page_obj.previous_page_number }}">
+
+                        ← Prev
+
+                    </button>
+
+                {% else %}
+
+                    <button type="button"
+                            disabled>
+
+                        ← Prev
+
+                    </button>
+
+                {% endif %}
+
+
+
+                <span class="current_page">
+
+                    Page {{ page_obj.number }}
+
+                    of
+
+                    {{ page_obj.paginator.num_pages }}
+
+                </span>
+
+
+
+                {% if page_obj.has_next %}
+
+                    <button type="button"
+                            data-url="/panel/contacts/?page={{ page_obj.next_page_number }}">
+
+                        Next →
+
+                    </button>
+
+                {% else %}
+
+                    <button type="button"
+                            disabled>
+
+                        Next →
+
+                    </button>
+
+                {% endif %}
+
+            </div>
+
+        </div>
+
+    </div>
+
+</section>

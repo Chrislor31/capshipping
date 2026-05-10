@@ -1,0 +1,623 @@
+<section class="users_managements pricing_management">
+
+    <!-- TITLE -->
+    <div class="title_head"
+         style="padding:0px 0px 50px 0">
+
+        <p>Pricing Rules</p>
+
+        <span style="display:flex;
+                     padding:10px 0px;
+                     opacity:60%;
+                     font-size:13px">
+
+            dashboard/pricing-rules
+
+        </span>
+
+    </div>
+
+
+
+
+
+    <!-- STATS -->
+    <div class="statistic_grid static_shipments">
+
+        <!-- TOTAL -->
+        <div class="item_shipment">
+
+            <div class="icon_statistic">
+
+                <i class='bx bx-dollar-circle'></i>
+
+            </div>
+
+            <div class="item_shipment_name">
+
+                <span>
+
+                    {{ total_rules }}
+
+                </span>
+
+                <p>
+
+                    Total Rules
+
+                </p>
+
+            </div>
+
+        </div>
+
+
+
+
+        <!-- AIR -->
+        <div class="item_shipment">
+
+            <div class="icon_statistic">
+
+                <i class='bx bx-plane'></i>
+
+            </div>
+
+            <div class="item_shipment_name">
+
+                <span>
+
+                    {{ air_rules }}
+
+                </span>
+
+                <p>
+
+                    Air Pricing
+
+                </p>
+
+            </div>
+
+        </div>
+
+
+
+
+        <!-- SEA -->
+        <div class="item_shipment">
+
+            <div class="icon_statistic">
+
+                <i class='bx bx-ship'></i>
+
+            </div>
+
+            <div class="item_shipment_name">
+
+                <span>
+
+                    {{ sea_rules }}
+
+                </span>
+
+                <p>
+
+                    Sea Pricing
+
+                </p>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+
+
+
+    <!-- ADD BUTTON -->
+    <div class="botton_add_download">
+
+        <button type="button"
+                id="openPricingModal">
+
+            <i class="bx bx-dollar"></i>
+
+            <span>
+
+                Add Pricing Rule
+
+            </span>
+
+        </button>
+
+    </div>
+
+
+
+
+
+    <!-- TABLE -->
+    <div class="user_tableau">
+
+        <!-- TOP -->
+        <div class="table_header">
+
+            <form id="pricingSearchForm"
+                  class="search_users">
+
+                <input type="text"
+                       name="q"
+                       id="pricingSearchInput"
+                       placeholder="Search pricing..."
+                       value="{{ q }}">
+
+                <button type="submit">
+
+                    Search
+
+                </button>
+
+            </form>
+
+
+
+
+            <div class="table_actions">
+
+                <button id="deleteSelectedPricing">
+
+                    <i class='bx bxs-trash-alt'></i>
+
+                    Delete Selected
+
+                </button>
+
+                <span id="selectedCount">
+
+                    0 of
+
+                    {{ page_obj.paginator.count }}
+
+                    selected
+
+                </span>
+
+            </div>
+
+        </div>
+
+
+
+
+
+        <!-- TABLE -->
+        <div class="table_wrapper">
+
+            <table class="users_table">
+
+                <thead>
+
+                    <tr>
+
+                        <th>
+
+                            <input type="checkbox"
+                                   id="selectAll">
+
+                        </th>
+
+                        <th>Shipping Type</th>
+                        <th>Price/LB</th>
+                        <th>Volumetric Divisor</th>
+                        <th>Minimum Charge</th>
+                        <th>Actions</th>
+
+                    </tr>
+
+                </thead>
+
+
+
+
+<tbody>
+
+{% for rule in pricing_rules %}
+
+<tr data-pricing-id="{{ rule.id }}">
+
+    <!-- CHECKBOX -->
+    <td>
+
+       <input type="checkbox"
+       class="rowCheck"
+       value="{{ rule.id }}"
+       data-url="/api/delete-pricing-rule/{{ rule.id }}/">
+
+    </td>
+
+
+
+
+    <!-- TYPE -->
+    <td class="user_info">
+
+        <div class="avatar">
+
+            {% if rule.shipping_type == "air" %}
+
+                <i class='bx bx-plane'></i>
+
+            {% else %}
+
+                <i class='bx bx-ship'></i>
+
+            {% endif %}
+
+        </div>
+
+        <div>
+
+            <span>
+
+                {{ rule.shipping_type|title }}
+
+            </span>
+
+            <br>
+
+            <span class="suit_code">
+
+                Shipping pricing
+
+            </span>
+
+        </div>
+
+    </td>
+
+
+
+
+    <!-- PRICE -->
+    <td>
+
+        ${{ rule.price_per_lb }}
+
+    </td>
+
+
+
+
+    <!-- DIVISOR -->
+    <td>
+
+        {{ rule.volumetric_divisor }}
+
+    </td>
+
+
+
+
+    <!-- MINIMUM -->
+    <td>
+
+        ${{ rule.minimum_charge }}
+
+    </td>
+
+
+
+
+    <!-- ACTIONS -->
+    <td class="action_cell">
+
+        <button class="more_btn">
+
+            •••
+
+        </button>
+
+        <div class="dropdown_menu">
+
+            <!-- EDIT -->
+            <div class="dropdown_item edit_pricing_btn"
+                 data-id="{{ rule.id }}">
+
+                <i class='bx bx-edit'></i>
+
+                <span>
+
+                    Edit Pricing
+
+                </span>
+
+            </div>
+
+
+
+            <!-- DELETE -->
+            <div class="dropdown_item danger"
+                 data-action="delete"
+                 data-url="/api/delete-pricing-rule/{{ rule.id }}/">
+
+                <i class='bx bx-trash'></i>
+
+                <span>
+
+                    Delete
+
+                </span>
+
+            </div>
+
+        </div>
+
+    </td>
+
+</tr>
+
+{% empty %}
+
+<tr>
+
+    <td colspan="6"
+        style="text-align:center;">
+
+        No pricing rules found
+
+    </td>
+
+</tr>
+
+{% endfor %}
+
+</tbody>
+
+            </table>
+
+        </div>
+
+    </div>
+
+
+
+
+
+    <!-- ================================= -->
+<!-- PRICING MODAL -->
+<!-- ================================= -->
+
+<div class="warehouse_modal"
+     id="pricingModal">
+
+    <div class="warehouse_modal_content">
+
+        <!-- CLOSE -->
+        <div class="close_modal"
+             id="closePricingModal">
+
+            <i class='bx bx-x'></i>
+
+        </div>
+
+
+
+        <!-- FORM -->
+        <form id="pricingForm">
+
+            {% csrf_token %}
+
+            <!-- UPDATE ID -->
+            <input type="hidden"
+                   name="pricing_id"
+                   id="pricing_id">
+
+
+
+
+            <div class="grid_layout">
+
+                <!-- LEFT -->
+                <div class="left_content_add">
+
+                    <div class="warehouse_information">
+
+                        <h3 id="pricingModalTitle">
+
+                            Pricing information
+
+                        </h3>
+
+
+
+
+                        <!-- SHIPPING TYPE -->
+                        <label>
+
+                            Shipping Type
+
+                        </label>
+
+                        <select name="shipping_type">
+
+                            <option value="">
+
+                                Select type
+
+                            </option>
+
+                            <option value="air">
+
+                                Air
+
+                            </option>
+
+                            <option value="sea">
+
+                                Sea
+
+                            </option>
+
+                        </select>
+
+
+
+
+                        <!-- PRICE -->
+                        <label>
+
+                            Price per LB
+
+                        </label>
+
+                        <input type="number"
+                               step="0.01"
+                               name="price_per_lb"
+                               placeholder="e.g 3.50">
+
+
+
+
+                        <!-- VOLUMETRIC -->
+                        <label>
+
+                            Volumetric divisor
+
+                        </label>
+
+                        <input type="number"
+                               name="volumetric_divisor"
+                               placeholder="e.g 139">
+
+
+
+
+                        <!-- MINIMUM -->
+                        <label>
+
+                            Minimum charge
+
+                        </label>
+
+                        <input type="number"
+                               step="0.01"
+                               name="minimum_charge"
+                               placeholder="e.g 25.00">
+
+                    </div>
+
+                </div>
+
+
+
+
+                <!-- RIGHT -->
+                <div class="right_content_add">
+
+
+                    <!-- ALERT -->
+                    <div id="alertBox"
+                         class="alert hidden">
+
+                        <div class="alert_content">
+
+                            <i id="alertIcon"
+                               class='bx bx-check-circle'></i>
+
+                            <span id="alertMessage">
+
+                                Pricing created
+
+                            </span>
+
+                        </div>
+
+                        <i class='bx bx-x close_alert'
+                           id="closeAlert"></i>
+
+                    </div>
+
+
+
+
+                    <!-- ACTION -->
+                    <div class="action">
+
+                        <span>
+
+                            Action
+
+                        </span>
+
+
+
+
+                        <!-- SAVE -->
+                        <button type="submit"
+                                id="save_pricing"
+                                class="save_user">
+
+                            <i class='bx bx-save'></i>
+
+                            Save pricing
+
+                        </button>
+
+
+
+
+                        <!-- CANCEL -->
+                        <button type="button"
+                                id="cancelPricing"
+                                class="cancel_process">
+
+                            <i class='bx bx-x'></i>
+
+                            Cancel
+
+                        </button>
+
+                    </div>
+
+
+
+
+                    <!-- INFO -->
+                    <div class="informations">
+
+                        <div class="warning">
+
+                            <i class='bx bx-info-circle'></i>
+
+                            <h4>
+
+                                information
+
+                            </h4>
+
+                        </div>
+
+                        <p>
+
+                            Pricing rules define
+                            shipment cost calculations
+                            automatically.
+
+                        </p>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </form>
+
+    </div>
+
+</div>
+
+</section>

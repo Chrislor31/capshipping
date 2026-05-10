@@ -30,9 +30,9 @@
                 </span>
 
                 <div class="all_details">
-                    <p>PKG-0001 <span>delivered</span></p>
+                    <p>{{ package.code }}<span class="status">{{ package.status|title }}</span></p>
                     <p>Tracking Number</p>
-                    <p>CSD2498257 <span><i class='bx bx-copy'></i></span></p>
+                    <p>{{ package.tracking_number }} <span><i class='bx bx-copy'></i></span></p>
                 </div>
 
             </div>
@@ -44,28 +44,36 @@
 
             <div class="shipment-date">
 
-                <p>Shipment date</p>
-                <p><span><i class='bx bx-calendar-minus'></i></span>may, 20 2026</p>
-                <p>10:30AM</p>
+    <p>Shipment date</p>
+    <p>
+        <span><i class='bx bx-calendar-minus'></i></span>
+        {{ package.created_at|date:"M d, Y" }}
+    </p>
+    <p>{{ package.created_at|time:"h:i A" }}</p>
 
-            </div>
+</div>
 
-            <div class="shipment-date">
+<div class="shipment-date">
 
-                <p>Created by</p>
-                <p><span><i class='bx bxs-user'></i></span> Chrislor Pierre</p>
-                <p>pchrislor2001@gmail.com</p>
+    <p>Created by</p>
+    <p>
+        <span><i class='bx bxs-user'></i></span>
+        {{ package.created_by.first_name }} {{ package.created_by.last_name }}
+    </p>
+    <p>{{ package.created_by.email }}</p>
 
-            </div>
+</div>
 
-            <div class="shipment-date">
+<div class="shipment-date">
 
-                <p>Created by</p>
-                <p><span><i class='bx bx-alarm-exclamation'></i></span>may 25,2026</p>
-                <p>10:30AM</p>
+    <p>Last update</p>
+    <p>
+        <span><i class='bx bx-alarm-exclamation'></i></span>
+        {{ last_update|date:"M d, Y" }}
+    </p>
+    <p>{{ last_update|time:"h:i A" }}</p>
 
-            </div>
-
+</div>
 
 
             </div>
@@ -91,41 +99,55 @@
     <div class="shipement_left_details">
 
         <div class="sender">
-            <h4><span><i class='bx bxs-user'></i></span> sender</h4>
+    <h4><span><i class='bx bxs-user'></i></span> Sender</h4>
 
-            <h3> Jean Claude</h3>
-            <p><span><i class='bx bxs-phone'></i></span> +509 47787435</p>
-            <p><span><i class='bx bx-envelope'></i></span> infochrislor@gmail.com</p>
-            <p><span><i class='bx bx-map'></i></span> 1125 orell avenue 32089 , 5423 <br> USA Orlando FL</p>
-        </div>
+    <h3>{{ package.sender.name }}</h3>
+    <p><span><i class='bx bxs-phone'></i></span> {{ package.sender.phone }}</p>
+    <p><span><i class='bx bx-envelope'></i></span> {{ package.sender.email }}</p>
+    <p>
+        <span><i class='bx bx-map'></i></span>
+        {{ package.sender.address }}
+    </p>
+</div>
 
 
-        <div class="sender">
-            <h4><span><i class='bx bxs-user'></i></span> Receiver </h4>
+<div class="sender">
+    <h4><span><i class='bx bxs-user'></i></span> Receiver</h4>
 
-            <h3> Chrislor Pierre</h3>
-            <p><span><i class='bx bxs-phone'></i></span> +509 47787435</p>
-            <p><span><i class='bx bx-envelope'></i></span> infochrislor@gmail.com</p>
-            <p><span><i class='bx bx-map'></i></span> 1125 orell avenue 32089 , 5423 <br> USA Orlando FL</p>
-        </div>
+    <h3>{{ package.receiver.name }}</h3>
+    <p><span><i class='bx bxs-phone'></i></span> {{ package.receiver.phone }}</p>
+    <p><span><i class='bx bx-envelope'></i></span> {{ package.receiver.email }}</p>
+    <p>
+        <span><i class='bx bx-map'></i></span>
+        {{ package.receiver.address }}
+    </p>
+</div>
 
 
          <div class="origine_warehouse sender">
-           <h4><span><i class='bx bx-building-house'></i></span> Origin Warehouse </h4>
+    <h4><span><i class='bx bx-building-house'></i></span> Origin Warehouse</h4>
 
-            <h3> Orlando FL, Warehouse</h3>
-            <p><span><i class='bx bx-map'></i></span> 1125 orell avenue 32089 , 5423 <br> USA Orlando FL</p>
-            <p><span><i class='bx bxs-phone'></i></span> +509 47787435</p>
-        </div>
+    <h3>{{ package.origin_warehouse.name }}</h3>
+    <p>
+        <span><i class='bx bx-map'></i></span>
+        {{ package.origin_warehouse.address }} <br>
+        {{ package.origin_warehouse.city }} {{ package.origin_warehouse.state }}
+    </p>
+    <p><span><i class='bx bxs-phone'></i></span> N/A</p>
+</div>
 
-        <div class="origine_warehouse sender">
-            <h4><span><i class='bx bx-map'></i></span> Destination Warehouse </h4>
 
-            <h3> P-au-p Delma, Warehouse</h3>
-            <p><span><i class='bx bx-map'></i></span> 1125 orell avenue 32089 , 5423 <br> USA Orlando FL</p>
-            <p><span><i class='bx bxs-phone'></i></span> +509 47787435</p>
-        </div>
+<div class="origine_warehouse sender">
+    <h4><span><i class='bx bx-map'></i></span> Destination Warehouse</h4>
 
+    <h3>{{ package.destination_warehouse.name }}</h3>
+    <p>
+        <span><i class='bx bx-map'></i></span>
+        {{ package.destination_warehouse.address }} <br>
+        {{ package.destination_warehouse.city }} {{ package.destination_warehouse.state }}
+    </p>
+    <p><span><i class='bx bxs-phone'></i></span> N/A</p>
+</div>
 
 
         <!------package informations -->
@@ -137,26 +159,26 @@
 
 
 
-
 <div class="row_details">
     <span>weight</span>
-    <strong>2.50kg</strong>
+    <strong>{{ package.weight }} kg</strong>
 </div>
 
 <div class="row_details">
     <span>Dimensions</span>
-    <strong>30*20*15 cm</strong>
+    <strong>
+        {{ package.length }} × {{ package.width }} × {{ package.height }} cm
+    </strong>
 </div>
-
 
 <div class="row_details">
     <span>quantity</span>
-    <strong>1</strong>
+    <strong>{{ package.quantity }}</strong>
 </div>
 
 <div class="row_details">
     <span>Category</span>
-    <strong>Phone</strong>
+    <strong>{{ package.category.name }}</strong>
 </div>
 
         </div>
@@ -171,7 +193,7 @@
 
 <div class="row_details">
     <span>service type</span>
-    <strong>Standard</strong>
+    <strong>{{ package.shipping_type|title }}</strong>
 </div>
 
 <div class="row_details">
@@ -179,15 +201,14 @@
     <strong>Normal</strong>
 </div>
 
-
 <div class="row_details">
     <span>status</span>
-    <span class="delivered"> Delivered</span>
+    <span class="delivered">{{ package.status|title }}</span>
 </div>
 
 <div class="row_details">
-    <span >payment status</span>
-    <span class="pay_status">paid</span>
+    <span>payment status</span>
+    <span class="pay_status">Paid</span>
 </div>
 
         </div>
@@ -209,80 +230,10 @@
         Tracking History
     </h4>
 
-    <div class="tracking_timeline">
+    <div class="tracking_timeline"
+     data-tracking="{{ package.tracking_number }}">
+</div>
 
-        <!-- ITEM -->
-        <div class="timeline_item">
-            <div class="timeline_left">
-                <div class="dot"> <i class='bx bx-check'></i></div>
-                <div class="line"></div>
-            </div>
-
-            <div class="timeline_content">
-                <h5>Delivered</h5>
-                <p>Cap-Haitien Warehouse</p>
-            </div>
-
-            <div class="timeline_date">
-                <p>May 24, 2025</p>
-                <span>02:15 PM</span>
-            </div>
-        </div>
-
-        <!-- ITEM -->
-        <div class="timeline_item">
-            <div class="timeline_left">
-                <div class="dot"> <i class='bx bx-check'></i></div>
-                <div class="line"></div>
-            </div>
-
-            <div class="timeline_content">
-                <h5>Out for Delivery</h5>
-                <p>Cap-Haitien Warehouse</p>
-            </div>
-
-            <div class="timeline_date">
-                <p>May 24, 2025</p>
-                <span>09:45 AM</span>
-            </div>
-        </div>
-
-        <!-- ITEM -->
-        <div class="timeline_item">
-            <div class="timeline_left">
-                <div class="dot"> <i class='bx bx-check'></i></div>
-                <div class="line"></div>
-            </div>
-
-            <div class="timeline_content">
-                <h5>Arrived at Destination</h5>
-                <p>Cap-Haitien Warehouse</p>
-            </div>
-
-            <div class="timeline_date">
-                <p>May 24, 2025</p>
-                <span>08:30 AM</span>
-            </div>
-        </div>
-
-        <!-- LAST ITEM (pa gen line anba) -->
-        <div class="timeline_item last">
-            <div class="timeline_left">
-                <div class="dot"> <i class='bx bx-check'></i></div>
-            </div>
-
-            <div class="timeline_content">
-                <h5>Shipment Created</h5>
-                <p>Port-au-Prince Warehouse</p>
-            </div>
-
-            <div class="timeline_date">
-                <p>May 20, 2025</p>
-                <span>10:30 AM</span>
-            </div>
-        </div>
-
-    </div>
 </div>
 
 
@@ -293,12 +244,13 @@
 
 <div class="action_buttons">
 
-    <button class="btn btn-outline">
+    <button class="btn btn-outline" data-print-url="/package/{{ package.id }}/label/">
         <i class='bx bx-printer'></i>
         Print Label
     </button>
 
-    <button class="btn btn-primary">
+    <button class="btn btn-primary" data-action="edit"
+     data-url="/panel/edit-shipment/{{ package.id }}/">
         <i class='bx bx-edit'></i>
         Edit Shipment
     </button>
@@ -321,3 +273,40 @@
 
 
 </section>
+
+
+<script>
+
+    document.addEventListener("DOMContentLoaded", initTracking);
+
+function initTracking(){
+
+    const timeline = document.querySelector(".tracking_timeline");
+    if (!timeline) return;
+
+    const items = timeline.querySelectorAll(".timeline_item");
+
+    // 🔥 si ou mete data-current nan HTML li pran li
+    let currentStep = parseInt(timeline.dataset.current);
+
+    // 🔥 fallback: si pa gen data-current → pran tout
+    if (!currentStep || isNaN(currentStep)) {
+        currentStep = items.length;
+    }
+
+    items.forEach((item, index) => {
+
+        // 🟢 ACTIVE STEPS
+        if(index < currentStep){
+            item.classList.add("active");
+        }
+
+        // 🔵 CURRENT STEP (dènye)
+        if(index === currentStep - 1){
+            item.classList.add("current");
+        }
+
+    });
+
+}
+</script>

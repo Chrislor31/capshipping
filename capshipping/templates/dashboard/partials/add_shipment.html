@@ -2,89 +2,6 @@
 
 
 
-<!-- 🔥 OVERLAY -->
-<div class="contact_overlay"></div>
-
-<form id="contactForm">
-
-    {% csrf_token %}
-
-    <div class="add_contact">
-
-        <h3>add contact</h3>
-
-        <div class="contact_form">
-
-            <!-- USER -->
-            <div class="select_user">
-                <label>User</label>
-
-                <div class="custom_user_select">
-
-                    <div class="selected_user">
-                        <span id="selectedUserText2">select user (optional)</span>
-                        <i class='bx bx-chevron-down'></i>
-                    </div>
-
-                    <div class="dropdown_user">
-
-                        <div class="input_search">
-                            <i class='bx bx-search'></i>
-                            <input type="search" class="searchUserInput2" placeholder="search user...">
-                        </div>
-
-                        <div class="user_options"></div>
-
-                    </div>
-
-                </div>
-
-                <input type="hidden" name="user" id="userHiddenInput2">
-            </div>
-
-            <!-- NAME -->
-            <div class="contact_name">
-                <label>Name</label>
-                <input type="text" name="name" placeholder="name">
-            </div>
-
-            <!-- PHONE -->
-            <div class="contact_phone">
-                <label>Phone</label>
-                <input type="number" name="phone" placeholder="Phone #">
-            </div>
-
-            <!-- EMAIL -->
-            <div class="contact_email">
-                <label>Email</label>
-                <input type="email" name="email" placeholder="email">
-            </div>
-
-            <!-- ADDRESS -->
-            <div class="contact_address">
-                <label>Full address</label>
-                <textarea name="address"></textarea>
-            </div>
-
-            <!-- GUEST -->
-            <div class="contact_is_guest">
-                <input type="checkbox" name="is_guest">
-                <span>is_guest</span>
-            </div>
-
-            <!-- ACTION -->
-            <div class="action_save">
-                <button type="submit">Save</button>
-                <button type="button" id="cancelContact">Cancel</button>
-            </div>
-
-        </div>
-
-    </div>
-
-</form>
-
-
 <section class="dashboard_add_user">
 
      <div id="alertBox" class="alert hidden">
@@ -97,7 +14,7 @@
         </div>
 
 
-<form id="shipmentForm">
+<form id="shipmentForm" data-id="{{ package.id|default:'' }}">
 
     <div class="head_page">
         <h2>Add new Shipement / Package</h2>
@@ -119,18 +36,22 @@
         </select>
 
         <!-- 🔥 hidden pou Django -->
-        <input type="hidden" name="user" id="userIdInput">
+        <input type="hidden" name="user" id="userIdInput" value="{{ package.user_id }}">
 
         <!-- 🔥 USER SEARCH -->
         <div class="user_search" id="userSearchBox">
 
             <label>User</label>
 
-            <!-- ✅ SELECTED USER (NOUVO) -->
-            <div class="selected_user_box">
-                <span id="selectedUserText">Select user</span>
-            </div>
-
+          <div class="selected_user_box">
+    <span id="selectedUserText">
+        {% if package.user %}
+            {{ package.user.first_name }} {{ package.user.last_name }}
+        {% else %}
+            Select user / guest
+        {% endif %}
+    </span>
+</div>
 
 
             <!-- 📜 LIST -->
@@ -171,22 +92,25 @@
 
             <!-- SELECTED -->
             <div class="selected_sender">
-                <p>Search sender</p>
-                <i class='bx bx-chevron-down'></i>
-            </div>
+    <p>
+        {% if package.sender %}
+            {{ package.sender.name }} ({{ package.sender.phone }})
+        {% else %}
+            Search sender
+        {% endif %}
+    </p>
+    <i class='bx bx-chevron-down'></i>
+</div>
 
             <!-- DROPDOWN -->
             <div class="dropdown_sender">
 
                 <input type="text" class="search_sender_input" placeholder="Search sender...">
-                <input type="hidden" id="senderIdInput" name="sender">
+                <input type="hidden" id="senderIdInput" name="sender" value="{{ package.sender_id }}">
 
 
 
                 <div class="sender_options">
-
-                    <div class="sender_option"><p>Chrislor Pierre (+16892172237)</p></div>
-                    <div class="sender_option"><p>Ioran (+18099280075)</p></div>
 
                 </div>
 
@@ -194,7 +118,7 @@
 
         </div>
         <div class="btn_sender">
-        <button type="button">+ new sender</button>
+        <button type="button">+ add</button>
         </div>
 
     </div>
@@ -215,7 +139,13 @@
 
             <!-- SELECTED -->
             <div class="selected_sender">
-                <p>Search Receiver</p>
+                <p>
+    {% if package.receiver %}
+        {{ package.receiver.name }} ({{ package.receiver.phone }})
+    {% else %}
+        Search Receiver
+    {% endif %}
+</p>
                 <i class='bx bx-chevron-down'></i>
             </div>
 
@@ -223,7 +153,7 @@
             <div class="dropdown_sender">
 
                 <input type="text" class="search_sender_input" placeholder="Search Receiver...">
-                <input type="hidden" id="receiverIdInput" name="receiver">
+                <input type="hidden" id="receiverIdInput" name="receiver" value="{{ package.receiver_id }}">
 
                 <div class="sender_options">
 
@@ -237,7 +167,7 @@
         </div>
 
            <div class="btn_receiver">
-        <button type="button">+ new Receiver</button>
+        <button type="button">+ add</button>
         </div>
 
     </div>
@@ -264,9 +194,13 @@
     <label>Origin Warehouse</label>
 
     <!-- 🔥 USER WÈ SA -->
-    <select disabled>
-        <option selected>{{ request.user.staff_warehouse.name }}</option>
-    </select>
+  <select name="origin_warehouse" disabled>
+    {% for w in warehouses %}
+        <option value="{{ w.id }}" {% if package.origin_warehouse_id == w.id %}selected{% endif %}>
+            {{ w.name }}
+        </option>
+    {% endfor %}
+</select>
 
     <!-- 🔥 SA KI VOYE NAN BACKEND -->
     <input type="hidden"
@@ -276,11 +210,12 @@
                 <div class="state destination">
                 <label >destination Warehouse </label>
                 <select name="destination_warehouse">
-                    <option disabled selected hidden>Select destination</option>
-                    {% for w in warehouses %}
-                        <option value="{{ w.id }}">{{ w.name }}</option>
-                    {% endfor %}
-                </select>
+    {% for w in warehouses %}
+        <option value="{{ w.id }}" {% if package.destination_warehouse_id == w.id %}selected{% endif %}>
+            {{ w.name }}
+        </option>
+    {% endfor %}
+</select>
                 </div>
 
 
@@ -291,21 +226,23 @@
                     <div class="category">
                 <label >category</label>
                 <select name="category">
-                <option disabled selected hidden>Select category</option>
-                {% for c in categories %}
-                    <option value="{{ c.id }}">{{ c.name }}</option>
-                {% endfor %}
-            </select>
+    {% for c in categories %}
+        <option value="{{ c.id }}" {% if package.category_id == c.id %}selected{% endif %}>
+            {{ c.name }}
+        </option>
+    {% endfor %}
+</select>
                             </div>
 
                 <div class="shipping-type">
                 <label >Shipping Type </label>
                 <select name="shipping_type">
-            <option disabled selected hidden>Select shipping type</option>
-            {% for value, label in shipping_types %}
-                <option value="{{ value }}">{{ label }}</option>
-            {% endfor %}
-        </select>
+    {% for value,label in shipping_types %}
+        <option value="{{ value }}" {% if package.shipping_type == value %}selected{% endif %}>
+            {{ label }}
+        </option>
+    {% endfor %}
+</select>
                         </div>
 
 
@@ -329,51 +266,126 @@
 
             <div class="pickup">
                 <label >Weight (Kg)</label>
-                <input type="number" name="weight" placeholder="Kg">
+               <input type="number" name="weight" value="{{ package.weight }}">
             </div>
 
             <div class="staff_warehouse">
                 <label>Length (Cm)</label>
-              <input type="number" name="length" placeholder="Cm">
+              <input type="number" name="height" value="{{ package.height }}">
 
             </div>
 
             <div class="staff_warehouse">
                 <label>Width (Cm)</label>
-              <input type="number" name="width" placeholder="Cm">
+              <input type="number" name="width" value="{{ package.width }}">
 
             </div>
 
             <div class="staff_warehouse">
                 <label >Height(Cm)</label>
-              <input type="number" name="width" placeholder="Cm">
+              <input type="number" name="height" value="{{ package.height }}">
 
             </div>
 
 
             <div class="staff_warehouse">
                 <label >Height(Cm)</label>
-              <input type="number" name="height" placeholder="Cm">
+              <input type="number" name="height" value="{{ package.height }}">
 
             </div>
 
 
              <div class="staff_warehouse">
                 <label >Quantity (Qty)</label>
-              <input type="number" name="quantity" placeholder="Qty" value="1">
+              <input type="number" name="quantity" value="{{ package.quantity }}">
 
             </div>
 
             <div class="staff_warehouse">
                 <label >Pirce ($)</label>
-              <input type="number" name="price" placeholder="US">
+              <input type="number" name="price" placeholder="US" value="{{ package.price }}">
 
             </div>
 
             <div class="staff_warehouse">
                 <label >Extra fee ($)</label>
-              <input type="number" name="extra_fee" placeholder="US">
+              <input type="number" name="extra_fee" value="{{ package.extra_fee }}">
 
+            </div>
+
+
+                <div class="staff_warehouse">
+                     <label >Shipment type </label>
+<select name="shipment_type">
+
+    <option value="standard"
+        {% if package.shipment_type == "standard" %}selected{% endif %}>
+        Standard
+    </option>
+
+    <option value="express"
+        {% if package.shipment_type == "express" %}selected{% endif %}>
+        Express
+    </option>
+
+</select>
+
+            </div>
+
+
+
+
+<div class="staff_warehouse">
+    <label>Shipment status</label>
+
+    <select name="status">
+
+        <option value="received"
+            {% if package.status == "received" %}selected{% endif %}>
+            Received
+        </option>
+
+        <option value="in_transit"
+            {% if package.status == "in_transit" %}selected{% endif %}>
+            In Transit
+        </option>
+
+        <option value="ready_pickup"
+            {% if package.status == "ready_pickup" %}selected{% endif %}>
+            Ready for Pickup
+        </option>
+
+        <option value="delivered"
+            {% if package.status == "delivered" %}selected{% endif %}>
+            Delivered
+        </option>
+
+        <option value="canceled"
+            {% if package.status == "canceled" %}selected{% endif %}>
+            Canceled
+        </option>
+
+    </select>
+</div>
+
+                 <div class="staff_warehouse">
+                     <label >payment_status</label>
+                <div class="payment_toggle">
+
+    <span class="label_text">Unpaid</span>
+
+    <label class="switch">
+        <input type="checkbox" id="paymentSwitch"
+               {% if package.payment_status == "paid" %}checked{% endif %}>
+        <span class="slider"></span>
+    </label>
+
+    <span class="label_text paid">Paid</span>
+
+</div>
+
+<input type="hidden" name="payment_status" id="paymentStatusInput"
+       value="{{ package.payment_status|default:'unpaid' }}">
             </div>
 
 
@@ -392,7 +404,7 @@
 
             <h3>Package Description </h3>
             <label >description</label>
-            <textarea name="description"></textarea>
+            <textarea name="description">{{ package.description|default:'' }}</textarea>
 
         </div>
 

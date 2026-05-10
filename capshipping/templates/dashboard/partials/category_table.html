@@ -1,0 +1,521 @@
+<section class="users_managements">
+
+
+    <!-- TITLE -->
+    <div class="title_head"
+         style="padding:0px 0px 50px 0">
+
+        <p>Shipment Categories</p>
+
+        <span style="display:flex;
+                     padding:10px 0px;
+                     opacity:60%;
+                     font-size:13px">
+
+            dashboard/categories
+
+        </span>
+
+    </div>
+
+
+
+
+    <!-- ADD BUTTON -->
+    <div class="botton_add_download">
+
+        <button type="button"
+                id="openCategoryModal">
+
+            <i class="bx bx-category"></i>
+
+            <span>
+                Add category
+            </span>
+
+        </button>
+
+    </div>
+
+
+
+
+
+    <!-- TABLE -->
+    <div class="user_tableau">
+
+
+        <!-- TOP BAR -->
+        <div class="table_header">
+
+            <form id="categorySearchForm"
+                  class="search_users">
+
+                <input type="text"
+                       name="q"
+                       id="categorySearchInput"
+                       placeholder="Search category..."
+                       value="{{ q }}">
+
+                <button type="submit">
+
+                    Search
+
+                </button>
+
+            </form>
+
+
+
+            <!-- ACTIONS -->
+            <div class="table_actions">
+
+                <button id="deleteSelectedCategory">
+
+                    <i class='bx bxs-trash-alt'></i>
+
+                    Delete Selected
+
+                </button>
+
+                <span id="selectedCount">
+
+                    0 of
+
+                    {{ page_obj.paginator.count }}
+
+                    selected
+
+                </span>
+
+            </div>
+
+        </div>
+
+
+
+
+
+        <!-- TABLE -->
+        <div class="table_wrapper">
+
+            <table class="users_table">
+
+                <thead>
+
+                    <tr>
+
+                        <th>
+
+                            <input type="checkbox"
+                                   id="selectAll">
+
+                        </th>
+
+                        <th>Category</th>
+                        <th>Surcharge</th>
+                        <th>Created</th>
+                        <th>Actions</th>
+
+                    </tr>
+
+                </thead>
+
+
+
+<tbody>
+
+{% for category in categories %}
+
+<tr data-category-id="{{ category.id }}">
+
+    <!-- CHECKBOX -->
+    <td>
+
+        <input type="checkbox"
+               class="rowCheck"
+               value="{{ category.id }}">
+
+    </td>
+
+
+
+    <!-- NAME -->
+    <td class="user_info">
+
+        <div class="avatar">
+
+            {{ category.name|slice:":1"|upper }}
+
+        </div>
+
+        <div>
+
+            <span>
+
+                {{ category.name }}
+
+            </span>
+
+            <br>
+
+            <span class="suit_code">
+
+                Shipment category
+
+            </span>
+
+        </div>
+
+    </td>
+
+
+
+    <!-- SURCHARGE -->
+    <td>
+
+        ${{ category.surcharge }}
+
+    </td>
+
+
+
+    <!-- CREATED -->
+    <td>
+
+        {{ category.id }}
+
+    </td>
+
+
+
+    <!-- ACTIONS -->
+    <td class="action_cell">
+
+        <button class="more_btn">
+
+            •••
+
+        </button>
+
+        <div class="dropdown_menu">
+
+            <!-- EDIT -->
+            <div class="dropdown_item edit_category_btn"
+                 data-id="{{ category.id }}">
+
+                <i class='bx bx-edit'></i>
+
+                <span>
+                    Edit Category
+                </span>
+
+            </div>
+
+
+
+            <!-- DELETE -->
+            <div class="dropdown_item danger"
+                 data-action="delete"
+                 data-url="/api/delete-category/{{ category.id }}/">
+
+                <i class='bx bx-trash'></i>
+
+                <span>
+                    Delete
+                </span>
+
+            </div>
+
+        </div>
+
+    </td>
+
+</tr>
+
+{% empty %}
+
+<tr>
+
+    <td colspan="5"
+        style="text-align:center;">
+
+        No categories found
+
+    </td>
+
+</tr>
+
+{% endfor %}
+
+</tbody>
+
+            </table>
+
+        </div>
+
+
+
+
+        <!-- PAGINATION -->
+        <div class="pagination">
+
+            <div class="page_info">
+
+                Showing
+
+                {{ page_obj.start_index }}–
+
+                {{ page_obj.end_index }}
+
+                of
+
+                {{ page_obj.paginator.count }}
+
+                categories
+
+            </div>
+
+            <div class="page_controls">
+
+                {% if page_obj.has_previous %}
+
+                    <button type="button"
+                            data-url="/panel/categories/?page={{ page_obj.previous_page_number }}">
+
+                        ← Prev
+
+                    </button>
+
+                {% else %}
+
+                    <button type="button"
+                            disabled>
+
+                        ← Prev
+
+                    </button>
+
+                {% endif %}
+
+
+
+                <span class="current_page">
+
+                    Page {{ page_obj.number }}
+
+                    of
+
+                    {{ page_obj.paginator.num_pages }}
+
+                </span>
+
+
+
+                {% if page_obj.has_next %}
+
+                    <button type="button"
+                            data-url="/panel/categories/?page={{ page_obj.next_page_number }}">
+
+                        Next →
+
+                    </button>
+
+                {% else %}
+
+                    <button type="button"
+                            disabled>
+
+                        Next →
+
+                    </button>
+
+                {% endif %}
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+
+
+
+
+    <!-- ================================= -->
+<!-- CATEGORY MODAL -->
+<!-- ================================= -->
+
+<div class="warehouse_modal"
+     id="categoryModal">
+
+    <div class="warehouse_modal_content">
+
+        <!-- CLOSE -->
+        <div class="close_modal"
+             id="closeCategoryModal">
+
+            <i class='bx bx-x'></i>
+
+        </div>
+
+
+
+        <!-- FORM -->
+        <form id="categoryForm">
+
+            {% csrf_token %}
+
+            <!-- UPDATE ID -->
+            <input type="hidden"
+                   name="category_id"
+                   id="category_id">
+
+
+
+            <div class="grid_layout">
+
+                <!-- LEFT -->
+                <div class="left_content_add">
+
+                    <div class="warehouse_information">
+
+                        <h3>
+                            Category information
+                        </h3>
+
+
+
+                        <!-- NAME -->
+                        <label>
+                            Category name
+                        </label>
+
+                        <input type="text"
+                               name="name"
+                               placeholder="e.g Electronics">
+
+
+
+                        <!-- SURCHARGE -->
+                        <label>
+                            Surcharge
+                        </label>
+
+                        <input type="number"
+                               step="0.01"
+                               name="surcharge"
+                               placeholder="e.g 5.00">
+
+                    </div>
+
+                </div>
+
+
+
+
+                <!-- RIGHT -->
+                <div class="right_content_add">
+
+
+                    <!-- ALERT -->
+                    <div id="alertBox"
+                         class="alert hidden">
+
+                        <div class="alert_content">
+
+                            <i id="alertIcon"
+                               class='bx bx-check-circle'></i>
+
+                            <span id="alertMessage">
+
+                                Category created
+
+                            </span>
+
+                        </div>
+
+                        <i class='bx bx-x close_alert'
+                           id="closeAlert"></i>
+
+                    </div>
+
+
+
+
+                    <!-- ACTION -->
+                    <div class="action">
+
+                        <span>
+                            Action
+                        </span>
+
+
+
+                        <!-- SAVE -->
+                        <button type="submit"
+                                id="save_category"
+                                class="save_user">
+
+                            <i class='bx bx-save'></i>
+
+                            Save category
+
+                        </button>
+
+
+
+                        <!-- CANCEL -->
+                        <button type="button"
+                                id="cancelCategory"
+                                class="cancel_process">
+
+                            <i class='bx bx-x'></i>
+
+                            Cancel
+
+                        </button>
+
+                    </div>
+
+
+
+
+                    <!-- INFO -->
+                    <div class="informations">
+
+                        <div class="warning">
+
+                            <i class='bx bx-info-circle'></i>
+
+                            <h4>
+                                information
+                            </h4>
+
+                        </div>
+
+                        <p>
+
+                            Categories help classify
+                            shipment packages and
+                            apply surcharges automatically.
+
+                        </p>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </form>
+
+    </div>
+
+</div>
+
+</section>
+
+
+
