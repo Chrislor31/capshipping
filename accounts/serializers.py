@@ -2,6 +2,8 @@ from rest_framework import serializers
 from django.contrib.auth import get_user_model, authenticate
 from django.contrib.auth.password_validation import validate_password
 
+from accounts.models import KYC
+
 User = get_user_model()
 
 
@@ -76,3 +78,27 @@ class LoginSerializer(serializers.Serializer):
 
         data["user"] = user
         return data
+
+
+
+
+
+class KYCSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = KYC
+
+        fields = [
+            "id",
+            "document_type",
+            "front_image",
+            "back_image",
+            "selfie_image",
+            "status",
+            "submitted_at",
+        ]
+
+        read_only_fields = [
+            "status",
+            "submitted_at",
+        ]

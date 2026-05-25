@@ -207,6 +207,8 @@
             <!-- ACTIONS -->
             <div class="table_actions">
 
+                {% if request.user.role == "admin" %}
+
                 <button id="deleteSelectedRoute">
 
                     <i class='bx bxs-trash-alt'></i>
@@ -214,6 +216,8 @@
                     Delete Selected
 
                 </button>
+
+                {% endif %}
 
                 <span id="selectedCount">
 
@@ -360,6 +364,7 @@
 
         </button>
 
+        {% if request.user.role == "admin" %}
         <div class="dropdown_menu">
 
             <!-- EDIT -->
@@ -392,6 +397,8 @@
                 </span>
 
             </div>
+
+            {% endif %}
 
         </div>
 

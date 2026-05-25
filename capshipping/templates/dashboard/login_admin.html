@@ -1,4 +1,6 @@
 {% load static %}
+
+{% load i18n %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -26,9 +28,9 @@
 <div class="login_container">
 
   <div class="logo_login">
-   <h1>Admin Login</h1>
+   <h1>{% trans 'Admin Login' %}</h1>
   </div>
-    <p class="subtitle">Sign in to your account</p>
+    <p class="subtitle">{% trans 'Sign in to your account' %}</p>
 
     <form method="POST" class="login_form">
         <!-- Django CSRF -->
@@ -52,10 +54,10 @@
         <!-- OPTIONS -->
         <div class="options">
             <label>
-                <input type="checkbox"> Remember me
+                <input type="checkbox"> {% trans 'Remember me' %}
             </label>
 
-            <a href="#">Forgot password?</a>
+            <a href="#">{% trans 'Forgot password?' %}</a>
         </div>
 
         <!-- BUTTON -->

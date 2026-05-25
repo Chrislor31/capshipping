@@ -1,4 +1,6 @@
 {% load static %}
+
+{% load i18n %}
    <div class="logo">
        <img src="{% static './images/Cargomages/logo_simple.png' %}" alt="">
 
@@ -13,7 +15,7 @@
             <!-- Dashboard -->
             <li class="active nav-item"   onclick="window.location.href='/panel/dashboard/'">
                 <i class='bx bxs-dashboard'></i>
-                <span>Dashboard</span>
+                <span>{% trans 'Dashboard' %}</span>
             </li>
 
             <!-- Shipments -->
@@ -21,16 +23,16 @@
 
                 <div class="dropdown_header">
                     <i class='bx bx-signal-5'></i>
-                    <span>Shipements</span>
+                    <span>{% trans 'Shipements' %}</span>
                     <i class='bx bx-chevron-down'></i>
                 </div>
 
                 <ul>
                    <li class="nav-item" data-url="/panel/shipments/">
     <i class='bx bx-package'></i>
-    All Shipements
+    {% trans 'All Shipements' %}
 </li>
-                   <li class="nav-item" data-url="/panel/add-shipments/"><i class='bx bx-plus'></i> Add Shipment</li>
+                   <li class="nav-item" data-url="/panel/add-shipments/"><i class='bx bx-plus'></i> {% trans 'Add Shipment' %}</li>
 
                 </ul>
 
@@ -41,13 +43,13 @@
 
                 <div class="dropdown_header">
                     <i class='bx bxs-user-detail'></i>
-                    <span>Accounts</span>
+                    <span>{% trans 'Accounts' %}</span>
                     <i class='bx bx-chevron-down'></i>
                 </div>
 
                 <ul>
-                     <li class="nav-item" data-url="/panel/users/"><i class='bx bx-group'></i> All Users</li>
-                    <li class="nav-item" data-url="/panel/add-user/"><i class='bx bx-user-plus'></i> Add User</li>
+                     <li class="nav-item" data-url="/panel/users/"><i class='bx bx-group'></i>{% trans 'All Users' %}</li>
+                    <li class="nav-item" data-url="/panel/add-user/"><i class='bx bx-user-plus'></i> {% trans 'Add User' %}</li>
 
                 </ul>
 
@@ -63,7 +65,7 @@
         <i class='bx bx-cog'></i>
 
         <span>
-            Management
+            {% trans 'Management' %}
         </span>
 
         <i class='bx bx-chevron-down'></i>
@@ -78,7 +80,7 @@
           <!-- Others -->
             <li class="nav-item" data-url="/panel/warehouses/">
                 <i class='bx bx-building-house'></i>
-                <span>Warehouses</span>
+                <span>{% trans 'Warehouses' %}</span>
             </li>
 
         <!-- CATEGORY -->
@@ -87,7 +89,7 @@
 
             <i class='bx bx-category-alt'></i>
 
-            Categories
+            {% trans 'Categories' %}
 
         </li>
 
@@ -101,7 +103,7 @@
 
     <span>
 
-        Contacts
+        {% trans 'Contacts' %}
 
     </span>
 
@@ -117,7 +119,7 @@
 
     <span>
 
-        Pricing Rules
+        {% trans 'Pricing Rules' %}
 
     </span>
 
@@ -133,29 +135,51 @@
 
     <span>
 
-        Route Pricings
+        {% trans 'Route Pricings' %}
 
     </span>
 
 </li>
+
+
+        <li class="nav-item nav-items"
+    data-url="/panel/kyc-management/">
+
+    <i class='bx bx-check-shield'></i>
+
+    <span \>
+
+        {% trans 'KYC Users' %} <span class="notice-kyc"></span>
+
+    </span>
+
+</li>
+
 
     </ul>
 
 </li>
 
 
-
+<li class="nav-item" data-url="/panel/calculator/">
+    <i class='bx bx-calculator'></i>
+    <span>{% trans 'Calculator' %}</span>
+</li>
 
             <li class="nav-item" data-url="/panel/tracking-updates/">
                 <i class='bx bx-map-pin'></i>
-                <span>Tracking Update</span>
+                <span>{% trans 'Tracking Update' %}</span>
             </li>
 
 
-            <li>
-                <i class='bx bxs-cog'></i>
-                <span>Settings</span>
-            </li>
+           <li class="nav-item"
+    data-url="/panel/settings/">
+
+    <i class='bx bxs-cog'></i>
+
+    <span>{% trans 'Settings' %}</span>
+
+</li>
 
         </ul>
 
@@ -172,11 +196,11 @@
                 <div class="mail_user">
                     <span>
                             {% if user.is_superuser %}
-                                Admin User
+                                {% trans 'Admin User' %}
                             {% elif user.is_staff %}
-                                Staff User
+                                {% trans 'Staff User' %}
                             {% else %}
-                                Customer
+                                {% trans 'Customer' %}
                             {% endif %}
                         </span>
                     <p>{{ user.email }}</p>
@@ -185,3 +209,4 @@
         </div>
 
     </div>
+

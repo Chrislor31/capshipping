@@ -1,13 +1,59 @@
 
 
 
+// 🔥 REGISTER ALERT
+const loginError =
+    document.getElementById("loginError");
+
+
+// ✅ SHOW ALERT
+function showLoginAlert(type, message){
+
+    // RESET
+    loginError.className =
+        "form_error";
+
+    // SHOW
+    loginError.classList.remove(
+        "hidden"
+    );
+
+    // TYPE
+    loginError.classList.add(type);
+
+    // ICON
+    const icon =
+        loginError.querySelector("i");
+
+    if(type === "success"){
+
+        icon.className =
+            "bx bx-check-circle";
+
+    }
+
+    else{
+
+        icon.className =
+            "bx bx-error-circle";
+
+    }
+
+    // MESSAGE
+    loginError
+        .querySelector("span")
+        .innerText = message;
+}
 
 // ==============================
 // STEP FORM
 // ==============================
 const steps = document.querySelectorAll(".step");
 const lines = document.querySelectorAll(".line");
-const formSteps = document.querySelectorAll(".form-step");
+const formSteps =
+    document.querySelectorAll(
+        "#multiForm .form-step"
+    );
 const nextBtns = document.querySelectorAll(".next-btn");
 const prevBtns = document.querySelectorAll(".prev-btn");
 
@@ -317,12 +363,31 @@ document.addEventListener("DOMContentLoaded", function () {
             return;
         }
 
+
+// 🔥 FULL PHONE
+const rawPhone =
+
+phoneInput.value
+.replace(/\D/g, "");
+
+
+const fullPhone =
+
+"+" +
+
+iti.getSelectedCountryData()
+.dialCode +
+
+rawPhone;
+
+
+console.log(fullPhone);
         const data = {
             email: form.querySelector('[name="email"]').value,
             password: password,
             first_name: form.querySelector('[name="first_name"]').value,
             last_name: form.querySelector('[name="last_name"]').value,
-            phone_number: form.querySelector('[name="phone_number"]').value,
+            phone_number: fullPhone,
             country: form.querySelector('[name="country"]').value,
             state: form.querySelector('[name="state"]').value,
             city: form.querySelector('[name="city"]').value,
@@ -352,29 +417,58 @@ document.addEventListener("DOMContentLoaded", function () {
 
             console.log(resData);
 
-            // ❌ backend errors
-            if (!response.ok) {
-                for (let field in resData) {
 
-                    let messages = resData[field];
+// ❌ BACKEND ERRORS
+if (!response.ok) {
 
-                    let messageText = Array.isArray(messages)
-                        ? messages.join(", ")
-                        : messages;
+    for (let field in resData) {
 
-                    showError(field, messageText);
-                    goToStepWithError(field);
-                }
-                return;
-            }
+        let messages = resData[field];
 
-            // ✅ success
-            // 🔥 OTP FLOW
-document.getElementById("multiForm").style.display = "none";
-document.getElementById("otpStep").style.display = "block";
+        let messageText =
+            Array.isArray(messages)
+            ? messages.join(", ")
+            : messages;
 
-// save email pou verify
-window.registerEmail = resData.email;
+        // 🔥 SHOW RED ALERT
+        showLoginAlert(
+            "error",
+            messageText
+        );
+
+        // 🔥 GO TO STEP
+        goToStepWithError(field);
+    }
+
+    return;
+}
+
+
+// ✅ SUCCESS
+showLoginAlert(
+    "success",
+    "Account created successfully. Sending verification code..."
+);
+
+
+// 🔥 SAVE EMAIL
+window.registerEmail =
+    resData.email;
+
+
+// ⏳ WAIT
+setTimeout(() => {
+
+    // OTP FLOW
+    document.getElementById(
+        "multiForm"
+    ).style.display = "none";
+
+    document.getElementById(
+        "otpStep"
+    ).style.display = "block";
+
+}, 1600);
 
         } catch (error) {
             console.error("Network error:", error);
@@ -422,15 +516,13 @@ function goToStepWithError(fieldName) {
 
 
 // 🔥 FIX: showStep function (te manke)
+// 🔥 FIX STEP SYSTEM
 function showStep(index) {
-    const steps = document.querySelectorAll(".form-step");
 
-    steps.forEach((step, i) => {
-        step.classList.remove("active");
-        if (i === index) {
-            step.classList.add("active");
-        }
-    });
+    currentStep = index;
+
+    updateSteps();
+
 }
 
 
@@ -611,5 +703,3 @@ document.addEventListener("DOMContentLoaded", function(){
     }
 
 });
-
-

@@ -166,6 +166,7 @@
 
 
             <div class="table_actions">
+                {% if request.user.role == "admin" %}
 
                 <button id="deleteSelectedPricing">
 
@@ -174,6 +175,8 @@
                     Delete Selected
 
                 </button>
+
+                {% endif %}
 
                 <span id="selectedCount">
 
@@ -322,6 +325,8 @@
 
         <div class="dropdown_menu">
 
+            {% if request.user.role == "admin" %}
+
             <!-- EDIT -->
             <div class="dropdown_item edit_pricing_btn"
                  data-id="{{ rule.id }}">
@@ -354,6 +359,8 @@
             </div>
 
         </div>
+
+        {% endif %}
 
     </td>
 

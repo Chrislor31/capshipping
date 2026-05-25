@@ -1,8 +1,8 @@
 {% extends 'base.html' %}
-
+{% load i18n %}
 {% load static %}
 
-{% block title %} Track {% endblock %}
+{% block title %} Package Tracking {% endblock %}
 
 
 {% block manu_nav %}
@@ -15,46 +15,38 @@
 
 
 
-<section class="packages">
+        <section class="packages_customer">
 
+            <div class="hearder_tracking">
 
+<div class="left_trk">
 
-<div class="packes_track_head">
+   <p>{% trans 'Track your packages' %}</p>
 
+   <h4>{% trans 'Enter your tracking number to get real-time updates' %}</h4>
 
-<div class="Trc_headers">
-
-    <div class="Trc_header">
-    <div class="title_track">
-        <div class="banner-title_track">
-								<h1>Cap Shipping Distribution LLC</h1>
-                                </div>
-        <h2>Track Your packages</h2>
-        <h5>
-            Enter your tracking number
-            to get real-time updates
-        </h5>
-    </div>
-
-    <div class="Trc_image">
-        <img src="{% static './images/Cargomages/Track image set.png' %}" alt="">
-    </div>
-</div>
-<form action="">
-    <div class="searcher_container">
+  <div class="searcher_container">
 
             <div class="input_container">
-     <i class='bx bx-search'></i><input type="search" id="trackingInput"  placeholder="enter tracking number" required>
+     <i class='bx bx-search'></i><input type="search" id="trackingInput"  placeholder="enter tracking number">
      </div>
 <div class="btn_Trc">
-    <button id="trackBtn">track Package</button>
+    <button id="trackBtn">{% trans 'Track Package' %}</button>
     </div>
 
     </div>
+    <span>{% trans 'Enter up to 10 items' %}</span>
 
 
-<div id="trackingAlert" class="alert hidden"></div>
-</form>
+
+</div>
+
+<div class="right_trk">
+
+    <div class="image">
+        <img src="{% static 'images/Cargomages/Track image set.png' %}" alt="">
+    </div>
+
 </div>
 
 
@@ -63,208 +55,823 @@
 
 
 
-<!-- tracking-steps.html -->
-<div class="tracking-steps-container">
-  <div class="tracking-step">
-    <div class="step-icon-wrapper">
-      <div class="step-circle">
-        <img src="{% static './images/Cargomages/received_box.png' %}" alt="">
-      </div>
+            <section class="tracking_section">
 
-      <div class="cheched_status">
-        <i class='bx bx-check' style='color:#ffffff' ></i>
-      </div>
-    </div>
-    <div class="step-details">
-      <div class="step-title">Package Received</div>
-        <div class="details_ship"> Orlando , FL 3289 Warehouse </div>
-      <div class="step-date">2 Days Ago, 3:00 PM</div>
-    </div>
-  </div>
+    <!-- TOP -->
+    <div class="tracking_top">
 
-  <div class="tracking-step">
-    <div class="step-icon-wrapper">
-      <div class="step-circle">
-        <img src="{% static './images/Cargomages/truck in transit.png' %}" alt="">
-      </div>
+        <div class="tracking_number">
+            <span>Tracking Number</span>
+            <h2>CSD2614025
+</h2>
+        </div>
 
-        <div class="cheched_status">
-        <i class='bx bx-check' style='color:#ffffff' ></i>
-      </div>
-    </div>
-    <div class="step-details">
-      <div class="step-title">In Transit (Air Freight)</div>
-        <div class="details_ship"> To HT , P-au-P </div>
-      <div class="step-date">Yesterday, 5:15 PM</div>
-    </div>
-  </div>
+        <div class="delivery_status">
+            <i class='bx bx-check-circle'></i>
 
-  <div class="tracking-step">
-    <div class="step-icon-wrapper">
-      <div class="step-circle">
-        <img src="{% static './images/Cargomages/ready_for _pickup_box.png' %}" alt="">
-      </div>
+            <div>
+                <h3>Delivered</h3>
+                <p>
+                    Delivered. (Received by recipient. For assistance,
+                    please contact Customer Service: (516) 272-8768)
+                </p>
+            </div>
+        </div>
 
-        <div class="cheched_status">
-        <i class='bx bx-check' style='color:#ffffff' ></i>
-      </div>
     </div>
-    <div class="step-details">
-      <div class="step-title">Ready for Pickup</div>
-        <div class="details_ship"> HT , P-au-P Delma 32</div>
-      <div class="step-date">Today, 9:00 AM</div>
-    </div>
-  </div>
 
-  <div class="tracking-step">
-    <div class="step-icon-wrapper">
-      <div class="step-circle">
-        <img src="{% static './images/Cargomages/deivery_box.png' %}" alt="">
-      </div>
-        <div class="cheched_status">
-        <i class='bx bx-check' style='color:#ffffff' ></i>
-      </div>
-    </div>
-    <div class="step-details">
-      <div class="step-title">Package Delivered</div>
-        <div class="details_ship"> HT , P-au-P Delma 32</div>
-      <div class="step-date">Today, 11:30 AM</div>
-    </div>
-  </div>
 
-</div>
 
-            <div id="trackingError" style="display:none; color:red; margin-bottom:15px; font-weight:600;"></div>
+    <!-- TIMELINE -->
+    <div class="timeline_container">
+
+        <!-- STEP -->
+        <div class="timeline_item">
+
+            <div class="timeline_left">
+
+                <div class="check_box active">
+                    <i class='bx bx-check'></i>
+                </div>
+
+                <div class="timeline_date">
+                    <h4>14:52 PM</h4>
+                    <span>Apr 18, 2026</span>
+                </div>
+
+            </div>
+
+            <div class="timeline_content">
+
+                <h3>{% trans 'Received at Warehouse' %}</h3>
+
+                <span class="location">
+                    <i class='bx bxs-map'></i>
+                    Orlando, Florida, USA
+                </span>
+
+                <p>
+                    {% trans 'Your package has been received and processed
+                    at our warehouse.' %}
+                </p>
+
+
+
+            </div>
+
+        </div>
+
+
+
+        <!-- STEP -->
+        <div class="timeline_item">
+
+            <div class="timeline_left">
+
+                <div class="check_box active">
+                    <i class='bx bx-check'></i>
+                </div>
+
+                <div class="timeline_date">
+                    <h4>09:15 AM</h4>
+                    <span>Apr 19, 2026</span>
+                </div>
+
+            </div>
+
+            <div class="timeline_content">
+
+                <h3>{% trans 'In Transit to' %} Haiti</h3>
+
+                <span class="location">
+                    <i class='bx bxs-map'></i>
+                    Port-au-Prince, Haiti
+                </span>
+
+                <p>
+                    {% trans 'Your package is on the way to the destination country.' %}
+                </p>
+
+            </div>
+
+        </div>
+
+
+
+        <!-- STEP -->
+        <div class="timeline_item">
+
+            <div class="timeline_left">
+
+                <div class="check_box active">
+                    <i class='bx bx-check'></i>
+                </div>
+
+                <div class="timeline_date">
+                    <h4>11:30 AM</h4>
+                    <span>Apr 21, 2026</span>
+                </div>
+
+            </div>
+
+            <div class="timeline_content">
+
+                <h3>{% trans 'Ready for Pickup' %} (Local)</h3>
+
+                <span class="location">
+                    <i class='bx bxs-map'></i>
+                    Delama 32 Rue 12, Haiti
+                </span>
+
+                <p>
+                    {% trans 'Your package is ready for pickup at the local office.' %}
+                </p>
+
+            </div>
+
+        </div>
+
+
+
+        <!-- STEP -->
+        <div class="timeline_item">
+
+            <div class="timeline_left">
+
+                <div class="check_box active delivered">
+                    <i class='bx bx-check'></i>
+                </div>
+
+                <div class="timeline_date">
+                    <h4>02:40 PM</h4>
+                    <span>Apr 22, 2026</span>
+                </div>
+
+            </div>
+
+            <div class="timeline_content delivered_box">
+
+                <h3>Delivered</h3>
+
+                <span class="location">
+                    <i class='bx bxs-map'></i>
+                    Port-au-Prince, Haiti
+                </span>
+
+                <p>
+                    {% trans 'Delivered. Received by recipient successfully.
+                    For assistance contact customer service.' %}
+                </p>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <!-- FOOTER -->
+    <div class="tracking_footer">
+
+        <div class="footer_item">
+            <i class='bx bx-calendar'></i>
+            <span>Shipped: Apr 17, 2026</span>
+        </div>
+
+        <div class="footer_item">
+            <i class='bx bx-time-five'></i>
+            <span>{% trans 'Total Transit Time' %}: <strong>5 {% trans 'Days' %}</strong></span>
+        </div>
+
+    </div>
+
+</section>
+
+
+
+
+            <div class="constomer_section">
+
+
+
+                <div class="constomer_card">
+
+                    <p><span>Need help </span>{% trans 'with your package delivery?' %}</p>
+                    <button>{% trans 'Contact Customer support' %}</button>
+
+                     <div class="image">
+                        <img src="{% static 'images/Cargomages/customer.png' %}" alt="">
+                    </div>
+
+                </div>
+
+
+            </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
         </section>
 
+
+
+<!----------------faq------------------->
+
+
+        <section class="faq_section">
+
+    <!-- LEFT -->
+    <div class="faq_left">
+
+        <span>{% trans 'FAQS' %}</span>
+        <p>{% trans 'Find answers to common questions' %}</p>
+
+        <div class="faq_image">
+            <img src="{% static 'images/Cargomages/Faq 2 images.png' %}" alt="faq image">
+
+            <div class="small_circle"></div>
+        </div>
+
+    </div>
+
+
+    <!-- RIGHT -->
+    <div class="faq_right">
+
+        <!-- ITEM -->
+        <div class="faq_item active">
+
+            <div class="faq_question">
+                <h3>{% trans 'How long does shipping from the USA to Haiti take?' %}</h3>
+                <i class='bx bx-plus'></i>
+            </div>
+
+            <div class="faq_answer">
+                <p>
+                    {% trans 'Delivery times depend on the shipping method you choose. Air freight is faster for urgent packages, while sea freight is more affordable for larger shipments. Our team always works to ensure safe and on-time delivery.' %}
+                </p>
+            </div>
+
+        </div>
+
+
+        <!-- ITEM -->
+        <div class="faq_item">
+
+            <div class="faq_question">
+                <h3>
+                   {% trans 'Can I track my package in real time?' %}
+                </h3>
+
+                <i class='bx bx-plus'></i>
+            </div>
+
+            <div class="faq_answer">
+                <p>
+                    {% trans 'Yes, we provide real-time package tracking so you can follow your shipment from our warehouse in the USA until it arrives at its final destination.' %}
+                </p>
+            </div>
+
+        </div>
+
+
+        <!-- ITEM -->
+        <div class="faq_item">
+
+            <div class="faq_question">
+                <h3>
+                    {% trans 'What items are allowed for shipping?' %}
+                </h3>
+
+                <i class='bx bx-plus'></i>
+            </div>
+
+            <div class="faq_answer">
+                <p>
+                    {% trans 'We ship clothing, electronics, household items, business goods, and many other products. However, restricted or prohibited items cannot be accepted for transportation.' %}
+                </p>
+            </div>
+
+        </div>
+
+
+
+
+		 <!-- ITEM -->
+        <div class="faq_item">
+
+            <div class="faq_question">
+                <h3>
+                   {% trans 'Do you offer both air and sea cargo services?' %}
+                </h3>
+
+                <i class='bx bx-plus'></i>
+            </div>
+
+            <div class="faq_answer">
+                <p>
+                   {% blocktrans %}
+                    Yes, we offer both fast air cargo and cost-effective sea freight services to give customers flexible shipping solutions based on their needs and budget.
+                    {% endblocktrans %}
+
+                </p>
+            </div>
+
+        </div>
+    </div>
+
+</section>
+
+
+
+
+
+
+
 <script>
 
+    const faqItems = document.querySelectorAll(".faq_item");
+
+faqItems.forEach(item => {
+
+    const question = item.querySelector(".faq_question");
+
+    question.addEventListener("click", () => {
+
+        faqItems.forEach(faq => {
+            if(faq !== item){
+                faq.classList.remove("active");
+            }
+        });
+
+        item.classList.toggle("active");
+
+    });
+
+});
+
+</script>
+<script>
 
 document.addEventListener("DOMContentLoaded", function(){
-const locationEls = document.querySelectorAll(".details_ship");
-const steps = document.querySelectorAll(".tracking-step");
-const container = document.querySelector(".tracking-steps-container");
-const input = document.querySelector("input[type='search']");
-const button = document.querySelector(".btn_Trc button");
-const datesEl = document.querySelectorAll(".step-date");
-const alertBox = document.getElementById("trackingAlert");
 
-const statusMap = {
-    "received": 0,
-    "in_transit": 1,
-    "ready_pickup": 2,
-    "delivered": 3
-};
+    const input = document.getElementById("trackingInput");
+    const button = document.getElementById("trackBtn");
 
-const keys = ["received","in_transit","ready_pickup","delivered"];
+    const trackingSection =
+        document.querySelector(".tracking_section");
 
-// 🔥 AUTO LOAD FROM URL
-const urlParams = new URLSearchParams(window.location.search);
-const trkFromUrl = urlParams.get("tracking_number");
+    const trackingHeader =
+        document.querySelector(".tracking_top");
 
-if(trkFromUrl){
-    input.value = trkFromUrl;
-    trackPackage(trkFromUrl);
-}
+    const trackingFooter =
+        document.querySelector(".tracking_footer");
 
-// ALERT
-function showAlert(message, type="error"){
-    if(!alertBox) return;
+    const trackingNumberEl =
+        document.querySelector(".tracking_number h2");
 
-    alertBox.innerText = message;
-    alertBox.className = "alert show " + type;
+    const deliveryTitle =
+        document.querySelector(".delivery_status h3");
 
-    setTimeout(()=>{
-        alertBox.classList.remove("show");
-    }, 3000);
-}
+    const deliveryMessage =
+        document.querySelector(".delivery_status p");
 
-// CLICK
-button.addEventListener("click", function(e){
-    e.preventDefault();
+    const timelineContainer =
+        document.querySelector(".timeline_container");
 
-    let trackingNumber = input.value.trim().toUpperCase();
+    const shippedDate =
+        document.querySelector(
+            ".footer_item:nth-child(1) span"
+        );
 
-    if(trackingNumber === ""){
-        showAlert("Please enter a tracking number", "error");
-        return;
+    const transitTime =
+        document.querySelector(
+            ".footer_item:nth-child(2) span"
+        );
+
+
+
+    // ====================================
+    // HIDE DEFAULT
+    // ====================================
+    trackingSection.style.display = "none";
+
+
+
+    // ====================================
+    // AUTO LOAD FROM URL
+    // ====================================
+    const urlParams =
+        new URLSearchParams(window.location.search);
+
+    const trkFromUrl =
+        urlParams.get("tracking_number");
+
+    if(trkFromUrl){
+
+        input.value = trkFromUrl;
+
+        trackPackage(trkFromUrl);
+
     }
 
-    trackPackage(trackingNumber);
-});
 
-// ENTER
-input.addEventListener("keypress", function(e){
-    if(e.key === "Enter"){
+
+    // ====================================
+    // CLICK BUTTON
+    // ====================================
+    button.addEventListener("click", function(e){
+
         e.preventDefault();
-        button.click();
-    }
-});
 
-function trackPackage(trk){
+        const trackingNumber =
+            input.value.trim();
 
-    fetch(`/shipping/api/track/?tracking_number=${trk}`)
-    .then(res => res.json())
-    .then(data => {
+        if(trackingNumber === "") return;
 
-        // ❌ NOT FOUND
-        if(!data.success){
+        trackPackage(trackingNumber);
 
-            showAlert("Tracking number not found", "error");
+    });
 
-            container.classList.remove("show");
 
-            return;
+
+    // ====================================
+    // ENTER KEY
+    // ====================================
+    input.addEventListener("keypress", function(e){
+
+        if(e.key === "Enter"){
+
+            e.preventDefault();
+
+            button.click();
+
         }
-        console.log(container);
-        // ✅ SUCCESS
-        showAlert("Tracking loaded successfully", "success");
 
-        // 👉 AFFICHAGE
-        container.classList.add("show");
+    });
 
-        let currentStep = statusMap[data.status];
 
-        steps.forEach((step, index) => {
 
-            const check = step.querySelector(".cheched_status");
+    // ====================================
+    // FETCH TRACKING
+    // ====================================
+    function trackPackage(trackingNumber){
 
-            if(index <= currentStep){
-                check.classList.add("active");
-                step.classList.add("active");
-            } else {
-                check.classList.remove("active");
-                step.classList.remove("active");
+        trackingSection.style.display = "block";
+
+        // 🔥 smooth scroll
+        setTimeout(() => {
+
+            trackingSection.scrollIntoView({
+
+                behavior: "smooth",
+
+                block: "start"
+
+            });
+
+        }, 100);
+
+
+
+
+        trackingHeader.style.display = "none";
+        trackingFooter.style.display = "none";
+
+
+
+        timelineContainer.innerHTML = `
+
+            <div class="loading_tracking">
+
+                <div class="loader"></div>
+
+            </div>
+
+        `;
+
+
+
+        fetch(
+            `/shipping/api/track/?tracking_number=${trackingNumber}`
+        )
+
+        .then(res => res.json())
+
+        .then(data => {
+
+            // ====================================
+            // NOT FOUND
+            // ====================================
+            if(!data.success){
+
+                trackingHeader.style.display = "none";
+                trackingFooter.style.display = "none";
+
+                timelineContainer.innerHTML = `
+
+                    <div class="tracking_not_found">
+
+                        Tracking number not found
+
+                    </div>
+
+                `;
+
+                return;
+
             }
+
+
+
+            // ====================================
+            // SHOW HEADER + FOOTER
+            // ====================================
+            trackingHeader.style.display = "flex";
+            trackingFooter.style.display = "flex";
+
+
+
+            // ====================================
+            // TOP DATA
+            // ====================================
+            trackingNumberEl.innerText =
+                data.tracking_number;
+
+
+
+            let currentStatus =
+                data.current_status
+                    .replaceAll("_", " ");
+
+
+
+            deliveryTitle.innerText =
+                capitalizeWords(currentStatus);
+
+
+
+            deliveryMessage.innerText =
+                data.delivered_message ||
+                "Your package is being processed.";
+
+
+
+            shippedDate.innerHTML =
+
+                `<strong>Shipped:</strong>
+                ${data.shipment_date}`;
+
+
+
+            transitTime.innerHTML =
+
+                `<strong>Total Transit Time:</strong>
+                ${data.total_transit_time}`;
+
+
+
+            // ====================================
+            // CLEAR TIMELINE
+            // ====================================
+            timelineContainer.innerHTML = "";
+
+
+
+            // ====================================
+            // GENERATE STEPS
+            // ====================================
+            data.timeline.forEach(step => {
+
+                const activeClass =
+                    step.active
+                    ? "active"
+                    : "";
+
+
+
+                const deliveredBox =
+                    step.status === "delivered"
+                    ? "delivered_box"
+                    : "";
+
+
+
+                const hasDate =
+                    step.date && step.date !== "";
+
+
+
+                const html = `
+
+                <div class="timeline_item">
+
+                    <div class="timeline_left">
+
+                        <div class="
+                            check_box
+                            ${activeClass}
+                        ">
+
+                            ${
+                                step.active
+                                ?
+                                `<i class='bx bx-check'></i>`
+                                :
+                                ``
+                            }
+
+                        </div>
+
+
+
+                        ${
+                            hasDate
+                            ?
+                            `
+                            <div class="timeline_date">
+
+                                <h4>
+                                    ${formatTime(step.date)}
+                                </h4>
+
+                                <span>
+                                    ${formatDate(step.date)}
+                                </span>
+
+                            </div>
+                            `
+                            :
+                            ``
+                        }
+
+                    </div>
+
+
+
+                    <div class="
+                        timeline_content
+                        ${deliveredBox}
+                    ">
+
+                        <h3>
+                            ${step.title}
+                        </h3>
+
+
+
+                        ${
+                            hasDate && step.location
+                            ?
+                            `
+                            <span class="location">
+
+                                <i class='bx bxs-map'></i>
+
+                                ${step.location}
+
+                            </span>
+                            `
+                            :
+                            ``
+                        }
+
+
+
+                        ${
+                            hasDate
+                            ?
+                            `
+                            <p>
+                                ${step.note}
+                            </p>
+                            `
+                            :
+                            ``
+                        }
+
+                    </div>
+
+                </div>
+
+                `;
+
+                timelineContainer.innerHTML += html;
+
+            });
+
+        })
+
+        .catch(err => {
+
+            console.log(err);
+
+            trackingHeader.style.display = "none";
+            trackingFooter.style.display = "none";
+
+            timelineContainer.innerHTML = `
+
+                <div class="tracking_not_found">
+
+                    Something went wrong
+
+                </div>
+
+            `;
 
         });
 
-keys.forEach((key, index)=>{
-    // 📅 DATE
-    if(datesEl[index]){
-        datesEl[index].innerText = data.dates[key] || "";
     }
 
-    // 📍 LOCATION (AFICHE SELMAN SI STEP LA AKTIF)
-    if(locationEls[index]){
-        if(index <= currentStep){
-            locationEls[index].innerText = data.locations[key] || "";
-        } else {
-            locationEls[index].innerText = ""; // ❌ pa montre anyen
-        }
+
+
+    // ====================================
+    // FORMAT DATE
+    // ====================================
+    function formatDate(dateString){
+
+        if(!dateString) return "";
+
+        const parts = dateString.split(" ");
+
+        return parts[0];
+
     }
+
+
+
+    // ====================================
+    // FORMAT TIME
+    // ====================================
+    function formatTime(dateString){
+
+        if(!dateString) return "";
+
+        const parts = dateString.split(" ");
+
+        return parts[1] + " " + parts[2];
+
+    }
+
+
+
+    // ====================================
+    // CAPITALIZE
+    // ====================================
+    function capitalizeWords(str){
+
+        return str.replace(
+
+            /\b\w/g,
+
+            l => l.toUpperCase()
+
+        );
+
+    }
+
 });
 
-    })
-    .catch(err => {
-        console.error(err);
-        showAlert("Something went wrong", "error");
-    });
-}
-
-});
 </script>
 
+<style>
+
+    .tracking_section{
+    display: none;
+}
+
+    .loading_tracking,
+.tracking_not_found{
+    width: 100%;
+    padding: 40px;
+    border-radius: 20px;
+    text-align: center;
+    font-size: 22px;
+    font-weight: 600;
+}
+
+.loading_tracking{
+    background: #fff7ed;
+    color: #DE8333;
+}
+
+.tracking_not_found{
+    background: #fef2f2;
+    color: #dc2626;
+}
+</style>
 
 {% endblock %}

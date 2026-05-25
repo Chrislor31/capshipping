@@ -1,3 +1,5 @@
+{% load i18n %}
+
 <section class="main_dashboard">
 
     <div class="dash_home">
@@ -5,19 +7,19 @@
         <span> / Dashboard</span>
     </div>
 
-    <h2>Dashboard</h2>
-    <p>Welcome back</p>
+    <h2>{% trans 'Dashboard' %}</h2>
+    <p>{% trans 'Welcome back' %}</p>
 
     <div class="box_items_dashboard">
 
         <div class="total_rev_box">
-            <p>Total revenue</p>
+            <p>{% trans 'Total revenue' %}</p>
             <h1>${{ total_revenue|floatformat:2 }}</h1>
              <p>
             <span class="{% if revenue_change > 0 %}up{% else %}down{% endif %}">
                 {{ revenue_change }}%
             </span>
-            vs last Month
+            {% trans 'vs last Month' %}
         </p>
             <div class="sign_rev">
                 <i class='bx bx-dollar'></i>
@@ -25,18 +27,18 @@
         </div>
 
         <div class="total_rev_box">
-            <p>Active Users</p>
+            <p>{% trans 'Active Users' %}</p>
             <h1>{{ active_users }}</h1>
             <p><span class="{% if users_change > 0 %}up{% else %}down{% endif %}">
     {{ users_change }}%
-</span> vs last Month</p>
+</span> {% trans 'vs last Month' %}</p>
             <div class="sign_rev">
                 <i class='bx bx-user-check'></i>
             </div>
         </div>
 
         <div class="total_rev_box">
-            <p>Total Shipments</p>
+            <p>{% trans 'Total Shipments' %}</p>
             <h1>{{ total_shipments }}</h1>
             <p><span class="{% if shipments_change > 0 %}up{% elif shipments_change < 0 %}down{% else %}neutral{% endif %}">
         {{ shipments_change }}%
@@ -47,7 +49,7 @@
         </div>
 
         <div class="total_rev_box">
-            <p>Total Delivered</p>
+            <p>{% trans 'Total Delivered' %}</p>
             <h1>{{ delivered_shipments }}</h1>
             <p><span class="{% if delivered_change > 0 %}up{% elif delivered_change < 0 %}down{% else %}neutral{% endif %}">
         {{ delivered_change }}%
@@ -63,14 +65,14 @@
     <div class="analystics">
 
         <div class="revenu_Overview">
-            <h2>Revenue Overview</h2>
+            <h2>{% trans 'Revenue Overview' %}</h2>
             <div class="chart_wrapper">
                 <canvas id="revenueChart"></canvas>
             </div>
         </div>
 
         <div class="revenu_Overview">
-            <h2>Profit vs Expenses</h2>
+            <h2>{% trans 'Profit vs Expenses' %}</h2>
             <div class="chart_wrapper">
                 <canvas id="profitChart"></canvas>
             </div>

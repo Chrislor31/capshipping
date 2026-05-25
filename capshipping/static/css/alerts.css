@@ -1,0 +1,112 @@
+/* FORM ALERT */
+.form_error{
+
+    width:100%;
+
+    display:flex;
+    align-items:center;
+    gap:10px;
+
+    margin-top:14px;
+
+    padding:13px 14px;
+
+    border-radius:14px;
+
+    border:1px solid transparent;
+
+    animation:errorShow .3s ease;
+
+    backdrop-filter:blur(10px);
+
+}
+
+
+/* ERROR STYLE */
+.form_error.error{
+
+    background:
+        linear-gradient(
+            135deg,
+            rgba(239,68,68,.12),
+            rgba(239,68,68,.04)
+        );
+
+    border:
+        1px solid rgba(239,68,68,.18);
+
+    color:#dc2626;
+
+}
+
+
+/* SUCCESS STYLE */
+.form_error.success{
+
+    background:
+        linear-gradient(
+            135deg,
+            rgba(34,197,94,.12),
+            rgba(34,197,94,.05)
+        );
+
+    border:
+        1px solid rgba(34,197,94,.18);
+
+    color:#16a34a;
+
+}
+
+
+/* ICON */
+.form_error i{
+
+    font-size:20px;
+
+    flex-shrink:0;
+
+}
+
+
+/* TEXT */
+.form_error span{
+
+    font-size:14px;
+
+    font-weight:500;
+
+    line-height:1.5;
+
+}
+
+
+/* HIDDEN */
+.hidden{
+
+    display:none;
+
+}
+
+
+/* ANIMATION */
+@keyframes errorShow{
+
+    from{
+
+        opacity:0;
+
+        transform:
+            translateY(-6px);
+
+    }
+
+    to{
+
+        opacity:1;
+
+        transform:
+            translateY(0);
+
+    }
+
+}

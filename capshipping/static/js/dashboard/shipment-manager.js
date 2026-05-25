@@ -129,6 +129,8 @@ function initContactSelect(){
 }
 
 
+
+
 // ================== CONTACT SUBMIT ==================
 
 function initContactSubmit(container){
@@ -159,6 +161,51 @@ function initContactSubmit(container){
 
         const formData =
         new FormData(form);
+
+        // ========================================
+// 🔥 FULL PHONE
+// ========================================
+
+const contactPhoneInput =
+
+document.querySelector(
+    "#contact_phone"
+);
+
+
+const rawPhone =
+
+contactPhoneInput.value
+.replace(/\D/g, "");
+
+
+const itiInstance =
+
+window.intlTelInputGlobals
+.getInstance(contactPhoneInput);
+
+
+const fullPhone =
+
+"+" +
+
+itiInstance.getSelectedCountryData()
+.dialCode +
+
+rawPhone;
+
+
+// 🔥 REPLACE PHONE
+formData.set(
+    "phone",
+    fullPhone
+);
+
+
+console.log(
+    "FULL PHONE:",
+    fullPhone
+);
 
 
 
@@ -5650,3 +5697,1531 @@ document.addEventListener(
     }
 
 });
+
+
+// =====================================
+// CALCULATOR
+// =====================================
+
+// =====================================
+// CALCULATOR
+// =====================================
+
+document.addEventListener(
+    "click",
+    async function(e){
+
+    // =====================================
+    // CALCULATE BUTTON
+    // =====================================
+
+    if(
+
+        e.target.id ===
+        "calculateShipment"
+
+        ||
+
+        e.target.closest(
+            "#calculateShipment"
+        )
+
+    ){
+
+        // =================================
+        // GET VALUES
+        // =================================
+
+        const origin =
+        document.getElementById(
+            "fromCountry"
+        )?.value;
+
+
+
+
+        const destination =
+        document.getElementById(
+            "toCountry"
+        )?.value;
+
+
+
+
+        const shippingType =
+        document.getElementById(
+            "shippingType"
+        )?.value;
+
+
+
+
+        const category =
+        document.getElementById(
+            "packageCategory"
+        )?.value;
+
+
+
+
+        const weight =
+        document.getElementById(
+            "weight"
+        )?.value;
+
+
+
+
+        const length =
+        document.getElementById(
+            "length"
+        )?.value;
+
+
+
+
+        const width =
+        document.getElementById(
+            "width"
+        )?.value;
+
+
+
+
+        const height =
+        document.getElementById(
+            "height"
+        )?.value;
+
+
+
+
+        const quantity =
+        document.getElementById(
+            "quantity"
+        )?.value;
+
+
+
+
+        const insurance =
+        document.getElementById(
+            "insurance"
+        )?.value;
+
+
+
+
+        // =================================
+        // VALIDATION
+        // =================================
+
+        if(
+
+            !origin ||
+
+            !destination ||
+
+            !shippingType ||
+
+            !weight
+
+        ){
+
+            showAlert(
+
+                "Please fill required fields",
+
+                "error"
+
+            );
+
+            return;
+
+        }
+
+
+
+
+        // =================================
+        // CSRF
+        // =================================
+
+        const csrfToken =
+        document.querySelector(
+            '[name=csrfmiddlewaretoken]'
+        )?.value;
+
+
+
+
+        // =================================
+        // FORM DATA
+        // =================================
+
+        const formData =
+        new FormData();
+
+
+
+
+        formData.append(
+            "origin",
+            origin
+        );
+
+
+
+        formData.append(
+            "destination",
+            destination
+        );
+
+
+
+        formData.append(
+            "shipping_type",
+            shippingType
+        );
+
+
+
+        formData.append(
+            "category",
+            category
+        );
+
+
+
+        formData.append(
+            "weight",
+            weight
+        );
+
+
+
+        formData.append(
+            "length",
+            length
+        );
+
+
+
+        formData.append(
+            "width",
+            width
+        );
+
+
+
+        formData.append(
+            "height",
+            height
+        );
+
+
+
+        formData.append(
+            "quantity",
+            quantity || 1
+        );
+
+
+
+        formData.append(
+            "insurance",
+            insurance
+        );
+
+
+
+
+        // =================================
+        // BUTTON
+        // =================================
+
+        const btn =
+        document.getElementById(
+            "calculateShipment"
+        );
+
+
+
+        btn.disabled = true;
+
+
+
+        btn.innerHTML = `
+
+            <i class='bx bx-loader-alt bx-spin'></i>
+
+            Calculating...
+
+        `;
+
+
+
+
+        // =================================
+        // FETCH
+        // =================================
+
+        try{
+
+            const response =
+            await fetch(
+
+                "/panel/calculator/",
+
+                {
+
+                    method:"POST",
+
+                    body:formData,
+
+                    headers:{
+
+                        "X-CSRFToken":
+                        csrfToken,
+
+                        "X-Requested-With":
+                        "XMLHttpRequest"
+
+                    }
+
+                }
+
+            );
+
+
+
+
+            const data =
+            await response.json();
+
+
+
+
+            // =============================
+            // RESET BUTTON
+            // =============================
+
+            btn.disabled = false;
+
+
+
+            btn.innerHTML = `
+
+                <i class='bx bx-calculator'></i>
+
+                Calculate Price
+
+            `;
+
+
+
+
+            // =============================
+            // ERROR
+            // =============================
+
+            if(!data.success){
+
+                showAlert(
+
+                    data.error ||
+
+                    "Calculation failed",
+
+                    "error"
+
+                );
+
+                return;
+
+            }
+
+
+
+
+       // =============================
+// SHOW SUMMARY
+// =============================
+
+const summary =
+document.querySelector(
+    ".calculator_summary"
+);
+
+
+
+// 🔥 SHOW AFTER UPDATE
+if(summary){
+
+    // reset animation
+    summary.classList.remove(
+        "active"
+    );
+
+
+
+    // force reflow
+    void summary.offsetWidth;
+
+
+
+    // 🔥 wait little for smooth deploy
+    setTimeout(() => {
+
+        summary.classList.add(
+            "active"
+        );
+
+
+
+        summary.scrollIntoView({
+
+            behavior:"smooth",
+
+            block:"start"
+
+        });
+
+    }, 100);
+
+}
+
+
+
+            // =============================
+            // SAFE UPDATE
+            // =============================
+
+            function updateText(
+                id,
+                value
+            ){
+
+                const el =
+                document.getElementById(
+                    id
+                );
+
+
+
+                if(el){
+
+                    el.innerText =
+                    value;
+
+                }
+
+            }
+
+
+
+
+            // =============================
+            // UPDATE UI
+            // =============================
+
+            updateText(
+
+                "basePrice",
+
+                "$" +
+
+                Number(
+                    data.base_price
+                ).toFixed(2)
+
+            );
+
+
+
+            updateText(
+
+                "insurancePrice",
+
+                "$" +
+
+                Number(
+                    data.insurance_price
+                ).toFixed(2)
+
+            );
+
+
+
+            updateText(
+
+                "qtyPrice",
+
+                quantity || 1
+
+            );
+
+
+
+            updateText(
+
+                "sum_price",
+
+                "$" +
+
+                Number(
+                    data.total
+                ).toFixed(2)
+
+            );
+
+
+
+            updateText(
+
+                "finalTotal",
+
+                "$" +
+
+                Number(
+                    data.total
+                ).toFixed(2)
+
+            );
+
+
+
+            updateText(
+
+                "deliveryTime",
+
+                data.delivery_time
+
+            );
+
+
+
+            updateText(
+
+                "deliveryTime2",
+
+                data.delivery_time
+
+            );
+
+
+
+
+            // =============================
+            // SUCCESS
+            // =============================
+
+            showAlert(
+
+                "Price calculated successfully",
+
+                "success"
+
+            );
+
+
+
+
+            // =============================
+            // RESET FORM
+            // =============================
+
+            document.getElementById(
+                "weight"
+            ).value = "";
+
+
+
+            document.getElementById(
+                "length"
+            ).value = "";
+
+
+
+            document.getElementById(
+                "width"
+            ).value = "";
+
+
+
+            document.getElementById(
+                "height"
+            ).value = "";
+
+
+
+            document.getElementById(
+                "quantity"
+            ).value = 1;
+
+
+
+
+            // =============================
+            // SCROLL RESULT
+            // =============================
+
+            summary?.scrollIntoView({
+
+                behavior:"smooth"
+
+            });
+
+        }
+
+        catch(error){
+
+            console.log(
+                "calculator error:",
+                error
+            );
+
+
+
+
+            btn.disabled = false;
+
+
+
+            btn.innerHTML = `
+
+                <i class='bx bx-calculator'></i>
+
+                Calculate Price
+
+            `;
+
+
+
+
+            showAlert(
+
+                "Something went wrong",
+
+                "error"
+
+            );
+
+        }
+
+    }
+
+
+
+
+    // =====================================
+    // RESET CALCULATOR
+    // =====================================
+
+    if(
+
+        e.target.id ===
+        "resetCalculator"
+
+        ||
+
+        e.target.closest(
+            "#resetCalculator"
+        )
+
+    ){
+
+        // RESET INPUTS
+        document.getElementById(
+            "fromCountry"
+        ).selectedIndex = 0;
+
+
+
+        document.getElementById(
+            "toCountry"
+        ).selectedIndex = 0;
+
+
+
+        document.getElementById(
+            "shippingType"
+        ).selectedIndex = 0;
+
+
+
+        document.getElementById(
+            "packageCategory"
+        ).selectedIndex = 0;
+
+
+
+        document.getElementById(
+            "weight"
+        ).value = "";
+
+
+
+        document.getElementById(
+            "length"
+        ).value = "";
+
+
+
+        document.getElementById(
+            "width"
+        ).value = "";
+
+
+
+        document.getElementById(
+            "height"
+        ).value = "";
+
+
+
+        document.getElementById(
+            "quantity"
+        ).value = 1;
+
+
+
+        document.getElementById(
+            "insurance"
+        ).value = "no";
+
+
+
+
+        // RESET UI
+        document.getElementById(
+            "basePrice"
+        ).innerText = "$0.00";
+
+
+
+        document.getElementById(
+            "insurancePrice"
+        ).innerText = "$0.00";
+
+
+
+        document.getElementById(
+            "qtyPrice"
+        ).innerText = "1";
+
+
+
+        document.getElementById(
+            "sum_price"
+        ).innerText = "$0.00";
+
+
+
+        document.getElementById(
+            "finalTotal"
+        ).innerText = "$0.00";
+
+
+
+        document.getElementById(
+            "deliveryTime"
+        ).innerText =
+        "3 - 5 Business Days";
+
+
+
+        document.getElementById(
+            "deliveryTime2"
+        ).innerText =
+        "3 - 5 Days";
+
+
+
+
+        // HIDE SUMMARY
+        document.querySelector(
+            ".calculator_summary"
+        )?.classList.remove(
+            "show"
+        );
+
+
+
+
+        showAlert(
+
+            "Calculator reset successfully",
+
+            "success"
+
+        );
+
+    }
+
+});
+
+
+
+
+
+// =========================
+// KYC DECISION
+// =========================
+
+document.addEventListener(
+    "click",
+    async function(e){
+
+    // button
+    const submitBtn =
+    e.target.closest(
+        ".submit_decision"
+    );
+
+
+    // no button
+    if(!submitBtn) return;
+
+
+
+    // =========================
+    // SELECT DECISION
+    // =========================
+
+    const selectedDecision =
+    document.querySelector(
+        'input[name="decision"]:checked'
+    );
+
+
+
+    if(!selectedDecision){
+
+        showAlert(
+
+            "Please select a decision",
+
+            "error"
+
+        );
+
+        return;
+
+    }
+
+
+
+    // =========================
+    // VALUES
+    // =========================
+
+    const decision =
+    selectedDecision.value;
+
+
+
+    const comment =
+    document.getElementById(
+        "comment-kyc"
+    ).value.trim();
+
+
+
+
+    // =========================
+    // REQUIRE COMMENT
+    // =========================
+
+    if(
+
+        decision === "rejected"
+
+        &&
+
+        comment === ""
+
+    ){
+
+        showAlert(
+
+            "Comment required for rejection",
+
+            "error"
+
+        );
+
+        return;
+
+    }
+
+
+
+
+    // =========================
+    // KYC ID
+    // =========================
+
+    const kycId =
+    submitBtn.dataset.id;
+
+
+
+
+    // =========================
+    // LOADING
+    // =========================
+
+    submitBtn.disabled =
+    true;
+
+
+
+    submitBtn.innerHTML = `
+
+        Processing...
+
+    `;
+
+
+
+
+    try{
+
+        // =========================
+        // REQUEST
+        // =========================
+
+        const response =
+        await fetch(
+
+            `/api/admin/kyc-decision/${kycId}/`,
+
+            {
+
+                method:"POST",
+
+                headers:{
+
+                    "Content-Type":
+                    "application/json",
+
+                    "X-CSRFToken":
+                    getCookie(
+                        "csrftoken"
+                    ),
+
+                    "X-Requested-With":
+                    "XMLHttpRequest"
+
+                },
+
+                body:JSON.stringify({
+
+                    decision:
+                    decision,
+
+                    comment:
+                    comment
+
+                })
+
+            }
+
+        );
+
+
+
+
+        const data =
+        await response.json();
+
+
+
+
+        // =========================
+        // ERROR
+        // =========================
+
+        if(!data.success){
+
+            showAlert(
+
+                data.error ||
+
+                "Something went wrong",
+
+                "error"
+
+            );
+
+            return;
+
+        }
+
+
+
+
+        // =========================
+        // SUCCESS
+        // =========================
+
+        showAlert(
+
+            data.message,
+
+            "success"
+
+        );
+
+
+
+
+        // reload SPA
+        setTimeout(() => {
+
+            loadPage(
+                "/panel/kyc-management/"
+            );
+
+        }, 1200);
+
+    }
+
+    catch(error){
+
+        console.log(
+            "kyc decision error:",
+            error
+        );
+
+
+
+        showAlert(
+
+            "Server error",
+
+            "error"
+
+        );
+
+    }
+
+
+
+    // =========================
+    // RESET BUTTON
+    // =========================
+
+    finally{
+
+        submitBtn.disabled =
+        false;
+
+
+
+        submitBtn.innerHTML = `
+
+            <i class='bx bx-send'></i>
+
+            Submit Decision
+
+        `;
+
+    }
+
+});
+
+// nitifikasyon kyc
+
+
+// =========================
+// KYC NOTIFICATION COUNT
+// =========================
+async function loadKYCNotice(){
+
+    try{
+
+        const response =
+        await fetch(
+
+            "/api/kyc-pending-count/"
+
+        );
+
+
+
+        const data =
+        await response.json();
+
+
+
+        const notice =
+        document.querySelector(
+            ".notice-kyc"
+        );
+
+
+
+        if(!notice) return;
+
+
+
+
+        // hide if 0
+        if(data.count <= 0){
+
+            notice.style.display =
+            "none";
+
+        }
+
+        else{
+
+            notice.style.display =
+            "inline-flex";
+
+            notice.textContent =
+            `(${data.count})`;
+
+        }
+
+    }
+
+    catch(error){
+
+        console.log(
+            "kyc notice error:",
+            error
+        );
+
+    }
+
+}
+
+
+
+// run
+loadKYCNotice();
+
+
+
+// delete kycs
+// =======================
+// KYC DELETE STATE
+// =======================
+
+let kycDeleteRows = [];
+let kycDeleteUrls = [];
+
+
+
+// OPEN
+function openKYCDeleteModal(rows, urls){
+
+    kycDeleteRows = rows;
+
+    kycDeleteUrls = urls;
+
+
+
+    const modal =
+    document.getElementById(
+        "deleteModal"
+    );
+
+
+
+    const msg =
+    document.getElementById(
+        "deleteMessage"
+    );
+
+
+
+    if(urls.length === 1){
+
+        msg.innerText =
+        "Are you sure you want to delete this KYC?";
+
+    }
+
+    else{
+
+        msg.innerText =
+        `Are you sure you want to delete ${urls.length} KYC records?`;
+
+    }
+
+
+
+    modal.classList.remove(
+        "hidden"
+    );
+
+}
+
+
+
+// CLOSE
+function closeKYCDeleteModal(){
+
+    document.getElementById(
+        "deleteModal"
+    )?.classList.add(
+        "hidden"
+    );
+
+
+
+    kycDeleteRows = [];
+    kycDeleteUrls = [];
+
+}
+
+
+
+// CLICK
+document.addEventListener(
+    "click",
+    function(e){
+
+    // SINGLE
+    const singleDelete =
+    e.target.closest(
+        '.kyc_management [data-action="delete"]'
+    );
+
+
+
+    if(singleDelete){
+
+        openKYCDeleteModal(
+
+            [
+                singleDelete.closest("tr")
+            ],
+
+            [
+                singleDelete.dataset.url
+            ]
+
+        );
+
+
+
+        return;
+
+    }
+
+
+
+    // BULK
+    const bulkDelete =
+    e.target.closest(
+        "#deleteSelectedKYC"
+    );
+
+
+
+    if(bulkDelete){
+
+        const checked =
+        document.querySelectorAll(
+            ".kyc_management .rowCheck:checked"
+        );
+
+
+
+        if(checked.length === 0){
+
+            showAlert(
+
+                "Select at least one KYC",
+
+                "error"
+
+            );
+
+            return;
+
+        }
+
+
+
+        let rows = [];
+        let urls = [];
+
+
+
+        checked.forEach(cb => {
+
+            rows.push(
+                cb.closest("tr")
+            );
+
+
+
+            urls.push(
+                cb.dataset.url
+            );
+
+        });
+
+
+
+        openKYCDeleteModal(
+            rows,
+            urls
+        );
+
+    }
+
+
+
+    // CANCEL
+    if(
+        e.target.id ===
+        "cancelDelete"
+    ){
+
+        closeKYCDeleteModal();
+
+    }
+
+
+
+    // OUTSIDE
+    if(
+        e.target.id ===
+        "deleteModal"
+    ){
+
+        closeKYCDeleteModal();
+
+    }
+
+});
+
+
+
+// CONFIRM
+function initDeleteKYC(){
+
+    const btn =
+    document.getElementById(
+        "confirmDelete"
+    );
+
+
+
+    if(!btn) return;
+
+
+
+    if(btn.dataset.kycBound) return;
+
+    btn.dataset.kycBound = "true";
+
+
+
+    btn.addEventListener(
+        "click",
+        async function(){
+
+        if(
+            kycDeleteUrls.length === 0
+        ) return;
+
+
+
+
+        try{
+
+            for(
+                const url
+                of kycDeleteUrls
+            ){
+
+                await fetch(url, {
+
+                    method: "POST",
+
+                    headers: {
+
+                        "X-CSRFToken":
+                        getCookie(
+                            "csrftoken"
+                        ),
+
+                    }
+
+                });
+
+            }
+
+
+
+
+            kycDeleteRows.forEach(row => {
+
+                row.style.opacity = "0";
+
+
+
+                setTimeout(() => {
+
+                    row.remove();
+
+                }, 300);
+
+            });
+
+
+
+
+            showAlert(
+
+                "KYC deleted successfully",
+
+                "success"
+
+            );
+
+        }
+
+        catch(error){
+
+            console.log(error);
+
+
+
+
+            showAlert(
+
+                "Delete failed",
+
+                "error"
+
+            );
+
+        }
+
+        finally{
+
+            closeKYCDeleteModal();
+
+        }
+
+    });
+
+}
+
+
+
+initDeleteKYC();
+
+
+
+// =====================================
+// SHIPMENT SEARCH
+// =====================================
+
+document.addEventListener(
+
+    "click",
+
+    function(e){
+
+        const btn =
+        e.target.closest(
+            ".search-btn"
+        );
+
+
+
+        if(!btn) return;
+
+
+
+        const input =
+        document.querySelector(
+            ".search-input"
+        );
+
+
+
+        if(!input) return;
+
+
+
+        const query =
+        input.value.trim();
+
+
+
+
+        loadPage(
+
+            `/panel/shipments/?q=${encodeURIComponent(query)}`
+
+        );
+
+    }
+
+);
+
+
+
+
+// =====================================
+// ENTER SEARCH
+// =====================================
+
+document.addEventListener(
+
+    "keydown",
+
+    function(e){
+
+        if(
+
+            e.key === "Enter"
+
+            &&
+
+            document.activeElement.classList.contains(
+                "search-input"
+            )
+
+        ){
+
+            e.preventDefault();
+
+
+
+
+            const input =
+            document.querySelector(
+                ".search-input"
+            );
+
+
+
+            const query =
+            input.value.trim();
+
+
+
+
+            loadPage(
+
+                `/panel/shipments/?q=${encodeURIComponent(query)}`
+
+            );
+
+        }
+
+    }
+
+);

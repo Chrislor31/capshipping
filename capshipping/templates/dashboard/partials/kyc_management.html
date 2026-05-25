@@ -1,0 +1,512 @@
+<section class="users_managements shipment_manage">
+
+<div class="title_head shiment_title">
+
+    <p>KYC Verification</p>
+
+    <span>
+        manage user identity verification
+    </span>
+
+</div>
+
+
+
+
+
+<!-- STATISTICS -->
+
+<div class="statistic_grid static_shipments">
+
+    <!-- TOTAL -->
+
+    <div class="item_shipment">
+
+        <div class="icon_statistic">
+            <i class='bx bx-id-card'></i>
+        </div>
+
+        <div class="item_shipment_name">
+
+            <span>
+                {{ total_kyc }}
+            </span>
+
+            <p>
+                total requests
+            </p>
+
+        </div>
+
+    </div>
+
+
+
+
+    <!-- PENDING -->
+
+    <div class="item_shipment">
+
+        <div class="icon_statistic">
+            <i class='bx bx-time-five'></i>
+        </div>
+
+        <div class="item_shipment_name">
+
+            <span>
+                {{ pending_kyc }}
+            </span>
+
+            <p>
+                pending review
+            </p>
+
+        </div>
+
+    </div>
+
+
+
+
+    <!-- APPROVED -->
+
+    <div class="item_shipment">
+
+        <div class="icon_statistic">
+            <i class='bx bx-check-circle'></i>
+        </div>
+
+        <div class="item_shipment_name">
+
+            <span>
+                {{ approved_kyc }}
+            </span>
+
+            <p>
+                approved
+            </p>
+
+        </div>
+
+    </div>
+
+
+
+
+    <!-- REJECTED -->
+
+    <div class="item_shipment">
+
+        <div class="icon_statistic">
+            <i class='bx bx-x-circle'></i>
+        </div>
+
+        <div class="item_shipment_name">
+
+            <span>
+                {{ rejected_kyc }}
+            </span>
+
+            <p>
+                rejected
+            </p>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+
+
+
+
+
+<!-- TABLE -->
+
+<div class="user_tableau">
+
+    <!-- HEADER -->
+
+    <div class="table_header">
+
+        <div class="search_users">
+
+            <input
+                type="text"
+                class="search-input"
+                placeholder="Search user..."
+            >
+
+            <button class="search-btn">
+
+                Search
+
+            </button>
+
+        </div>
+
+
+
+        <div class="table_actions">
+{% if request.user.role == "admin" %}
+            <button id="deleteSelected">
+
+                <i class='bx bxs-trash-alt'></i>
+
+                Delete Selected
+
+            </button>
+
+            {% endif %}
+
+            <span id="selectedCount">
+
+                0 of
+                {{ page_obj.paginator.count }}
+                selected
+
+            </span>
+
+        </div>
+
+    </div>
+
+
+
+
+
+
+<div class="table_wrapper">
+
+<table class="users_table shipment_packages">
+
+    <thead>
+
+        <tr>
+
+            <th>
+                <input
+                    type="checkbox"
+                    id="selectAll"
+                >
+            </th>
+
+            <th>User</th>
+
+            <th>Document Type</th>
+
+            <th>Status</th>
+
+            <th>Submitted</th>
+
+            <th>Approved By</th>
+
+            <th>Reviewed</th>
+
+            <th>Actions</th>
+
+        </tr>
+
+    </thead>
+
+
+
+<tbody>
+
+{% for kyc in page_obj %}
+
+<tr data-kyc-id="{{ kyc.id }}">
+
+    <!-- CHECKBOX -->
+
+    <td>
+
+        <input
+            type="checkbox"
+            class="rowCheck"
+            value="{{ kyc.id }}"
+        >
+
+    </td>
+
+
+
+
+    <!-- USER -->
+
+    <td class="user_info">
+
+        <div class="avatar">
+
+            <i class='bx bxs-user'></i>
+
+        </div>
+
+        <div>
+
+            <span>
+                {{ kyc.user.email }}
+            </span>
+
+            <br>
+
+            <span class="suit_code">
+
+                {{ kyc.user.first_name }}
+                {{ kyc.user.last_name }}
+
+            </span>
+
+        </div>
+
+    </td>
+
+
+
+
+    <!-- DOCUMENT -->
+
+    <td>
+
+        <span class="document_type
+        {{ kyc.document_type }}">
+
+            {{ kyc.get_document_type_display }}
+
+        </span>
+
+    </td>
+
+
+
+
+    <!-- STATUS -->
+
+    <td>
+
+        <span class="status
+        {{ kyc.status }}">
+
+            {{ kyc.get_status_display }}
+
+        </span>
+
+    </td>
+
+
+
+
+
+
+    <!-- SUBMITTED -->
+
+    <td>
+
+        {{ kyc.submitted_at|date:"M d, Y" }}
+
+    </td>
+
+    <td>
+
+    {% if kyc.approved_by %}
+
+        <span class="approved_by">
+
+            {{ kyc.approved_by.email }}
+
+        </span>
+
+    {% else %}
+
+        --
+
+    {% endif %}
+
+</td>
+
+
+
+
+    <!-- REVIEWED -->
+
+    <td>
+
+        {% if kyc.reviewed_at %}
+
+            {{ kyc.reviewed_at|date:"M d, Y" }}
+
+        {% else %}
+
+            --
+
+        {% endif %}
+
+    </td>
+
+
+
+
+    <!-- ACTIONS -->
+
+    <td class="action_cell">
+
+        <button class="more_btn">
+            •••
+        </button>
+
+
+
+        <div class="dropdown_menu">
+
+            <!-- VIEW -->
+
+            <div class="dropdown_item"
+                 data-url="/panel/kyc-details/{{ kyc.id }}/">
+
+                <i class='bx bx-show'></i>
+
+                <span>
+                    View Details
+                </span>
+
+            </div>
+
+
+
+            <!-- DELETE -->
+            {% if request.user.role == "admin" %}
+
+            <div class="dropdown_item danger"
+                 data-action="delete"
+                 data-url="/api/delete-kyc/{{ kyc.id }}/">
+
+                <i class='bx bx-trash'></i>
+
+                <span>
+                    Delete Request
+                </span>
+
+            </div>
+{% endif %}
+        </div>
+
+    </td>
+
+</tr>
+
+{% empty %}
+
+<tr>
+
+    <td colspan="7"
+        style="text-align:center;">
+
+        No KYC requests found
+
+    </td>
+
+</tr>
+
+{% endfor %}
+
+</tbody>
+
+</table>
+
+</div>
+
+
+
+
+
+
+<!-- PAGINATION -->
+
+<div class="pagination">
+
+    <div class="page_info">
+
+        Showing
+        {{ page_obj.start_index }}
+        –
+        {{ page_obj.end_index }}
+
+        of
+
+        {{ page_obj.paginator.count }}
+        requests
+
+    </div>
+
+
+
+    <div class="page_controls">
+
+        <!-- PREV -->
+
+        {% if page_obj.has_previous %}
+
+        <button
+        type="button"
+        data-url="/panel/kyc-management/?page={{ page_obj.previous_page_number }}">
+
+            ← Prev
+
+        </button>
+
+        {% else %}
+
+        <button disabled>
+            ← Prev
+        </button>
+
+        {% endif %}
+
+
+
+
+        <!-- CURRENT -->
+
+        <span class="current_page">
+
+            Page
+            {{ page_obj.number }}
+
+            of
+
+            {{ page_obj.paginator.num_pages }}
+
+        </span>
+
+
+
+
+        <!-- NEXT -->
+
+        {% if page_obj.has_next %}
+
+        <button
+        type="button"
+        data-url="/panel/kyc-management/?page={{ page_obj.next_page_number }}">
+
+            Next →
+
+        </button>
+
+        {% else %}
+
+        <button disabled>
+            Next →
+        </button>
+
+        {% endif %}
+
+    </div>
+
+</div>
+
+</div>
+
+</section>

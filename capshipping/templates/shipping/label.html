@@ -1,108 +1,282 @@
 {% load static %}
 <!DOCTYPE html>
-<html>
+<html lang="en">
+
 <head>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Shipping Label</title>
-    <link rel="stylesheet" href="{% static 'css/label.css' %}">
+
+<meta charset="UTF-8">
+
+<meta name="viewport"
+content="width=device-width, initial-scale=1.0">
+
+<title>Shipping Label</title>
+
+<link rel="stylesheet"
+href="{% static 'css/label.css' %}">
 
 </head>
 
 <body>
 
-<button class="print-btn" onclick="window.print()">🖨️ Print Label</button>
+<button class="print-btn"
+onclick="window.print()">
+
+🖨️ Print Label
+
+</button>
+
 
 {% for i in labels %}
 
 <div class="label">
 
-    <!-- 🔝 HEADER -->
-    <div class="header">
-        <img src="{% static './images/Cargomages/edited_cap_logo-_hight.png' %}" class="logo">
 
-        <div class="company-info">
-             +1 (407) 000-0000 | 🌐 capshipping.com
-        </div>
-        <div class="company_initial">
+    <!-- =====================================
+         TOP HEADER
+    ====================================== -->
 
-            <h1>{{ package.destination_warehouse.label_code }}</h1>
+    <div class="label_top">
 
-        </div>
+        <div class="top_left">
 
-    </div>
+            <img
+            src="{% static './images/Cargomages/edited_cap_logo-_hight.png' %}"
+            class="logo">
 
-    <!-- 📦 FROM -->
-    <div class="section">
-        <div class="flex">
-            <div class="title">FROM:</div>
-            <div class="title">DATE: {{ package.created_at|date:"m/d/Y" }}</div>
-        </div>
-        <div class="value">{{ package.sender.name }}</div>
-        <div class="value">{{ package.sender.address }}</div>
-    </div>
 
-    <!-- 📦 TO -->
-    <div class="section">
-        <div class="title">TO:</div>
-        <div class="value receiver">{{ package.receiver.name }}</div>
-        <div class="value">{{ package.receiver.address }}</div>
-    </div>
+            <div class="company_text">
 
-    <!-- 📏 DETAILS -->
-    <div class="section flex">
-        <div>
-            <div class="title">WEIGHT</div>
-            <div class="value">{{ package.weight }} LB</div>
-        </div>
+                Fast & Reliable Shipping
+                from USA to Haiti,
+                Dominican Republic
+                & International Destinations
 
-        <div>
-            <div class="title">SIZE</div>
-            <div class="value">
-                {{ package.length }} x {{ package.width }} x {{ package.height }} IN
             </div>
+
         </div>
 
-        <div>
-            <div class="title">QTY</div>
-            <div class="value">
-                {{ i }}/{{ package.quantity }}
+
+
+        <div class="top_right">
+
+            <div class="warehouse_code">
+
+                {{ package.destination_warehouse.label_code }}
+
             </div>
-        </div>
-    </div>
 
-    <!-- 🔢 TRACKING -->
-    <div class="tracking">
-        <div class="title">TRACKING #</div>
-        <div class="trk-number">{{ package.tracking_number }}</div>
-    </div>
+            <div class="shipping_badge">
 
-    <!-- 🔥 BARCODE -->
-    <div class="barcode">
-        <img src="{{ package.barcode_image.url }}" class="barcode-img">
+                {{ package.shipping_type|upper }}
 
-        <div class="barcode-text">
-            {{ package.barcode }}
-        </div>
-    </div>
+            </div>
 
-    <!-- 🔻 FOOTER -->
-    <div class="footer">
-
-        <div class="footer-left">
-            CAP SHIPPING DISTRIBUTION LLC <br>
-            Track: capshipping.com
         </div>
 
-        <div class="qr">
-            <img src="https://api.qrserver.com/v1/create-qr-code/?size=80x80&data=https://capshippingdistribution.com/track/{{ package.tracking_number }}">
+    </div>
+
+
+
+    <!-- =====================================
+         FROM
+    ====================================== -->
+
+    <div class="address_section">
+
+        <span class="mini_title">
+
+            From:
+
+        </span>
+
+        <h4>
+
+            {{ package.sender.name }}
+
+        </h4>
+
+        <p>
+
+            {{ package.sender.address }}
+
+        </p>
+
+    </div>
+
+
+
+    <!-- =====================================
+         TO
+    ====================================== -->
+
+    <div class="address_section to_section">
+
+        <span class="mini_title">
+
+            Deliver To:
+
+        </span>
+
+
+        <h2 class="receiver_name">
+
+            {{ package.receiver.name }}
+
+        </h2>
+
+
+        <p class="receiver_address">
+
+            {{ package.receiver.address }}
+
+        </p>
+
+
+        <span class="masked_phone">
+
+            {{ package.receiver.phone|slice:":8" }}**
+
+        </span>
+
+    </div>
+
+
+
+    <!-- =====================================
+         TRACKING
+    ====================================== -->
+
+    <div class="tracking_section">
+
+        <span>
+
+            Tracking Number
+
+        </span>
+
+        <h3>
+
+            {{ package.tracking_number }}
+
+        </h3>
+
+    </div>
+
+
+
+    <!-- =====================================
+         BARCODE
+    ====================================== -->
+
+    <div class="barcode_section">
+
+        <img
+        src="{{ package.barcode_image.url }}"
+        class="barcode_img">
+
+    </div>
+
+
+
+    <!-- =====================================
+         DETAILS + QR
+    ====================================== -->
+
+    <div class="bottom_info">
+
+
+        <div class="details_left">
+
+            <div class="detail_row">
+
+                <span>Weight:</span>
+
+                <strong>
+
+                    {{ package.weight }} LBS
+
+                </strong>
+
+            </div>
+
+
+            <div class="detail_row">
+
+                <span>Size:</span>
+
+                <strong>
+
+                    {{ package.length }} ×
+                    {{ package.width }} ×
+                    {{ package.height }}
+
+                </strong>
+
+            </div>
+
+
+            <div class="detail_row">
+
+                <span>Qty:</span>
+
+                <strong>
+
+                    {{ i }}/{{ package.quantity }}
+
+                </strong>
+
+            </div>
+
+
+            <div class="detail_row">
+
+                <span>Ref:</span>
+
+                <strong>
+
+                    {{ package.code }}
+
+                </strong>
+
+            </div>
+
+
+
+            <div class="date_code">
+
+                {{ package.created_at|date:"Y-m-d H:i:s" }}
+
+            </div>
+
+
+
+            <div class="big_label_code">
+
+                {{ package.destination_warehouse.label_code }}
+
+            </div>
+
+        </div>
+
+
+
+        <div class="qr_side">
+
+            <img
+            src="https://api.qrserver.com/v1/create-qr-code/?size=120x120&data=https://capshippingdistribution.com/track/{{ package.tracking_number }}">
+
+
+            <span>
+
+                {{ package.tracking_number }}
+
+            </span>
+
         </div>
 
     </div>
 
 </div>
-
-<!-- 🔥 PAGE BREAK -->
-<div class="page-break"></div>
 
 {% endfor %}
 
@@ -111,197 +285,523 @@
 
 
 <style>
-/* GLOBAL */
-body {
-    font-family: Arial, sans-serif;
-    background: #eef1f5;
-    display: block; /* 🔥 CHANJMAN AN */
-    padding-top: 60px;
-    text-align: center;
-}
 
-/* PAGE BREAK */
-.page-break {
-    page-break-after: always;
-}
+/* =========================================
+   GLOBAL
+========================================= */
 
-/* PRINT BUTTON */
-.print-btn {
-    position: fixed;
-    top: 15px;
-    left: 15px;
-    padding: 8px 14px;
-    background: black;
-    color: white;
-    border: none;
-    border-radius: 6px;
-    cursor: pointer;
-}
+*{
 
-/* LABEL */
-.label {
-    width: 4in;
-    height: 6in;
-    background: white;
-    border-radius: 12px;
-    padding: 15px;
-    box-shadow: 0 5px 25px rgba(0,0,0,0.1);
+    margin: 0;
+    padding: 0;
     box-sizing: border-box;
-
-    margin: 0 auto 20px auto;
-
 }
 
-/* HEADER */
-.header {
-    text-align: center;
-    border-bottom: 2px solid #ddd;
-    padding-bottom: 8px;
+
+body{
+
+    background: #090C1E;
+
+    font-family: Arial, Helvetica, sans-serif;
+
+    padding: 30px;
 }
 
-.logo {
-    width: 150px;
+
+
+/* =========================================
+   PRINT BTN
+========================================= */
+
+.print-btn{
+
+    position: fixed;
+
+    top: 20px;
+
+    right:50px;
+
+    z-index: 999;
+
+    border: none;
+
+    background: white;
+
+    color: #DE8333;
+
+    padding: 12px 18px;
+
+    border-radius: 8px;
+
+    cursor: pointer;
+
+    font-weight: 700;
 }
 
-.company {
-    font-size: 16px;
-    font-weight: bold;
+
+
+/* =========================================
+   LABEL
+========================================= */
+
+.label{
+
+    width: 3.75in;
+
+    min-height: 5.75in;
+
+    background: white;
+
+    margin: 18px auto;
+
+    padding: 18px;
+
+    border-radius: 8px;
+
+    position: relative;
+
+    box-shadow:
+    0 4px 20px rgba(0,0,0,.08);
+
+    page-break-inside: avoid;
+
+    break-inside: avoid;
 }
 
-.company-info {
-    font-size: 11px;
-    color: #555;
-}
 
-/* SECTION */
-.section {
-    border-bottom: 1px solid #ddd;
-    padding: 8px 0;
-}
 
-.flex {
+/* =========================================
+   TOP
+========================================= */
+
+.label_top{
+
     display: flex;
+
     justify-content: space-between;
+
+    align-items: flex-start;
+
+    gap: 10px;
+
+    margin-bottom: 12px;
 }
 
-.title {
-    font-size: 12px;
-    font-weight: bold;
+
+.top_left{
+
+    flex: 1;
 }
 
-.value {
-    font-size: 13px;
-}
 
-.receiver {
-    font-weight: bold;
-}
+.logo{
 
-/* TRACKING */
-.tracking {
-    text-align: left;
-    padding: 8px 0;
-    border-bottom: 2px solid #f2f2f2;
-}
+    width: 100px;
 
-.trk-number {
-    font-size: 22px;
-    font-weight: bold;
-    letter-spacing: 2px;
-}
-
-/* BARCODE */
-.barcode {
-    text-align: center;
-    margin-top: 8px;
-}
-
-.barcode-img {
-    width: 100%;
-    height: 120px;
     object-fit: contain;
 }
 
-.barcode-text {
-    font-family: monospace;
+
+.company_text{
+
+    margin-top: 4px;
+
+    font-size: 9px;
+
+    line-height: 1.3;
+
+    color: #555;
+
+    max-width: 180px;
+}
+
+
+
+/* =========================================
+   RIGHT TOP
+========================================= */
+
+.top_right{
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 6px;
+}
+
+
+.warehouse_code{
+
+    border: 2px solid #111;
+
+    padding: 4px 9px;
+
     font-size: 18px;
-    letter-spacing: 3px;
-    margin-top: 2px;
+
+    font-weight: 900;
+
+    letter-spacing: 1px;
+}
+
+
+.shipping_badge{
+
+    background: #111;
+
+    color: white;
+
+    padding: 4px 8px;
+
+    font-size: 18px;
+
+    font-weight: 800;
+
+    letter-spacing: 1px;
+}
+
+
+
+/* =========================================
+   ADDRESS
+========================================= */
+
+.address_section{
+
+    margin-bottom: 10px;
+}
+
+
+.mini_title{
+
+    font-size: 10px;
+
+    font-weight: 800;
+
+    color: #777;
+
+    text-transform: uppercase;
+}
+
+
+.address_section h4{
+
+    margin-top: 4px;
+
+    font-size: 13px;
+
+    font-weight: 700;
+}
+
+
+.address_section p{
+
+    margin-top: 4px;
+
+    font-size: 11px;
+
+    line-height: 1.25;
+
     font-weight: 600;
 }
 
-/* FOOTER */
-.footer {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
+
+
+/* =========================================
+   TO
+========================================= */
+
+.to_section{
+
+    border-top: 1px dashed #bbb;
+
+    border-bottom: 1px dashed #bbb;
+
+    padding: 8px 0;
+}
+
+
+.receiver_name{
+
+    font-size: 18px;
+
+    margin-top: 4px;
+
+    line-height: 1.05;
+
+    font-weight: 900;
+
+    text-transform: uppercase;
+}
+
+
+.receiver_address{
+
+    font-size: 13px !important;
+
+    line-height: 1.15 !important;
+
+    margin-top: 4px;
+
+    font-weight: 700 !important;
+}
+
+
+.masked_phone{
+
+    display: block;
+
+    margin-top: 4px;
+
+    font-size: 10px;
+
+    font-weight: 800;
+
+    color: #555;
+}
+
+
+
+/* =========================================
+   TRACKING
+========================================= */
+
+.tracking_section{
+
     margin-top: 10px;
+
+    margin-bottom: 8px;
 }
 
-.footer-left {
+
+.tracking_section span{
+
+    font-size: 10px;
+
+    color: #666;
+
+    font-weight: 700;
+}
+
+
+.tracking_section h3{
+
+    margin-top: 2px;
+
+    font-size: 18px;
+
+    font-weight: 900;
+
+    letter-spacing: .5px;
+
+    word-break: break-word;
+}
+
+
+
+/* =========================================
+   BARCODE
+========================================= */
+
+.barcode_section{
+
+    text-align: center;
+
+    margin-bottom: 4px;
+}
+
+
+.barcode_img{
+
+    width: 100%;
+
+    height: 100px;
+
+    object-fit: contain;
+}
+
+
+
+/* =========================================
+   BOTTOM INFO
+========================================= */
+
+.bottom_info{
+
+    display: flex;
+
+    justify-content: space-between;
+
+    align-items: flex-start;
+
+    gap: 10px;
+
+    margin-top: -4px;
+}
+
+
+.details_left{
+
+    flex: 1;
+}
+
+
+.detail_row{
+
+    display: flex;
+
+    justify-content: space-between;
+
+    align-items: center;
+
+    margin-bottom: 2px;
+
+    gap: 8px;
+}
+
+
+.detail_row span{
+
+    font-size: 10px;
+
+    font-weight: 700;
+
+    color: #555;
+}
+
+
+.detail_row strong{
+
     font-size: 11px;
+
+    font-weight: 900;
+
+    color: #111;
+
+    text-align: right;
 }
 
-.qr img {
-    width: 40px;
+
+
+/* =========================================
+   DATE CODE
+========================================= */
+
+.date_code{
+
+    border: 0.5px solid #111;
+
+    padding: 4px 7px;
+
+    font-size: 10px;
+
+    display: inline-block;
+
+    margin-top: 3px;
+
+    font-weight: 700;
 }
 
-/* PRINT MODE */
-@media print {
 
-    @page {
+.big_label_code{
+
+    margin: 8px 0;
+
+    font-size: 28px;
+
+    font-weight: 900;
+
+    line-height: 1;
+}
+
+
+
+/* =========================================
+   QR
+========================================= */
+
+.qr_side{
+
+    width: 78px;
+
+    text-align: center;
+}
+
+
+.qr_side img{
+
+    width: 70px;
+
+    height: 70px;
+
+    object-fit: contain;
+}
+
+
+.qr_side span{
+
+    display: block;
+
+    margin-top: 2px;
+
+    font-size: 7px;
+
+    font-weight: 700;
+
+    word-break: break-word;
+}
+
+
+
+/* =========================================
+   PRINT
+========================================= */
+
+@media print{
+
+    @page{
+
         size: 4in 6in;
+
         margin: 0;
     }
 
-    body {
+    html,
+    body{
+
+        width: 4in;
+
+        height: auto;
+
         background: white;
-        margin: 0;
+
         padding: 0;
-        display: block;
+
+        margin: 0;
     }
 
-    .print-btn {
+    .print-btn{
+
         display: none;
     }
 
-    .label {
-        width: 4in;
-        height: 6in;
+    .label{
+
+        width: 3.75in;
+
+        min-height: 5.75in;
+
         margin: 0 auto;
-        box-shadow: none;
+
         border-radius: 0;
-        page-break-after: always; /* 🔥 chak label sou paj pa li */
-        position: relative; /* 🔥 PA ABSOLUTE */
+
+        box-shadow: none;
+
+        page-break-inside: avoid;
+
+        break-inside: avoid;
     }
+
 }
 
-    .section {
-    text-align: left; /* 🔥 fòse tout section yo left */
-}
-
-.value {
-    text-align: left;
-}
-
-.receiver {
-    text-align: left;
-}
-
-
-     .header{
-    position: relative;
- }
-
- .company_initial{
-    position: absolute;
-    top: 0;
-    left: 0px;
-    border: 1px solid #222429;
-    padding:5px;
- }
- .company_initial h1{
-    font-size: 26px;
-    font-weight: bold;
- }
 </style>

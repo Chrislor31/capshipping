@@ -8,7 +8,7 @@
 
 
 {% block manu_nav %}
-
+<link rel="stylesheet" href="{% static 'css/alerts.css' %}">
 
 <section class="auth-section register-page">
   <div class="auth-container">
@@ -31,56 +31,86 @@
       </div>
 
 
+<!-- GLOBAL ALERT -->
+<div class="form_error hidden"
+     id="loginError">
+
+    <i class='bx bx-error-circle'></i>
+
+    <span>
+        Message here
+    </span>
+
+</div>
+
+
 
   <form id="multiForm">
 
   <!-- STEP 1 -->
   <div class="form-step active">
 
-    <h2>Personal information</h2>
+    <h2>{% trans 'Personal information' %}</h2>
+
+
 
     <div class="input-row">
-      <input type="text" placeholder="First name" name="first_name" required>
-      <input type="text" placeholder="Last name" name="last_name" required>
+      <input type="text" placeholder="{% trans 'First name' %}" name="first_name" required>
+      <input type="text" placeholder="{% trans 'Last name' %}" name="last_name" required>
     </div>
 
-    <div class="input-row phone-group">
-      <input id="phone" type="number" placeholder="Phone number" name="phone_number" required>
-    </div>
+       <!-- PHONE -->
+   <!-- PHONE -->
+<div class="input-row phone-group">
 
-    <input type="email" placeholder="Email" name="email" required>
+    <input
+    id="phone"
+    type="tel"
+    placeholder="{% trans 'Phone number' %}"
+    name="phone_number"
+    required>
+
+
+    <!-- 🔥 DIAL CODE -->
+    <input
+    type="hidden"
+    id="dial_code">
+
+</div>
+
+    <input type="email" placeholder="{% trans 'Email' %}" name="email" required>
 
     <div class="input-row">
-      <input type="password" placeholder="Password" name="password" required>
-      <input type="password" placeholder="Confirm Password" name="confirm_password" required>
+      <input type="password" placeholder="{% trans 'Password' %}" name="password" required>
+      <input type="password" placeholder="{% trans 'Confirm Password' %}" name="confirm_password" required>
     </div>
 
-    <button type="button" class="next-btn">Next</button>
+    <button type="button" class="next-btn">{% trans 'Next' %}</button>
   </div>
 
 
   <!-- STEP 2 -->
   <div class="form-step">
-    <h2>Your Addresses</h2>
+    <h2>{% trans 'Your Addresses' %}</h2>
 
     <!-- COUNTRY -->
     <div class="input-box">
       <select class="custom-select" id="country" name="country">
-        <option value="" disabled selected hidden>Select Country</option>
+        <option value="" disabled selected hidden> {% trans 'Select Country' %}</option>
       </select>
     </div>
 
     <!-- STATE -->
     <div class="input-box">
       <select class="custom-select" id="state" name="state" disabled>
-        <option value="" disabled selected hidden>State / Region</option>
+        <option value="" disabled selected hidden>{% trans 'State / Region' %}</option>
       </select>
     </div>
 
     <!-- CITY -->
     <div class="input-box">
       <select class="custom-select" id="city" name="city" disabled>
-        <option value="" disabled selected hidden>Select your city of residence</option>
+        <option value="" disabled selected hidden>{% trans 'Select your city of residence' %}</option>
       </select>
     </div>
 
@@ -88,26 +118,26 @@
     <input type="text" name="full_address" placeholder="Full address" required>
 
     <div class="btn-group">
-      <button type="button" class="prev-btn">Back</button>
-      <button type="button" class="next-btn">Next</button>
+      <button type="button" class="prev-btn">{% trans 'Back' %}</button>
+      <button type="button" class="next-btn">{% trans 'Next' %}</button>
     </div>
   </div>
 
 
   <!-- STEP 3 -->
   <div class="form-step">
-    <h2>Delivery Address</h2>
+    <h2>{% trans 'Delivery Address' %}</h2>
 
     <div class="input-box">
       <select class="custom-select" id="Delevery_country" name="Delevery_country">
-        <option value="" disabled selected hidden>Delivery country</option>
+        <option value="" disabled selected hidden>{% trans 'Delivery country' %}</option>
         <option value="Haiti">Haiti</option>
       </select>
     </div>
 
     <div class="input-box">
       <select class="custom-select" id="Delevery_city" name="Delevery_city">
-        <option value="" disabled selected hidden>Delivery city</option>
+        <option value="" disabled selected hidden>{% trans 'Delivery city' %}</option>
 
         {% for wh in haiti_warehouses %}
           <option value="{{ wh.id }}">{{ wh.city }}</option>
@@ -125,13 +155,13 @@
   height: 20px;
   border-radius: 5px;align-items: center;
 justify-content: center;">
-       <span> I have read and accept <a href="">the terms and conditions</a></span>
+       <span> I have read and accept <a href="">{% trans 'the terms and conditions' %}</a></span>
       </label>
     </div>
 
     <div class="btn-group">
-      <button type="button" class="prev-btn">Back</button>
-      <button type="submit" class="submit-btn">Submit</button>
+      <button type="button" class="prev-btn">{% trans 'Back' %}</button>
+      <button type="submit" class="submit-btn">{% trans 'Submit' %}</button>
     </div>
   </div>
 
@@ -140,8 +170,8 @@ justify-content: center;">
 
 <!-- STEP 2: OTP -->
     <div class="form-step" id="otpStep" style="display:none;">
-      <h2 class="login_h2">Enter verification code</h2>
-      <p>Enter the 6-digit code sent to your email</p>
+      <h2 class="login_h2">{% trans 'Enter verification code' %}</h2>
+      <p>{% trans 'Enter the 6-digit code sent to your email' %}</p>
 
 <div class="otp-container">
  <input maxlength="1" class="otp" type="text" inputmode="numeric">
@@ -156,9 +186,9 @@ justify-content: center;">
 
       <p style="margin-top:10px;">
   Didn’t receive code?
-  <span id="resendOtp" style="color:orange; cursor:pointer;">Resend</span>
+  <span id="resendOtp" style="color:orange; cursor:pointer;">{% trans 'Resend' %}</span>
 </p>
-<button id="verifyRegisterOtp" class="submit-btn">Verify</button>
+<button id="verifyRegisterOtp" class="submit-btn">{% trans 'Verify' %}</button>
 
       <small id="otp-error" style="display:none; " class="error-message"></small>
     </div>

@@ -1,47 +1,50 @@
 
 #####  send email update packages
 
-
-
 from django.core.mail import EmailMultiAlternatives
 from django.template.loader import render_to_string
+from django.utils.translation import gettext as _
+from django.utils.translation import activate
 
 
-def send_shipping_email(package):
+def send_shipping_email(package, language="fr"):
 
     if package.status == "received":
-        title = "📦 Package Received"
-        message = "Your package has been received at our warehouse."
+        title = "📦 Colis reçu"
+        message = "Votre colis a été reçu dans notre entrepôt."
         image = "https://collection.cloudinary.com/dplskdeel/df713d2902b281c7224e8b752d637755"
 
     elif package.status == "in_transit":
-        title = "🚚 In Transit"
-        message = "Your package is on the way to its destination."
+        title = "🚚 En transit"
+        message = "Votre colis est en route vers sa destination."
         image = "https://res.cloudinary.com/dplskdeel/image/upload/v1776028618/truck_in_transit_qsshty.png"
 
     elif package.status == "ready_pickup":
-        title = "Ready for Pickup"
-        message = "Your package is ready for pickup. Please use your code below."
+        title = "Prêt pour le retrait"
+        message = "Votre colis est prêt pour le retrait. Veuillez utiliser votre code ci-dessous."
         image = "https://res.cloudinary.com/dplskdeel/image/upload/v1776028618/ready_for__pickup_box_ibf9cg.png"
 
     elif package.status == "delivered":
-        title = "Delivered"
-        message = "Your package has been successfully delivered."
+        title = "Livré"
+        message = "Votre colis a été livré avec succès."
         image = "https://res.cloudinary.com/dplskdeel/image/upload/v1776030211/Acer_Juara_Success_Page_spupqr.gif"
 
-    html = render_to_string("emails/shippment_status_update.html", {
-        "title": title,
-        "message": message,
-        "tracking": package.tracking_number,
-        "location": package.destination_warehouse,
-        "pickup_code": package.pickup_code,
-        "image_url": image
-    })
+    html = render_to_string(
+        "emails/shippment_status_update.html",
+        {
+            "title": title,
+            "message": message,
+            "tracking": package.tracking_number,
+            "location": package.destination_warehouse,
+            "pickup_code": package.pickup_code,
+            "image_url": image
+        }
+    )
 
     email = EmailMultiAlternatives(
         subject=title,
         body="",
-        from_email="info@capshippingdistribution.com",
+        from_email="support@capshippingdistribution.com",
         to=[package.receiver.email],
     )
 
@@ -53,14 +56,11 @@ def send_shipping_email(package):
 
 
 
-
-
 #===========sms status
 
 
 
-from twilio.rest import Client
-from django.conf import settings
+
 
 
 def send_shipping_sms(package):

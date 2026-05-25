@@ -647,7 +647,7 @@ textarea.form-control {
     margin-right: 0;
   }
 }
-/*** 
+/***
 
 ====================================================================
 Reset
@@ -13300,29 +13300,6 @@ Section Title
     display: none;
   }
 }
-
-.donate-love-section-home3 {
-  position: relative;
-  z-index: 2;
-  margin-top: -232px;
-}
-.donate-love-section-home3::before {
-  position: absolute;
-  z-index: -1;
-  content: "";
-  width: 100%;
-  height: 120px;
-  left: 0;
-  top: 130px;
-  background-image: url(../images/home3/feature-bg-shape.png);
-  background-repeat: no-repeat;
-  background-position: center center;
-  background-size: cover;
-}
-.donate-love-section-home3 .donate-love-thumb {
-  position: relative;
-  overflow: hidden;
-}
 .donate-love-section-home3 .donate-love-thumb::before {
   content: "";
   position: absolute;
@@ -13360,27 +13337,7 @@ Section Title
   animation: ripple-blue 1s linear infinite;
   -webkit-transition: 0.5s;
 }
-.donate-love-section-home3 .donate-love-thumb .donation-video-icon a::before {
-  position: absolute;
-  content: "";
-  width: 86px;
-  height: 86px;
-  border-radius: 43px;
-  background-color: rgba(255, 255, 255, 0.3019607843);
-  left: -11px;
-  top: -11px;
-}
-.donate-love-section-home3 .donate-love-thumb .donation-video-icon a::after {
-  position: absolute;
-  content: "";
-  width: 122px;
-  height: 122px;
-  border-radius: 61px;
-  background-color: rgba(255, 255, 255, 0);
-  border: 2px solid rgba(255, 255, 255, 0.3);
-  left: -30px;
-  top: -30px;
-}
+
 .donate-love-section-home3 .single-donate-love-box {
   background-image: url(../images/home3/donation-love2.png);
   background-repeat: no-repeat;
@@ -15415,7 +15372,7 @@ Section Title
 /*======estimate=======*/
 .estimate{
   padding: 50px 15px;
-  background-color: var(--black_secondery);
+  background: #1e293b;
 }
 
 .estimate .estim{
@@ -16467,7 +16424,7 @@ Section Title
 }
 
 .mission-vission-section-home3 {
-  padding: 215px 0 370px;
+  padding: 200px 0 150px;
           background: linear-gradient(
 90deg,
 #1b2f4f 0%,
@@ -16480,6 +16437,8 @@ Section Title
   margin-top: -40px;
   overflow: hidden;
 }
+
+
 .mission-vission-section-home3 .sec-title {
   margin-bottom: 40px;
 }
@@ -16542,6 +16501,9 @@ Section Title
   font-size: 18px;
   margin-bottom: 13px;
 }
+
+
+
 .mission-vission-section-home3 .mission-vission-list li span {
   display: inline-block;
   width: 22px;
@@ -18884,8 +18846,163 @@ Section Title
 
 
 
+/*==== loaderv =====*/
 
 
+/* =========================
+   GLOBAL LOADER
+========================= */
+
+#siteLoader{
+    position: fixed;
+    inset: 0;
+    width: 100%;
+    height: 100vh;
+
+    background: rgba(10, 15, 25, 0.75);
+
+    backdrop-filter: blur(6px);
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    z-index: 999999;
+
+    transition: opacity .5s ease,
+                visibility .5s ease;
+}
+
+
+/* HIDE */
+#siteLoader.hide{
+    opacity: 0;
+    visibility: hidden;
+}
+
+
+
+/* =========================
+   LOADER
+========================= */
+
+.custom_loader{
+
+    width: 22px;
+
+    aspect-ratio: 1;
+
+    border-radius: 50%;
+
+    background: #DE8333;
+
+    display: grid;
+
+    animation: loaderRotate 1.8s infinite linear;
+
+    box-shadow:
+    0 0 25px rgba(222,131,51,.45);
+
+}
+
+
+/* BALLS */
+.custom_loader::before,
+.custom_loader::after{
+
+    content: "";
+
+    grid-area: 1/1;
+
+    margin: 15%;
+
+    border-radius: 50%;
+
+    background: inherit;
+
+    transform: rotate(0deg) translate(160%);
+
+    animation: loaderBall 1s infinite;
+
+}
+
+
+/* SECOND BALL */
+.custom_loader::after{
+
+    animation-delay: -.5s;
+
+}
+
+
+
+/* MAIN ROTATE */
+@keyframes loaderRotate{
+
+    100%{
+        transform: rotate(1turn);
+    }
+
+}
+
+
+/* BALL ROTATE */
+@keyframes loaderBall{
+
+    100%{
+        transform:
+        rotate(1turn)
+        translate(160%);
+    }
+
+}
+
+
+
+
+
+
+
+
+/* =========================
+ACTIVE MENU
+========================= */
+
+.navigation li{
+
+    position:relative;
+
+}
+
+
+
+.navigation li.active > a{
+
+    color:orange !important;
+
+}
+
+
+
+/* ORANGE BAR */
+.navigation li.active::after{
+
+
+
+    position:absolute;
+
+    left:0;
+
+    bottom:0px;
+
+    width:100%;
+
+
+    border-radius:10px;
+
+    background:orange;
+
+}
 
 
 

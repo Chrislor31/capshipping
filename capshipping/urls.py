@@ -4,10 +4,24 @@ from django.urls import path, include
 
 from django.conf.urls.static import static
 from capshipping import views, settings
-from capshipping.views import logout_view
+from capshipping.views import logout_view, KYCAPIView
+
+from django.shortcuts import redirect, render
+
+
+def custom_404(request, exception):
+
+    return render(
+        request,
+        "404.html",
+        status=404
+    )
+
+handler404 = "capshipping.urls.custom_404"
+
 
 urlpatterns = [
-    path('admin/', admin.site.urls),
+   # path('admin/', admin.site.urls),
 
     path('', views.index, name='home'),
     path('about/', views.about, name='about'),
@@ -24,6 +38,8 @@ urlpatterns = [
     path("reset/", views.reset_page,name='reset'),
     path("logout/", views.logout_view, name="logout"),
 
+path("user-logout/", views.user_logout, name="user_logout"),
+
     path('api/register/',views.register_api),
     path("api/login/", views.login_api),
     path('login/',views.loginform,name='login'),
@@ -33,6 +49,18 @@ urlpatterns = [
     path("resend-register-otp/", views.resend_register_otp),
 
     path('dashboard/',views.dashboard_user,name='dashboard_user'),
+
+path(
+    "update-profile/",
+    views.update_profile,
+    name="update_profile"
+),
+
+path(
+    "user-calculator/",
+    views.user_calculator,
+    name="user_calculator"
+),
     # language switch
     path('i18n/', include('django.conf.urls.i18n')),
 
@@ -54,8 +82,12 @@ urlpatterns = [
 
 
     path('panel/', views.dashboard_home),
+path(
+    'panel/calculator/',
+    views.calculator
+),
 
-    path('panel/dashboard/', views.dashboard),
+    path('panel/dashboard/', views.dashboard,name='Panel-admin-access'),
     path('panel/users/', views.users),
     path('panel/add-user/', views.add_users),
     # 🔹 EDIT (GET)
@@ -278,7 +310,98 @@ path(
    # path('panel/shipments/', views.shipments),
 
     path('panel/login/', views.login_view, name='panel_login'),
-    path('panel/logout/', logout_view, name='logout'),
+    path('panel/logout/', logout_view, name='panel_logout'),
+
+    path('term-and-condition/',views.term_condition,name='term_condition'),
+
+    path(
+        "api/kyc/",
+        KYCAPIView.as_view(),
+        name="kyc-api"
+    ),
+
+# =========================
+# URLS.PY
+# =========================
+
+    path(
+        "panel/kyc-management/",
+        views.kyc_management,
+        name="kyc_management"
+    ),
+
+# urls.py
+
+path(
+    "panel/kyc-details/<int:id>/",
+    views.kyc_details,
+    name="kyc_details"
+),
+
+
+# urls.py
+
+path(
+    "api/admin/kyc-decision/<int:id>/",
+    views.admin_kyc_decision,
+    name="admin_kyc_decision"
+),
+
+# urls.py
+
+path(
+
+    "api/kyc-pending-count/",
+
+    views.kyc_pending_count,
+
+    name="kyc_pending_count"
+
+),
+
+path(
+
+    "api/delete-kyc/<int:kyc_id>/",
+
+    views.delete_kyc,
+
+    name="delete_kyc"
+
+),
+
+
+path(
+
+    "panel/settings/",
+
+    views.settings_page,
+
+    name="settings_page"
+
+),
+
+
+
+path(
+
+    "api/save-settings/",
+
+    views.save_settings,
+
+    name="save_settings"
+
+),
+
+
+path(
+
+    "api/save-settings/",
+
+    views.save_settings,
+
+    name="save_settings"
+
+),
 
 ]
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

@@ -1,23 +1,2344 @@
 msgid ""
 msgstr ""
+"Project-Id-Version: \n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-05-24 22:07-0400\n"
+"PO-Revision-Date: \n"
+"Last-Translator: \n"
+"Language-Team: \n"
 "Language: ht\n"
+"MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Poedit 3.9\n"
 
+#: accounts/utils.py:24
+msgid "Welcome to Cap Shipping 🎉"
+msgstr "Byenvini nan Cap Shipping 🎉"
+
+#: accounts/utils.py:59
+msgid "Your OTP Code"
+msgstr ""
+
+#: accounts/utils.py:189
+msgid "KYC Submitted Successfully 📄"
+msgstr ""
+
+#: accounts/utils.py:248
+msgid "KYC Approved Successfully ✅"
+msgstr ""
+
+#: accounts/utils.py:311
+msgid "KYC Verification Rejected ❌"
+msgstr ""
+
+#: capshipping/settings.py:166
+msgid "English"
+msgstr ""
+
+#: capshipping/settings.py:167
+msgid "French"
+msgstr ""
+
+#: capshipping/settings.py:168
+msgid "Spanish"
+msgstr ""
+
+#: capshipping/settings.py:169
+msgid "Creole"
+msgstr ""
+
+#: capshipping/templates/404.html:19
+msgid "Oops! Page Not Found"
+msgstr ""
+
+#: capshipping/templates/404.html:27
+msgid "The page you are looking for doesn"
+msgstr ""
+
+#: capshipping/templates/404.html:31
+msgid ""
+" The page may have been moved, deleted,\n"
+"            or the link is incorrect.\n"
+"            "
+msgstr ""
+
+#: capshipping/templates/404.html:40
+#, fuzzy
+#| msgid "Home"
+msgid "Back Home"
+msgstr "Akèy"
+
+#: capshipping/templates/404.html:46
+#, fuzzy
+#| msgid "Back"
+msgid "Go Back"
+msgstr "Bak"
+
+#: capshipping/templates/about.html:18 capshipping/templates/about.html:22
+#: capshipping/templates/about.html:40 capshipping/templates/base.html:341
+#: capshipping/templates/base.html:531 capshipping/templates/index.html:272
+msgid "About Us"
+msgstr "Kiyès nou ye "
+
+#: capshipping/templates/about.html:21
+msgid "home"
+msgstr "Akèy "
+
+#: capshipping/templates/about.html:43
+msgid "Reliable Freight & Logistics"
+msgstr "Sèvis Transpò ak Lojistik Fyab"
+
+#: capshipping/templates/about.html:44
+msgid "Between the U.S. and Haiti"
+msgstr "ant Etazini E Ayiti"
+
+#: capshipping/templates/about.html:58
+msgid "Shipments Delivered Successfully"
+msgstr "Ekspedisyon Livre avèk Siksè"
+
+#: capshipping/templates/about.html:64
+msgid "Customer Satisfaction Rate"
+msgstr "To Satisfaksyon Kliyan yo"
+
+#: capshipping/templates/about.html:74
+msgid "Reliable Freight Services"
+msgstr "Sèvis Transpò Fyab"
+
+#: capshipping/templates/about.html:82
+msgid ""
+"We offer reliable air and sea freight solutions with secure handling, fast "
+"delivery, and trusted logistics services between the USA, Haiti, and the "
+"Dominican Republic."
+msgstr ""
+"Nou ofri sèvis transpò pa avyon ak pa bato ki fyab, avèk sekirite nan "
+"tretman pakè yo, livrezon rapid, ak sèvis lojistik ou ka fè konfyans ant "
+"Etazini, Ayiti ak Repiblik Dominikèn."
+
+#: capshipping/templates/about.html:94 capshipping/templates/contact.html:110
+msgid "Customer Support"
+msgstr "Sèvis Sipò pou Kliyan yo"
+
+#: capshipping/templates/about.html:102
+msgid ""
+"Our support team is always ready to assist you with shipment tracking, "
+"delivery updates, and any questions to ensure a smooth and stress-free "
+"shipping experience."
+msgstr ""
+"Ekip sipò nou an toujou pare pou ede w ak suiv pakè yo, enfòmasyon sou "
+"livrezon yo, ansanm ak nenpòt kestyon, pou asire w yon eksperyans "
+"ekspedisyon ki fasil epi san tèt chaje."
+
+#: capshipping/templates/about.html:110 capshipping/templates/index.html:312
+msgid "More About Us"
+msgstr "Plis Sou Nou"
+
+#: capshipping/templates/about.html:113
+msgid "Call Us now"
+msgstr "Rele Nou kounya "
+
+#: capshipping/templates/about.html:135
+msgid "Working Process"
+msgstr "Pwosesis Travay la"
+
+#: capshipping/templates/about.html:138
+msgid "Simple, Fast & Reliable"
+msgstr "Senp, Rapid ak Fyab"
+
+#: capshipping/templates/about.html:139
+msgid "Shipping Process"
+msgstr "Pwosesis Ekspedisyon an"
+
+#: capshipping/templates/about.html:151
+msgid "Request & Booking"
+msgstr "Demann ak Rezèvasyon"
+
+#: capshipping/templates/about.html:153
+msgid ""
+"\n"
+"Submit your shipment details and receive a clear quote.\n"
+"Our team ensures a smooth and transparent booking process.\n"
+msgstr ""
+"Soumèt detay ekspedisyon ou epi resevwa yon estimasyon pri ki klè.\n"
+"Ekip nou an asire yon pwosesis rezèvasyon ki senp, transparan ak san "
+"pwoblèm.\n"
+
+#: capshipping/templates/about.html:167
+msgid "Processing & Shipping"
+msgstr "Tretman ak Ekspedisyon"
+
+#: capshipping/templates/about.html:169
+msgid ""
+"\n"
+"We carefully handle, pack, and ship your cargo using reliable\n"
+"sea and air freight solutions with real-time updates.\n"
+msgstr ""
+"Nou pran swen kago ou avèk anpil atansyon, nou prepare li epi ekspedye li "
+"atravè sèvis transpò pa bato ak avyon ki fyab, avèk mizajou an tan reyèl.\n"
+
+#: capshipping/templates/about.html:183
+msgid "Delivery & Confirmation"
+msgstr "Livrezon ak Konfimasyon"
+
+#: capshipping/templates/about.html:185
+msgid ""
+"\n"
+"Your shipment is delivered safely to its destination,\n"
+"with confirmation and full customer satisfaction.\n"
+msgstr ""
+"Ekspedisyon ou a livre an sekirite nan destinasyon li, avèk konfimasyon ak "
+"satisfaksyon total kliyan an.\n"
+
+#: capshipping/templates/base.html:113 capshipping/templates/base.html:519
+#: capshipping/templates/contact.html:19
+#: capshipping/templates/term_and_condition.html:33
+msgid "Home"
+msgstr "Akèy"
+
+#: capshipping/templates/base.html:117
+msgid "Service"
+msgstr "Sèvis"
+
+#: capshipping/templates/base.html:121
+msgid "About us"
+msgstr "Kiyès Nou ye"
+
+#: capshipping/templates/base.html:123
+msgid "About"
+msgstr "Kiyès Nou ye"
+
+#: capshipping/templates/base.html:124
+msgid "Our policy"
+msgstr "Politik Nou"
+
+#: capshipping/templates/base.html:130
+#: capshipping/templates/dashboard/partials/add_shipment.html:476
+#: capshipping/templates/dashboard_user/dashboard.html:223
+msgid "Tracking"
+msgstr "Swiv pake"
+
+#: capshipping/templates/base.html:176 capshipping/templates/contact.html:20
+#: capshipping/templates/dashboard/partials/contact_table.html:262
+msgid "Contact"
+msgstr "Kontak"
+
+#: capshipping/templates/base.html:181 capshipping/templates/base.html:185
+msgid "My Account"
+msgstr "Kont Mwen"
+
+#: capshipping/templates/base.html:234
+msgid "Call Now"
+msgstr "Rele Kounya"
+
+#: capshipping/templates/base.html:242
+msgid "Send Email"
+msgstr "Voye imèl"
+
+#: capshipping/templates/base.html:343
+msgid ""
+"CapShipping Distribution provides reliable Air and Sea cargo\n"
+"\t\t\t\tservices between the USA, Haiti, and the Dominican Republic.\n"
+"\t\t\t\tWe help individuals and businesses ship packages safely,\n"
+"\t\t\t\tquickly, and efficiently through our trusted logistics network. "
+msgstr ""
+"CapShipping Distribution bay sèvis transpò machandiz pa avyon ak pa bato ki "
+"fyab ant Etazini, Ayiti, ak Repiblik Dominikèn. Nou ede moun ak biznis voye "
+"pakè yo an sekirite, rapid, epi avèk efikasite atravè rezo lojistik nou an "
+"ki fè konfyans."
+
+#: capshipping/templates/base.html:349
+msgid "Contact Info"
+msgstr "Kontak enfo"
+
+#: capshipping/templates/base.html:386
+msgid "Sign Up"
+msgstr "Enskri "
+
+#: capshipping/templates/base.html:387
+msgid "Sign In"
+msgstr "Konekte"
+
+#: capshipping/templates/base.html:449
+msgid "Are you sure to proceed ?"
+msgstr "Èske ou sèten ou vle kontinye ?"
+
+#: capshipping/templates/base.html:453
+msgid "This may be change your interface in fonctionality"
+msgstr "Sa ka chanje aparans ak fonksyonalite entèfas ou a"
+
+#: capshipping/templates/base.html:455
+msgid " to navigate to other pages"
+msgstr "pou navige ale sou lòt paj yo "
+
+#: capshipping/templates/base.html:462
+msgid "Confirm"
+msgstr "Konfime"
+
+#: capshipping/templates/base.html:467
+#: capshipping/templates/dashboard/base.html:287
+#: capshipping/templates/dashboard/base.html:337
+#: capshipping/templates/dashboard/partials/add_users.html:292
+#: capshipping/templates/dashboard/partials/category_table.html:484
+msgid "Cancel"
+msgstr "Anile"
+
+#: capshipping/templates/base.html:492
+msgid ""
+"\n"
+"Cap Shipping Distribution LLC is a trusted freight forwarding and logistics "
+"company dedicated to providing fast,\n"
+"secure, and reliable cargo solutions between the United States and Haiti.\n"
+msgstr ""
+"Cap Shipping Distribution LLC se yon konpayi transpò ak lojistik ou ka fè "
+"konfyans, ki angaje li pou bay solisyon ekspedisyon rapid, sekirize ak fyab "
+"ant Etazini ak Ayiti.\n"
+
+#: capshipping/templates/base.html:511
+msgid "Company"
+msgstr "Konpayi"
+
+#: capshipping/templates/base.html:543
+msgid "Our Services"
+msgstr "Sèvis Nou"
+
+#: capshipping/templates/base.html:555 capshipping/templates/base.html:635
+msgid "Contact Us"
+msgstr "Kontakte Nou"
+
+#: capshipping/templates/base.html:574
+msgid "Quick Links"
+msgstr "Lwen rapid"
+
+#: capshipping/templates/base.html:582
+msgid "Track Shipment"
+msgstr "Swiv Ekspedisyon an"
+
+#: capshipping/templates/base.html:594
+msgid "Shipping Rates"
+msgstr "To Ekspedisyon yo"
+
+#: capshipping/templates/base.html:606
+msgid "Air & Sea Freight"
+msgstr "Transpò pa Avyon ak pa Bato"
+
+#: capshipping/templates/base.html:618
+msgid "Warehouse Addresses"
+msgstr "Adrès Depo yo"
+
+#: capshipping/templates/base.html:647
+msgid "Send E-Mail"
+msgstr "Voye Imèl"
+
+#: capshipping/templates/base.html:698
+msgid "Cap Shipping Distribution LLC 2026. All rights reserved. Designed by"
+msgstr "Cap Shipping Distribution LLC 2026. Tout dwa rezève. Konsepsyon pa"
+
+#: capshipping/templates/contact.html:44
+msgid "Trusted Happy Customers"
+msgstr "Kliyan Satisfè ki Fè Nou Konfyans"
+
+#: capshipping/templates/contact.html:56
+msgid "Need Help? We’re Here"
+msgstr "Eske ou Bezwen  èd ? Nou la "
+
+#: capshipping/templates/contact.html:85
+msgid "Select Subject"
+msgstr "Chwazi Sijè a"
+
+#: capshipping/templates/contact.html:89
+msgid "Shipment Tracking"
+msgstr "Swiv Ekspedisyon an\n"
+
+#: capshipping/templates/contact.html:93
+msgid "Air Freight"
+msgstr "Transpò pa Avyon"
+
+#: capshipping/templates/contact.html:97
+msgid "Sea Cargo"
+msgstr "Kago Maritim"
+
+#: capshipping/templates/contact.html:101
+msgid "Package Delivery"
+msgstr "Livrezon Pakè yo"
+
+#: capshipping/templates/contact.html:105
+msgid "Warehouse Service"
+msgstr "Sèvis Depo"
+
+#: capshipping/templates/contact.html:114
+msgid "Other Inquiry"
+msgstr "Lòt Demann"
+
+#: capshipping/templates/contact.html:127
+msgid "Send Message"
+msgstr "Voye Mesaj"
+
+#: capshipping/templates/dashboard/base.html:110
+#: capshipping/templates/dashboard/partials/contact_table.html:172
+#, fuzzy
+#| msgid "Contact"
+msgid "Add Contact"
+msgstr "Kontak"
+
+#: capshipping/templates/dashboard/base.html:125
+#: capshipping/templates/dashboard/partials/add_shipment.html:34
+msgid "User"
+msgstr ""
+
+#: capshipping/templates/dashboard/base.html:137
+msgid "select user (optional)"
+msgstr ""
+
+#: capshipping/templates/dashboard/base.html:155
+msgid "search user..."
+msgstr ""
+
+#: capshipping/templates/dashboard/base.html:191
+#, fuzzy
+#| msgid "Last name"
+msgid "name"
+msgstr "Non Fanmi"
+
+#: capshipping/templates/dashboard/base.html:211
+#: capshipping/templates/dashboard/partials/contact_table.html:263
+msgid "Phone"
+msgstr ""
+
+#: capshipping/templates/dashboard/base.html:223
+#: capshipping/templates/dashboard/partials/contact_table.html:264
+#: capshipping/templates/register.html:81
+msgid "Email"
+msgstr "Imèl"
+
+#: capshipping/templates/dashboard/base.html:241
+#, fuzzy
+#| msgid "Your Addresses"
+msgid "Full address"
+msgstr "Adrès Ou"
+
+#: capshipping/templates/dashboard/base.html:261
+msgid "is_guest"
+msgstr ""
+
+#: capshipping/templates/dashboard/base.html:278
+#, fuzzy
+#| msgid "Contact"
+msgid "Save Contact"
+msgstr "Kontak"
+
+#: capshipping/templates/dashboard/base.html:326
+#, fuzzy
+#| msgid "Confirm"
+msgid "Confirm Delete"
+msgstr "Konfime"
+
+#: capshipping/templates/dashboard/base.html:331
+msgid "Are you sure you want to delete this item?"
+msgstr ""
+
+#: capshipping/templates/dashboard/base.html:333
+msgid "This action cannot be undone"
+msgstr ""
+
+#: capshipping/templates/dashboard/base.html:338
+#: capshipping/templates/dashboard/partials/category_table.html:231
+#: capshipping/templates/dashboard/partials/contact_table.html:431
+msgid "Delete"
+msgstr ""
+
+#: capshipping/templates/dashboard/login_admin.html:31
+msgid "Admin Login"
+msgstr ""
+
+#: capshipping/templates/dashboard/login_admin.html:33
+msgid "Sign in to your account"
+msgstr ""
+
+#: capshipping/templates/dashboard/login_admin.html:57
+msgid "Remember me"
+msgstr ""
+
+#: capshipping/templates/dashboard/login_admin.html:60
+#, fuzzy
+#| msgid "Forget Password ?"
+msgid "Forgot password?"
+msgstr "Ou Bliye Modpas la?"
+
+#: capshipping/templates/dashboard/partials/add_shipment.html:20
+msgid " Add new Shipement / Package "
+msgstr ""
+
+#: capshipping/templates/dashboard/partials/add_shipment.html:22
+msgid " user > add new user "
+msgstr ""
+
+#: capshipping/templates/dashboard/partials/add_shipment.html:31
+msgid " select user / guest "
+msgstr ""
+
+#: capshipping/templates/dashboard/partials/add_shipment.html:33
+msgid " select user / gues "
+msgstr ""
+
+#: capshipping/templates/dashboard/partials/add_shipment.html:35
+#: capshipping/templates/dashboard/partials/contact_table.html:362
+msgid "Guest"
+msgstr ""
+
+#: capshipping/templates/dashboard/partials/add_shipment.html:87
+msgid " Sender (From) "
+msgstr ""
+
+#: capshipping/templates/dashboard/partials/add_shipment.html:108
+msgid "Search sender..."
+msgstr ""
+
+#: capshipping/templates/dashboard/partials/add_shipment.html:121
+#: capshipping/templates/dashboard/partials/add_shipment.html:170
+msgid "add"
+msgstr ""
+
+#: capshipping/templates/dashboard/partials/add_shipment.html:134
+msgid " Receiver (To) "
+msgstr ""
+
+#: capshipping/templates/dashboard/partials/add_shipment.html:194
+msgid "Origin Warehouse"
+msgstr ""
+
+#: capshipping/templates/dashboard/partials/add_shipment.html:211
+#, fuzzy
+#| msgid "Received at Warehouse"
+msgid "destination Warehouse"
+msgstr "Resevwa nan Depo a"
+
+#: capshipping/templates/dashboard/partials/add_shipment.html:238
+#, fuzzy
+#| msgid "Shipping From"
+msgid "Shipping Type"
+msgstr "Livrezon soti"
+
+#: capshipping/templates/dashboard/partials/add_shipment.html:263
+#: capshipping/templates/dashboard/partials/calculator.html:232
+#, fuzzy
+#| msgid "Package Delivery"
+msgid "Package Details"
+msgstr "Livrezon Pakè yo"
+
+#: capshipping/templates/dashboard/partials/add_shipment.html:268
+#: capshipping/templates/dashboard/partials/calculator.html:248
+msgid "Weight"
+msgstr ""
+
+#: capshipping/templates/dashboard/partials/add_shipment.html:273
+#: capshipping/templates/dashboard/partials/calculator.html:266
+msgid "Length"
+msgstr ""
+
+#: capshipping/templates/dashboard/partials/add_shipment.html:279
+#: capshipping/templates/dashboard/partials/calculator.html:284
+msgid "Width"
+msgstr ""
+
+#: capshipping/templates/dashboard/partials/add_shipment.html:285
+#: capshipping/templates/dashboard/partials/add_shipment.html:292
+#: capshipping/templates/dashboard/partials/calculator.html:302
+msgid "Height"
+msgstr ""
+
+#: capshipping/templates/dashboard/partials/add_shipment.html:299
+#: capshipping/templates/dashboard/partials/calculator.html:320
+msgid "Quantity"
+msgstr ""
+
+#: capshipping/templates/dashboard/partials/add_shipment.html:305
+msgid "Pirce"
+msgstr ""
+
+#: capshipping/templates/dashboard/partials/add_shipment.html:311
+msgid "Extra fee"
+msgstr ""
+
+#: capshipping/templates/dashboard/partials/add_shipment.html:318
+#, fuzzy
+#| msgid "Track Shipment"
+msgid "Shipment type"
+msgstr "Swiv Ekspedisyon an"
+
+#: capshipping/templates/dashboard/partials/add_shipment.html:339
+#, fuzzy
+#| msgid "Shipment Tracking"
+msgid "Shipment status"
+msgstr "Swiv Ekspedisyon an\n"
+
+#: capshipping/templates/dashboard/partials/add_shipment.html:372
+msgid "payment_status"
+msgstr ""
+
+#: capshipping/templates/dashboard/partials/add_shipment.html:375
+msgid "Unpaid"
+msgstr ""
+
+#: capshipping/templates/dashboard/partials/add_shipment.html:383
+msgid "Paid"
+msgstr ""
+
+#: capshipping/templates/dashboard/partials/add_shipment.html:405
+#, fuzzy
+#| msgid "Package Delivery"
+msgid "Package Description"
+msgstr "Livrezon Pakè yo"
+
+#: capshipping/templates/dashboard/partials/add_shipment.html:418
+msgid "send email to Receiver"
+msgstr ""
+
+#: capshipping/templates/dashboard/partials/add_shipment.html:424
+#, fuzzy
+#| msgid "Track Shipment"
+msgid "Save Shipment"
+msgstr "Swiv Ekspedisyon an"
+
+#: capshipping/templates/dashboard/partials/add_shipment.html:444
+msgid "Make sure all required fields are filled"
+msgstr ""
+
+#: capshipping/templates/dashboard/partials/add_shipment.html:445
+msgid "Double-check the warehouse locations"
+msgstr ""
+
+#: capshipping/templates/dashboard/partials/add_shipment.html:446
+msgid "Weight and dimensions affect pricing"
+msgstr ""
+
+#: capshipping/templates/dashboard/partials/add_shipment.html:447
+msgid "You can add new contacts on the go"
+msgstr ""
+
+#: capshipping/templates/dashboard/partials/add_shipment.html:467
+#, fuzzy
+#| msgid "Shipment Tracking"
+msgid "Shipment Created"
+msgstr "Swiv Ekspedisyon an\n"
+
+#: capshipping/templates/dashboard/partials/add_shipment.html:468
+#, fuzzy
+#| msgid "Shipment Tracking"
+msgid "Review shipment details below"
+msgstr "Swiv Ekspedisyon an\n"
+
+#: capshipping/templates/dashboard/partials/add_shipment.html:481
+#, fuzzy
+#| msgid "Package Delivery"
+msgid "Package"
+msgstr "Livrezon Pakè yo"
+
+#: capshipping/templates/dashboard/partials/add_shipment.html:486
+msgid "Type"
+msgstr ""
+
+#: capshipping/templates/dashboard/partials/add_users.html:44
+#, fuzzy
+#| msgid "Personal information"
+msgid "User information"
+msgstr "Enfòmasyon Pèsonel"
+
+#: capshipping/templates/dashboard/partials/add_users.html:46
+#, fuzzy
+#| msgid "Email"
+msgid "email"
+msgstr "Imèl"
+
+#: capshipping/templates/dashboard/partials/add_users.html:59
+#, fuzzy
+#| msgid "First name"
+msgid "first name"
+msgstr "Non"
+
+#: capshipping/templates/dashboard/partials/add_users.html:70
+#, fuzzy
+#| msgid "Last name"
+msgid "last name"
+msgstr "Non Fanmi"
+
+#: capshipping/templates/dashboard/partials/add_users.html:84
+#, fuzzy
+#| msgid "Phone number"
+msgid "Phone Number"
+msgstr "Nimewo Telefòn"
+
+#: capshipping/templates/dashboard/partials/add_users.html:126
+#, fuzzy
+#| msgid "Personal information"
+msgid "Address information"
+msgstr "Enfòmasyon Pèsonel"
+
+#: capshipping/templates/dashboard/partials/add_users.html:136
+#: capshipping/templates/register.html:99
+msgid "Select Country"
+msgstr "Chwazi Peyi"
+
+#: capshipping/templates/dashboard/partials/add_users.html:142
+#, fuzzy
+#| msgid "State / Region"
+msgid "state / province"
+msgstr "Depatman"
+
+#: capshipping/templates/dashboard/partials/add_users.html:148
+#: capshipping/templates/register.html:106
+msgid "State / Region"
+msgstr "Depatman"
+
+#: capshipping/templates/dashboard/partials/add_users.html:160
+#, fuzzy
+#| msgid "Select Country"
+msgid "Select your city"
+msgstr "Chwazi Peyi"
+
+#: capshipping/templates/dashboard/partials/add_users.html:171
+msgid "enter full address"
+msgstr ""
+
+#: capshipping/templates/dashboard/partials/add_users.html:181
+#, fuzzy
+#| msgid "Personal information"
+msgid "warehouse information"
+msgstr "Enfòmasyon Pèsonel"
+
+#: capshipping/templates/dashboard/partials/add_users.html:186
+msgid "Default pickup warehouse"
+msgstr ""
+
+#: capshipping/templates/dashboard/partials/add_users.html:189
+msgid "default pickup warehouse"
+msgstr ""
+
+#: capshipping/templates/dashboard/partials/add_users.html:202
+msgid " staff warehouse ( for staff users) "
+msgstr ""
+
+#: capshipping/templates/dashboard/partials/add_users.html:205
+msgid " select staff warehouse (optional) "
+msgstr ""
+
+#: capshipping/templates/dashboard/partials/add_users.html:224
+msgid "Account Security"
+msgstr ""
+
+#: capshipping/templates/dashboard/partials/add_users.html:238
+#, fuzzy
+#| msgid "Confirm Password"
+msgid "Confirm password"
+msgstr "Konfime Modpas"
+
+#: capshipping/templates/dashboard/partials/add_users.html:256
+msgid "send welcome email to user"
+msgstr ""
+
+#: capshipping/templates/dashboard/partials/add_users.html:284
+#, fuzzy
+#| msgid "Password"
+msgid "Update user"
+msgstr "Modpas"
+
+#: capshipping/templates/dashboard/partials/add_users.html:286
+msgid "Save user"
+msgstr ""
+
+#: capshipping/templates/dashboard/partials/add_users.html:297
+msgid "account status"
+msgstr ""
+
+#: capshipping/templates/dashboard/partials/add_users.html:308
+#: capshipping/templates/dashboard_user/dashboard.html:1236
+msgid "Active"
+msgstr ""
+
+#: capshipping/templates/dashboard/partials/add_users.html:315
+#: capshipping/templates/dashboard/partials/category_table.html:501
+#, fuzzy
+#| msgid "Personal information"
+msgid "information"
+msgstr "Enfòmasyon Pèsonel"
+
+#: capshipping/templates/dashboard/partials/add_users.html:319
+msgid ""
+" Please provide accurate user information before creating a new account.\n"
+"    This helps ensure secure account management and a smooth shipping "
+"experience for all customers. "
+msgstr ""
+
+#: capshipping/templates/dashboard/partials/calculator.html:8
+#: capshipping/templates/dashboard_user/dashboard.html:735
+msgid "Shipment Price Calculator"
+msgstr ""
+
+#: capshipping/templates/dashboard/partials/calculator.html:12
+msgid "dashboard > shipment calculator"
+msgstr ""
+
+#: capshipping/templates/dashboard/partials/calculator.html:41
+#, fuzzy
+#| msgid "Shipping From"
+msgid "Shipping Information"
+msgstr "Livrezon soti"
+
+#: capshipping/templates/dashboard/partials/calculator.html:58
+#, fuzzy
+#| msgid "Select Country"
+msgid "From Country"
+msgstr "Chwazi Peyi"
+
+#: capshipping/templates/dashboard/partials/calculator.html:70
+#, fuzzy
+#| msgid "Select Country"
+msgid "Select Origin Country"
+msgstr "Chwazi Peyi"
+
+#: capshipping/templates/dashboard/partials/calculator.html:100
+#, fuzzy
+#| msgid "Select Country"
+msgid "Destination Country"
+msgstr "Chwazi Peyi"
+
+#: capshipping/templates/dashboard/partials/calculator.html:112
+msgid "Select Destination"
+msgstr ""
+
+#: capshipping/templates/dashboard/partials/calculator.html:147
+#, fuzzy
+#| msgid "Package Delivery"
+msgid "Package Category"
+msgstr "Livrezon Pakè yo"
+
+#: capshipping/templates/dashboard/partials/calculator.html:159
+#, fuzzy
+#| msgid "Select Country"
+msgid "Select category"
+msgstr "Chwazi Peyi"
+
+#: capshipping/templates/dashboard/partials/calculator.html:338
+msgid "Insurance"
+msgstr ""
+
+#: capshipping/templates/dashboard/partials/calculator.html:351
+#, fuzzy
+#| msgid "Transport Packages"
+msgid "Insured Package"
+msgstr "Transpòte Pakè yo"
+
+#: capshipping/templates/dashboard/partials/calculator.html:375
+#, fuzzy
+#| msgid "Resend"
+msgid "Reset"
+msgstr "Voye"
+
+#: capshipping/templates/dashboard/partials/calculator.html:388
+msgid "Calculate Price"
+msgstr ""
+
+#: capshipping/templates/dashboard/partials/calculator.html:418
+#, fuzzy
+#| msgid "Fast & Trusted Shipping"
+msgid "Estimated Shipping Cost"
+msgstr "Ekspedisyon Rapid ak Fyab"
+
+#: capshipping/templates/dashboard/partials/calculator.html:422
+#, fuzzy
+#| msgid "Shipment Tracking"
+msgid "Shipment pricing breakdown"
+msgstr "Swiv Ekspedisyon an\n"
+
+#: capshipping/templates/dashboard/partials/calculator.html:435
+msgid "Total Estimated Cost"
+msgstr ""
+
+#: capshipping/templates/dashboard/partials/calculator.html:460
+#, fuzzy
+#| msgid "Shipping Process"
+msgid "Shipping Price"
+msgstr "Pwosesis Ekspedisyon an"
+
+#: capshipping/templates/dashboard/partials/calculator.html:485
+msgid "Insurance Fee"
+msgstr ""
+
+#: capshipping/templates/dashboard/partials/calculator.html:560
+msgid "Final Total"
+msgstr ""
+
+#: capshipping/templates/dashboard/partials/calculator.html:592
+#, fuzzy
+#| msgid "Shipping From"
+msgid "Shipping Tips"
+msgstr "Livrezon soti"
+
+#: capshipping/templates/dashboard/partials/calculator.html:601
+msgid "Weight affects final shipping cost"
+msgstr ""
+
+#: capshipping/templates/dashboard/partials/calculator.html:606
+msgid "Dimensions affect volumetric weight"
+msgstr ""
+
+#: capshipping/templates/dashboard/partials/calculator.html:611
+msgid "Air shipping is faster but more expensive"
+msgstr ""
+
+#: capshipping/templates/dashboard/partials/calculator.html:616
+msgid "Insurance protects valuable packages"
+msgstr ""
+
+#: capshipping/templates/dashboard/partials/calculator.html:621
+msgid "Final cost may vary after inspection"
+msgstr ""
+
+#: capshipping/templates/dashboard/partials/category_table.html:10
+#, fuzzy
+#| msgid "Shipment Tracking"
+msgid "Shipment Categories"
+msgstr "Swiv Ekspedisyon an\n"
+
+#: capshipping/templates/dashboard/partials/category_table.html:17
+msgid "dashboard/categories"
+msgstr ""
+
+#: capshipping/templates/dashboard/partials/category_table.html:35
+msgid "Add category"
+msgstr ""
+
+#: capshipping/templates/dashboard/partials/category_table.html:64
+msgid "Search"
+msgstr ""
+
+#: capshipping/templates/dashboard/partials/category_table.html:81
+#: capshipping/templates/dashboard/partials/contact_table.html:221
+#, fuzzy
+#| msgid "Select Subject"
+msgid "Delete Selected"
+msgstr "Chwazi Sijè a"
+
+#: capshipping/templates/dashboard/partials/category_table.html:93
+#: capshipping/templates/dashboard/partials/contact_table.html:234
+msgid "selected"
+msgstr ""
+
+#: capshipping/templates/dashboard/partials/category_table.html:121
+msgid "Category"
+msgstr ""
+
+#: capshipping/templates/dashboard/partials/category_table.html:122
+msgid "Surcharge"
+msgstr ""
+
+#: capshipping/templates/dashboard/partials/category_table.html:123
+#: capshipping/templates/dashboard/partials/contact_table.html:266
+msgid "Created"
+msgstr ""
+
+#: capshipping/templates/dashboard/partials/category_table.html:124
+#: capshipping/templates/dashboard/partials/contact_table.html:267
+msgid "Actions"
+msgstr ""
+
+#: capshipping/templates/dashboard/partials/category_table.html:170
+#, fuzzy
+#| msgid "Shipment Tracking"
+msgid "Shipment category"
+msgstr "Swiv Ekspedisyon an\n"
+
+#: capshipping/templates/dashboard/partials/category_table.html:216
+msgid "Edit Category"
+msgstr ""
+
+#: capshipping/templates/dashboard/partials/category_table.html:251
+msgid "No categories found"
+msgstr ""
+
+#: capshipping/templates/dashboard/partials/category_table.html:283
+msgid "categories"
+msgstr ""
+
+#: capshipping/templates/dashboard/partials/category_table.html:441
+msgid "Category created"
+msgstr ""
+
+#: capshipping/templates/dashboard/partials/category_table.html:471
+msgid "Save category"
+msgstr ""
+
+#: capshipping/templates/dashboard/partials/category_table.html:508
+#, fuzzy
+#| msgid ""
+#| "\n"
+#| "                        If you have questions about our Terms & "
+#| "Conditions,\n"
+#| "                        our support team is ready to help you.\n"
+#| "\n"
+#| "                        "
+msgid ""
+" Categories help classify\n"
+"                            shipment packages and\n"
+"                            apply surcharges automatically.\n"
+"                            "
+msgstr ""
+"Si ou gen kestyon konsènan Tèm ak Kondisyon nou yo, ekip sipò nou an pare "
+"pou ede ou."
+
+#: capshipping/templates/dashboard/partials/contact_table.html:9
+#, fuzzy
+#| msgid "Shipment Tracking"
+msgid "Shipment Contacts"
+msgstr "Swiv Ekspedisyon an\n"
+
+#: capshipping/templates/dashboard/partials/contact_table.html:13
+msgid "manage customer and guest contacts"
+msgstr ""
+
+#: capshipping/templates/dashboard/partials/contact_table.html:47
+#, fuzzy
+#| msgid "Contact"
+msgid "Total Contacts"
+msgstr "Kontak"
+
+#: capshipping/templates/dashboard/partials/contact_table.html:77
+#, fuzzy
+#| msgid "Contact"
+msgid "Guest Contacts"
+msgstr "Kontak"
+
+#: capshipping/templates/dashboard/partials/contact_table.html:107
+#, fuzzy
+#| msgid "Register"
+msgid "Registered Users"
+msgstr "Enskri"
+
+#: capshipping/templates/dashboard/partials/contact_table.html:145
+#, fuzzy
+#| msgid "Contact"
+msgid "Last Contact"
+msgstr "Kontak"
+
+#: capshipping/templates/dashboard/partials/contact_table.html:265
+#: capshipping/templates/dashboard_user/dashboard.html:225
+msgid "Status"
+msgstr ""
+
+#: capshipping/templates/dashboard/partials/contact_table.html:410
+#, fuzzy
+#| msgid "Contact"
+msgid "Edit Contact"
+msgstr "Kontak"
+
+#: capshipping/templates/dashboard/partials/contact_table.html:452
+#, fuzzy
+#| msgid "Contact Info"
+msgid "No contacts found"
+msgstr "Kontak enfo"
+
+#: capshipping/templates/dashboard/partials/dashboard.html:10
+#: capshipping/templates/dashboard/sidebar.html:18
+#: capshipping/templates/dashboard_user/dashboard.html:30
+msgid "Dashboard"
+msgstr ""
+
+#: capshipping/templates/dashboard/partials/dashboard.html:11
+#, fuzzy
+#| msgid "Welcome Back"
+msgid "Welcome back"
+msgstr "Byenveni Ankò"
+
+#: capshipping/templates/dashboard/partials/dashboard.html:16
+msgid "Total revenue"
+msgstr ""
+
+#: capshipping/templates/dashboard/partials/dashboard.html:22
+#: capshipping/templates/dashboard/partials/dashboard.html:34
+msgid "vs last Month"
+msgstr ""
+
+#: capshipping/templates/dashboard/partials/dashboard.html:30
+msgid "Active Users"
+msgstr ""
+
+#: capshipping/templates/dashboard/partials/dashboard.html:41
+#, fuzzy
+#| msgid "Track Shipment"
+msgid "Total Shipments"
+msgstr "Swiv Ekspedisyon an"
+
+#: capshipping/templates/dashboard/partials/dashboard.html:52
+#, fuzzy
+#| msgid "Deliveries"
+msgid "Total Delivered"
+msgstr "Delivre"
+
+#: capshipping/templates/dashboard/partials/dashboard.html:68
+#, fuzzy
+#| msgid "Shipment Tracking"
+msgid "Revenue Overview"
+msgstr "Swiv Ekspedisyon an\n"
+
+#: capshipping/templates/dashboard/partials/dashboard.html:75
+msgid "Profit vs Expenses"
+msgstr ""
+
+#: capshipping/templates/dashboard/partials/kyc_details.html:5
+msgid "Dashboard / KYC Verifications"
+msgstr ""
+
+#: capshipping/templates/dashboard/partials/kyc_details.html:6
+#, fuzzy
+#| msgid "Enter verification code"
+msgid "KYC Verification Detail"
+msgstr "Antre kòd verifikasyon an"
+
+#: capshipping/templates/dashboard/partials/kyc_details.html:8
+msgid "Review and verify user identify Documents"
+msgstr ""
+
+#: capshipping/templates/dashboard/partials/kyc_details.html:16
+#, fuzzy
+#| msgid "Personal information"
+msgid "User Information"
+msgstr "Enfòmasyon Pèsonel"
+
+#: capshipping/templates/dashboard/sidebar.html:26
+#, fuzzy
+#| msgid "Track Shipment"
+msgid "Shipements"
+msgstr "Swiv Ekspedisyon an"
+
+#: capshipping/templates/dashboard/sidebar.html:33
+#, fuzzy
+#| msgid "Track Shipment"
+msgid "All Shipements"
+msgstr "Swiv Ekspedisyon an"
+
+#: capshipping/templates/dashboard/sidebar.html:35
+#, fuzzy
+#| msgid "Track Shipment"
+msgid "Add Shipment"
+msgstr "Swiv Ekspedisyon an"
+
+#: capshipping/templates/dashboard/sidebar.html:46
+#, fuzzy
+#| msgid "My Account"
+msgid "Accounts"
+msgstr "Kont Mwen"
+
+#: capshipping/templates/dashboard/sidebar.html:51
+#, fuzzy
+#| msgid "Call Us"
+msgid "All Users"
+msgstr "Rele Nou"
+
+#: capshipping/templates/dashboard/sidebar.html:52
+msgid "Add User"
+msgstr ""
+
+#: capshipping/templates/dashboard/sidebar.html:68
+msgid "Management"
+msgstr ""
+
+#: capshipping/templates/dashboard/sidebar.html:83
+#, fuzzy
+#| msgid "Warehouse Addresses"
+msgid "Warehouses"
+msgstr "Adrès Depo yo"
+
+#: capshipping/templates/dashboard/sidebar.html:92
+msgid "Categories"
+msgstr ""
+
+#: capshipping/templates/dashboard/sidebar.html:106
+#, fuzzy
+#| msgid "Contact"
+msgid "Contacts"
+msgstr "Kontak"
+
+#: capshipping/templates/dashboard/sidebar.html:122
+msgid "Pricing Rules"
+msgstr ""
+
+#: capshipping/templates/dashboard/sidebar.html:138
+msgid "Route Pricings"
+msgstr ""
+
+#: capshipping/templates/dashboard/sidebar.html:152
+msgid "KYC Users"
+msgstr ""
+
+#: capshipping/templates/dashboard/sidebar.html:166
+#: capshipping/templates/dashboard_user/dashboard.html:38
+msgid "Calculator"
+msgstr ""
+
+#: capshipping/templates/dashboard/sidebar.html:171
+#, fuzzy
+#| msgid "Tracking"
+msgid "Tracking Update"
+msgstr "Swiv pake"
+
+#: capshipping/templates/dashboard/sidebar.html:180
+#: capshipping/templates/dashboard/topbar.html:143
+#: capshipping/templates/dashboard_user/dashboard.html:47
+#: capshipping/templates/dashboard_user/dashboard.html:1222
+msgid "Settings"
+msgstr ""
+
+#: capshipping/templates/dashboard/sidebar.html:199
+msgid "Admin User"
+msgstr ""
+
+#: capshipping/templates/dashboard/sidebar.html:201
+msgid "Staff User"
+msgstr ""
+
+#: capshipping/templates/dashboard/sidebar.html:203
+#, fuzzy
+#| msgid "Customer Support"
+msgid "Customer"
+msgstr "Sèvis Sipò pou Kliyan yo"
+
+#: capshipping/templates/dashboard/topbar.html:138
+msgid "Your Profile"
+msgstr ""
+
+#: capshipping/templates/dashboard/topbar.html:150
+#, fuzzy
+#| msgid "Sign Up"
+msgid "Sign out"
+msgstr "Enskri "
+
+#: capshipping/templates/dashboard_user/dashboard.html:34
+#, fuzzy
+#| msgid "Your Addresses"
+msgid "Addresses"
+msgstr "Adrès Ou"
+
+#: capshipping/templates/dashboard_user/dashboard.html:42
+#: capshipping/templates/index.html:36
+msgid "Track"
+msgstr "Swiv"
+
+#: capshipping/templates/dashboard_user/dashboard.html:56
+#: capshipping/templates/dashboard_user/dashboard.html:533
+#: capshipping/templates/login.html:32
+msgid "Welcome Back"
+msgstr "Byenveni Ankò"
+
+#: capshipping/templates/dashboard_user/dashboard.html:57
+msgid "Here's an Overview of your shipments"
+msgstr ""
+
+#: capshipping/templates/dashboard_user/dashboard.html:108
+msgid "Received"
+msgstr ""
+
+#: capshipping/templates/dashboard_user/dashboard.html:114
+#: capshipping/templates/dashboard_user/dashboard.html:140
+#, fuzzy
+#| msgid "Track Shipment"
+msgid "Shipments"
+msgstr "Swiv Ekspedisyon an"
+
+#: capshipping/templates/dashboard_user/dashboard.html:134
+#: capshipping/templates/dashboard_user/dashboard.html:292
+#, fuzzy
+#| msgid "In Transit to"
+msgid "In Transit"
+msgstr "An Transpò pou "
+
+#: capshipping/templates/dashboard_user/dashboard.html:160
+#: capshipping/templates/dashboard_user/dashboard.html:302
+#, fuzzy
+#| msgid "Ready for Pickup"
+msgid "Ready Pickup"
+msgstr "Pare pou Delivre"
+
+#: capshipping/templates/dashboard_user/dashboard.html:186
+#: capshipping/templates/dashboard_user/dashboard.html:312
+#, fuzzy
+#| msgid "Deliveries"
+msgid "Delivered"
+msgstr "Delivre"
+
+#: capshipping/templates/dashboard_user/dashboard.html:208
+#, fuzzy
+#| msgid "Track Shipment"
+msgid "Recent Shipments"
+msgstr "Swiv Ekspedisyon an"
+
+#: capshipping/templates/dashboard_user/dashboard.html:209
+msgid "Your latest shipment activity"
+msgstr ""
+
+#: capshipping/templates/dashboard_user/dashboard.html:224
+#, fuzzy
+#| msgid "Shipping From"
+msgid "Shipping"
+msgstr "Livrezon soti"
+
+#: capshipping/templates/dashboard_user/dashboard.html:226
+msgid "Date"
+msgstr ""
+
+#: capshipping/templates/dashboard_user/dashboard.html:227
+msgid "Action"
+msgstr ""
+
+#: capshipping/templates/dashboard_user/dashboard.html:352
+msgid "No shipment found"
+msgstr ""
+
+#: capshipping/templates/dashboard_user/dashboard.html:375
+#, fuzzy
+#| msgid "Shipment Tracking"
+msgid "Shipment Overview"
+msgstr "Swiv Ekspedisyon an\n"
+
+#: capshipping/templates/dashboard_user/dashboard.html:376
+msgid "Monthly shipment activity"
+msgstr ""
+
+#: capshipping/templates/dashboard_user/dashboard.html:534
+msgid "Here are shipping addresses to use when purchasing online"
+msgstr ""
+
+#: capshipping/templates/dashboard_user/dashboard.html:548
+#, fuzzy
+#| msgid "Delivery Address"
+msgid "Plane Address"
+msgstr "Adrès Livrezon"
+
+#: capshipping/templates/dashboard_user/dashboard.html:582
+#, fuzzy
+#| msgid "Your Addresses"
+msgid "Copy address"
+msgstr "Adrès Ou"
+
+#: capshipping/templates/dashboard_user/dashboard.html:644
+#, fuzzy
+#| msgid "Warehouse Addresses"
+msgid "Additional Warehouse Addresses"
+msgstr "Adrès Depo yo"
+
+#: capshipping/templates/dashboard_user/dashboard.html:647
+msgid ""
+"\n"
+"        You can also use one of our other warehouse locations\n"
+"        below for delivering packages or shopping online.\n"
+"        "
+msgstr ""
+
+#: capshipping/templates/dashboard_user/dashboard.html:741
+msgid "Enter shipment details to estimate the shipping cost"
+msgstr ""
+
+#: capshipping/templates/dashboard_user/dashboard.html:770
+#, fuzzy
+#| msgid "Shipment Tracking"
+msgid "Shipment Details"
+msgstr "Swiv Ekspedisyon an\n"
+
+#: capshipping/templates/dashboard_user/dashboard.html:913
+#, fuzzy
+#| msgid "Package Delivery"
+msgid "Package Type"
+msgstr "Livrezon Pakè yo"
+
+#: capshipping/templates/dashboard_user/dashboard.html:1125
+msgid "Breakdown of estimated shipping cost"
+msgstr ""
+
+#: capshipping/templates/dashboard_user/dashboard.html:1241
+msgid "edite"
+msgstr ""
+
+#: capshipping/templates/dashboard_user/dashboard.html:1249
+#, fuzzy
+#| msgid "Your Addresses"
+msgid "Pick up Address"
+msgstr "Adrès Ou"
+
+#: capshipping/templates/dashboard_user/dashboard.html:1468
+#, fuzzy
+#| msgid "Confirm Password"
+msgid "Confirm New Password"
+msgstr "Konfime Modpas"
+
+#: capshipping/templates/dashboard_user/dashboard.html:1471
+#, fuzzy
+#| msgid "Password"
+msgid "Update Password"
+msgstr "Modpas"
+
+#: capshipping/templates/emails/kyc/approved.html:30
+msgid "Congratulations"
+msgstr ""
+
+#: capshipping/templates/emails/kyc/approved.html:44
+msgid ""
+"\n"
+"\n"
+"    Your identity verification has been approved successfully.\n"
+"\n"
+"    "
+msgstr ""
+
+#: capshipping/templates/emails/kyc/approved.html:56
+msgid ""
+"\n"
+"\n"
+"    Your account is now fully verified and you can access all platform "
+"features.\n"
+"\n"
+"    "
+msgstr ""
+
+#: capshipping/templates/emails/kyc/approved.html:68
+#, fuzzy
+#| msgid "Cap Shipping Distribution LLC"
+msgid "Thank you for choosing Cap Shipping Distribution."
+msgstr "Cap Shipping Distribution LLC"
+
+#: capshipping/templates/emails/kyc/approved.html:100
+#: capshipping/templates/emails/kyc/rejected.html:116
+#: capshipping/templates/emails/kyc/submitted.html:100
+#: capshipping/templates/emails/otp_email.html:87
+#: capshipping/templates/emails/otp_email_reset.html:87
+#: capshipping/templates/emails/shippment_status_update.html:91
+#: capshipping/templates/emails/welcome_email.html:78
+msgid "All rights reserved"
+msgstr "Tout dwa rezève."
+
+#: capshipping/templates/emails/kyc/rejected.html:30
+#: capshipping/templates/emails/kyc/submitted.html:30
 msgid "Hello"
 msgstr "Bonjou"
 
+#: capshipping/templates/emails/kyc/rejected.html:44
+msgid ""
+"\n"
+"\n"
+"    Unfortunately, your KYC verification request was rejected.\n"
+"\n"
+"    "
+msgstr ""
+
+#: capshipping/templates/emails/kyc/rejected.html:59
+msgid "Reason"
+msgstr ""
+
+#: capshipping/templates/emails/kyc/rejected.html:72
+msgid ""
+"\n"
+"\n"
+"    Please upload valid and clear documents before submitting another "
+"verification request.\n"
+"\n"
+"    "
+msgstr ""
+
+#: capshipping/templates/emails/kyc/rejected.html:84
+msgid "You may now resubmit your KYC documents from your dashboard."
+msgstr ""
+
+#: capshipping/templates/emails/kyc/submitted.html:44
+msgid ""
+"\n"
+"\n"
+"    Your KYC verification request has been successfully submitted.\n"
+"\n"
+"    "
+msgstr ""
+
+#: capshipping/templates/emails/kyc/submitted.html:56
+msgid ""
+"\n"
+"\n"
+"    Our team is currently reviewing your documents.\n"
+"    This process may take some time depending on verification volume.\n"
+"\n"
+"    "
+msgstr ""
+
+#: capshipping/templates/emails/kyc/submitted.html:69
+msgid ""
+"You will receive another email once your verification has been reviewed."
+msgstr ""
+
+#: capshipping/templates/emails/otp_email.html:38
+#: capshipping/templates/emails/otp_email_reset.html:38
+msgid "One-Time Password"
+msgstr "Modpas tanporè (OTP)"
+
+#: capshipping/templates/emails/otp_email.html:42
+msgid "Use the code below to Verify your account"
+msgstr "Itilize kod ki anba a pou w verifye Kont ou"
+
+#: capshipping/templates/emails/otp_email.html:58
+#: capshipping/templates/emails/otp_email_reset.html:58
+msgid "This code will expire in 10 minutes"
+msgstr "Kod sa ap Ekspire nan 10 minit"
+
+#: capshipping/templates/emails/otp_email.html:63
+#: capshipping/templates/emails/otp_email_reset.html:63
+msgid ""
+"If you did not request this, please ignore this email or contact support"
+msgstr "Siw pat fe yon demand konsa , Tanplri Inyore li Ou kontakte Sipò "
+
+#: capshipping/templates/emails/otp_email_reset.html:42
+msgid "Use the code below to reset your password"
+msgstr "Itilize kòd ki anba a pou reset modpas ou."
+
+#: capshipping/templates/emails/welcome_email.html:29
+msgid "Welcome"
+msgstr "Byenveni "
+
+#: capshipping/templates/emails/welcome_email.html:33
+msgid ""
+"\n"
+"                        Congratulations, you have successfully created your "
+"Cap Shipping Distribution account.<br>\n"
+"                        We are happy to now have you in our big family.\n"
+"\n"
+"                        "
+msgstr ""
+"Si ou gen kestyon konsènan Tèm ak Kondisyon nou yo, ekip sipò nou an pare "
+"pou ede ou."
+
+#: capshipping/templates/emails/welcome_email.html:41
+msgid ""
+"\n"
+"                        You can now send your packages with complete peace "
+"of mind to one of our branches in Haiti or Dominican Republic.\n"
+"                        "
+msgstr ""
+"Kounya ou kapab voye pakè ou yo ak tout lapè lespri nan youn nan branch nou "
+"yo an Ayiti oswa  Repibik Dominiken."
+
+#: capshipping/templates/emails/welcome_email.html:47
+msgid "Thank you for your trust, see you soon for your next transaction."
+msgstr ""
+"Mèsi pou konfyans ou, n ap kontan sèvi w ankò pou pwochen tranzaksyon ou an."
+
+#: capshipping/templates/index.html:23
 msgid "Cap Shipping Distribution LLC"
 msgstr "Cap Shipping Distribution LLC"
 
+#: capshipping/templates/index.html:25
 msgid "Shipping From"
 msgstr "Livrezon soti"
 
+#: capshipping/templates/index.html:26
 msgid "the USA to Haiti"
 msgstr "Etazini pou Ayiti"
 
+#: capshipping/templates/index.html:27
 msgid "and Other Countries"
 msgstr "ak lòt peyi"
 
-msgid "Track Your Package"
-msgstr "Swiv pakè ou"
+#: capshipping/templates/index.html:51
+msgid "Successful"
+msgstr "Siksè"
 
+#: capshipping/templates/index.html:51
+msgid "Deliveries"
+msgstr "Delivre"
+
+#: capshipping/templates/index.html:62
+msgid "5+ Years Experience"
+msgstr "5+ Ane Ekspleryans"
+
+#: capshipping/templates/index.html:66
+msgid "In Global Shipping"
+msgstr "Nan Transpò Entènasyonal"
+
+#: capshipping/templates/index.html:97
+msgid "HOW IT WORKS"
+msgstr "KIJAN LI MACHE"
+
+#: capshipping/templates/index.html:98
+msgid "Our Working"
+msgstr "Tranvay Nou"
+
+#: capshipping/templates/index.html:98
+msgid "Process in Transport"
+msgstr "Pwosesis Transpò a"
+
+#: capshipping/templates/index.html:100
+msgid ""
+"\n"
+"\n"
+"From Cap Shipping Distribution LLC to supply chain optimization,\n"
+"we are committed to providing the services to ensure your success.\n"
+"\n"
+msgstr ""
+"Soti nan sèvis Cap Shipping Distribution LLC yo rive nan optimize chèn "
+"distribisyon an, nou angaje nou pou bay sèvis ki nesesè pou asire siksè ou.\n"
+
+#: capshipping/templates/index.html:122
+msgid "Receive Packages"
+msgstr "Resevwa Pakè yo"
+
+#: capshipping/templates/index.html:127
+msgid ""
+"Shop from your favorite stores in the United States and send your packages "
+"directly to our warehouse..."
+msgstr ""
+"Achte nan magazen ou pi renmen Ozetazini epi voye pakè ou yo dirèkteman nan "
+"depo nou an..."
+
+#: capshipping/templates/index.html:133
+msgid ""
+"\n"
+"\n"
+"        Shop from your favorite stores in the United States and send your "
+"packages directly to our warehouse. We receive, process, and securely "
+"deliver your shipments to Haiti and the Dominican Republic with reliable air "
+"and sea cargo services. Enjoy fast delivery times, package tracking, secure "
+"handling, and a smooth shipping experience from pickup to final "
+"destination.\n"
+"\n"
+"        "
+msgstr ""
+"Achte nan magazen ou pi renmen Ozetazini epi voye pakè ou yo dirèkteman nan "
+"depo nou an. Nou resevwa, trete epi livre ekspedisyon ou yo an sekirite ann "
+"Ayiti ak nan Repiblik Dominikèn atravè sèvis transpò pa avyon ak pa bato ki "
+"fyab. Jwi livrezon rapid, suiv pakè yo, bon jan sekirite nan tretman yo, "
+"ansanm ak yon eksperyans ekspedisyon ki senp depi ranmasaj la rive jouk nan "
+"destinasyon final la."
+
+#: capshipping/templates/index.html:143 capshipping/templates/index.html:184
+#: capshipping/templates/index.html:226
+msgid "Read More"
+msgstr "Li Plis"
+
+#: capshipping/templates/index.html:157
+msgid "Transport Packages"
+msgstr "Transpòte Pakè yo"
+
+#: capshipping/templates/index.html:166
+msgid ""
+"We provide reliable package transportation through both air freight and sea "
+"cargo services, giving you flexible and affordable shipping options..."
+msgstr ""
+"Nou bay sèvis transpò pakè ki fyab atravè transpò pa avyon ak pa bato, pou "
+"ofri w opsyon ekspedisyon fleksib ak abòdab..."
+
+#: capshipping/templates/index.html:173
+msgid ""
+"\n"
+"\n"
+"        We provide reliable package transportation through both air freight "
+"and sea cargo services, giving you flexible and affordable shipping options "
+"based on your needs. Whether you need fast air delivery or cost-effective "
+"ocean freight, we safely transport your packages from the USA to Haiti and "
+"the Dominican Republic with professional handling and real-time shipment "
+"support.\n"
+"\n"
+"        "
+msgstr ""
+"Nou bay sèvis transpò pakè ki fyab atravè transpò pa avyon ak pa bato, pou "
+"ofri w opsyon ekspedisyon fleksib ak abòdab selon bezwen ou. Kit ou bezwen "
+"yon livrezon rapid pa avyon oswa yon transpò maritim ki pi ekonomik, nou "
+"transpòte pakè ou yo an sekirite soti Ozetazini pou rive Ayiti ak Repiblik "
+"Dominikèn avèk sèvis pwofesyonèl ak sipò an tan reyèl pou suiv ekspedisyon "
+"yo."
+
+#: capshipping/templates/index.html:199
+msgid "Deliver Packages"
+msgstr "Livre Pakè yo"
+
+#: capshipping/templates/index.html:208
+msgid ""
+"We ensure your packages are delivered safely and on time to Haiti and the "
+"Dominican Republic..."
+msgstr ""
+"Nou asire pakè ou yo livre an sekirite epi alè ann Ayiti ak nan Repiblik "
+"Dominikèn..."
+
+#: capshipping/templates/index.html:215
+msgid ""
+"\n"
+"\n"
+"        We ensure your packages are delivered safely and on time to Haiti "
+"and the Dominican Republic through our trusted delivery network. From "
+"warehouse processing to final delivery, our team handles every shipment with "
+"care, providing reliable tracking, secure transportation, and fast customer "
+"support to guarantee a smooth delivery experience.\n"
+"\n"
+"        "
+msgstr ""
+"Nou asire pakè ou yo livre an sekirite epi alè ann Ayiti ak nan Repiblik "
+"Dominikèn atravè rezo livrezon nou an ki fyab. Depi nan tretman depo a rive "
+"jouk nan livrezon final la, ekip nou an jere chak ekspedisyon avèk anpil "
+"swen, pandan nou bay sèvis suiv pakè, transpò sekirize ak sipò kliyan rapid "
+"pou garanti yon eksperyans livrezon ki senp epi san pwoblèm."
+
+#: capshipping/templates/index.html:257
+msgid "YEARS OF"
+msgstr "ANE DE"
+
+#: capshipping/templates/index.html:257
+msgid "EXPERIENCE"
+msgstr "EKSPERYANS"
+
+#: capshipping/templates/index.html:275
+msgid "Reliable Cargo Shipping"
+msgstr "Transpò Kago Fyab"
+
+#: capshipping/templates/index.html:276
+msgid "From USA to Haiti"
+msgstr "De Etazini ak Haiti"
+
+#: capshipping/templates/index.html:286
+msgid "Freight Shipping"
+msgstr "Transpò Kago"
+
+#: capshipping/templates/index.html:291
+msgid ""
+"Fast and secure freight shipping solutions designed to deliver your cargo "
+"safely and on time from the USA to Haiti and the Dominican Republic."
+msgstr ""
+"Solisyon transpò kago rapid ak sekirize ki fèt pou livre machandiz ou yo an "
+"sekirite epi alè soti Ozetazini pou rive Ayiti ak Repiblik Dominikèn."
+
+#: capshipping/templates/index.html:301
+msgid "Intermodal Shipping"
+msgstr "Transpò Entèmodal"
+
+#: capshipping/templates/index.html:306
+msgid ""
+"Reliable air and sea shipping services that provide safe, affordable, and "
+"efficient package delivery across every destination."
+msgstr ""
+"Sèvis transpò pa avyon ak pa bato ki fyab, ki ofri livrezon pakè an "
+"sekirite, abòdab ak efikas pou tout destinasyon yo."
+
+#: capshipping/templates/index.html:315
+msgid "Call Us"
+msgstr "Rele Nou"
+
+#: capshipping/templates/index.html:339 capshipping/templates/index.html:347
+msgid "FAST AIR SHIPPING"
+msgstr "TRANSPÒ PA AVYON RAPID"
+
+#: capshipping/templates/index.html:340 capshipping/templates/index.html:348
+msgid "GLOBAL OCEAN FREIGHT"
+msgstr "TRANSPÒ MARITIM ENTÈNASYONAL"
+
+#: capshipping/templates/index.html:341 capshipping/templates/index.html:349
+msgid "SECURE PACKAGE DELIVERY"
+msgstr "LIVREZON PAKÈ AN SEKIRITE\n"
+
+#: capshipping/templates/index.html:342 capshipping/templates/index.html:350
+msgid "EXPRESS LOGISTICS"
+msgstr "LÒJISTIK EKSPRÈS"
+
+#: capshipping/templates/index.html:371
+msgid "Mission & Vision"
+msgstr "Misyon ak Vizyon"
+
+#: capshipping/templates/index.html:374
+msgid "Delivering Reliable Cargo Services"
+msgstr "Bay Sèvis Transpò Kago ki Fyab"
+
+#: capshipping/templates/index.html:375
+msgid "Between USA and Haiti"
+msgstr "Entre Etazini Ak Haiti"
+
+#: capshipping/templates/index.html:380
+msgid "Our Mission"
+msgstr "Misyon Nou"
+
+#: capshipping/templates/index.html:381
+msgid "Our Vision"
+msgstr "Vizyon Nou"
+
+#: capshipping/templates/index.html:382
+msgid "Our History"
+msgstr "Istwa Nou"
+
+#: capshipping/templates/index.html:387
+msgid ""
+"Cap Shipping Distribution is dedicated to providing fast, secure, and "
+"reliable shipping solutions between the USA, Haiti, and the Dominican "
+"Republic. Our mission is to simplify international shipping through trusted "
+"customer service, efficient logistics, and affordable delivery options by "
+"air and sea."
+msgstr ""
+"Cap Shipping Distribution angaje li pou bay solisyon ekspedisyon rapid, "
+"sekirize ak fyab ant Etazini, Ayiti ak Repiblik Dominikèn. Misyon nou se "
+"senplifye transpò entènasyonal atravè yon sèvis kliyan ou ka fè konfyans, "
+"lojistik efikas, ak opsyon livrezon abòdab pa avyon ak pa bato."
+
+#: capshipping/templates/index.html:394
+msgid ""
+"Our vision is to become one of the most trusted Caribbean logistics and "
+"freight forwarding companies by connecting families and businesses through "
+"innovative, secure, and professional shipping services worldwide."
+msgstr ""
+"Vizyon nou se vin youn nan konpayi lojistik ak transpò machandiz ki plis fè "
+"konfyans nan Karayib la, lè nou konekte fanmi ak biznis atravè sèvis "
+"ekspedisyon inovatè, sekirize ak pwofesyonèl atravè lemond."
+
+#: capshipping/templates/index.html:402
+msgid ""
+"Cap Shipping Distribution was created with the goal of making international "
+"shipping easier, faster, and more accessible for the Haitian and Caribbean "
+"communities. Through dedication, transparency, and customer-focused service, "
+"we continue to build a reliable logistics network customers can trust every "
+"day."
+msgstr ""
+"Cap Shipping Distribution te kreye avèk objektif pou rann transpò "
+"entènasyonal pi fasil, pi rapid ak pi aksesib pou kominote ayisyen ak "
+"karayibeyen yo. Gras ak devouman, transparans ak sèvis ki santre sou kliyan "
+"yo, nou kontinye bati yon rezo lojistik ki fyab kliyan yo ka fè konfyans "
+"chak jou."
+
+#: capshipping/templates/index.html:415
+msgid "Secure Packaging & Handling"
+msgstr "Anbalaj ak Tretman Sekirize"
+
+#: capshipping/templates/index.html:421
+msgid ""
+"Your goods are carefully handled, packed, and shipped with maximum safety "
+"and care."
+msgstr ""
+"Machandiz ou yo trete, anbale epi ekspedye avèk anpil swen ak maksimòm "
+"sekirite."
+
+#: capshipping/templates/index.html:449 capshipping/templates/index.html:550
+msgid "Packages Delivered"
+msgstr "Pakè Livre deja"
+
+#: capshipping/templates/index.html:461
+msgid "Customer Satisfaction"
+msgstr "Satisfaksyon Kliyan yo"
+
+#: capshipping/templates/index.html:508 capshipping/templates/index.html:516
+msgid "SEA & AIR FREIGHT SOLUTIONS"
+msgstr "SOLISYON TRANSPÒ PA BATO AK PA AVYON"
+
+#: capshipping/templates/index.html:510 capshipping/templates/index.html:518
+msgid "WAREHOUSING & DISTRIBUTION"
+msgstr "DEPO AK DISTRIBISYON"
+
+#: capshipping/templates/index.html:511 capshipping/templates/index.html:519
+msgid "REAL-TIME TRACKING SYSTEM"
+msgstr "SISTÈM SWIVI AN TAN REYÈL"
+
+#: capshipping/templates/index.html:513 capshipping/templates/index.html:521
+msgid "CUSTOM LOGISTICS SUPPORT"
+msgstr "SIPÒ LÒJISTIK PÈSONALIZE"
+
+#: capshipping/templates/index.html:536
+msgid "Fast & Trusted Shipping"
+msgstr "Ekspedisyon Rapid ak Fyab"
+
+#: capshipping/templates/index.html:540
+msgid "the USA to Haiti with Trusted, Fast and"
+msgstr "soti Ozetazini pou rive Ayiti avèk sèvis ki fyab, rapid ak"
+
+#: capshipping/templates/index.html:540
+msgid "Professional Delivery"
+msgstr "Livrezon Pwofesyonèl"
+
+#: capshipping/templates/index.html:551
+msgid "Whether by plane or by boat, we are there for you"
+msgstr "Kit se pa avyon oswa pa bato, nou la pou ou"
+
+#: capshipping/templates/index.html:561
+msgid "Satisfied Customers"
+msgstr "Kliyan Satisfè"
+
+#: capshipping/templates/index.html:562
+msgid "We guarantee the safety of packages and ensure fast delivery."
+msgstr "Nou garanti sekirite pakè yo epi nou asire livrezon rapid."
+
+#: capshipping/templates/index.html:574
+msgid "Years of experience"
+msgstr "Ane Eksperyans"
+
+#: capshipping/templates/index.html:575
+msgid ""
+"We are committed to providing you with quality service by meeting your "
+"expectations."
+msgstr "Nou angaje nou pou ba ou yon sèvis kalite ki satisfè tout atant ou yo."
+
+#: capshipping/templates/index.html:605 capshipping/templates/tracking.html:299
+msgid "FAQS"
+msgstr "KESYON MOUN POZE SOUVAN YO"
+
+#: capshipping/templates/index.html:606 capshipping/templates/tracking.html:300
+msgid "Find answers to common questions"
+msgstr "Jwenn repons pou kestyon moun poze souvan yo"
+
+#: capshipping/templates/index.html:624 capshipping/templates/tracking.html:318
+msgid "How long does shipping from the USA to Haiti take?"
+msgstr "Konbyen tan transpò soti Ozetazini pou rive Ayiti pran?"
+
+#: capshipping/templates/index.html:630 capshipping/templates/tracking.html:324
+msgid ""
+"Delivery times depend on the shipping method you choose. Air freight is "
+"faster for urgent packages, while sea freight is more affordable for larger "
+"shipments. Our team always works to ensure safe and on-time delivery."
+msgstr ""
+"Tan livrezon an depann de kalite transpò ou chwazi a. Transpò pa avyon pi "
+"rapid pou pakè ijan, pandan transpò pa bato pi abòdab pou gwo chajman yo. "
+"Ekip nou an toujou travay pou asire livrezon yo fèt an sekirite epi alè."
+
+#: capshipping/templates/index.html:642 capshipping/templates/tracking.html:336
+msgid "Can I track my package in real time?"
+msgstr "Èske mwen ka swiv pakè mwen an an tan reyèl?"
+
+#: capshipping/templates/index.html:650 capshipping/templates/tracking.html:344
+msgid ""
+"Yes, we provide real-time package tracking so you can follow your shipment "
+"from our warehouse in the USA until it arrives at its final destination."
+msgstr ""
+"Wi, nou bay sèvis swiv pakè an tan reyèl pou ou ka suiv ekspedisyon ou depi "
+"nan depo nou Ozetazini jouk li rive nan destinasyon final li."
+
+#: capshipping/templates/index.html:662 capshipping/templates/tracking.html:356
+msgid "What items are allowed for shipping?"
+msgstr "Ki atik ki otorize pou ekspedisyon?"
+
+#: capshipping/templates/index.html:670 capshipping/templates/tracking.html:364
+msgid ""
+"We ship clothing, electronics, household items, business goods, and many "
+"other products. However, restricted or prohibited items cannot be accepted "
+"for transportation."
+msgstr ""
+"Nou ekspedye rad, aparèy elektwonik, atik pou kay, machandiz komèsyal ak "
+"anpil lòt pwodwi ankò. Sepandan, atik ki entèdi oswa ki gen restriksyon pa "
+"kapab aksepte pou transpò."
+
+#: capshipping/templates/index.html:684 capshipping/templates/tracking.html:378
+msgid "Do you offer both air and sea cargo services?"
+msgstr "Èske nou ofri sèvis kago pa avyon ak pa bato? "
+
+#: capshipping/templates/index.html:692 capshipping/templates/tracking.html:386
+msgid ""
+"\n"
+"                    Yes, we offer both fast air cargo and cost-effective sea "
+"freight services to give customers flexible shipping solutions based on "
+"their needs and budget.\n"
+"                    "
+msgstr ""
+"Wi, nou ofri sèvis kago pa avyon ki rapid ansanm ak sèvis transpò pa bato ki "
+"pi ekonomik, pou bay kliyan yo solisyon livrezon fleksib selon bezwen ak "
+"bidjè yo. "
+
+#: capshipping/templates/login.html:33
+msgid "Welcome Back ! please enter your Details"
+msgstr "Byenveni Ankò! Tanpri antre enfòmasyon ou yo."
+
+#: capshipping/templates/login.html:63
+msgid "Forget Password ?"
+msgstr "Ou Bliye Modpas la?"
+
+#: capshipping/templates/login.html:71
+msgid "Don’t have an account?"
+msgstr "Ou pa gen yon kont?"
+
+#: capshipping/templates/login.html:71
+msgid "Register"
+msgstr "Enskri"
+
+#: capshipping/templates/register.html:53
+msgid "Personal information"
+msgstr "Enfòmasyon Pèsonel"
+
+#: capshipping/templates/register.html:58
+msgid "First name"
+msgstr "Non"
+
+#: capshipping/templates/register.html:59
+msgid "Last name"
+msgstr "Non Fanmi"
+
+#: capshipping/templates/register.html:69
+msgid "Phone number"
+msgstr "Nimewo Telefòn"
+
+#: capshipping/templates/register.html:84
+msgid "Password"
+msgstr "Modpas"
+
+#: capshipping/templates/register.html:85
+msgid "Confirm Password"
+msgstr "Konfime Modpas"
+
+#: capshipping/templates/register.html:88
+#: capshipping/templates/register.html:122
+msgid "Next"
+msgstr "Kotinye"
+
+#: capshipping/templates/register.html:94
+msgid "Your Addresses"
+msgstr "Adrès Ou"
+
+#: capshipping/templates/register.html:113
+msgid "Select your city of residence"
+msgstr "Chwazi Vil"
+
+#: capshipping/templates/register.html:121
+#: capshipping/templates/register.html:163
+msgid "Back"
+msgstr "Bak"
+
+#: capshipping/templates/register.html:129
+msgid "Delivery Address"
+msgstr "Adrès Livrezon"
+
+#: capshipping/templates/register.html:133
+msgid "Delivery country"
+msgstr "Peyi Livrezon"
+
+#: capshipping/templates/register.html:140
+msgid "Delivery city"
+msgstr "Vil Livrezon"
+
+#: capshipping/templates/register.html:158
+msgid "the terms and conditions"
+msgstr "Tèm ak Kondisyon yo"
+
+#: capshipping/templates/register.html:164
+msgid "Submit"
+msgstr "Soumèt"
+
+#: capshipping/templates/register.html:173
+msgid "Enter verification code"
+msgstr "Antre kòd verifikasyon an"
+
+#: capshipping/templates/register.html:174
+msgid "Enter the 6-digit code sent to your email"
+msgstr "Antre kòd 6 chif yo voye nan imel ou a."
+
+#: capshipping/templates/register.html:189
+msgid "Resend"
+msgstr "Voye"
+
+#: capshipping/templates/register.html:191
+msgid "Verify"
+msgstr "Verifye"
+
+#: capshipping/templates/term_and_condition.html:26
+msgid "Shipping Policy"
+msgstr "Politik Ekspedisyon an"
+
+#: capshipping/templates/term_and_condition.html:29
+#: capshipping/templates/term_and_condition.html:37
+msgid "Terms & Conditions"
+msgstr "Tèm ak Kondisyon yo"
+
+#: capshipping/templates/term_and_condition.html:71
+msgid "Last Updated"
+msgstr "Dènye Mizajou"
+
+#: capshipping/templates/term_and_condition.html:72
+msgid "May 24, 2026"
+msgstr "24 , Me 2026"
+
+#: capshipping/templates/term_and_condition.html:76
+msgid ""
+" Please read these Terms & Conditions carefully before using our shipping "
+"and logistics services."
+msgstr ""
+"Tanpri li Tèm ak Kondisyon sa yo avèk anpil atansyon anvan ou itilize sèvis "
+"ekspedisyon ak lojistik nou yo."
+
+#: capshipping/templates/term_and_condition.html:106
+msgid "1. Introduction"
+msgstr "1. Entwodiksyon"
+
+#: capshipping/templates/term_and_condition.html:109
+msgid ""
+"These Terms & Conditions govern your use of our shipping services and "
+"website."
+msgstr ""
+"Tèm ak Kondisyon sa yo gouvène itilizasyon sèvis ekspedisyon nou yo ansanm "
+"ak sit entènèt nou an."
+
+#: capshipping/templates/term_and_condition.html:124
+msgid ""
+"\n"
+"    By using Cap Shipping Distribution LLC services, you agree to comply "
+"with our shipping policies, operational procedures, and delivery terms. We "
+"provide freight forwarding, package handling, and logistics solutions "
+"between the United States, Haiti, and the Dominican Republic. Customers are "
+"responsible for providing accurate shipment information, including recipient "
+"details, package contents, and contact information. Any false, prohibited, "
+"or incomplete information may result in shipment delays, refusal, or "
+"additional charges. Our team is committed to ensuring safe handling, timely "
+"transportation, and reliable customer support throughout the shipping "
+"process.\n"
+"    "
+msgstr ""
+"Lè ou itilize sèvis Cap Shipping Distribution LLC yo, ou dakò respekte "
+"politik ekspedisyon nou yo, pwosedi operasyonèl nou yo ak kondisyon livrezon "
+"yo. Nou bay sèvis transpò machandiz, tretman pakè ak solisyon lojistik ant "
+"Etazini, Ayiti ak Repiblik Dominikèn. Kliyan yo responsab pou bay enfòmasyon "
+"ki egzak sou ekspedisyon yo, tankou detay moun k ap resevwa a, sa ki nan "
+"pakè yo ak enfòmasyon kontak yo. Nenpòt enfòmasyon ki fo, entèdi oswa ki pa "
+"konplè kapab lakòz reta, refi oswa frè adisyonèl sou ekspedisyon an. Ekip "
+"nou an angaje li pou asire tretman an fèt an sekirite, transpò fèt alè ak "
+"sipò kliyan ki fyab pandan tout pwosesis ekspedisyon an."
+
+#: capshipping/templates/term_and_condition.html:152
+msgid ""
+"\n"
+"    Cap Shipping Distribution LLC provides air and sea freight services for "
+"packages, personal items, commercial goods, and cargo between the United "
+"States, Haiti, and the Dominican Republic. Our services include shipment "
+"collection, package consolidation, warehouse handling, transportation, "
+"tracking updates, and delivery support. Delivery times may vary depending on "
+"the shipping method, customs clearance, weather conditions, and destination "
+"location.\n"
+"    "
+msgstr ""
+"Cap Shipping Distribution LLC bay sèvis transpò pa avyon ak pa bato pou "
+"pakè, atik pèsonèl, machandiz komèsyal ak kago ant Etazini, Ayiti ak "
+"Repiblik Dominikèn. Sèvis nou yo gen ladan ranmasaj ekspedisyon yo, gwoupman "
+"pakè yo, tretman nan depo, transpò, mizajou sou suiv pakè yo ak sipò pou "
+"livrezon yo. Tan livrezon yo ka varye selon kalite transpò a, pwosedi ladwàn "
+"yo, kondisyon metewolojik yo ak kote destinasyon an ye."
+
+#: capshipping/templates/term_and_condition.html:194
+msgid "3. User Responsibilities"
+msgstr "3. Responsablite Itilizatè yo"
+
+#: capshipping/templates/term_and_condition.html:197
+msgid ""
+"\n"
+"    Customers are responsible for providing accurate shipping information, "
+"including names, addresses, phone numbers, and package descriptions. All "
+"items must be properly packaged to ensure safe transportation. Customers "
+"must also comply with all shipping regulations and avoid sending prohibited, "
+"illegal, dangerous, or restricted items. Cap Shipping Distribution LLC is "
+"not responsible for delays, losses, or additional fees caused by incorrect "
+"information or improper packaging provided by the customer.\n"
+"    "
+msgstr ""
+"Kliyan yo responsab pou bay enfòmasyon ekspedisyon ki egzak, tankou non, "
+"adrès, nimewo telefòn ak deskripsyon pakè yo. Tout atik yo dwe byen anbale "
+"pou asire transpò yo fèt an sekirite. Kliyan yo dwe respekte tout règleman "
+"transpò yo epi evite voye atik ki entèdi, ilegal, danjere oswa ki gen "
+"restriksyon. Cap Shipping Distribution LLC pa responsab pou reta, pèt oswa "
+"frè adisyonèl ki koze pa move enfòmasyon oswa move anbalaj kliyan an bay."
+
+#: capshipping/templates/term_and_condition.html:214
+msgid ""
+"\n"
+"    We are committed to providing secure, reliable, and professional "
+"shipping services while ensuring transparency, customer satisfaction, and "
+"smooth logistics operations for every shipment entrusted to our company.\n"
+"    "
+msgstr ""
+"Nou angaje nou pou bay sèvis ekspedisyon ki sekirize, fyab ak pwofesyonèl, "
+"pandan nou asire transparans, satisfaksyon kliyan yo ak bon fonksyònman "
+"operasyon lojistik yo pou chak ekspedisyon yo konfye konpayi nou an."
+
+#: capshipping/templates/term_and_condition.html:239
+msgid "4. Delivery Time"
+msgstr "4. Tan Livrezon"
+
+#: capshipping/templates/term_and_condition.html:242
+msgid ""
+"\n"
+"    Delivery times provided by Cap Shipping Distribution LLC are estimated "
+"and may vary depending on customs inspections, weather conditions, "
+"transportation delays, holidays, or other circumstances beyond our control. "
+"While we work to ensure timely deliveries, we cannot guarantee exact "
+"delivery dates. The company is not responsible for damages, losses, or "
+"delays caused by customs authorities, natural events, accidents, or improper "
+"packaging by the customer. Customers are encouraged to securely package "
+"fragile or valuable items before shipment.\n"
+"    "
+msgstr ""
+"Tan livrezon Cap Shipping Distribution LLC bay yo se estimasyon sèlman epi "
+"yo ka varye selon enspeksyon ladwàn, kondisyon metewolojik, reta transpò, "
+"jou ferye oswa lòt sitiyasyon ki depase kontwòl nou. Menmsi nou travay pou "
+"asire livrezon yo fèt alè, nou pa kapab garanti dat livrezon egzak yo. "
+"Konpayi an pa responsab pou domaj, pèt oswa reta ki koze pa otorite ladwàn "
+"yo, evènman natirèl, aksidan oswa move anbalaj kliyan an fè. Nou ankouraje "
+"kliyan yo pou byen anbale atik frajil oswa ki gen anpil valè anvan "
+"ekspedisyon an."
+
+#: capshipping/templates/term_and_condition.html:259
+msgid ""
+"\n"
+"    We continuously strive to provide reliable shipping services and clear "
+"communication to ensure every customer receives the best possible logistics "
+"experience with transparency and professionalism.\n"
+"    "
+msgstr ""
+"Nou kontinye fè tout efò pou bay sèvis ekspedisyon ki fyab ansanm ak "
+"kominikasyon ki klè pou asire chak kliyan jwenn pi bon eksperyans lojistik "
+"posib avèk transparans ak pwofesyonalis."
+
+#: capshipping/templates/term_and_condition.html:284
+msgid "5. Payments & Fees"
+msgstr "5. Peman ak Frè yo"
+
+#: capshipping/templates/term_and_condition.html:287
+msgid ""
+"\n"
+"    All shipping fees, service charges, customs costs, storage fees, and "
+"other applicable charges must be fully paid before shipment processing or "
+"delivery. Prices may vary depending on package size, weight, destination, "
+"shipping method, and additional services requested. Cap Shipping "
+"Distribution LLC reserves the right to refuse shipment release or delivery "
+"until all outstanding balances are cleared. Additional fees may also apply "
+"for oversized packages, restricted items, returned shipments, or extended "
+"warehouse storage.\n"
+"    "
+msgstr ""
+"Tout frè ekspedisyon, frè sèvis, depans ladwàn, frè depo ak lòt frè ki "
+"aplikab yo dwe peye nèt anvan tretman oswa livrezon ekspedisyon an fèt. Pri "
+"yo ka varye selon gwosè pakè a, pwa li, destinasyon an, kalite transpò a ak "
+"sèvis adisyonèl kliyan an mande yo. Cap Shipping Distribution LLC rezève dwa "
+"pou refize remèt oswa livre yon ekspedisyon toutotan tout balans ki poko "
+"peye yo pa regle. Frè adisyonèl kapab aplike tou pou gwo pakè, atik ki gen "
+"restriksyon, ekspedisyon retounen oswa depo ki dire twò lontan."
+
+#: capshipping/templates/term_and_condition.html:304
+msgid ""
+"\n"
+"    Customers are encouraged to review all pricing details and payment "
+"conditions carefully before confirming any shipment or logistics service "
+"with our company.\n"
+"    "
+msgstr ""
+"Nou ankouraje kliyan yo pou verifye tout detay sou pri yo ansanm ak "
+"kondisyon peman yo avèk anpil atansyon anvan yo konfime nenpòt ekspedisyon "
+"oswa sèvis lojistik ak konpayi nou an."
+
+#: capshipping/templates/term_and_condition.html:329
+msgid "6. Prohibited Items"
+msgstr "6. Atik Entèdi yo"
+
+#: capshipping/templates/term_and_condition.html:332
+msgid ""
+"\n"
+"    Customers are strictly prohibited from shipping illegal, hazardous, "
+"flammable, explosive, counterfeit, or restricted items through Cap Shipping "
+"Distribution LLC services. This includes weapons, drugs, toxic materials, "
+"and any products prohibited by local or international shipping regulations. "
+"The company reserves the right to inspect, refuse, hold, or report "
+"suspicious shipments to the appropriate authorities when necessary. Any "
+"violation of these policies may result in shipment cancellation, legal "
+"action, fines, or permanent suspension of service access.\n"
+"    "
+msgstr ""
+"Kliyan yo entèdi nèt pou ekspedye atik ilegal, danjere, ki pran dife fasil, "
+"eksplozif, fo pwodwi oswa atik ki gen restriksyon atravè sèvis Cap Shipping "
+"Distribution LLC yo. Sa gen ladan zam, dwòg, materyèl toksik ak nenpòt "
+"pwodwi règleman transpò lokal oswa entènasyonal entèdi. Konpayi an rezève "
+"dwa pou enspekte, refize, kenbe oswa rapòte nenpòt ekspedisyon sispèk bay "
+"otorite ki konsène yo lè sa nesesè. Nenpòt vyolasyon règleman sa yo kapab "
+"lakòz anilasyon ekspedisyon an, aksyon legal, amann oswa sispansyon pèmanan "
+"aksè ak sèvis yo."
+
+#: capshipping/templates/term_and_condition.html:349
+msgid ""
+"\n"
+"    Our priority is to maintain safe, secure, and compliant shipping "
+"operations while protecting customers, employees, and transportation "
+"partners throughout the delivery process.\n"
+"    "
+msgstr ""
+"Priyorite nou se kenbe operasyon ekspedisyon yo an sekirite, byen pwoteje "
+"epi an konfòmite ak règleman yo, pandan n ap pwoteje kliyan yo, anplwaye yo "
+"ak patnè transpò yo pandan tout pwosesis livrezon an."
+
+#: capshipping/templates/term_and_condition.html:377
+msgid "Need Help?"
+msgstr "Ou Vle Èd ? "
+
+#: capshipping/templates/term_and_condition.html:380
+msgid ""
+"\n"
+"                        If you have questions about our Terms & Conditions,\n"
+"                        our support team is ready to help you.\n"
+"\n"
+"                        "
+msgstr ""
+"Si ou gen kestyon konsènan Tèm ak Kondisyon nou yo, ekip sipò nou an pare "
+"pou ede ou."
+
+#: capshipping/templates/tracking.html:24
+msgid "Track your packages"
+msgstr "Swiv pakè ou "
+
+#: capshipping/templates/tracking.html:26
+msgid "Enter your tracking number to get real-time updates"
+msgstr "Antre nimewo suiv ou a pou jwenn mizajou an tan reyèl."
+
+#: capshipping/templates/tracking.html:34
+msgid "Track Package"
+msgstr "Swiv pakè ou "
+
+#: capshipping/templates/tracking.html:38
+msgid "Enter up to 10 items"
+msgstr "Antre jiska 10 Karaktè"
+
+#: capshipping/templates/tracking.html:106
+msgid "Received at Warehouse"
+msgstr "Resevwa nan Depo a"
+
+#: capshipping/templates/tracking.html:144
+msgid "In Transit to"
+msgstr "An Transpò pou "
+
+#: capshipping/templates/tracking.html:152
+msgid "Your package is on the way to the destination country."
+msgstr "Pakè ou a sou wout pou rive nan peyi destinasyon an."
+
+#: capshipping/templates/tracking.html:179
+msgid "Ready for Pickup"
+msgstr "Pare pou Delivre"
+
+#: capshipping/templates/tracking.html:187
+msgid "Your package is ready for pickup at the local office."
+msgstr "Pakè ou a pare pou vin Pran li nan biwo lokal la."
+
+#: capshipping/templates/tracking.html:243
+msgid "Total Transit Time"
+msgstr "Tan Total Transpò a"
+
+#: capshipping/templates/tracking.html:243
+msgid "Days"
+msgstr "Jou"
+
+#: capshipping/templates/tracking.html:259
+msgid "with your package delivery?"
+msgstr "ak livrezon pakè ou a?"
+
+#: capshipping/templates/tracking.html:260
+msgid "Contact Customer support"
+msgstr "Kontakte Sipò Kliyan an"
+
+#, fuzzy
+#~| msgid "Packages Delivered"
+#~ msgid "📦 Package Received"
+#~ msgstr "Pakè Livre deja"
+
+#, fuzzy
+#~| msgid "In Transit to"
+#~ msgid "🚚 In Transit"
+#~ msgstr "An Transpò pou "
+
+#, fuzzy
+#~| msgid "Your package is on the way to the destination country."
+#~ msgid "Your package is on the way to its destination."
+#~ msgstr "Pakè ou a sou wout pou rive nan peyi destinasyon an."
+
+#, fuzzy
+#~| msgid "Your package is ready for pickup at the local office."
+#~ msgid "Your package is ready for pickup. Please use your code below."
+#~ msgstr "Pakè ou a pare pou vin Pran li nan biwo lokal la."

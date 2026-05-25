@@ -70,14 +70,24 @@
 
        <div class="search_users">
 
-    <input type="text" class="search-input" placeholder="Search TRK# PKG ID...">
+    <input type="text" class="search-input" placeholder="Search TRK#, PKG ID or Pickup Code...">
 
     <button class="search-btn">Search</button>
 
 </div>
 
         <div class="table_actions">
-            <button id="deleteSelected"><i class='bx bxs-trash-alt'></i> Delete Selected</button>
+            {% if request.user.role == "admin" %}
+
+<button id="deleteSelected">
+
+    <i class='bx bxs-trash-alt'></i>
+
+    Delete Selected
+
+</button>
+
+{% endif %}
 
     <!-- 🔥 COUNTER -->
     <span id="selectedCount">0 of {{ page_obj.paginator.count }} selected</span>
@@ -159,24 +169,47 @@
                 <i class='bx bx-show'></i>
                 <span>View Details</span>
             </div>
+{% if request.user.role == "admin" %}
 
 <div class="dropdown_item"
+
      data-action="edit"
+
      data-url="/panel/edit-shipment/{{ package.id }}/">
+
     <i class='bx bx-edit'></i>
+
     <span>Edit Shipment</span>
-</div>
-          <div class="dropdown_item" data-print-url="/package/{{ package.id }}/label/">
-    <i class='bx bx-barcode'></i>
-    <span>Print Label</span>
-</div>
-          <div class="dropdown_item danger"
-     data-action="delete"
-     data-url="/api/delete-shipment/{{ package.id }}/">
-    <i class='bx bx-trash'></i>
-    <span>Delete</span>
+
 </div>
 
+
+
+<div class="dropdown_item"
+
+     data-print-url="/package/{{ package.id }}/label/">
+
+    <i class='bx bx-barcode'></i>
+
+    <span>Print Label</span>
+
+</div>
+
+
+
+<div class="dropdown_item danger"
+
+     data-action="delete"
+
+     data-url="/api/delete-shipment/{{ package.id }}/">
+
+    <i class='bx bx-trash'></i>
+
+    <span>Delete</span>
+
+</div>
+
+{% endif %}
         </div>
 
     </td>
@@ -199,34 +232,98 @@
 <div class="pagination">
 
     <div class="page_info">
-        Showing {{ page_obj.start_index }}–{{ page_obj.end_index }} of {{ page_obj.paginator.count }} shipments
+
+        Showing
+
+        {{ page_obj.start_index }}
+
+        –
+
+        {{ page_obj.end_index }}
+
+        of
+
+        {{ page_obj.paginator.count }}
+
+        shipments
+
     </div>
+
+
 
     <div class="page_controls">
 
         <!-- PREV -->
         {% if page_obj.has_previous %}
-            <button type="button"
-                    data-url="/panel/shipments/?page={{ page_obj.previous_page_number }}">
+
+            <button
+
+                type="button"
+
+                data-url="/panel/shipments/?page={{ page_obj.previous_page_number }}&q={{ query }}"
+
+            >
+
                 ← Prev
+
             </button>
+
         {% else %}
-            <button type="button" disabled>← Prev</button>
+
+            <button
+                type="button"
+                disabled
+            >
+
+                ← Prev
+
+            </button>
+
         {% endif %}
+
+
 
         <!-- CURRENT PAGE -->
         <span class="current_page">
-            Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}
+
+            Page
+
+            {{ page_obj.number }}
+
+            of
+
+            {{ page_obj.paginator.num_pages }}
+
         </span>
+
+
 
         <!-- NEXT -->
         {% if page_obj.has_next %}
-            <button type="button"
-                    data-url="/panel/shipments/?page={{ page_obj.next_page_number }}&q={{ query }}">
+
+            <button
+
+                type="button"
+
+                data-url="/panel/shipments/?page={{ page_obj.next_page_number }}&q={{ query }}"
+
+            >
+
                 Next →
+
             </button>
+
         {% else %}
-            <button type="button" disabled>Next →</button>
+
+            <button
+                type="button"
+                disabled
+            >
+
+                Next →
+
+            </button>
+
         {% endif %}
 
     </div>

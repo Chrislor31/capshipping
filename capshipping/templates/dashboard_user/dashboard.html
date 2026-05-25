@@ -2,12 +2,24 @@
 
 {% load static %}
 
+{% load i18n %}
+
+<script>
+
+    window.shipmentLabels = JSON.parse('{{ month_labels|escapejs }}');
+
+    window.shipmentData = JSON.parse('{{ shipment_data|escapejs }}');
+
+</script>
+
+
 {% block title %}Dashboard {% endblock %}
 
 {% block manu_nav %}
 
+{% block scrisp %} {% endblock%}
 
-
+<link rel="stylesheet" href="{% static 'css/alerts.css' %}">
 
 <section class="dasboard">
 
@@ -15,23 +27,24 @@
 
     <ul>
         <li class="active" data-page="dashboard">
-            <i data-lucide="layout-dashboard"></i> <span>Dashboard</span>
+            <i data-lucide="layout-dashboard"></i> <span>{% trans 'Dashboard' %}</span>
         </li>
 
         <li data-page="addresses">
-            <i data-lucide="map-pin-house"></i> <span>Addresses</span>
+            <i data-lucide="map-pin-house"></i> <span>{% trans 'Addresses' %}</span>
         </li>
 
         <li data-page="calculator">
-            <i data-lucide="calculator"></i><span>Calculator</span>
+            <i data-lucide="calculator"></i><span>{% trans 'Calculator' %}</span>
         </li>
-
-        <li data-page="chat">
-            <i data-lucide="message-circle-more"></i> <span>Chat</span>
+<a href="{% url 'tracking_page' %}">
+        <li>
+            <i data-lucide="package-search"></i> <span>{% trans 'Track' %}</span>
         </li>
+    </a>
 
         <li data-page="settings">
-            <i data-lucide="settings"></i> <span>Settings</span>
+            <i data-lucide="settings"></i> <span>{% trans 'Settings' %}</span>
         </li>
     </ul>
 
@@ -40,140 +53,656 @@
 
 <div class="right_main page active" id="dashboard">
 
-<h2>Welcome Back , {{ user.first_name }} 👋 </h2>
-<p>Here's an Overview of your shipments</p>
+<h2>{% trans 'Welcome Back' %} , {{ user.first_name }} 👋 </h2>
+<p>{% trans "Here's an Overview of your shipments" %}</p>
+
+
+
+
+
+<div class="grid_kyc">
+
+	<div class="logo_verify">
+		<i class='bx bxs-shield-x'></i>
+	</div>
+
+	<div class="info_midle">
+		<p> KYC not Verify </p>
+		<p>Secure your account and unlock all platform features by completing your identity verification (KYC).</p>
+
+		<div class="notes">
+			<span><i class='bx bxs-lock-alt'></i>Secure Account</span>
+
+			<span><i class='bx bx-check-circle'></i> Access all services </span>
+		</div>
+	</div>
+
+	<div class="identity_badge">
+		<i class='bx bxs-id-card'></i>
+	</div>
+
+	<div class="btn-kyc">
+		<button data-page="kyc-verification">
+			Conplete KYC
+		</button>
+
+
+
+	</div>
+</div>
 
 <div class="process_container">
+
+
+    <!-- RECEIVED -->
     <div class="process_1">
-        <div class="back_design">
-        <div class="pending">
-        <i data-lucide="loader"></i>
-        <span>Pending</span>
+
+        <div class="back_design received_card">
+
+            <div class="pending">
+
+                <div class="icon_box received_icon">
+                    <i data-lucide="package-check"></i>
+                </div>
+
+                <span>{% trans 'Received' %}</span>
+
+            </div>
+
+            <h4>
+                {{ received_packages }}
+                <span>{% trans 'Shipments' %}</span>
+            </h4>
+
         </div>
-        <h4>3 <span>shipments</span></h4>
-        </div>
+
     </div>
 
+
+
+    <!-- IN TRANSIT -->
     <div class="process_1">
-        <div class="back_design">
-        <div class="pending">
-        <i data-lucide="truck"></i>
-        <span>in transit</span>
+
+        <div class="back_design transit_card">
+
+            <div class="pending">
+
+                <div class="icon_box transit_icon">
+                    <i data-lucide="truck"></i>
+                </div>
+
+                <span>{% trans 'In Transit' %}</span>
+
+            </div>
+
+            <h4>
+                {{ transit_packages }}
+                <span>{% trans 'Shipments' %}</span>
+            </h4>
+
         </div>
-        <h4>5 <span>shipments</span></h4>
-        </div>
+
     </div>
 
+
+
+    <!-- READY PICKUP -->
     <div class="process_1">
-        <div class="back_design">
-        <div class="pending">
-        <i data-lucide="circle-check-big"></i>
-        <span>Delevered</span>
+
+        <div class="back_design pickup_card">
+
+            <div class="pending">
+
+                <div class="icon_box pickup_icon">
+                    <i data-lucide="package-open"></i>
+                </div>
+
+                <span>{% trans 'Ready Pickup' %}</span>
+
+            </div>
+
+            <h4>
+                {{ ready_pickup_packages }}
+                <span>Ready Now</span>
+            </h4>
+
         </div>
-        <h4>7 <span>shipments</span></h4>
-        </div>
+
     </div>
 
+
+
+    <!-- DELIVERED -->
     <div class="process_1">
-        <div class="back_design">
-        <div class="pending">
-        <i data-lucide="notepad-text"></i>
-        <span>Orders</span>
+
+        <div class="back_design delivered_card">
+
+            <div class="pending">
+
+                <div class="icon_box delivered_icon">
+                    <i data-lucide="circle-check-big"></i>
+                </div>
+
+                <span>{% trans 'Delivered' %}</span>
+
+            </div>
+
+            <h4>
+                {{ delivered_packages }}
+                <span>Completed</span>
+            </h4>
+
         </div>
-        <h4>20 <span>All Time</span></h4>
-        </div>
+
     </div>
+
+
 </div>
 
 <div class="shippements_tables">
 <div class="shippements_tab_left">
-    <h4>Recent Shipments</h4>
 
-    <table>
-        <thead>
-            <tr>
-                <th>Tracking No.</th>
-                <th>Status</th>
-                <th>Date</th>
-            </tr>
-        </thead>
+    <div class="shipment_table_header">
 
-        <tbody>
-            <tr>
-                <td>#TRK12345</td>
-                <td><span class="status pending_status">Pending</span></td>
-                <td>Apr 03, 2026</td>
-            </tr>
-        </tbody>
-    </table>
+        <div>
+            <h4>{% trans 'Recent Shipments' %}</h4>
+            <p>{% trans 'Your latest shipment activity' %}</p>
+        </div>
+
+    </div>
+
+
+    <div class="table_responsive">
+
+        <table>
+
+            <thead>
+
+                <tr>
+
+                    <th>{% trans 'Tracking' %} No.</th>
+                    <th>{% trans 'Shipping' %}</th>
+                    <th>{% trans 'Status' %}</th>
+                    <th>{% trans 'Date' %}</th>
+                    <th>{% trans 'Action' %}</th>
+
+                </tr>
+
+            </thead>
+
+            <tbody>
+
+                {% for shipment in packages %}
+
+                <tr>
+
+                    <!-- TRACKING -->
+                    <td class="tracking_td">
+                        #{{ shipment.tracking_number }}
+                    </td>
+
+
+                    <!-- SHIPPING TYPE -->
+                    <td>
+
+                        {% if shipment.shipping_type == 'air' %}
+
+                            <span class="shipping_badge air_badge">
+
+                                <i data-lucide="plane"></i>
+
+                                Air
+
+                            </span>
+
+                        {% else %}
+
+                            <span class="shipping_badge sea_badge">
+
+                                <i data-lucide="ship"></i>
+
+                                Sea
+
+                            </span>
+
+                        {% endif %}
+
+                    </td>
+
+
+                    <!-- STATUS -->
+                    <td>
+
+                        {% if shipment.status == 'received' %}
+
+                            <span class="status received_status">
+
+                                <i data-lucide="package-check"></i>
+
+                                Received
+
+                            </span>
+
+                        {% elif shipment.status == 'in_transit' %}
+
+                            <span class="status transit_status">
+
+                                <i data-lucide="truck"></i>
+
+                                {% trans 'In Transit' %}
+
+                            </span>
+
+                        {% elif shipment.status == 'ready_pickup' %}
+
+                            <span class="status pickup_status">
+
+                                <i data-lucide="package-open"></i>
+
+                                {% trans 'Ready Pickup' %}
+
+                            </span>
+
+                        {% elif shipment.status == 'delivered' %}
+
+                            <span class="status delivered_status">
+
+                                <i data-lucide="circle-check-big"></i>
+
+                                {% trans 'Delivered' %}
+
+                            </span>
+
+                        {% endif %}
+
+                    </td>
+
+
+                    <!-- DATE -->
+                    <td>
+                        {{ shipment.created_at|date:"M d, Y" }}
+                    </td>
+
+
+                    <!-- ACTION -->
+                    <td>
+
+                        <button class="view_btn">
+
+                            <i data-lucide="eye"></i>
+
+                            View
+
+                        </button>
+
+                    </td>
+
+                </tr>
+
+                {% empty %}
+
+                <tr>
+
+                    <td colspan="5">
+
+                        <div class="empty_table">
+
+                            <i data-lucide="package-search"></i>
+
+                            <p>{% trans 'No shipment found' %}</p>
+
+                        </div>
+
+                    </td>
+
+                </tr>
+
+                {% endfor %}
+
+            </tbody>
+
+        </table>
+
+    </div>
+
 </div>
 
 <div class="shippements_tab_right">
-    <h4>Shipment Overview</h4>
-    <canvas id="shipmentChart"></canvas>
+
+    <div class="chart_header">
+
+        <div>
+            <h4>{% trans 'Shipment Overview' %}</h4>
+            <p>{% trans 'Monthly shipment activity' %}</p>
+        </div>
+
+    </div>
+
+    <div class="chart_container">
+
+        <canvas id="shipmentChart"></canvas>
+
+    </div>
+
 </div>
+
+
 </div>
 
 </div>
+
+
+
+
+
+<div class="kyc-verification page" id="kyc-verification">
+
+    <!-- GLOBAL ALERT -->
+<div class="form_error hidden"
+     id="loginError">
+
+    <i class='bx bx-error-circle'></i>
+
+    <span>
+        Message here
+    </span>
+
+</div>
+
+
+    <section class="kyc_section">
+
+
+
+
+        <!-- Box -->
+
+        <div class="kyc_box">
+
+            <h3>Upload Your ID</h3>
+
+            <p class="kyc_desc">
+                Upload a clear photo of your government-issued ID.
+            </p>
+
+
+
+            <!-- Document Type -->
+
+            <div class="document_types">
+
+                <span class="doc_type active">
+                    National ID
+                </span>
+
+                <span class="doc_type">
+                    Passport
+                </span>
+
+                <span class="doc_type">
+                    Driver License
+                </span>
+
+            </div>
+
+
+
+            <!-- Upload -->
+
+            <div class="upload_wrapper">
+
+    <!-- Front -->
+
+    <label class="upload_area" for="front_input">
+
+        <input
+            type="file"
+            id="front_input"
+            class="front_input"
+            hidden
+        >
+
+        <i class='bx bx-cloud-upload'></i>
+
+        <h4>Front of ID</h4>
+
+        <span>Click to upload</span>
+
+    </label>
+
+
+
+    <!-- Back -->
+
+    <label class="upload_area" for="back_input">
+
+        <input
+            type="file"
+            id="back_input"
+            class="back_input"
+            hidden
+        >
+
+        <i class='bx bx-cloud-upload'></i>
+
+        <h4>Back of ID</h4>
+
+        <span>Click to upload</span>
+
+    </label>
+
+</div>
+
+
+
+            <!-- Security -->
+
+            <div class="kyc_security">
+
+                <i class='bx bxs-shield'></i>
+
+                <p>
+                    Your information is encrypted and securely protected.
+                </p>
+
+            </div>
+
+
+
+            <!-- Button -->
+
+            <button class="kyc_btn">
+
+                Submit Verification
+
+                <i class='bx bx-right-arrow-alt'></i>
+
+            </button>
+
+        </div>
+
+    </section>
+
+</div>
+
+
 
 <!-- ADDRESSES PAGE -->
 <div class="adresses_user page" id="addresses">
 
-<h2>Welcome Back , {{ user.first_name }} 👋 </h2>
-<p>Here are shipping addresses to use when purchasing online</p>
+<h2>{% trans 'Welcome Back' %} , {{ user.first_name }} 👋 </h2>
+<p>{% trans 'Here are shipping addresses to use when purchasing online' %}</p>
 
 <div class="tsetel">
 
 <div class="adresses_items">
     <div class="trasports">
 
-        <div class="plane_address">
-            <div class="mode_title">
-                <i data-lucide="plane"></i> <span> Plane address</span>
-            </div>
+    <!-- PLANE ADDRESS -->
+    <div class="plane_address">
 
-            <div class="details_address">
-                <h2>{{ user.first_name }} {{ user.last_name }} / HT215726</h2>
-                <p>1225 orwell av <br> Orlando , FL, 32089</p>
+        <div class="mode_title">
 
-                <div class="copy">
-                     <i data-lucide="copy"></i> <span>Copy address</span>
-                </div>
-            </div>
+            <i data-lucide="plane"></i>
 
-            <div class="plane_address">
-                <div class="mode_title">
-                    <i data-lucide="ship"></i> <span> Boat address</span>
-                </div>
+            <span>{% trans 'Plane Address' %}</span>
 
-                <div class="details_address">
-                    <h2>Chrislor Pierre / HT21572</h2>
-                    <p>1225 orwell av <br> Orlando , FL, 32089</p>
+        </div>
 
-                    <div class="copy">
-                        <i data-lucide="copy"></i> <span>Copy address</span>
-                    </div>
-                </div>
+        <div class="details_address">
+
+            <h2>
+
+                {{ user.first_name }}
+                {{ user.last_name }}
+
+                /
+
+                {{ user.suite_code }}
+
+            </h2>
+
+            <p>
+
+                {{ air_warehouse.address }} <br>
+
+                {{ air_warehouse.city }},
+                {{ air_warehouse.state }}
+
+                {% if air_warehouse.zip_code %}
+                    {{ air_warehouse.zip_code }}
+                {% endif %}
+
+            </p>
+
+            <div class="copy">
+
+                <i data-lucide="copy"></i>
+
+                <span>{% trans 'Copy address' %}</span>
+
             </div>
 
         </div>
 
     </div>
 
-    <div class="additional_addresses">
 
-  <h2>Additional Warehouse Addresses</h2>
-  <p>You can also use one of our other warehouse locations below for delivering packages or shopping online.</p>
 
-  <div class="add_address_name">
-    <span>WEST DIXIE</span>
-    <i data-lucide="plus"></i>
-  </div>
+    <!-- BOAT ADDRESS -->
+    <div class="plane_address">
 
-  <div class="add_address_content">
-    <p>1234 NW Street</p>
-    <p>Miami, FL 33166</p>
-  </div>
+        <div class="mode_title">
+
+            <i data-lucide="ship"></i>
+
+            <span>Boat Address</span>
+
+        </div>
+
+        <div class="details_address">
+
+            <h2>
+
+                {{ user.first_name }}
+                {{ user.last_name }}
+
+                /
+
+                {{ user.suite_code }}
+
+            </h2>
+
+            <p>
+
+                {{ sea_warehouse.address }} <br>
+
+                {{ sea_warehouse.city }},
+                {{ sea_warehouse.state }}
+
+                {% if sea_warehouse.zip_code %}
+                    {{ sea_warehouse.zip_code }}
+                {% endif %}
+
+            </p>
+
+            <div class="copy">
+
+                <i data-lucide="copy"></i>
+
+                <span>Copy address</span>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+<div class="additional_addresses">
+
+    <h2>{% trans 'Additional Warehouse Addresses' %}</h2>
+
+    <p>
+        {% blocktrans %}
+        You can also use one of our other warehouse locations
+        below for delivering packages or shopping online.
+        {% endblocktrans %}
+    </p>
+
+
+    {% for warehouse in usa_warehouses %}
+
+    <div class="warehouse_item">
+
+        <!-- HEADER -->
+        <div class="add_address_name">
+
+            <div class="warehouse_title">
+
+                <i data-lucide="warehouse"></i>
+
+                <span>{{ warehouse.name }}</span>
+
+            </div>
+
+            <i data-lucide="plus"></i>
+
+        </div>
+
+
+        <!-- CONTENT -->
+        <div class="add_address_content">
+
+            <p>{{ warehouse.address }}</p>
+
+            <p>
+
+                {{ warehouse.city }},
+
+                {{ warehouse.state }}
+
+                {% if warehouse.zip_code %}
+                    {{ warehouse.zip_code }}
+                {% endif %}
+
+            </p>
+
+        </div>
+
+    </div>
+
+    {% empty %}
+
+    <div class="empty_warehouse">
+
+        <i data-lucide="warehouse"></i>
+
+        <p>No USA warehouse available</p>
+
+    </div>
+
+    {% endfor %}
 
 </div>
 </div>
@@ -188,15 +717,509 @@
 
 <!-- OTHER PAGES -->
 <div class="page" id="calculator">
-  <h3>Calculator Page</h3>
+
+    <!-- =====================================================
+DASHBOARD SHIPPING CALCULATOR
+===================================================== -->
+<section class="dash-calc-section">
+
+    <div class="dash-calc-container">
+
+        <!-- TOP -->
+        <div class="dash-calc-top">
+
+            <div>
+
+                <div class="dash-calc-page-title">
+
+                    {% trans 'Shipment Price Calculator' %}
+
+                </div>
+
+                <div class="dash-calc-page-subtitle">
+
+                    {% trans 'Enter shipment details to estimate the shipping cost' %}
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+
+        <!-- MAIN -->
+        <div class="dash-calc-grid">
+
+            <!-- LEFT -->
+            <div class="dash-calc-left-card">
+
+                <!-- HEADER -->
+                <div class="dash-calc-card-header">
+
+                    <div class="dash-calc-icon">
+
+                        <i class='bx bx-calculator'></i>
+
+                    </div>
+
+                    <div>
+
+                        <div class="dash-calc-card-title">
+
+                            {% trans 'Shipment Details' %}
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+
+                <!-- FROM / TO -->
+                <div class="dash-calc-two-grid">
+
+                    <!-- FROM -->
+                    <div class="dash-calc-input-box">
+
+                        <div class="dash-calc-label">
+
+                            From Warehouse
+
+                        </div>
+
+                        <select
+                            id="dash_from"
+                            class="dash-calc-input"
+                        >
+
+                            <option value="">
+                                Select origin warehouse
+                            </option>
+
+                            {% for warehouse in warehouses %}
+
+                                {% if warehouse.type == "USA" %}
+
+                                <option value="{{ warehouse.id }}">
+
+                                    {{ warehouse.city }}
+
+                                    -
+
+                                    {{ warehouse.area }}
+
+                                    ({{ warehouse.type }})
+
+                                </option>
+
+                                {% endif %}
+
+                            {% endfor %}
+
+                        </select>
+
+                    </div>
+
+
+
+                    <!-- TO -->
+                    <div class="dash-calc-input-box">
+
+                        <div class="dash-calc-label">
+
+                            To Warehouse
+
+                        </div>
+
+                        <select
+                            id="dash_to"
+                            class="dash-calc-input"
+                        >
+
+                            <option value="">
+                                Select destination warehouse
+                            </option>
+
+                            {% for warehouse in warehouses %}
+
+                                {% if warehouse.type != "USA" %}
+
+                                <option value="{{ warehouse.id }}">
+
+                                    {{ warehouse.city }}
+
+                                    -
+
+                                    {{ warehouse.area }}
+
+                                    ({{ warehouse.type }})
+
+                                </option>
+
+                                {% endif %}
+
+                            {% endfor %}
+
+                        </select>
+
+                    </div>
+
+                </div>
+
+
+
+                <!-- SHIPPING / CATEGORY -->
+                <div class="dash-calc-two-grid">
+
+                    <!-- SHIPPING -->
+                    <div class="dash-calc-input-box">
+
+                        <div class="dash-calc-label">
+
+                            Shipping Method
+
+                        </div>
+
+                        <select
+                            id="dash_shipping_type"
+                            class="dash-calc-input"
+                        >
+
+                            <option value="air">
+
+                                Air Cargo
+
+                            </option>
+
+                            <option value="sea">
+
+                                Sea Cargo
+
+                            </option>
+
+                        </select>
+
+                    </div>
+
+
+
+                    <!-- CATEGORY -->
+                    <div class="dash-calc-input-box">
+
+                        <div class="dash-calc-label">
+
+                            {% trans 'Package Type' %}
+
+                        </div>
+
+                        <select
+                            id="dash_category"
+                            class="dash-calc-input"
+                        >
+
+                            <option value="">
+                                Select category
+                            </option>
+
+                            {% for category in categories %}
+
+                            <option value="{{ category.id }}">
+
+                                {{ category.name }}
+
+                            </option>
+
+                            {% endfor %}
+
+                        </select>
+
+                    </div>
+
+                </div>
+
+
+
+                <!-- WEIGHT / QUANTITY -->
+                <div class="dash-calc-two-grid">
+
+                    <!-- WEIGHT -->
+                    <div class="dash-calc-input-box">
+
+                        <div class="dash-calc-label">
+
+                            Weight (LB)
+
+                        </div>
+
+                        <input
+
+                            type="number"
+
+                            id="dash_weight"
+
+                            class="dash-calc-input"
+
+                            placeholder="12"
+
+                        >
+
+                    </div>
+
+
+
+                    <!-- QUANTITY -->
+                    <div class="dash-calc-input-box">
+
+                        <div class="dash-calc-label">
+
+                            Quantity
+
+                        </div>
+
+                        <input
+
+                            type="number"
+
+                            id="dash_quantity"
+
+                            class="dash-calc-input"
+
+                            value="1"
+
+                        >
+
+                    </div>
+
+                </div>
+
+
+
+                <!-- DIMENSIONS -->
+                <div class="dash-dimension-title">
+
+                    Package Dimensions
+
+                </div>
+
+
+
+                <div class="dash-calc-three-grid">
+
+                    <!-- LENGTH -->
+                    <div class="dash-calc-input-box">
+
+                        <div class="dash-calc-label">
+
+                            Length
+
+                        </div>
+
+                        <input
+
+                            type="number"
+
+                            id="dash_length"
+
+                            class="dash-calc-input"
+
+                            placeholder="40"
+
+                        >
+
+                    </div>
+
+
+
+                    <!-- WIDTH -->
+                    <div class="dash-calc-input-box">
+
+                        <div class="dash-calc-label">
+
+                            Width
+
+                        </div>
+
+                        <input
+
+                            type="number"
+
+                            id="dash_width"
+
+                            class="dash-calc-input"
+
+                            placeholder="30"
+
+                        >
+
+                    </div>
+
+
+
+                    <!-- HEIGHT -->
+                    <div class="dash-calc-input-box">
+
+                        <div class="dash-calc-label">
+
+                            Height
+
+                        </div>
+
+                        <input
+
+                            type="number"
+
+                            id="dash_height"
+
+                            class="dash-calc-input"
+
+                            placeholder="25"
+
+                        >
+
+                    </div>
+
+                </div>
+
+
+
+                <!-- BUTTON -->
+                <div
+                    class="dash-calc-btn"
+                    id="dashCalculateBtn"
+                >
+
+                    <i class='bx bx-calculator'></i>
+
+                    Calculate Price
+
+                </div>
+
+            </div>
+
+
+
+            <!-- RIGHT -->
+            <div class="dash-calc-right-card">
+
+                <!-- HEADER -->
+                <div class="dash-calc-card-header">
+
+                    <div class="dash-calc-icon">
+
+                        <i class='bx bx-purchase-tag'></i>
+
+                    </div>
+
+                    <div>
+
+                        <div class="dash-calc-card-title">
+
+                            Estimated Price
+
+                        </div>
+
+                        <div class="dash-calc-small">
+
+                            {% trans 'Breakdown of estimated shipping cost' %}
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+
+                <!-- PRICE -->
+                <div class="dash-price-box">
+
+                    <div class="dash-price-label">
+
+                        Total Estimated Cost
+
+                    </div>
+
+                    <div
+                        class="dash-main-price"
+                        id="dash_total"
+                    >
+
+                        $0.00
+
+                    </div>
+
+                    <div
+                        class="dash-price-days"
+                        id="dash_delivery"
+                    >
+
+                        Delivery Time: 3 - 5 Business Days
+
+                    </div>
+
+                </div>
+
+
+
+                <!-- DETAILS -->
+                <div class="dash-price-list">
+
+                    <div class="dash-price-row">
+
+                        <span>
+
+                            Shipping Price
+
+                        </span>
+
+                        <strong id="dash_base_price">
+
+                            $0.00
+
+                        </strong>
+
+                    </div>
+
+
+
+                    <div class="dash-price-row">
+
+                        <span>
+
+                            Final Total
+
+                        </span>
+
+                        <strong id="dash_final_total">
+
+                            $0.00
+
+                        </strong>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
 </div>
 
 <div class="page" id="chat">
   <h3>Tracking Page</h3>
+
+
+
 </div>
 
 <div class="setting_dash page" id="settings">
-  <h3>Settings</h3>
+  <h3>{% trans 'Settings' %}</h3>
 
   <div class="profiles">
 
@@ -210,12 +1233,12 @@
             <p>{{ user.suite_code }} <span>|</span> {{ user.country }} , {{ user.city }}</p>
             </div>
             {% if user.is_active %}
-            <p>  <i data-lucide="shield-check"></i> <span>Active</span></p>
+            <p>  <i data-lucide="shield-check"></i> <span>{% trans 'Active' %}</span></p>
             {% endif %}
         </div>
 
         <div class="edite">
-            <i data-lucide="pen"></i> <span>edite</span>
+            <i data-lucide="pen"></i> <span>{% trans 'edite' %}</span>
         </div>
     </div>
 
@@ -223,7 +1246,7 @@
 <div class="suit_mail">
 
     <div class="suits">
-        <p> <i data-lucide="id-card"></i><span>Pick up Address </span></p>
+        <p> <i data-lucide="id-card"></i><span>{% trans 'Pick up Address' %} </span></p>
         <h4><i data-lucide="map-pin"></i>{{ user.default_pickup_warehouse.type }} , {{ user.default_pickup_warehouse.area }} ,{{ user.default_pickup_warehouse.state }}</h4>
     </div>
 
@@ -240,29 +1263,192 @@
 
 
 <div class="update_profile">
-
 <div class="update_left">
-    <h4>edite profile</h4>
-<form method="POST">
-    {% csrf_token %}
 
-    <div class="last_fist">
+    <h4>
+        Edit Profile
+    </h4>
 
-        <label>Last Name</label>
-        <input type="text" name="last_name" value="{{ user.last_name }}" disabled>
 
-        <label>First Name</label>
-        <input type="text" name="first_name" value="{{ user.first_name }}" disabled>
 
-        <label>Phone Number</label>
-        <input type="text" name="phone_number" value="{{ user.phone_number }}" disabled>
+    <form id="updateProfileForm">
 
-        <label>Address</label>
-        <input type="text" name="address" value="{{ user.country }} , {{ user.city }} , {{  user.state }} " disabled>
+        {% csrf_token %}
 
-    </div>
 
-</form>
+
+        <div class="last_fist">
+
+            <!-- LAST NAME -->
+            <label>
+                Last Name
+            </label>
+
+            <input
+                type="text"
+                name="last_name"
+                value="{{ user.last_name }}"
+            >
+
+
+
+            <!-- FIRST NAME -->
+            <label>
+                First Name
+            </label>
+
+            <input
+                type="text"
+                name="first_name"
+                value="{{ user.first_name }}"
+            >
+
+
+
+            <!-- EMAIL -->
+            <label>
+                Email
+            </label>
+
+            <input
+                type="email"
+                name="email"
+                value="{{ user.email }}"
+            >
+
+
+
+            <!-- PHONE -->
+            <label>
+                Phone Number
+            </label>
+
+            <input
+                type="text"
+                name="phone_number"
+                value="{{ user.phone_number }}"
+            >
+
+
+
+            <!-- COUNTRY -->
+            <label>
+                Country
+            </label>
+
+            <input
+                type="text"
+                name="country"
+                value="{{ user.country }}"
+            >
+
+
+
+            <!-- STATE -->
+            <label>
+                State
+            </label>
+
+            <input
+                type="text"
+                name="state"
+                value="{{ user.state }}"
+            >
+
+
+
+            <!-- CITY -->
+            <label>
+                City
+            </label>
+
+            <input
+                type="text"
+                name="city"
+                value="{{ user.city }}"
+            >
+
+
+
+            <!-- PICKUP -->
+            <label>
+                Pick Up Address
+            </label>
+
+ <select
+    name="default_pickup"
+    id="defaultPickup"
+>
+
+    <!-- CURRENT PICKUP -->
+    {% if user.default_pickup_warehouse %}
+
+    <option
+
+        value="{{ user.default_pickup_warehouse.id }}"
+
+        selected
+
+    >
+
+        Current:
+
+        {{ user.default_pickup_warehouse.name }}
+
+        -
+
+        {{ user.default_pickup_warehouse.city }}
+
+    </option>
+
+    {% else %}
+
+    <option value="" selected>
+
+        Select pickup location
+
+    </option>
+
+    {% endif %}
+
+
+
+    <!-- OTHER WAREHOUSES -->
+    {% for warehouse in usa_warehouses %}
+
+        {% if warehouse.id != user.default_pickup_warehouse.id %}
+
+        <option value="{{ warehouse.id }}">
+
+            {{ warehouse.name }}
+
+            -
+
+            {{ warehouse.city }}
+
+        </option>
+
+        {% endif %}
+
+    {% endfor %}
+
+</select>
+
+
+            <!-- BUTTON -->
+            <button
+                type="submit"
+                id="updateProfileBtn"
+            >
+
+                Update Information
+
+            </button>
+
+        </div>
+
+    </form>
+
 </div>
 
 
@@ -279,10 +1465,10 @@
     <label>New Password</label>
     <input type="password" name="new_password" required>
 
-    <label>Confirm New Password</label>
+    <label>{% trans 'Confirm New Password' %}</label>
     <input type="password" name="confirm_password" required>
 
-    <button type="submit">Update Password</button>
+    <button type="submit">{% trans 'Update Password' %}</button>
 
     <p id="message"></p>
 </form>
@@ -301,3 +1487,32 @@
 
 {% endblock %}
 
+<style>
+    .shippements_tab_right{
+    background: #fff;
+    border-radius: 25px;
+    padding: 25px;
+}
+
+.chart_header{
+    margin-bottom: 20px;
+}
+
+.chart_header h4{
+    font-size: 22px;
+    font-weight: 700;
+    color: #1e293b;
+}
+
+.chart_header p{
+    color: #888;
+    font-size: 14px;
+    margin-top: 5px;
+}
+
+.chart_container{
+    position: relative;
+    width: 100%;
+    height: 320px;
+}
+</style>

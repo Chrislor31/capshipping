@@ -1,7 +1,7 @@
 
 
 
-
+{% load i18n %}
 
 <section class="dashboard_add_user">
 
@@ -41,9 +41,9 @@
 
             <!-- USER INFO -->
 
-            <h3> User information </h3>
+            <h3> {% trans 'User information' %} </h3>
 
-            <label > email </label>
+            <label > {% trans 'email' %} </label>
 
  <input type="email"
        name="email"
@@ -56,7 +56,7 @@
 
                 <div class="fist_name">
 
-                <label >first name </label>
+                <label >{% trans 'first name' %} </label>
 <input type="text"
        name="first_name"
        placeholder="e.g jacky"
@@ -67,7 +67,7 @@
 
                 <div class="last_name">
 
-                <label >last name </label>
+                <label >{% trans 'last name' %} </label>
                <input type="text"
        name="last_name"
        placeholder="e.g jacky"
@@ -81,7 +81,7 @@
             <div class="phone_and_role">
 
                 <div class="phone_number">
-                    <label>Phone Number</label>
+                    <label>{% trans 'Phone Number' %}</label>
 
 
                        <input id="phone"
@@ -95,8 +95,9 @@
 
                 </div>
                 <div class="role">
-
+{% if request.user.role == "admin" %}
                 <label >role </label>
+
 
 <select name="role" id="role">
     <option value="">Select role</option>
@@ -107,6 +108,8 @@
         </option>
     {% endfor %}
 </select>
+
+                    {% endif %}
 
                 </div>
 
@@ -120,7 +123,7 @@
                 <!-- Address information -->
 
 
-                <h3>Address information</h3>
+                <h3>{% trans 'Address information' %}</h3>
                         <div class="countr_state_city">
 
                             <div class="country">
@@ -130,19 +133,19 @@
                     <input type="text" name="country" value="{{ user.country }}" >
                 {% else %}
                     <select name="country" id="country">
-                        <option value="" disabled selected hidden>Select Country</option>
+                        <option value="" disabled selected hidden>{% trans 'Select Country' %}</option>
                     </select>
                 {% endif %}
             </div>
 
                 <div class="state">
-                <label>state / province</label>
+                <label>{% trans 'state / province' %}</label>
 
                 {% if mode == "edit" %}
                     <input type="text" name="state" value="{{ user.state }}" >
                 {% else %}
                     <select name="state" id="state">
-                        <option value="">State / Region</option>
+                        <option value="">{% trans 'State / Region' %}</option>
                     </select>
                 {% endif %}
             </div>
@@ -154,7 +157,7 @@
                         <input type="text" name="city" value="{{ user.city }}" >
                     {% else %}
                         <select name="city" id="city">
-                            <option value="">Select your city</option>
+                            <option value="">{% trans 'Select your city' %}</option>
                         </select>
                     {% endif %}
                 </div>
@@ -165,7 +168,7 @@
 
                     <label > full address</label>
 
-                    <textarea name="full_address" id="full_address" placeholder="enter full address">{% if mode == 'edit' %}{{ user.full_address }}{% endif %}</textarea>
+                    <textarea name="full_address" id="full_address" placeholder="{% trans 'enter full address' %}">{% if mode == 'edit' %}{{ user.full_address }}{% endif %}</textarea>
                 </div>
 
 
@@ -175,15 +178,15 @@
 
             <!-- warehouse information -->
 
-            <h3>warehouse information</h3>
+            <h3>{% trans 'warehouse information' %}</h3>
 
             <div class="pickup_staff">
 
             <div class="pickup">
-                <label >Default pickup warehouse</label>
+                <label >{% trans 'Default pickup warehouse' %}</label>
 
             <select name="default_pickup_warehouse" id="default_pickup_warehouse">
-    <option value="">default pickup warehouse</option>
+    <option value="">{% trans 'default pickup warehouse' %}</option>
 
     {% for w in warehouses %}
         <option value="{{ w.id }}"
@@ -196,10 +199,10 @@
             </div>
 
             <div class="staff_warehouse">
-                <label >staff warehouse ( for staff users)</label>
+                <label >{% blocktrans %} staff warehouse ( for staff users) {% endblocktrans %}</label>
 
                <select name="staff_warehouse">
-    <option value="">select staff warehouse (optional)</option>
+    <option value="">{% blocktrans %} select staff warehouse (optional) {% endblocktrans %}</option>
 
     {% for w in warehouses %}
         <option value="{{ w.id }}"
@@ -218,7 +221,7 @@
         <div class="password_confirm_par">
             <!-- password -->
 
-            <h3>Account Security </h3>
+            <h3>{% trans 'Account Security' %} </h3>
             <div class="password_confirm">
 
             <div class="password">
@@ -232,7 +235,7 @@
 
 
             <div class="confirm_password">
-                <label>Confirm password *</label>
+                <label>{% trans 'Confirm password' %} *</label>
                 <input type="password"
                        name="confirm_password"
                        placeholder="{% if mode == 'edit' %}Confirm password{% else %}Confirm password{% endif %}"
@@ -250,7 +253,7 @@
 <div class="send_welcome">
     <input type="checkbox" name="welcome_sms">
 
-    <span>send welcome email to user</span>
+    <span>{% trans 'send welcome email to user' %}</span>
 </div>
     </div>
 
@@ -278,20 +281,20 @@
     <button type="submit" id="save_user" class="save_user">
         <i class='bx bx-save'></i>
         {% if mode == 'edit' %}
-            Update user
+            {% trans 'Update user' %}
         {% else %}
-            Save user
+            {% trans 'Save user' %}
         {% endif %}
     </button>
 
     <!-- CANCEL -->
     <button type="button" id="cancel_process" class="cancel_process">
-        <i class='bx bx-x'></i> Cancel
+        <i class='bx bx-x'></i> {% trans 'Cancel' %}
     </button>
 </div>
 
             <div class="account_status">
-                <h3>account status </h3>
+                <h3>{% trans 'account status' %} </h3>
 
                     <div class="status_check">
 
@@ -302,17 +305,20 @@
     <span class="slider"></span>
 </label>
 
-            <span id="statusText">Active</span>
+            <span id="statusText">{% trans 'Active' %}</span>
         </div>
 
             </div>
 
             <div class="informations">
                 <div class="warning">
-                <i class='bx bx-info-circle'></i> <h4>information</h4>
+                <i class='bx bx-info-circle'></i> <h4>{% trans 'information' %}</h4>
                 </div>
 
-                <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Rerum nesciunt placeat a consectetur totam </p>
+               <p>
+    {% blocktrans %} Please provide accurate user information before creating a new account.
+    This helps ensure secure account management and a smooth shipping experience for all customers. {% endblocktrans %}
+</p>
             </div>
 
 

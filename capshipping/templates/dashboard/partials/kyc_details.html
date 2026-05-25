@@ -1,0 +1,478 @@
+
+
+<section class="KYC_verifications">
+
+<p>{% trans 'Dashboard / KYC Verifications' %} </p>
+<h3>{% trans 'KYC Verification Detail' %}</h3>
+
+<p> {% trans 'Review and verify user identify Documents' %} </p>
+
+
+<div class="kyc-verify-grid">
+
+    <div class="kyc-verify-header">
+
+        <div class="kyc-information">
+<p><span><i class='bx bxs-user'></i></span> {% trans 'User Information' %}</p>
+<div class="Initial_KYC">
+
+    <!-- INITIAL -->
+
+    <div class="Init-user">
+
+        {% if kyc.user.first_name %}
+
+            {{ kyc.user.first_name|slice:":1"|upper }}
+            {{ kyc.user.last_name|slice:":1"|upper }}
+
+        {% else %}
+
+            {{ kyc.user.email|slice:":2"|upper }}
+
+        {% endif %}
+
+    </div>
+
+
+
+
+    <!-- INFO -->
+
+    <div class="info-initial">
+
+        <p>
+
+            {% if kyc.user.first_name %}
+
+                {{ kyc.user.first_name }}
+                {{ kyc.user.last_name }}
+
+            {% else %}
+
+                No Name
+
+            {% endif %}
+
+        </p>
+
+
+
+        <p>
+
+            {{ kyc.user.email }}
+
+        </p>
+
+
+
+        <p>
+
+            {% if kyc.user.phone_number %}
+
+                {{ kyc.user.phone_number }}
+
+            {% else %}
+
+                No phone number
+
+            {% endif %}
+
+        </p>
+
+    </div>
+
+</div>
+<div class="info_boutom_users">
+
+<div class="info_users">
+
+    <span>
+        <i class='bx bx-calendar'></i>
+        Joined At :
+    </span>
+
+    <strong>
+
+        {{ kyc.user.date_joined|date:"M d,Y" }}
+
+    </strong>
+
+</div>
+
+
+
+
+
+<div class="info_users">
+
+    <span>
+        <i class='bx bx-time-five'></i>
+        Last Login :
+    </span>
+
+    <strong>
+
+        {% if kyc.user.last_login %}
+
+            {{ kyc.user.last_login|date:"M d,Y" }}
+
+        {% else %}
+
+            Never Login
+
+        {% endif %}
+
+    </strong>
+
+</div>
+
+
+
+
+
+<div class="info_users">
+
+    <span>
+        <i class='bx bx-barcode'></i>
+        Suit Code :
+    </span>
+
+    <strong>
+
+        USER-{{ kyc.user.id }}
+
+    </strong>
+
+</div>
+
+
+</div>
+
+
+
+        </div>
+
+
+        <!-----next step --- -->
+<div class="kyc-information">
+
+<p>
+    <span>
+        <i class='bx bx-file'></i>
+    </span>
+
+    Document Information
+</p>
+
+
+
+<div class="info_boutom_users">
+
+<div class="info_users">
+
+    <span>
+        <i class='bx bx-id-card'></i>
+        Document Type
+    </span>
+
+    <strong>
+
+        {{ kyc.get_document_type_display }}
+
+    </strong>
+
+</div>
+
+
+
+
+
+<div class="info_users">
+
+    <span>
+        <i class='bx bx-world'></i>
+        Country
+    </span>
+
+    <strong>
+
+        Haiti
+
+    </strong>
+
+</div>
+
+
+
+
+
+<div class="info_users">
+
+    <span>
+        <i class='bx bx-calendar'></i>
+        Submit at
+    </span>
+
+    <strong>
+
+        {{ kyc.submitted_at|date:"M d,Y" }}
+
+    </strong>
+
+</div>
+
+
+    <div class="info_users">
+
+    <span>
+
+        <i class='bx bx-user-check'></i>
+
+        Approved By
+
+    </span>
+
+    <strong>
+
+        {% if kyc.approved_by %}
+
+            {{ kyc.approved_by.email }}
+
+        {% else %}
+
+            Not approved yet
+
+        {% endif %}
+
+    </strong>
+
+</div>
+
+
+</div>
+
+
+
+
+        </div>
+
+
+        <!-----submit document ---- -->
+
+        <div class="kyc-information">
+<p>
+    <span>
+        <i class='bx bx-check-shield'></i>
+    </span>
+
+    Verification Decision
+</p>
+
+
+<h4> Decision</h4>
+<div class="button-submit">
+
+    <!-- APPROVE -->
+
+  <label class="decision-card approve
+{% if kyc.status == 'approved' %}
+active
+{% endif %}">
+
+    <input
+        type="radio"
+        name="decision"
+        value="approved"
+
+        data-status="approved"
+
+        {% if kyc.status == "approved" %}
+            checked
+        {% endif %}
+    >
+
+    <div class="decision-content">
+
+        <div class="check-icon">
+
+            <i class='bx bx-check'></i>
+
+        </div>
+
+        <div class="decision-text">
+
+            <h4>
+
+                Approve
+
+            </h4>
+
+            <p>
+
+               Mark as verified
+
+            </p>
+
+        </div>
+
+    </div>
+
+</label>
+
+
+
+
+    <!-- REJECT -->
+
+    <label class="decision-card reject
+{% if kyc.status == 'rejected' %}
+active
+{% endif %}">
+
+    <input
+        type="radio"
+        name="decision"
+        value="rejected"
+
+        data-status="rejected"
+
+        {% if kyc.status == "rejected" %}
+            checked
+        {% endif %}
+    >
+
+    <div class="decision-content">
+
+        <div class="check-icon">
+
+            <i class='bx bx-x'></i>
+
+        </div>
+
+        <div class="decision-text">
+
+            <h4>
+
+                Reject
+
+            </h4>
+
+            <p>
+
+                Mark as rejected
+
+            </p>
+
+        </div>
+
+    </div>
+
+</label>
+
+</div>
+
+<h4> Admin Coment (Required if rejected )</h4>
+
+<textarea
+    name="comment-kyc"
+    id="comment-kyc"
+    placeholder="Write your comment here"
+></textarea>
+
+            <div class="submit-decision">
+
+
+<button
+class="submit_decision"
+data-id="{{ kyc.id }}">
+
+    submit Decision
+
+</button>
+
+</div>
+
+</div>
+
+
+
+
+        </div>
+
+
+    </div>
+
+  <div class="kyc-photos-doc">
+
+    <!-- FRONT -->
+
+    <div class="from-image">
+
+        <p>
+            <span>
+                <i class='bx bx-id-card'></i>
+            </span>
+
+            Front Document
+        </p>
+
+        <div class="image-front">
+
+            <img
+                src="{{ kyc.front_image.url }}"
+                alt="Front Document"
+            >
+
+        </div>
+
+    </div>
+
+
+
+
+
+    <!-- BACK -->
+
+    <div class="from-image">
+
+        <p>
+            <span>
+                <i class='bx bx-id-card'></i>
+            </span>
+
+            Back Document
+        </p>
+
+        <div class="image-front">
+
+            {% if kyc.back_image %}
+
+            <img
+                src="{{ kyc.back_image.url }}"
+                alt="Back Document"
+            >
+
+            {% else %}
+
+            <span class="no_document">
+
+                No back document uploaded
+
+            </span>
+
+            {% endif %}
+
+        </div>
+
+    </div>
+
+</div>
+
+
+
+</div>
+
+
+
+</section>
+

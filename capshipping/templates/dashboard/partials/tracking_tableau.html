@@ -170,7 +170,7 @@
 
         <!-- ACTIONS -->
         <div class="table_actions">
-
+{% if request.user.role == "admin" %}
             <!-- DELETE SELECTED -->
             <button id="deleteSelected">
 
@@ -179,7 +179,7 @@
                 Delete Selected
 
             </button>
-
+{% endif %}
 
             <!-- COUNTER -->
             <span id="selectedCount">
@@ -372,13 +372,15 @@
                 <span>View Details</span>
             </div>
 
-
+{% if request.user.role == "admin" %}
           <div class="dropdown_item danger"
      data-action="delete"
      data-url="/api/delete-tracking-update/{{ update.id }}/">
     <i class='bx bx-trash'></i>
     <span>Delete</span>
 </div>
+
+            {% endif %}
 
         </div>
 

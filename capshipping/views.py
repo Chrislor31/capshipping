@@ -1,20 +1,36 @@
+from types import SimpleNamespace
+
 from django.contrib.auth.decorators import login_required, user_passes_test
 
 from django.shortcuts import render, redirect
+from rest_framework import status
+from rest_framework.views import APIView
 
-from accounts.models import Warehouse, PasswordResetOTP, Accounts
-from accounts.serializers import RegisterSerializer ,LoginSerializer
+from accounts.models import Warehouse, PasswordResetOTP, Accounts, KYC, DashboardSetting
+from accounts.serializers import RegisterSerializer, LoginSerializer, KYCSerializer
 
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
 
 from django.contrib.auth import login, update_session_auth_hash
 
-from accounts.utils import generate_otp, send_otp_email,send_welcome_email
+from accounts.utils import generate_otp, send_otp_email, send_welcome_email, send_kyc_submitted_email, \
+    send_kyc_approved_email, send_kyc_rejected_email
 from django.http import JsonResponse
 from django.contrib.auth import get_user_model
 
 from shipping.models import Package, Contact, Category, TrackingUpdate, PricingRule, RoutePricing
+
+
+
+
+
+from django.db.models.functions import ExtractMonth
+from django.db.models import Count
+
+import calendar
+
+from shipping.services.pricing import calculate_price
 
 
 #==== reset password
@@ -28,6 +44,22 @@ def register_api(request):
         # ❗ pa aktive user la ankò
         user.is_active = False
         user.save()
+
+        Contact.objects.create(
+
+            user=user,
+
+            name=f"{user.first_name} {user.last_name}",
+
+            phone=user.phone_number,
+
+            email=user.email,
+
+            address=user.full_address,
+
+            is_guest=False
+
+        )
 
         # 🔥 generate OTP
         code = generate_otp()
@@ -85,7 +117,10 @@ def verify_register_otp(request):
     otp_obj.delete()
 
     # 🔥 SEND WELCOME EMAIL
-    send_welcome_email(user)
+    send_welcome_email(
+        user,
+        request.COOKIES.get('django_language', 'en')
+    )
 
     # 🔥 AUTO LOGIN
     login(request, user)
@@ -176,15 +211,260 @@ def register(request):
     }
     return render(request, "register.html", context)
 
+
 @login_required
 def dashboard_user(request):
-    user = request.user
+
+    # =====================================
+    # 🔥 CLIENT SHIPMENTS
+    # =====================================
+
+    packages = Package.objects.filter(
+
+        user=request.user
+
+    ).order_by(
+
+        '-created_at'
+
+    )
+
+
+
+
+    # =====================================
+    # 🔥 WAREHOUSES
+    # =====================================
+
+    warehouses = Warehouse.objects.all()
+
+
+
+
+    # 🔥 USA WAREHOUSES
+    usa_warehouses = Warehouse.objects.filter(
+        type="USA"
+    )
+
+
+
+
+    # 🔥 FIRST = AIR
+    air_warehouse = usa_warehouses.first()
+
+
+
+
+    # 🔥 LAST = SEA
+    sea_warehouse = usa_warehouses.last()
+
+
+
+
+    # =====================================
+    # 🔥 CATEGORIES
+    # =====================================
+
+    categories = Category.objects.all()
+
+
+
+
+    # =====================================
+    # 🔥 STATS
+    # =====================================
+
+    received_packages = packages.filter(
+        status='received'
+    ).count()
+
+
+
+
+    transit_packages = packages.filter(
+        status='in_transit'
+    ).count()
+
+
+
+
+    ready_pickup_packages = packages.filter(
+        status='ready_pickup'
+    ).count()
+
+
+
+
+    delivered_packages = packages.filter(
+        status='delivered'
+    ).count()
+
+
+
+
+    # =====================================
+    # 🔥 MONTHLY CHART DATA
+    # =====================================
+
+    monthly_shipments = (
+
+        packages
+
+        .annotate(
+
+            month=ExtractMonth(
+                'created_at'
+            )
+
+        )
+
+        .values(
+            'month'
+        )
+
+        .annotate(
+
+            total=Count(
+                'id'
+            )
+
+        )
+
+        .order_by(
+            'month'
+        )
+
+    )
+
+
+
+
+    # =====================================
+    # 🔥 DEFAULT 12 MONTHS
+    # =====================================
+
+    shipment_data = [0] * 12
+
+
+
+
+    # =====================================
+    # 🔥 INSERT REAL DATA
+    # =====================================
+
+    for item in monthly_shipments:
+
+        shipment_data[
+            item['month'] - 1
+        ] = item['total']
+
+
+
+
+    # =====================================
+    # 🔥 MONTH LABELS
+    # =====================================
+
+    month_labels = list(
+
+        calendar.month_abbr
+
+    )[1:]
+
+
+
+
+    # =====================================
+    # 🔥 CONTEXT
+    # =====================================
+
     context = {
-        "user": user,
+
+        # SHIPMENTS
+        "packages":
+        packages,
+
+
+
+        # STATS
+        "received_packages":
+        received_packages,
+
+
+
+        "transit_packages":
+        transit_packages,
+
+
+
+        "ready_pickup_packages":
+        ready_pickup_packages,
+
+
+
+        "delivered_packages":
+        delivered_packages,
+
+
+
+        # CHART
+        "shipment_data":
+        json.dumps(
+            shipment_data
+        ),
+
+
+
+        "month_labels":
+        json.dumps(
+            month_labels
+        ),
+
+
+
+        # WAREHOUSES
+        "warehouses":
+        warehouses,
+
+
+
+        "usa_warehouses":
+        usa_warehouses,
+
+
+
+        "air_warehouse":
+        air_warehouse,
+
+
+
+        "sea_warehouse":
+        sea_warehouse,
+
+
+
+        # CATEGORIES
+        "categories":
+        categories,
+
     }
-    return render(request,'dashboard_user/dashboard.html',context)
 
 
+
+
+    # =====================================
+    # 🔥 RENDER
+    # =====================================
+
+    return render(
+
+        request,
+
+        'dashboard_user/dashboard.html',
+
+        context
+
+    )
 
 @login_required
 def change_password(request):
@@ -215,16 +495,119 @@ def change_password(request):
     return JsonResponse({"status": "error", "message": "Invalid request"})
 
 
+
+
+@login_required
+def update_profile(request):
+
+    if request.method == "POST":
+
+        user = request.user
+
+
+
+        user.first_name = request.POST.get(
+            "first_name"
+        )
+
+
+
+        user.last_name = request.POST.get(
+            "last_name"
+        )
+
+
+
+        user.email = request.POST.get(
+            "email"
+        )
+
+
+
+        user.phone_number = request.POST.get(
+            "phone_number"
+        )
+
+
+
+        user.country = request.POST.get(
+            "country"
+        )
+
+
+
+        user.state = request.POST.get(
+            "state"
+        )
+
+
+
+        user.city = request.POST.get(
+            "city"
+        )
+
+
+
+        # PICKUP
+        pickup_id = request.POST.get(
+            "default_pickup"
+        )
+
+
+
+        if pickup_id:
+
+            warehouse = Warehouse.objects.filter(
+                id=pickup_id
+            ).first()
+
+
+
+            user.default_pickup = warehouse
+
+
+
+        user.save()
+
+
+
+        return JsonResponse({
+
+            "status": "success",
+
+            "message":
+            "Profile updated successfully"
+
+        })
+
+
+
+    return JsonResponse({
+
+        "status": "error",
+
+        "message":
+        "Invalid request"
+
+    })
+
+
 from django.http import JsonResponse
 from django.contrib.auth import logout
 
 
 def logout_view(request):
-    if request.method == "POST":
-        logout(request)
-        return JsonResponse({"status": "success"})
 
-    return JsonResponse({"status": "error"})
+    logout(request)
+
+    return redirect('login')
+
+
+def user_logout(request):
+
+    logout(request)
+
+    return redirect('/login/')
 
 
 #======reset password
@@ -370,7 +753,7 @@ def dashboard_home(request):
 from django.db.models.functions import TruncMonth
 from django.db.models import Sum, Count, F
 from django.utils.timezone import now
-from datetime import timedelta
+from datetime import timedelta, timezone
 from calendar import month_abbr
 
 from accounts.models import Accounts
@@ -882,51 +1265,232 @@ from django.core.paginator import Paginator
 
 def shipment_list(request):
 
-    # 🔥 GET QUERY SAFE
-    query = request.GET.get("q", "").strip()
+    # =====================================
+    # 🔍 SEARCH QUERY
+    # =====================================
+
+    query = request.GET.get(
+        "q",
+        ""
+    ).strip()
+
+
+
+
+    # =====================================
+    # 📦 SHIPMENTS
+    # =====================================
 
     packages = Package.objects.select_related(
+
         "origin_warehouse",
+
         "destination_warehouse",
+
         "created_by"
-    ).order_by("-created_at")
 
-    # 🔥 FIX q=None + empty
-    if query and query.lower() != "none":
-        packages = packages.filter(
-            Q(tracking_number__icontains=query) |
-            Q(code__icontains=query)
-        )
+    ).order_by(
 
-    # 🔥 PAGINATION SAFE
-    paginator = Paginator(packages, 10)
-    page_number = request.GET.get("page")
+        "-created_at"
 
-    page_obj = paginator.get_page(page_number)
-
-    # 🔥 STATS
-    stats = Package.objects.aggregate(
-        total=Count('id'),
-        in_transit=Count('id', filter=Q(status='in_transit')),
-        ready_pickup=Count('id', filter=Q(status='ready_pickup')),
-        delivered=Count('id', filter=Q(status='delivered')),
     )
 
-    context = {
-        "packages": page_obj,
-        "page_obj": page_obj,
-        "query": query,
 
-        "total_shipments": stats['total'],
-        "in_transit": stats['in_transit'],
-        "ready_pickup": stats['ready_pickup'],
-        "delivered": stats['delivered'],
+
+
+    # =====================================
+    # 🔥 SEARCH FILTER
+    # =====================================
+
+    if(
+
+        query
+
+        and
+
+        query.lower() != "none"
+
+    ):
+
+        packages = packages.filter(
+
+            Q(
+                tracking_number__icontains=query
+            )
+
+            |
+
+            Q(
+                code__icontains=query
+            )
+
+            |
+
+            Q(
+                pickup_code__icontains=query
+            )
+
+        )
+
+
+
+
+    # =====================================
+    # 📄 PAGINATION
+    # =====================================
+
+    paginator = Paginator(
+
+        packages,
+
+        10
+
+    )
+
+
+
+    page_number = request.GET.get(
+        "page"
+    )
+
+
+
+    page_obj = paginator.get_page(
+        page_number
+    )
+
+
+
+
+    # =====================================
+    # 📊 STATS
+    # =====================================
+
+    stats = Package.objects.aggregate(
+
+        total = Count(
+            "id"
+        ),
+
+
+
+        in_transit = Count(
+
+            "id",
+
+            filter=Q(
+                status="in_transit"
+            )
+
+        ),
+
+
+
+        ready_pickup = Count(
+
+            "id",
+
+            filter=Q(
+                status="ready_pickup"
+            )
+
+        ),
+
+
+
+        delivered = Count(
+
+            "id",
+
+            filter=Q(
+                status="delivered"
+            )
+
+        ),
+
+    )
+
+
+
+
+    # =====================================
+    # CONTEXT
+    # =====================================
+
+    context = {
+
+        "packages":
+        page_obj,
+
+
+
+        "page_obj":
+        page_obj,
+
+
+
+        "query":
+        query,
+
+
+
+        "total_shipments":
+        stats["total"],
+
+
+
+        "in_transit":
+        stats["in_transit"],
+
+
+
+        "ready_pickup":
+        stats["ready_pickup"],
+
+
+
+        "delivered":
+        stats["delivered"],
+
     }
 
-    if request.headers.get('x-requested-with') == 'XMLHttpRequest':
-        return render(request, "dashboard/partials/shipment_table.html", context)
 
-    return render(request, "dashboard/base.html", context)
+
+
+    # =====================================
+    # AJAX
+    # =====================================
+
+    if request.headers.get(
+        "x-requested-with"
+    ) == "XMLHttpRequest":
+
+        return render(
+
+            request,
+
+            "dashboard/partials/shipment_table.html",
+
+            context
+
+        )
+
+
+
+
+    # =====================================
+    # NORMAL PAGE
+    # =====================================
+
+    return render(
+
+        request,
+
+        "dashboard/base.html",
+
+        context
+
+    )
 
 
 
@@ -3131,3 +3695,1416 @@ def delete_route_pricing(request, id):
             "message": str(e)
 
         })
+
+
+
+def calculator(request):
+
+    # =========================================
+    # AJAX CALCULATION
+    # =========================================
+
+    if request.method == "POST":
+
+        try:
+
+            # =========================================
+            # FORM DATA
+            # =========================================
+
+            origin = request.POST.get(
+                "origin"
+            )
+
+
+
+            destination = request.POST.get(
+                "destination"
+            )
+
+
+
+            shipping_type = request.POST.get(
+                "shipping_type"
+            )
+
+
+
+            category_id = request.POST.get(
+                "category"
+            )
+
+
+
+            weight = float(
+                request.POST.get(
+                    "weight",
+                    0
+                )
+            )
+
+
+
+            length = float(
+                request.POST.get(
+                    "length",
+                    0
+                )
+            )
+
+
+
+            width = float(
+                request.POST.get(
+                    "width",
+                    0
+                )
+            )
+
+
+
+            height = float(
+                request.POST.get(
+                    "height",
+                    0
+                )
+            )
+
+
+
+            quantity = int(
+                request.POST.get(
+                    "quantity",
+                    1
+                )
+            )
+
+
+
+            insurance = request.POST.get(
+                "insurance"
+            )
+
+
+
+            # =========================================
+            # CATEGORY
+            # =========================================
+
+            category = None
+
+
+
+            if category_id:
+
+                category = \
+                Category.objects.filter(
+                    id=category_id
+                ).first()
+
+
+
+            # =========================================
+            # WAREHOUSES
+            # =========================================
+
+            origin_warehouse = \
+            Warehouse.objects.filter(
+                type=origin
+            ).first()
+
+
+
+            destination_warehouse = \
+            Warehouse.objects.filter(
+                type=destination
+            ).first()
+
+
+
+            # =========================================
+            # CHECK
+            # =========================================
+
+            if not origin_warehouse:
+
+                return JsonResponse({
+
+                    "success": False,
+
+                    "error":
+                    "Origin warehouse not found"
+
+                })
+
+
+
+            if not destination_warehouse:
+
+                return JsonResponse({
+
+                    "success": False,
+
+                    "error":
+                    "Destination warehouse not found"
+
+                })
+
+
+
+            # =========================================
+            # TEMP PACKAGE
+            # =========================================
+
+            package =SimpleNamespace()
+
+
+
+            package.origin_warehouse = \
+            origin_warehouse
+
+
+
+            package.destination_warehouse = \
+            destination_warehouse
+
+
+
+            package.shipping_type = \
+            shipping_type
+
+
+
+            package.weight = \
+            weight
+
+
+
+            package.length = \
+            length
+
+
+
+            package.width = \
+            width
+
+
+
+            package.height = \
+            height
+
+
+
+            package.quantity = \
+            quantity
+
+
+
+            package.category = \
+            category
+
+
+
+            package.extra_fee = 0
+
+
+
+            # =========================================
+            # MAIN PRICE
+            # =========================================
+
+            total = calculate_price(
+                package
+            )
+
+
+
+            # =========================================
+            # INSURANCE
+            # =========================================
+
+            insurance_fee = 0
+
+
+
+            if insurance == "yes":
+
+                insurance_fee = (
+                    total * 0.02
+                )
+
+
+
+                total += insurance_fee
+
+
+
+            # =========================================
+            # DELIVERY TIME
+            # =========================================
+
+            delivery_time = \
+            "3 - 5 Business Days"
+
+
+
+            if shipping_type == "sea":
+
+                delivery_time = \
+                "10 - 20 Business Days"
+
+
+
+            # =========================================
+            # RESPONSE
+            # =========================================
+
+            return JsonResponse({
+
+                "success": True,
+
+                "base_price":
+                    round(total, 2),
+
+                "weight_price":
+                    round(total, 2),
+
+                "dimension_price":
+                    0,
+
+                "insurance_price":
+                    round(
+                        insurance_fee,
+                        2
+                    ),
+
+                "fuel_price":
+                    0,
+
+                "total":
+                    round(total, 2),
+
+                "delivery_time":
+                    delivery_time,
+
+            })
+
+
+
+        except Exception as e:
+
+            return JsonResponse({
+
+                "success": False,
+
+                "error": str(e)
+
+            })
+
+
+
+    # =========================================
+    # NORMAL PAGE LOAD
+    # =========================================
+
+    categories = \
+    Category.objects.all()
+
+
+
+    warehouses = \
+    Warehouse.objects.all()
+
+
+
+
+    context = {
+
+        "categories":
+        categories,
+
+        "warehouses":
+        warehouses
+
+    }
+
+
+
+    # =========================================
+    # AJAX LOAD
+    # =========================================
+
+    if request.headers.get(
+        "x-requested-with"
+    ) == "XMLHttpRequest":
+
+        return render(
+
+            request,
+
+            "dashboard/partials/calculator.html",
+
+            context
+
+        )
+
+
+
+    return render(
+
+        request,
+
+        "dashboard/base.html",
+
+        context
+
+    )
+
+def term_condition(request):
+    return render(request,'term_and_condition.html')
+
+
+
+
+class KYCAPIView(APIView):
+
+    permission_classes = [IsAuthenticated]
+
+    def get(self, request):
+
+        kyc = KYC.objects.filter(user=request.user).first()
+
+        if not kyc:
+            return Response({
+                "kyc_submitted": False
+            })
+
+        serializer = KYCSerializer(kyc)
+
+        return Response({
+            "kyc_submitted": True,
+            "data": serializer.data
+        })
+
+    def post(self, request):
+
+        # verify si user deja gen kyc
+        existing_kyc = KYC.objects.filter(
+            user=request.user
+        ).first()
+
+        # pending oubyen approved
+        if existing_kyc:
+
+            if existing_kyc.status in [
+                "pending",
+                "approved"
+            ]:
+                return Response({
+
+                    "error":
+                        "KYC already submitted"
+
+                }, status=400)
+
+            # rejected -> update li
+            if existing_kyc.status == "rejected":
+
+                serializer = KYCSerializer(
+
+                    existing_kyc,
+
+                    data=request.data,
+
+                    partial=True
+
+                )
+
+                if serializer.is_valid():
+                    serializer.save(
+                        status="pending"
+                    )
+
+                    return Response({
+
+                        "message":
+                            "KYC resubmitted successfully",
+
+                        "data":
+                            serializer.data
+
+                    })
+
+                return Response(
+                    serializer.errors,
+                    status=400
+                )
+
+        # nouvo KYC
+        serializer = KYCSerializer(
+            data=request.data
+        )
+
+        send_kyc_submitted_email(
+
+            request.user,
+
+            request.COOKIES.get(
+                "django_language",
+                "en"
+            )
+
+        )
+
+        if serializer.is_valid():
+            serializer.save(
+                user=request.user
+            )
+
+            return Response({
+
+                "message":
+                    "KYC submitted successfully",
+
+                "data":
+                    serializer.data
+
+            })
+
+        return Response(
+            serializer.errors,
+            status=400
+        )
+
+
+
+
+
+
+# =========================
+# VIEWS.PY
+# =========================
+
+
+# =========================
+# KYC MANAGEMENT
+# =========================
+
+def kyc_management(request):
+
+    # =========================================
+    # DATA
+    # =========================================
+
+    kycs = KYC.objects.select_related(
+        "user"
+    ).order_by("-submitted_at")
+
+
+
+    # =========================================
+    # SEARCH
+    # =========================================
+
+    query = request.GET.get(
+        "q",
+        ""
+    )
+
+    if query:
+
+        kycs = kycs.filter(
+
+            user__email__icontains=query
+
+        )
+
+
+
+    # =========================================
+    # STATISTICS
+    # =========================================
+
+    total_kyc = KYC.objects.count()
+
+    pending_kyc = KYC.objects.filter(
+        status="pending"
+    ).count()
+
+    approved_kyc = KYC.objects.filter(
+        status="approved"
+    ).count()
+
+    rejected_kyc = KYC.objects.filter(
+        status="rejected"
+    ).count()
+
+
+
+    # =========================================
+    # PAGINATION
+    # =========================================
+
+    paginator = Paginator(
+        kycs,
+        10
+    )
+
+    page_number = request.GET.get(
+        "page"
+    )
+
+    page_obj = paginator.get_page(
+        page_number
+    )
+
+
+
+    # =========================================
+    # CONTEXT
+    # =========================================
+
+    context = {
+
+        "page_obj": page_obj,
+
+        "query": query,
+
+        "total_kyc": total_kyc,
+
+        "pending_kyc": pending_kyc,
+
+        "approved_kyc": approved_kyc,
+
+        "rejected_kyc": rejected_kyc,
+
+    }
+
+
+
+    # =========================================
+    # AJAX LOAD
+    # =========================================
+
+    if request.headers.get(
+        "x-requested-with"
+    ) == "XMLHttpRequest":
+
+        return render(
+
+            request,
+
+            "dashboard/partials/kyc_management.html",
+
+            context
+
+        )
+
+
+
+    # =========================================
+    # NORMAL LOAD
+    # =========================================
+
+    return render(
+
+        request,
+
+        "dashboard/base.html",
+
+        context
+
+    )
+
+
+
+
+
+# views.py
+
+from django.shortcuts import (
+    render,
+    get_object_or_404
+)
+
+
+
+
+def kyc_details(request, id):
+
+    kyc = get_object_or_404(
+        KYC,
+        id=id
+    )
+
+
+    context = {
+
+        "kyc": kyc
+
+    }
+
+
+    # SPA AJAX LOAD
+    if request.headers.get(
+        "x-requested-with"
+    ) == "XMLHttpRequest":
+
+        return render(
+
+            request,
+
+            "dashboard/partials/kyc_details.html",
+
+            context
+
+        )
+
+
+    return render(
+
+        request,
+
+        "dashboard/base.html",
+
+        context
+
+    )
+
+
+
+# views.py
+
+
+
+from django.contrib.admin.views.decorators import (
+    staff_member_required
+)
+
+from django.views.decorators.http import (
+    require_POST
+)
+
+
+
+from django.utils import timezone
+
+@staff_member_required
+@require_POST
+def admin_kyc_decision(request, id):
+
+    try:
+
+        kyc = KYC.objects.get(
+            id=id
+        )
+
+        data = json.loads(
+            request.body
+        )
+
+        decision = data.get(
+            "decision"
+        )
+
+        comment = data.get(
+            "comment"
+        )
+
+
+        # verify
+        if decision not in [
+            "approved",
+            "rejected"
+        ]:
+
+            return JsonResponse({
+
+                "success": False,
+
+                "error":
+                "Invalid decision"
+
+            })
+
+
+        # update
+        kyc.status = decision
+
+        kyc.admin_note = comment
+
+        kyc.reviewed_at = timezone.now()
+
+        kyc.approved_by = request.user
+
+        kyc.save()
+        if decision == "approved":
+            send_kyc_approved_email(
+
+                kyc.user,
+
+                request.COOKIES.get(
+                    "django_language",
+                    "en"
+                )
+
+            )
+
+        if decision == "rejected":
+            send_kyc_rejected_email(
+
+                kyc.user,
+
+                request.COOKIES.get(
+                    "django_language",
+                    "en"
+                ),
+
+                comment
+
+            )
+
+
+        return JsonResponse({
+
+            "success": True,
+
+            "message":
+            "KYC updated successfully"
+
+        })
+
+
+    except Exception as e:
+
+        return JsonResponse({
+
+            "success": False,
+
+            "error": str(e)
+
+        })
+
+
+
+
+## count nitification
+
+
+# =========================
+# KYC PENDING COUNT API
+# =========================
+
+from django.http import JsonResponse
+
+def kyc_pending_count(request):
+
+    pending = KYC.objects.filter(
+        status="pending"
+    )
+
+    print(pending)
+    print(pending.count())
+
+    return JsonResponse({
+
+        "count": pending.count()
+
+    })
+
+
+
+
+
+@login_required
+def delete_kyc(request, kyc_id):
+
+    if request.method == "POST":
+
+        try:
+
+            kyc =KYC.objects.get(
+                id=kyc_id
+            )
+
+            kyc.delete()
+
+            return JsonResponse({
+
+                "success": True,
+
+                "message":
+                "KYC deleted successfully"
+
+            })
+
+        except KYC.DoesNotExist:
+
+            return JsonResponse({
+
+                "success": False,
+
+                "message":
+                "KYC not found"
+
+            })
+
+    return JsonResponse({
+
+        "success": False
+
+    })
+
+
+
+
+
+## setting dashboard
+@login_required
+def settings_page(request):
+
+    context = {
+
+        "user_obj":
+        request.user
+
+    }
+
+
+
+    # AJAX
+    if request.headers.get(
+        "x-requested-with"
+    ) == "XMLHttpRequest":
+
+        return render(
+
+            request,
+
+            "dashboard/partials/settings.html",
+
+            context
+
+        )
+
+
+
+    return render(
+
+        request,
+
+        "dashboard/base.html",
+
+        context
+
+    )
+@login_required
+def save_settings(request):
+
+    if request.method == "POST":
+
+        user =request.user
+
+
+
+        # BASIC INFO
+        user.first_name = \
+        request.POST.get(
+            "first_name"
+        )
+
+
+
+        user.last_name = \
+        request.POST.get(
+            "last_name"
+        )
+
+
+
+        user.phone_number = \
+        request.POST.get(
+            "phone_number"
+        )
+
+
+
+        user.email = \
+        request.POST.get(
+            "email"
+        )
+
+
+
+        # ADDRESS
+        user.country = \
+        request.POST.get(
+            "country"
+        )
+
+
+
+        user.state = \
+        request.POST.get(
+            "state"
+        )
+
+
+
+        user.city = \
+        request.POST.get(
+            "city"
+        )
+
+
+
+        user.full_address = \
+        request.POST.get(
+            "full_address"
+        )
+
+
+
+        # LANGUAGE
+        user.language = \
+        request.POST.get(
+            "language"
+        )
+
+
+
+        # PASSWORD
+        password =request.POST.get(
+            "password"
+        )
+
+
+
+        confirm_password =request.POST.get(
+            "confirm_password"
+        )
+
+
+
+        if password:
+
+            if password != confirm_password:
+
+                return JsonResponse({
+
+                    "success": False,
+
+                    "message":
+                    "Passwords do not match"
+
+                })
+
+
+
+            user.set_password(
+                password
+            )
+
+
+
+        # SAVE
+        user.save()
+
+
+
+        return JsonResponse({
+
+            "success": True,
+
+            "message":
+            "Settings updated successfully"
+
+        })
+
+
+
+    return JsonResponse({
+
+        "success": False
+
+    })
+
+
+
+
+@login_required
+def save_settings(request):
+
+    if request.method == "POST":
+
+        user =request.user
+
+
+
+        # BASIC INFO
+        user.first_name = \
+        request.POST.get(
+            "first_name"
+        )
+
+
+
+        user.last_name = \
+        request.POST.get(
+            "last_name"
+        )
+
+
+
+        user.phone_number = \
+        request.POST.get(
+            "phone_number"
+        )
+
+
+
+        # ADDRESS
+        user.country = \
+        request.POST.get(
+            "country"
+        )
+
+
+
+        user.state = \
+        request.POST.get(
+            "state"
+        )
+
+
+
+        user.city = \
+        request.POST.get(
+            "city"
+        )
+
+
+
+        user.full_address = \
+        request.POST.get(
+            "full_address"
+        )
+
+
+
+        # PASSWORD
+        password =request.POST.get(
+            "password"
+        )
+
+
+
+        confirm_password =request.POST.get(
+            "confirm_password"
+        )
+
+
+
+        # CHANGE PASSWORD
+        if password:
+
+            if len(password) < 6:
+
+                return JsonResponse({
+
+                    "success": False,
+
+                    "message":
+                    "Password too short"
+
+                })
+
+
+
+            if password != confirm_password:
+
+                return JsonResponse({
+
+                    "success": False,
+
+                    "message":
+                    "Passwords do not match"
+
+                })
+
+
+
+            user.set_password(
+                password
+            )
+
+
+
+        # SAVE
+        user.save()
+
+
+
+        return JsonResponse({
+
+            "success": True,
+
+            "message":
+            "Settings updated successfully"
+
+        })
+
+
+
+    return JsonResponse({
+
+        "success": False
+
+    })
+
+
+
+## calculator user
+
+@login_required
+def user_calculator(request):
+
+    if request.method == "POST":
+
+        try:
+
+            data = json.loads(
+                request.body
+            )
+
+
+
+            # =====================================
+            # DATA
+            # =====================================
+
+            origin_id = data.get(
+                "origin"
+            )
+
+
+
+            destination_id = data.get(
+                "destination"
+            )
+
+
+
+            shipping_type = data.get(
+                "shipping_type"
+            )
+
+
+
+            category_id = data.get(
+                "category"
+            )
+
+
+
+            weight = float(
+                data.get(
+                    "weight",
+                    0
+                )
+            )
+
+
+
+            quantity = int(
+                data.get(
+                    "quantity",
+                    1
+                )
+            )
+
+
+
+            length = float(
+                data.get(
+                    "length",
+                    0
+                )
+            )
+
+
+
+            width = float(
+                data.get(
+                    "width",
+                    0
+                )
+            )
+
+
+
+            height = float(
+                data.get(
+                    "height",
+                    0
+                )
+            )
+
+
+
+
+            # =====================================
+            # OBJECTS
+            # =====================================
+
+            origin_warehouse = \
+            Warehouse.objects.get(
+                id=origin_id
+            )
+
+
+
+            destination_warehouse = \
+            Warehouse.objects.get(
+                id=destination_id
+            )
+
+
+
+            category = \
+            Category.objects.filter(
+                id=category_id
+            ).first()
+
+
+
+
+            # =====================================
+            # TEMP PACKAGE
+            # =====================================
+
+            package =SimpleNamespace()
+
+
+
+            package.origin_warehouse = \
+            origin_warehouse
+
+
+
+            package.destination_warehouse = \
+            destination_warehouse
+
+
+
+            package.shipping_type = \
+            shipping_type
+
+
+
+            package.category = \
+            category
+
+
+
+            package.weight = \
+            weight
+
+
+
+            package.quantity = \
+            quantity
+
+
+
+            package.length = \
+            length
+
+
+
+            package.width = \
+            width
+
+
+
+            package.height = \
+            height
+
+
+
+            package.extra_fee = 0
+
+
+
+
+            # =====================================
+            # CALCULATE
+            # =====================================
+
+            total = calculate_price(
+                package
+            )
+
+
+
+
+            # =====================================
+            # DELIVERY
+            # =====================================
+
+            delivery_time = \
+            "3 - 5 Business Days"
+
+
+
+            if shipping_type == "sea":
+
+                delivery_time = \
+                "10 - 20 Business Days"
+
+
+
+
+            # =====================================
+            # RESPONSE
+            # =====================================
+
+            return JsonResponse({
+
+                "success": True,
+
+                "total":
+                round(total, 2),
+
+                "delivery":
+                delivery_time,
+
+            })
+
+
+
+        except Exception as e:
+
+            return JsonResponse({
+
+                "success": False,
+
+                "error": str(e)
+
+            })
+
+
+
+    return JsonResponse({
+
+        "success": False,
+
+        "error":
+        "Invalid request"
+
+    })
+
+
+
+
+

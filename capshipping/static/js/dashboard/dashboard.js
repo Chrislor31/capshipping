@@ -461,84 +461,416 @@ if (document.getElementById("shipmentForm")){
 }
 
 
-// =====================
-function loadPage(url) {
 
-    const fullUrl = new URL(url, window.location.origin);
-    url = fullUrl.pathname + fullUrl.search;
+// =====================================
+// PAGE LOADER
+// =====================================
 
-    console.log("LOADING:", url);
+function showPageLoader(){
 
-    fetch(url, {
-        headers: { 'X-Requested-With': 'XMLHttpRequest' }
-    })
-    .then(res => {
-        if (!res.ok) throw new Error("Network error");
-        return res.text();
-    })
-    .then(data => {
+    const container =
+    document.getElementById(
+        "main-content"
+    );
 
-        const container = document.getElementById('main-content');
-        if (!container) return;
+    if(!container) return;
 
-        // 🔥 PARSE HTML
-        const parser = new DOMParser();
-        const doc = parser.parseFromString(data, 'text/html');
 
-        // 🔥 INJECT ONLY BODY CONTENT (sa evite script pwoblèm)
-        const newContent = doc.body.innerHTML;
-        container.innerHTML = newContent;
 
-        // =====================
-        // 🔥 SAFE JSON FUNCTION
-        // =====================
-        function safeJSON(script){
-            try{
-                if (!script) return [];
-                const txt = script.textContent?.trim();
-                if (!txt) return [];
-                return JSON.parse(txt);
-            }catch{
-                return [];
+    container.innerHTML = `
+
+        <div class="page_state loading_state">
+
+            <div class="spinner_loader"></div>
+
+            <h3>Loading...</h3>
+
+        </div>
+
+    `;
+}
+
+
+
+// =====================================
+// PAGE ERROR
+// =====================================
+
+function showPageError(url){
+
+    const container =
+    document.getElementById(
+        "main-content"
+    );
+
+    if(!container) return;
+
+
+
+    container.innerHTML = `
+
+        <div class="page_state error_state">
+
+            <i class='bx bx-error-circle'></i>
+
+            <h2>Couldn't load</h2>
+
+            <p>
+
+                Something went wrong fetching this data.
+
+            </p>
+
+            <button
+                onclick="loadPage('${url}')"
+            >
+
+                Retry
+
+            </button>
+
+        </div>
+
+    `;
+}
+
+
+
+// =====================================
+// LOAD PAGE
+// =====================================
+
+async function loadPage(url){
+
+    const container =
+    document.getElementById(
+        "main-content"
+    );
+
+
+
+    if(!container) return;
+
+
+
+    // 🔥 SAVE OLD CONTENT
+    const oldContent =
+    container.innerHTML;
+
+
+
+    // =====================================
+    // URL
+    // =====================================
+
+    const fullUrl =
+    new URL(
+
+        url,
+
+        window.location.origin
+
+    );
+
+
+
+    url =
+    fullUrl.pathname +
+    fullUrl.search;
+
+
+
+    console.log(
+        "LOADING:",
+        url
+    );
+
+
+
+    // =====================================
+    // LOADER
+    // =====================================
+
+    showPageLoader();
+
+
+
+    try{
+
+        // =====================================
+        // FETCH
+        // =====================================
+
+        const response =
+        await fetch(
+
+            url,
+
+            {
+
+                headers: {
+
+                    "X-Requested-With":
+                    "XMLHttpRequest"
+
+                }
+
             }
+
+        );
+
+
+
+        // =====================================
+        // BAD RESPONSE
+        // =====================================
+
+        if(!response.ok){
+
+            throw new Error(
+                `HTTP ${response.status}`
+            );
+
         }
 
-        // =====================
-        // 🔥 GET CHART DATA
-        // =====================
-        const labelsScript = doc.getElementById('labels-data');
-        const revenueScript = doc.getElementById('revenue-data');
-        const shipmentsScript = doc.getElementById('shipments-data');
 
-        window.chartLabels = safeJSON(labelsScript);
-        window.chartRevenue = safeJSON(revenueScript);
-        window.chartShipments = safeJSON(shipmentsScript);
 
-        console.log("Chart Data:", window.chartLabels, window.chartRevenue, window.chartShipments);
+        // =====================================
+        // HTML DATA
+        // =====================================
 
-        // =====================
-        // 🔥 UPDATE URL
-        // =====================
-        history.pushState(null, '', url);
+        const data =
+        await response.text();
 
-        // =====================
-        // 🔥 ACTIVE MENU
-        // =====================
+
+
+        // =====================================
+        // EMPTY RESPONSE
+        // =====================================
+
+        if(
+
+            !data ||
+
+            !data.trim()
+
+        ){
+
+            throw new Error(
+                "Empty response"
+            );
+
+        }
+
+
+
+        // =====================================
+        // PARSE HTML
+        // =====================================
+
+        const parser =
+        new DOMParser();
+
+
+
+        const doc =
+        parser.parseFromString(
+
+            data,
+
+            "text/html"
+
+        );
+
+
+
+        // =====================================
+        // INJECT HTML
+        // =====================================
+
+        container.innerHTML =
+        doc.body.innerHTML;
+
+
+        // 🔥 RELOAD SCRIPTS
+
+doc.querySelectorAll("script").forEach(oldScript => {
+
+    const newScript =
+    document.createElement("script");
+
+    if (oldScript.src){
+
+        newScript.src =
+        oldScript.src;
+
+    } else {
+
+        newScript.textContent =
+        oldScript.textContent;
+
+    }
+
+    document.body.appendChild(
+        newScript
+    );
+
+});
+
+
+
+        // =====================================
+        // SAFE JSON
+        // =====================================
+
+        function safeJSON(script){
+
+            try{
+
+                if(!script) return [];
+
+
+
+                const txt =
+                script.textContent?.trim();
+
+
+
+                if(!txt) return [];
+
+
+
+                return JSON.parse(txt);
+
+            }
+
+            catch(err){
+
+                console.log(
+                    "JSON parse skipped"
+                );
+
+                return [];
+
+            }
+
+        }
+
+
+
+        // =====================================
+        // CHART DATA
+        // =====================================
+
+        window.chartLabels =
+        safeJSON(
+            doc.getElementById(
+                "labels-data"
+            )
+        );
+
+
+
+        window.chartRevenue =
+        safeJSON(
+            doc.getElementById(
+                "revenue-data"
+            )
+        );
+
+
+
+        window.chartShipments =
+        safeJSON(
+            doc.getElementById(
+                "shipments-data"
+            )
+        );
+
+
+
+        // =====================================
+        // UPDATE URL
+        // =====================================
+
+        history.pushState(
+
+            null,
+
+            "",
+
+            url
+
+        );
+
+
+
+        // =====================================
+        // ACTIVE MENU
+        // =====================================
+
         setActive(url);
 
-        // =====================
-        // 🔥 INIT MODULES (NO setTimeout)
-        // =====================
-        initPage();
-         // 🔥 TRACKING (MEN LI 👇)
-        loadTracking();
-        initPaymentToggle();
-        initDeleteShipment();
 
-    })
-    .catch(err => {
-        console.error("Load page error:", err);
-    });
+
+        // =====================================
+        // INIT PAGE
+        // =====================================
+
+        initPage();
+
+
+
+        // =====================================
+        // EXTRA MODULES
+        // =====================================
+
+        if(typeof loadTracking === "function"){
+
+            loadTracking();
+
+        }
+
+
+
+        if(typeof initPaymentToggle === "function"){
+
+            initPaymentToggle();
+
+        }
+
+
+
+        if(typeof initDeleteShipment === "function"){
+
+            initDeleteShipment();
+
+        }
+
+    }
+
+    catch(err){
+
+        console.error(
+            "Load page error:",
+            err
+        );
+
+
+
+        // =====================================
+        // RESTORE OLD PAGE
+        // =====================================
+
+        window.location.reload();
+
+
+
+        // 🔥 OPTIONAL
+        // showPageError(url);
+
+    }
+
 }
 
 
@@ -1474,3 +1806,235 @@ function initDeleteShipment(){
 }
 
 
+
+// =========================
+// LANGUAGE DROPDOWN
+// =========================
+
+const langToggle =
+document.querySelector(
+    ".lang_toggle"
+);
+
+const langDropdown =
+document.querySelector(
+    ".lang_dropdown"
+);
+
+const languages =
+document.querySelector(
+    ".languages"
+);
+
+
+
+// open / close
+if(langToggle){
+
+    langToggle.addEventListener(
+        "click",
+        (e) => {
+
+        e.stopPropagation();
+
+        langDropdown.classList.toggle(
+            "show_lang"
+        );
+
+    });
+
+}
+
+
+
+// close outside
+document.addEventListener(
+    "click",
+    (e) => {
+
+    if(
+        languages &&
+        !languages.contains(e.target)
+    ){
+
+        langDropdown.classList.remove(
+            "show_lang"
+        );
+
+    }
+
+});
+
+
+
+
+// =====================================
+// SAVE SETTINGS
+// =====================================
+
+document.addEventListener(
+    "submit",
+    async function(e){
+
+    // SETTINGS FORM
+    if(
+
+        e.target
+
+        &&
+
+        e.target.id ===
+        "settingsForm"
+
+    ){
+
+        e.preventDefault();
+
+
+
+
+        const form =
+        e.target;
+
+
+
+
+        const formData =
+        new FormData(
+            form
+        );
+
+
+
+
+        try{
+
+            const response =
+            await fetch(
+
+                "/api/save-settings/",
+
+                {
+
+                    method:"POST",
+
+                    headers:{
+
+                        "X-CSRFToken":
+                        getCookie(
+                            "csrftoken"
+                        ),
+
+                        "X-Requested-With":
+                        "XMLHttpRequest"
+
+                    },
+
+                    body:formData
+
+                }
+
+            );
+
+
+
+
+            const data =
+            await response.json();
+
+
+
+
+            // ERROR
+            if(!data.success){
+
+                showAlert(
+
+                    data.message ||
+
+                    "Something went wrong",
+
+                    "error"
+
+                );
+
+                return;
+
+            }
+
+
+
+
+            // SUCCESS
+            showAlert(
+
+                data.message,
+
+                "success"
+
+            );
+
+
+
+
+            // OPTIONAL RELOAD
+            setTimeout(() => {
+
+                loadPage(
+                    "/panel/settings/"
+                );
+
+            }, 1000);
+
+        }
+
+        catch(error){
+
+            console.log(
+                "settings error:",
+                error
+            );
+
+
+
+
+            showAlert(
+
+                "Something went wrong",
+
+                "error"
+
+            );
+
+        }
+
+    }
+
+});
+
+
+
+// fix reload
+
+
+// =====================
+// 🔥 AUTO RESTORE SPA
+// =====================
+
+document.addEventListener("visibilitychange", () => {
+
+    if (!document.hidden) {
+
+        console.log("TAB ACTIVE AGAIN");
+
+        const path = window.location.pathname;
+
+        if (path.startsWith("/panel/")) {
+
+            loadPage(path);
+
+        }
+
+    }
+
+});

@@ -1,0 +1,814 @@
+<section class="dashboard_add_user settings_dashboard">
+<form id="settingsForm">
+
+    <div class="head_page">
+        <h2>Settings</h2>
+
+        <p>Dashboard / Settings</p>
+    </div>
+
+    <div class="grid_layout">
+
+         <!-- LEFT -->
+
+        <div class="left_content_add">
+
+
+          <div class="user_information">
+
+            <!-- USER INFO -->
+
+            <h3> User information </h3>
+
+            <label for=""> email </label>
+
+            <input
+                type="email"
+                placeholder="enter email address"
+                id="email_user"
+                name="email"
+                value="{{ user_obj.email }}"
+                readonly
+            >
+
+            <div class="fist_lastname">
+
+                <div class="fist_name">
+
+                <label for="">fist name </label>
+
+                <input
+                    type="text"
+                    placeholder="e.g jacky"
+                    name="first_name"
+                    value="{{ user_obj.first_name }}"
+                >
+
+                </div>
+
+
+                <div class="last_name">
+
+                <label for="">last name </label>
+
+                <input
+                    type="text"
+                    placeholder="e.g Pierre"
+                    name="last_name"
+                    value="{{ user_obj.last_name }}"
+                >
+
+                </div>
+
+            </div>
+
+            <div class="phone_and_role">
+
+                <div class="phone_number">
+
+                    <label>Phone Number</label>
+
+                    <input
+                        id="phone"
+                        type="tel"
+                        placeholder="689 217 2237"
+                        name="phone_number"
+                        value="{{ user_obj.phone_number }}"
+                    >
+
+                </div>
+
+                <div class="role">
+
+                <label for="">role </label>
+
+                <select
+                    name="role"
+                    disabled
+                >
+
+                    <option>
+
+                        {{ user_obj.role }}
+
+                    </option>
+
+                </select>
+
+                </div>
+
+            </div>
+
+          </div>
+
+
+
+            <div class="address_information">
+
+
+                <!-- Address information -->
+
+
+                <h3>Address information</h3>
+
+            <div class="countr_state_city">
+
+                <div class="country">
+
+                <label for="">country</label>
+
+                <select
+                    name="country"
+                    id="country"
+                >
+
+                    {% if user_obj.country %}
+
+                    <option
+                        value="{{ user_obj.country }}"
+                        selected
+                    >
+
+                        {{ user_obj.country }}
+
+                    </option>
+
+                    {% else %}
+
+                    <option
+                        value=""
+                        disabled
+                        selected
+                        hidden
+                    >
+
+                        Select Country
+
+                    </option>
+
+                    {% endif %}
+
+                </select>
+
+                </div>
+
+
+
+                <div class="state">
+
+                <label for="">state / province</label>
+
+                <select
+                    name="state"
+                    id="state"
+                >
+
+                    {% if user_obj.state %}
+
+                    <option
+                        value="{{ user_obj.state }}"
+                        selected
+                    >
+
+                        {{ user_obj.state }}
+
+                    </option>
+
+                    {% else %}
+
+                    <option
+                        value=""
+                        disabled
+                        selected
+                        hidden
+                    >
+
+                        State / Region
+
+                    </option>
+
+                    {% endif %}
+
+                </select>
+
+                </div>
+
+
+
+                <div class="city">
+
+                <label for="">city</label>
+
+                <select
+                    name="city"
+                    id="city"
+                >
+
+                    {% if user_obj.city %}
+
+                    <option
+                        value="{{ user_obj.city }}"
+                        selected
+                    >
+
+                        {{ user_obj.city }}
+
+                    </option>
+
+                    {% else %}
+
+                    <option
+                        value=""
+                        disabled
+                        selected
+                        hidden
+                    >
+
+                        Select your city of residence
+
+                    </option>
+
+                    {% endif %}
+
+                </select>
+
+                </div>
+
+            </div>
+
+
+
+            <div class="full_address">
+
+                <label for=""> full address</label>
+
+                <textarea
+                    name="full_address"
+                    placeholder="enter full address"
+                >{{ user_obj.full_address }}</textarea>
+
+            </div>
+
+
+        </div>
+
+
+
+        <div class="warehouse_info">
+
+            <!-- warehouse information -->
+
+            <h3>warehouse information</h3>
+
+            <div class="pickup_staff">
+
+            <div class="pickup">
+
+                <label for="">
+
+                    Default pickup warehouse
+
+                </label>
+
+                <select
+                    name="default_warehouse"
+                >
+
+                    {% if user_obj.default_warehouse %}
+
+                    <option
+                        value="{{ user_obj.default_warehouse.id }}"
+                        selected
+                    >
+
+                       {{ user_obj.default_warehouse }}
+
+                    </option>
+
+                    {% else %}
+
+                    <option value="">
+
+                       select default warehouse
+
+                    </option>
+
+                    {% endif %}
+
+                </select>
+
+            </div>
+
+
+
+            <div class="staff_warehouse">
+
+                <label for="">
+
+                    staff warehouse
+
+                    ( for staff users )
+
+                </label>
+
+                <select disabled>
+
+                    {% if user_obj.staff_warehouse %}
+
+                    <option selected>
+
+                       {{ user_obj.staff_warehouse }}
+
+                    </option>
+
+                    {% else %}
+
+                    <option>
+
+                       no warehouse assigned
+
+                    </option>
+
+                    {% endif %}
+
+                </select>
+
+            </div>
+
+            </div>
+
+        </div>
+
+
+
+        <div class="password_confirm_par">
+
+            <!-- password -->
+
+            <h3>Account Security </h3>
+
+            <div class="password_confirm">
+
+            <div class="password">
+
+                <label for="">Password *</label>
+
+                <input
+                    type="password"
+                    placeholder="enter password"
+                    name="password"
+                >
+
+            </div>
+
+
+
+            <div class="confirm_password">
+
+                <label for="">confirm password *</label>
+
+                <input
+                    type="password"
+                    placeholder="confirm password"
+                    name="confirm_password"
+                >
+
+            </div>
+
+            </div>
+
+        </div>
+
+
+
+
+
+<div class="send_welcome submit-setting">
+
+    <button id="saveSettingsBtn">
+
+        <i class='bx bx-save'></i>
+
+        Save Changes
+
+    </button>
+
+</div>
+
+    </div>
+
+
+     <!-- right -->
+
+        <div class="right_content_add">
+
+            <div class="profile_overviews">
+
+                 <h3>
+
+                    <i class='bx bx-user-circle'></i>
+
+                    Profile Overview
+
+                </h3>
+
+
+
+                 <div class="box-init-setting">
+
+                    <div class="Initial-settings">
+
+                        {% if user_obj.first_name %}
+
+                            {{ user_obj.first_name|slice:":1"|upper }}
+                            {{ user_obj.last_name|slice:":1"|upper }}
+
+                        {% else %}
+
+                            {{ user_obj.email|slice:":2"|upper }}
+
+                        {% endif %}
+
+                    </div>
+
+
+
+                    <div class="status-settings">
+
+                        <p>
+
+                            {{ user_obj.first_name }}
+                            {{ user_obj.last_name }}
+
+                        </p>
+
+
+
+                        <span>
+
+                            {{ user_obj.role }}
+
+                        </span>
+
+                    </div>
+
+                 </div>
+
+
+
+                <div class="information-initial">
+
+
+
+    <div class="info-grid">
+
+       <div class="left-info">
+
+            <p>
+
+                <span>
+
+                    <i class='bx bx-calendar-star'></i>
+
+                </span>
+
+                Member since
+
+            </p>
+
+        </div>
+
+
+
+         <div class="right-info">
+
+           <p>
+
+                {{ user_obj.date_joined|date:"M d, Y" }}
+
+           </p>
+
+        </div>
+
+    </div>
+
+
+
+    <div class="info-grid">
+
+       <div class="left-info">
+
+            <p>
+
+                <span>
+
+                    <i class='bx bx-time-five'></i>
+
+                </span>
+
+                Last Login
+
+            </p>
+
+        </div>
+
+
+
+         <div class="right-info">
+
+           <p>
+
+                {{ user_obj.last_login|date:"M d, Y" }}
+
+           </p>
+
+        </div>
+
+    </div>
+
+
+
+     <div class="info-grid">
+
+       <div class="left-info">
+
+            <p>
+
+                <span>
+
+                    <i class='bx bx-check-shield'></i>
+
+                </span>
+
+               account status
+
+            </p>
+
+        </div>
+
+
+
+         <div class="right-info">
+
+           <p>
+
+                Active
+
+           </p>
+
+        </div>
+
+    </div>
+
+
+
+       <div class="info-grid">
+
+       <div class="left-info">
+
+            <p>
+
+                <span>
+
+                    <i class='bx bx-map'></i>
+
+                </span>
+
+               default Local
+
+            </p>
+
+        </div>
+
+
+
+         <div class="right-info">
+
+           <p>
+
+                {{ user_obj.city }}
+
+           </p>
+
+        </div>
+
+    </div>
+
+
+
+     <div class="info-grid">
+
+       <div class="left-info">
+
+            <p>
+
+                <span>
+
+                    <i class='bx bx-building-house'></i>
+
+                </span>
+
+               staff Local
+
+            </p>
+
+        </div>
+
+
+
+         <div class="right-info">
+
+           <p>
+
+                {{ user_obj.staff_warehouse }}
+
+           </p>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+
+            </div>
+
+
+
+         <div class="profile_overviews">
+
+    <h3>
+
+        <i class='bx bx-user-circle'></i>
+
+        Account details
+
+    </h3>
+
+
+
+    <div class="information-initial">
+
+        <div class="info-grid">
+
+           <div class="left-info">
+
+                <p>
+
+                    <span>
+
+                        <i class='bx bx-barcode'></i>
+
+                    </span>
+
+                    suit-code
+
+                </p>
+
+            </div>
+
+
+
+             <div class="right-info">
+
+               <p>
+
+                    {{ user_obj.suite_code }}
+
+               </p>
+
+            </div>
+
+        </div>
+
+
+
+        <div class="info-grid">
+
+           <div class="left-info">
+
+                <p>
+
+                    <span>
+
+                        <i class='bx bx-envelope-check'></i>
+
+                    </span>
+
+                    Email verify
+
+                </p>
+
+            </div>
+
+
+
+             <div class="right-info">
+
+               <p class="status">
+
+                    {% if user_obj.email_verified %}
+
+                        Verify
+
+                    {% else %}
+
+                        Pending
+
+                    {% endif %}
+
+               </p>
+
+            </div>
+
+        </div>
+
+
+
+         <div class="info-grid">
+
+           <div class="left-info">
+
+                <p>
+
+                    <span>
+
+                        <i class='bx bx-phone-call'></i>
+
+                    </span>
+
+                   Phone# verify
+
+                </p>
+
+            </div>
+
+
+
+             <div class="right-info">
+
+               <p class="status">
+
+                    {% if user_obj.phone_verified %}
+
+                        Verify
+
+                    {% else %}
+
+                        Pending
+
+                    {% endif %}
+
+               </p>
+
+            </div>
+
+        </div>
+
+
+
+        <div class="info-grid">
+
+           <div class="left-info">
+
+                <p>
+
+                    <span>
+
+                        <i class='bx bx-check-shield'></i>
+
+                    </span>
+
+                   status
+
+                </p>
+
+            </div>
+
+
+
+             <div class="right-info">
+
+               <p class="status">
+
+                    Active
+
+               </p>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+
+
+
+        </div>
+  </form>
+
+</section>

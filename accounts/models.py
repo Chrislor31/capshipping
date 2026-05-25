@@ -128,3 +128,123 @@ class PasswordResetOTP(models.Model):
         return (timezone.now() - self.created_at).seconds < 600  # 10 min
 
 
+
+
+
+
+
+
+class KYC(models.Model):
+
+    STATUS = (
+        ("pending", "Pending"),
+        ("approved", "Approved"),
+        ("rejected", "Rejected"),
+    )
+
+    DOCUMENT_TYPES = (
+    ("passport", "Passport"),
+    ("driver_license", "Driver License"),
+    ("national_id", "National ID"),
+    )
+
+    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
+    document_type = models.CharField(
+        max_length=20,
+        choices=DOCUMENT_TYPES,
+        default="national_id"
+    )
+    approved_by = models.ForeignKey(
+
+        settings.AUTH_USER_MODEL,
+
+        on_delete=models.SET_NULL,
+
+        null=True,
+
+        blank=True,
+
+        related_name="approved_kycs"
+
+    )
+
+    front_image = models.ImageField(
+        upload_to="kyc/front/"
+    )
+
+    back_image = models.ImageField(
+        upload_to="kyc/back/",
+        blank=True,
+        null=True
+    )
+
+    selfie_image = models.ImageField(
+        upload_to="kyc/selfie/",
+        blank=True,
+        null=True
+    )
+
+    status = models.CharField(
+        max_length=20,
+        choices=STATUS,
+        default="pending"
+    )
+
+    submitted_at = models.DateTimeField(
+        auto_now_add=True
+    )
+
+    reviewed_at = models.DateTimeField(
+        blank=True,
+        null=True
+    )
+
+    admin_note = models.TextField(
+        blank=True,
+        null=True
+    )
+
+    def __str__(self):
+        return self.user.email
+
+
+
+
+## dashboard settings
+
+
+class DashboardSetting(models.Model):
+
+    company_name = models.CharField(
+        max_length=255,
+        blank=True,
+        null=True
+    )
+
+    support_email = models.EmailField(
+        blank=True,
+        null=True
+    )
+
+    support_phone = models.CharField(
+        max_length=100,
+        blank=True,
+        null=True
+    )
+
+    default_language = models.CharField(
+        max_length=10,
+        default="en"
+    )
+
+    maintenance_mode = models.BooleanField(
+        default=False
+    )
+
+    kyc_email = models.BooleanField(
+        default=True
+    )
+
+    shipment_email = models.BooleanField(
+        default=True
+    )

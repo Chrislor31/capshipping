@@ -11,10 +11,6 @@ document.querySelectorAll(".faq-item").forEach(item => {
 
 
 
-
-
-
-
 const counters = document.querySelectorAll(".counters");
 
 const startCounter = (counter) => {
@@ -50,6 +46,10 @@ const observer = new IntersectionObserver(entries => {
 counters.forEach(counter => {
     observer.observe(counter);
 });
+
+
+
+
 
 
 // JavaScript pour animer la section "Our Working Process" au scroll
@@ -1106,4 +1106,1016 @@ function showAlert(message, type="error"){
         alertBox.classList.remove("show");
     }, 3000);
 }
+
+
+
+
+// show text page index
+
+document.addEventListener("click", function(e){
+
+    if(e.target.classList.contains("read_more_btn")){
+
+        const parent =
+        e.target.closest(".service_text");
+
+        parent.classList.toggle("active");
+
+
+
+        if(parent.classList.contains("active")){
+
+            e.target.innerText =
+            "Show Less";
+
+        }else{
+
+            e.target.innerText =
+            "Read More";
+
+        }
+
+    }
+
+});
+
+
+// FAQ parti
+
+
+
+
+    const faqItems = document.querySelectorAll(".faq_item");
+
+faqItems.forEach(item => {
+
+    const question = item.querySelector(".faq_question");
+
+    question.addEventListener("click", () => {
+
+        faqItems.forEach(faq => {
+            if(faq !== item){
+                faq.classList.remove("active");
+            }
+        });
+
+        item.classList.toggle("active");
+
+    });
+
+});
+
+
+
+
+function showAlert(type, message){
+
+    const alertBox = document.getElementById("alertBox");
+
+    const alertMessage =
+        document.getElementById("alertMessage");
+
+    alertBox.className = "alert";
+
+    alertBox.classList.add(type);
+
+    alertMessage.textContent = message;
+
+    alertBox.classList.remove("hidden");
+
+}
+
+
+
+
+
+
+
+
+
+
+// kyc page
+
+
+function showDashboardAlert(type, message){
+
+    const alertBox =
+    document.getElementById(
+        "loginError"
+    );
+
+    // show
+    alertBox.classList.remove(
+        "hidden"
+    );
+
+
+    // reset
+    alertBox.className =
+    "form_error";
+
+
+    // add type
+    alertBox.classList.add(type);
+
+
+    // icon
+    const icon =
+    alertBox.querySelector("i");
+
+
+    if(type === "success"){
+
+        icon.className =
+        "bx bx-check-circle";
+
+    }
+
+    else if(type === "warning"){
+
+        icon.className =
+        "bx bx-error";
+
+    }
+
+    else{
+
+        icon.className =
+        "bx bx-error-circle";
+
+    }
+
+
+    // text
+    alertBox.querySelector(
+        "span"
+    ).innerText = message;
+
+
+    // auto hide
+    setTimeout(() => {
+
+        alertBox.classList.add(
+            "hidden"
+        );
+
+    }, 4000);
+
+}
+
+
+const kycButtons = document.querySelectorAll('[data-page="kyc-verification"]');
+
+kycButtons.forEach(btn => {
+
+    btn.addEventListener("click", () => {
+
+        // retire active sou tout page
+        pages.forEach(p => p.classList.remove("active"));
+
+        // montre page KYC la
+        document
+        .getElementById("kyc-verification")
+        .classList.add("active");
+
+    });
+
+});
+
+
+// =========================
+// Preview Uploaded Images
+// =========================
+
+const uploadAreas = document.querySelectorAll(".upload_area");
+
+uploadAreas.forEach(area => {
+
+    const input = area.querySelector("input");
+
+    input.addEventListener("change", (e) => {
+
+        const file = e.target.files[0];
+
+        if(file){
+
+            // retire icon/text yo
+            area.innerHTML = "";
+
+            // kreye image preview
+            const img = document.createElement("img");
+
+            img.src = URL.createObjectURL(file);
+
+            img.style.width = "100%";
+            img.style.height = "220px";
+            img.style.objectFit = "cover";
+            img.style.borderRadius = "14px";
+
+            area.appendChild(img);
+
+        }
+
+    });
+
+});
+
+
+// submit kyc
+// =========================
+// DOCUMENT TYPE SELECT
+// =========================
+
+const docTypes = document.querySelectorAll(".doc_type");
+
+docTypes.forEach(type => {
+
+    type.addEventListener("click", () => {
+
+        docTypes.forEach(item => {
+            item.classList.remove("active");
+        });
+
+        type.classList.add("active");
+
+    });
+
+});
+
+
+
+
+
+
+// =========================
+// INPUTS
+// =========================
+
+const frontInput =
+document.getElementById("front_input");
+
+const backInput =
+document.getElementById("back_input");
+
+
+
+
+
+
+// =========================
+// IMAGE PREVIEW FUNCTION
+// =========================
+
+function setupPreview(input){
+
+    if(!input) return;
+
+    input.addEventListener("change", function(){
+
+        const file = this.files[0];
+
+        if(!file) return;
+
+
+        // parent label
+        const uploadArea =
+        this.parentNode;
+
+
+        // create preview image
+        let preview =
+        uploadArea.querySelector(".preview_img");
+
+
+        if(!preview){
+
+            preview =
+            document.createElement("img");
+
+            preview.className =
+            "preview_img";
+
+            uploadArea.appendChild(preview);
+
+        }
+
+
+        // image src
+        preview.src =
+        URL.createObjectURL(file);
+
+
+
+        // hide content
+        const icon =
+        uploadArea.querySelector("i");
+
+        const title =
+        uploadArea.querySelector("h4");
+
+        const text =
+        uploadArea.querySelector("span");
+
+
+        if(icon){
+            icon.style.display = "none";
+        }
+
+        if(title){
+            title.style.display = "none";
+        }
+
+        if(text){
+            text.style.display = "none";
+        }
+
+    });
+
+}
+
+
+
+// activate preview
+setupPreview(frontInput);
+
+setupPreview(backInput);
+
+
+
+
+
+
+// =========================
+// SUBMIT KYC
+// =========================
+
+const kycBtn =
+document.querySelector(".kyc_btn");
+
+
+if(kycBtn){
+
+    kycBtn.addEventListener(
+    "click",
+    async () => {
+
+        // verify inputs
+        if(!frontInput || !backInput){
+
+            showDashboardAlert(
+                "error",
+                "Inputs not found."
+            );
+
+            return;
+
+        }
+
+
+        // files
+        const frontImage =
+        frontInput.files[0];
+
+        const backImage =
+        backInput.files[0];
+
+
+        // verify images
+        if(!frontImage || !backImage){
+
+            showDashboardAlert(
+                "warning",
+                "Please upload both images."
+            );
+
+            return;
+
+        }
+
+
+
+        // active document type
+        const activeType =
+        document.querySelector(
+            ".doc_type.active"
+        );
+
+
+        let documentType =
+        "national_id";
+
+
+        if(activeType){
+
+            const typeText =
+            activeType.innerText
+            .trim()
+            .toLowerCase();
+
+
+            if(typeText.includes("passport")){
+
+                documentType =
+                "passport";
+
+            }
+
+            else if(
+                typeText.includes("driver")
+            ){
+
+                documentType =
+                "driver_license";
+
+            }
+
+        }
+
+
+
+        // formdata
+        const formData =
+        new FormData();
+
+        formData.append(
+            "document_type",
+            documentType
+        );
+
+        formData.append(
+            "front_image",
+            frontImage
+        );
+
+        formData.append(
+            "back_image",
+            backImage
+        );
+
+
+
+        // loading
+        kycBtn.innerHTML =
+        "Submitting...";
+
+        kycBtn.disabled = true;
+
+
+
+        try{
+
+            const response =
+            await fetch("/api/kyc/", {
+
+                method:"POST",
+
+                headers:{
+                    "X-CSRFToken":
+                    getCookie("csrftoken")
+                },
+
+                body:formData
+
+            });
+
+
+            const data =
+            await response.json();
+
+            console.log(data);
+
+
+
+            // =========================
+            // SUCCESS
+            // =========================
+
+            if(response.ok){
+
+                // success message
+                showDashboardAlert(
+                    "success",
+                    "KYC submitted successfully ✅"
+                );
+
+
+                // wait 5 sec
+                setTimeout(() => {
+
+                    const gridKyc =
+                    document.querySelector(
+                        ".grid_kyc"
+                    );
+
+                    if(gridKyc){
+
+                        // background
+                        gridKyc.style.background =
+                        "#FFF6EA";
+
+                        gridKyc.style.border =
+                        "1px solid #F6D7A8";
+
+
+                        // icon
+                        const icon =
+                        gridKyc.querySelector(
+                            ".logo_verify i"
+                        );
+
+                        if(icon){
+
+                            icon.className =
+                            "bx bxs-shield-x";
+
+                            icon.style.color =
+                            "#DE8333";
+
+                        }
+
+
+                        // title
+                        const title =
+                        gridKyc.querySelector(
+                            ".info_midle p:nth-child(1)"
+                        );
+
+                        if(title){
+
+                            title.innerText =
+                            "KYC Under Review";
+
+                        }
+
+
+                        // description
+                        const desc =
+                        gridKyc.querySelector(
+                            ".info_midle p:nth-child(2)"
+                        );
+
+                        if(desc){
+
+                            desc.innerText =
+                            "Your verification is currently under review.";
+
+                        }
+
+
+                        // hide button
+                        const btn =
+                        gridKyc.querySelector(
+                            ".btn-kyc"
+                        );
+
+                        if(btn){
+
+                            btn.style.display =
+                            "none";
+
+                        }
+
+                    }
+
+
+                    // back dashboard
+                    const pages =
+                    document.querySelectorAll(
+                        ".page"
+                    );
+
+                    pages.forEach(page => {
+
+                        page.classList.remove(
+                            "active"
+                        );
+
+                    });
+
+
+                    const dashboard =
+                    document.getElementById(
+                        "dashboard"
+                    );
+
+                    if(dashboard){
+
+                        dashboard.classList.add(
+                            "active"
+                        );
+
+                    }
+
+                }, 5000);
+
+            }
+
+
+
+            // =========================
+            // ERROR
+            // =========================
+
+            else{
+
+                showDashboardAlert(
+                    "error",
+                    data.error ||
+                    "Submission failed."
+                );
+
+            }
+
+        }
+
+        catch(error){
+
+            console.log(error);
+
+            showDashboardAlert(
+                "error",
+                "Server error."
+            );
+
+        }
+
+        finally{
+
+            kycBtn.innerHTML = `
+                Submit Verification
+                <i class='bx bx-right-arrow-alt'></i>
+            `;
+
+            kycBtn.disabled =
+            false;
+
+        }
+
+    });
+
+}
+
+
+// =========================
+// DJANGO CSRF
+// =========================
+
+function getCookie(name) {
+
+    let cookieValue = null;
+
+    if(document.cookie &&
+        document.cookie !== '') {
+
+        const cookies =
+        document.cookie.split(';');
+
+        for(let i = 0;
+            i < cookies.length;
+            i++) {
+
+            const cookie =
+            cookies[i].trim();
+
+            if(
+                cookie.substring(
+                    0,
+                    name.length + 1
+                ) === (name + '=')
+            ) {
+
+                cookieValue =
+                decodeURIComponent(
+                    cookie.substring(
+                        name.length + 1
+                    )
+                );
+
+                break;
+
+            }
+
+        }
+
+    }
+
+    return cookieValue;
+
+}
+
+// =========================
+// CHECK KYC STATUS
+// =========================
+
+async function checkKYCStatus(){
+
+    try{
+
+        const response =
+        await fetch("/api/kyc/");
+
+        const data =
+        await response.json();
+
+        console.log(data);
+
+
+        // verify si kyc existe
+        if(data.kyc_submitted){
+
+            const kycData =
+            data.data;
+
+            const gridKyc =
+            document.querySelector(
+                ".grid_kyc"
+            );
+
+            if(!gridKyc) return;
+
+
+
+            // icon
+            const icon =
+            gridKyc.querySelector(
+                ".logo_verify i"
+            );
+
+
+
+            // title
+            const title =
+            gridKyc.querySelector(
+                ".info_midle p:nth-child(1)"
+            );
+
+
+
+            // description
+            const desc =
+            gridKyc.querySelector(
+                ".info_midle p:nth-child(2)"
+            );
+
+
+
+            // button
+            const btn =
+            gridKyc.querySelector(
+                ".btn-kyc"
+            );
+
+
+
+            // =========================
+            // PENDING
+            // =========================
+
+            if(
+                kycData.status ===
+                "pending"
+            ){
+
+                gridKyc.style.background =
+                "#FFF6EA";
+
+                gridKyc.style.border =
+                "1px solid #F6D7A8";
+
+
+                if(icon){
+
+                    icon.className =
+                    "bx bxs-shield-x";
+
+                    icon.style.color =
+                    "#DE8333";
+
+                }
+
+
+                if(title){
+
+                    title.innerText =
+                    "KYC Under Review";
+
+                }
+
+
+                if(desc){
+
+                    desc.innerText =
+                    "Your verification is currently under review.";
+
+                }
+
+
+                if(btn){
+
+                    btn.style.display =
+                    "none";
+
+                }
+
+            }
+
+
+
+
+            // =========================
+            // APPROVED
+            // =========================
+
+            if(
+                kycData.status ===
+                "approved"
+            ){
+
+                gridKyc.style.background =
+                "#EEF9F1";
+
+                gridKyc.style.border =
+                "1px solid #BFE7C8";
+
+
+                if(icon){
+
+                    icon.className =
+                    "bx bxs-badge-check";
+
+                    icon.style.color =
+                    "#1E9E52";
+
+                }
+
+
+                if(title){
+
+                    title.innerText =
+                    "KYC Verified";
+
+                }
+
+
+                if(desc){
+
+                    desc.innerText =
+                    "Your identity has been successfully verified.";
+
+                }
+
+
+                if(btn){
+
+                    btn.style.display =
+                    "none";
+
+                }
+
+            }
+
+
+
+
+            // =========================
+            // REJECTED
+            // =========================
+
+            if(
+                kycData.status ===
+                "rejected"
+            ){
+
+                gridKyc.style.background =
+                "#FFF1F1";
+
+                gridKyc.style.border =
+                "1px solid #F3B6B6";
+
+
+                if(icon){
+
+                    icon.className =
+                    "bx bxs-shield-x";
+
+                    icon.style.color =
+                    "#E53935";
+
+                }
+
+
+                if(title){
+
+                    title.innerText =
+                    "KYC Rejected";
+
+                }
+
+
+                if(desc){
+
+                    desc.innerText =
+                    "Your verification was rejected. Please upload valid documents.";
+
+                }
+
+
+                if(btn){
+
+                    btn.style.display =
+                    "block";
+
+                }
+
+            }
+
+        }
+
+    }
+
+    catch(error){
+
+        console.log(error);
+
+    }
+
+}
+
+
+
+// run on page load
+checkKYCStatus();
+
+
+
+
+// =========================
+// ACTIVE MENU
+// =========================
+document.addEventListener(
+    "DOMContentLoaded",
+    function(){
+
+    // current page
+    const currentUrl =
+    window.location.pathname;
+
+
+
+    // all menu links
+    const menuLinks =
+    document.querySelectorAll(
+        ".navigation li a"
+    );
+
+
+
+    menuLinks.forEach(link => {
+
+        // parent li
+        const li =
+        link.parentElement;
+
+
+
+        // href menu
+        const href =
+        link.getAttribute(
+            "href"
+        );
+
+
+
+        if(!href) return;
+
+
+
+        // remove active first
+        li.classList.remove(
+            "active"
+        );
+
+
+
+        // add active
+        if(
+
+            currentUrl === href
+
+        ){
+
+            li.classList.add(
+                "active"
+            );
+
+        }
+
+    });
+
+});
+
+
+
+
+
 

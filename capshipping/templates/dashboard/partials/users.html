@@ -77,7 +77,17 @@
       </form>
 
         <div class="table_actions">
-            <button id="deleteSelected"><i class='bx bxs-trash-alt'></i> Delete Selected</button>
+          {% if request.user.role == "admin" %}
+
+<button id="deleteSelected">
+
+    <i class='bx bxs-trash-alt'></i>
+
+    Delete Selected
+
+</button>
+
+{% endif %}
 
     <!-- 🔥 COUNTER -->
     <span id="selectedCount">0 of {{ page_obj.paginator.count }} selected</span>
@@ -163,17 +173,35 @@
                 <span>View Details</span>
             </div>
 
-            <div class="dropdown_item" data-action="edit" data-url="/panel/edit-user/{{ user.id }}/">
-                <i class='bx bx-edit'></i>
-                <span>Edit User</span>
-            </div>
+            {% if request.user.role == "admin" %}
 
-           <div class="dropdown_item danger"
-     data-action="delete"
-     data-url="/api/delete-shipment/{{ pkg.id }}/">
-    <i class='bx bx-trash'></i>
-    <span>Delete</span>
-</div>
+    <div class="dropdown_item"
+
+         data-action="edit"
+
+         data-url="/panel/edit-user/{{ user.id }}/">
+
+        <i class='bx bx-edit'></i>
+
+        <span>Edit User</span>
+
+    </div>
+
+
+
+    <div class="dropdown_item danger"
+
+         data-action="delete"
+
+         data-url="/api/delete-shipment/{{ pkg.id }}/">
+
+        <i class='bx bx-trash'></i>
+
+        <span>Delete</span>
+
+    </div>
+
+{% endif %}
         </div>
 
     </td>

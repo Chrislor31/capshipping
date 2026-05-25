@@ -1,0 +1,437 @@
+
+{% extends 'base.html' %}
+
+{% load i18n %}
+{% load static %}
+
+
+{% block title %} Home {% endblock %}
+{% block manu_nav %}
+
+
+<!-- =====================================
+CAP SHIPPING TERMS PAGE
+===================================== -->
+
+<section class="capterms-hero-area">
+
+    <div class="capterms-dark-overlay"></div>
+
+    <div class="capterms-container">
+
+        <div class="capterms-hero-content">
+
+            <span class="capterms-mini-badge">
+                <i class='bx bx-file'></i>
+                {% trans 'Shipping Policy' %}
+            </span>
+
+            <h1>{% trans 'Terms & Conditions' %}</h1>
+
+            <div class="capterms-breadcrumb-wrap">
+
+                <a href="#">{% trans 'Home' %}</a>
+
+                <i class='bx bx-chevron-right'></i>
+
+                <span>{% trans 'Terms & Conditions' %}</span>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+
+<!-- =====================================
+MAIN SECTION
+===================================== -->
+
+<section class="capterms-main-section">
+
+    <div class="capterms-container">
+
+
+        <!-- =========================
+        UPDATE BOX
+        ========================== -->
+
+        <div class="capterms-update-card">
+
+            <div class="capterms-update-icon">
+                <i class='bx bx-check-shield'></i>
+            </div>
+
+            <div class="capterms-update-info">
+
+                <h4>
+                    {% trans 'Last Updated' %}:
+                    <span>{% trans 'May 24, 2026' %}</span>
+                </h4>
+
+                <p>
+                   {% trans ' Please read these Terms & Conditions carefully before using our shipping and logistics services.' %}
+                </p>
+
+            </div>
+
+        </div>
+
+
+
+        <!-- =========================
+        ACCORDION
+        ========================== -->
+
+        <div class="capterms-accordion-wrapper">
+
+
+            <!-- ITEM -->
+
+            <div class="capterms-accordion-item active">
+
+                <div class="capterms-accordion-header">
+
+                    <div class="capterms-header-left">
+
+                        <div class="capterms-item-icon">
+                            <i class='bx bx-user'></i>
+                        </div>
+
+                        <div class="capterms-item-text">
+
+                            <h3>{% trans '1. Introduction' %}</h3>
+
+                            <p>
+                                {%trans 'These Terms & Conditions govern your use of our shipping services and website.' %}
+                            </p>
+
+                        </div>
+
+                    </div>
+
+                    <i class='bx bx-chevron-down capterms-arrow-icon'></i>
+
+                </div>
+
+
+                <div class="capterms-accordion-content">
+
+                   <p>
+    {% blocktrans %}
+    By using Cap Shipping Distribution LLC services, you agree to comply with our shipping policies, operational procedures, and delivery terms. We provide freight forwarding, package handling, and logistics solutions between the United States, Haiti, and the Dominican Republic. Customers are responsible for providing accurate shipment information, including recipient details, package contents, and contact information. Any false, prohibited, or incomplete information may result in shipment delays, refusal, or additional charges. Our team is committed to ensuring safe handling, timely transportation, and reliable customer support throughout the shipping process.
+    {% endblocktrans %}
+</p>
+
+                </div>
+
+            </div>
+
+
+
+            <!-- ITEM -->
+
+            <div class="capterms-accordion-item">
+
+                <div class="capterms-accordion-header">
+
+                    <div class="capterms-header-left">
+
+                        <div class="capterms-item-icon">
+                            <i class='bx bx-package'></i>
+                        </div>
+
+                        <div class="capterms-item-text">
+
+                            <h3>2. Shipping Services</h3>
+
+                          <p>
+    {% blocktrans %}
+    Cap Shipping Distribution LLC provides air and sea freight services for packages, personal items, commercial goods, and cargo between the United States, Haiti, and the Dominican Republic. Our services include shipment collection, package consolidation, warehouse handling, transportation, tracking updates, and delivery support. Delivery times may vary depending on the shipping method, customs clearance, weather conditions, and destination location.
+    {% endblocktrans %}
+</p>
+
+                        </div>
+
+                    </div>
+
+                    <i class='bx bx-chevron-down capterms-arrow-icon'></i>
+
+                </div>
+
+
+                <div class="capterms-accordion-content">
+
+                    <p>
+                        Lorem ipsum dolor sit amet consectetur adipisicing elit.
+                        Minus illum praesentium numquam doloremque deleniti
+                        molestiae quia beatae veritatis quasi recusandae.
+                    </p>
+
+                </div>
+
+            </div>
+
+
+
+            <!-- ITEM -->
+
+            <div class="capterms-accordion-item">
+
+                <div class="capterms-accordion-header">
+
+                    <div class="capterms-header-left">
+
+                        <div class="capterms-item-icon">
+                            <i class='bx bx-shield'></i>
+                        </div>
+
+                        <div class="capterms-item-text">
+
+                            <h3>{% trans '3. User Responsibilities' %}</h3>
+
+                           <p>
+    {% blocktrans %}
+    Customers are responsible for providing accurate shipping information, including names, addresses, phone numbers, and package descriptions. All items must be properly packaged to ensure safe transportation. Customers must also comply with all shipping regulations and avoid sending prohibited, illegal, dangerous, or restricted items. Cap Shipping Distribution LLC is not responsible for delays, losses, or additional fees caused by incorrect information or improper packaging provided by the customer.
+    {% endblocktrans %}
+</p>
+
+                        </div>
+
+                    </div>
+
+                    <i class='bx bx-chevron-down capterms-arrow-icon'></i>
+
+                </div>
+
+
+                <div class="capterms-accordion-content">
+
+                   <p>
+    {% blocktrans %}
+    We are committed to providing secure, reliable, and professional shipping services while ensuring transparency, customer satisfaction, and smooth logistics operations for every shipment entrusted to our company.
+    {% endblocktrans %}
+</p>
+
+                </div>
+
+            </div>
+
+
+
+            <!-- ITEM -->
+
+            <div class="capterms-accordion-item">
+
+                <div class="capterms-accordion-header">
+
+                    <div class="capterms-header-left">
+
+                        <div class="capterms-item-icon">
+                            <i class='bx bx-time'></i>
+                        </div>
+
+                        <div class="capterms-item-text">
+
+                            <h3>{% trans '4. Delivery Time' %}</h3>
+
+                            <p>
+    {% blocktrans %}
+    Delivery times provided by Cap Shipping Distribution LLC are estimated and may vary depending on customs inspections, weather conditions, transportation delays, holidays, or other circumstances beyond our control. While we work to ensure timely deliveries, we cannot guarantee exact delivery dates. The company is not responsible for damages, losses, or delays caused by customs authorities, natural events, accidents, or improper packaging by the customer. Customers are encouraged to securely package fragile or valuable items before shipment.
+    {% endblocktrans %}
+</p>
+
+                        </div>
+
+                    </div>
+
+                    <i class='bx bx-chevron-down capterms-arrow-icon'></i>
+
+                </div>
+
+
+                <div class="capterms-accordion-content">
+
+                   <p>
+    {% blocktrans %}
+    We continuously strive to provide reliable shipping services and clear communication to ensure every customer receives the best possible logistics experience with transparency and professionalism.
+    {% endblocktrans %}
+</p>
+
+                </div>
+
+            </div>
+
+
+
+            <!-- ITEM -->
+
+            <div class="capterms-accordion-item">
+
+                <div class="capterms-accordion-header">
+
+                    <div class="capterms-header-left">
+
+                        <div class="capterms-item-icon">
+                            <i class='bx bx-credit-card'></i>
+                        </div>
+
+                        <div class="capterms-item-text">
+
+                            <h3>{% trans '5. Payments & Fees' %}</h3>
+
+                            <p>
+    {% blocktrans %}
+    All shipping fees, service charges, customs costs, storage fees, and other applicable charges must be fully paid before shipment processing or delivery. Prices may vary depending on package size, weight, destination, shipping method, and additional services requested. Cap Shipping Distribution LLC reserves the right to refuse shipment release or delivery until all outstanding balances are cleared. Additional fees may also apply for oversized packages, restricted items, returned shipments, or extended warehouse storage.
+    {% endblocktrans %}
+</p>
+
+                        </div>
+
+                    </div>
+
+                    <i class='bx bx-chevron-down capterms-arrow-icon'></i>
+
+                </div>
+
+
+                <div class="capterms-accordion-content">
+
+                   <p>
+    {% blocktrans %}
+    Customers are encouraged to review all pricing details and payment conditions carefully before confirming any shipment or logistics service with our company.
+    {% endblocktrans %}
+</p>
+
+                </div>
+
+            </div>
+
+
+
+            <!-- ITEM -->
+
+            <div class="capterms-accordion-item">
+
+                <div class="capterms-accordion-header">
+
+                    <div class="capterms-header-left">
+
+                        <div class="capterms-item-icon">
+                            <i class='bx bx-error'></i>
+                        </div>
+
+                        <div class="capterms-item-text">
+
+                            <h3>{% trans '6. Prohibited Items' %}</h3>
+
+                            <p>
+    {% blocktrans %}
+    Customers are strictly prohibited from shipping illegal, hazardous, flammable, explosive, counterfeit, or restricted items through Cap Shipping Distribution LLC services. This includes weapons, drugs, toxic materials, and any products prohibited by local or international shipping regulations. The company reserves the right to inspect, refuse, hold, or report suspicious shipments to the appropriate authorities when necessary. Any violation of these policies may result in shipment cancellation, legal action, fines, or permanent suspension of service access.
+    {% endblocktrans %}
+</p>
+
+                        </div>
+
+                    </div>
+
+                    <i class='bx bx-chevron-down capterms-arrow-icon'></i>
+
+                </div>
+
+
+                <div class="capterms-accordion-content">
+
+                    <p>
+    {% blocktrans %}
+    Our priority is to maintain safe, secure, and compliant shipping operations while protecting customers, employees, and transportation partners throughout the delivery process.
+    {% endblocktrans %}
+</p>
+
+                </div>
+
+            </div>
+
+
+        </div>
+
+
+
+        <!-- =========================
+        BOTTOM CTA
+        ========================== -->
+
+        <div class="capterms-support-box">
+
+            <div class="capterms-support-left">
+
+                <div class="capterms-support-icon">
+                    <i class='bx bx-help-circle'></i>
+                </div>
+
+                <div class="capterms-support-text">
+
+                    <h3>{% trans 'Need Help?' %}</h3>
+
+                    <p>
+                        {% blocktrans %}
+                        If you have questions about our Terms & Conditions,
+                        our support team is ready to help you.
+
+                        {% endblocktrans %}
+                    </p>
+
+                </div>
+
+            </div>
+
+            <a href="#" class="capterms-support-btn">
+
+                Contact Support
+
+                <i class='bx bx-right-arrow-alt'></i>
+
+            </a>
+
+        </div>
+
+
+    </div>
+
+</section>
+
+
+<script>
+
+const capTermsItems = document.querySelectorAll(".capterms-accordion-item");
+
+capTermsItems.forEach(item => {
+
+    const header = item.querySelector(".capterms-accordion-header");
+
+    header.addEventListener("click", () => {
+
+        const activeItem = document.querySelector(".capterms-accordion-item.active");
+
+        // close old item
+        if(activeItem && activeItem !== item){
+            activeItem.classList.remove("active");
+        }
+
+        // toggle current item
+        item.classList.toggle("active");
+
+    });
+
+});
+
+</script>
+
+
+
+{% endblock %}
+
+

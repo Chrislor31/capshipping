@@ -6,11 +6,11 @@
 
     <div class="title_head shiment_title">
 
-        <p>Shipment Contacts</p>
+        <p>{% trans 'Shipment Contacts' %}</p>
 
         <span>
 
-            manage customer and guest contacts
+           {% trans 'manage customer and guest contacts' %}
 
         </span>
 
@@ -44,7 +44,7 @@
 
                 <p>
 
-                    Total Contacts
+                    {% trans 'Total Contacts' %}
 
                 </p>
 
@@ -74,7 +74,7 @@
 
                 <p>
 
-                    Guest Contacts
+                    {% trans 'Guest Contacts' %}
 
                 </p>
 
@@ -104,7 +104,7 @@
 
                 <p>
 
-                    Registered Users
+                    {% trans 'Registered Users' %}
 
                 </p>
 
@@ -142,7 +142,7 @@
 
                 <p>
 
-                    Last Contact
+                    {% trans 'Last Contact' %}
 
                 </p>
 
@@ -169,7 +169,7 @@
 
             <span>
 
-                Add Contact
+                {% trans 'Add Contact' %}
 
             </span>
 
@@ -213,14 +213,16 @@
 
             <!-- ACTIONS -->
             <div class="table_actions">
-
+{% if request.user.role == "admin" %}
                 <button id="deleteSelectedContact">
 
                     <i class='bx bxs-trash-alt'></i>
 
-                    Delete Selected
+                   {% trans 'Delete Selected' %}
 
                 </button>
+
+                {% endif %}
 
 
                 <span id="selectedCount">
@@ -229,7 +231,7 @@
 
                     {{ page_obj.paginator.count }}
 
-                    selected
+                    {% trans 'selected' %}
 
                 </span>
 
@@ -257,12 +259,12 @@
 
             </th>
 
-            <th>Contact</th>
-            <th>Phone</th>
-            <th>Email</th>
-            <th>Status</th>
-            <th>Created</th>
-            <th>Actions</th>
+            <th>{% trans 'Contact' %}</th>
+            <th>{% trans 'Phone' %}</th>
+            <th>{% trans 'Email' %}</th>
+            <th>{% trans 'Status' %}</th>
+            <th>{% trans 'Created' %}</th>
+            <th>{% trans 'Actions' %}</th>
 
         </tr>
 
@@ -357,7 +359,7 @@
 
                 <span class="status pending">
 
-                    Guest
+                    {% trans 'Guest' %}
 
                 </span>
 
@@ -405,7 +407,7 @@
 
                     <span>
 
-                        Edit Contact
+                        {% trans 'Edit Contact' %}
 
                     </span>
 
@@ -414,19 +416,25 @@
 
 
                 <!-- DELETE -->
-                <div class="dropdown_item danger"
-                     data-action="delete"
-                     data-url="/api/delete-contact/{{ contact.id }}/">
+               {% if request.user.role == "admin" %}
 
-                    <i class='bx bx-trash'></i>
+<div class="dropdown_item danger"
 
-                    <span>
+     data-action="delete"
 
-                        Delete
+     data-url="/api/delete-contact/{{ contact.id }}/">
 
-                    </span>
+    <i class='bx bx-trash'></i>
 
-                </div>
+    <span>
+
+        {% trans 'Delete' %}
+
+    </span>
+
+</div>
+
+{% endif %}
 
             </div>
 
@@ -441,7 +449,7 @@
         <td colspan="7"
             style="text-align:center;">
 
-            No contacts found
+            {% trans 'No contacts found' %}
 
         </td>
 

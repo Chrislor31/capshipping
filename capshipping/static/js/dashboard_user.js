@@ -1,79 +1,132 @@
 lucide.createIcons();
 
 
+
+const shipmentLabels = window.shipmentLabels;
+
+const shipmentData = window.shipmentData;
+
+
 const ctx = document.getElementById('shipmentChart').getContext('2d');
 
-// 🎨 Gradient background
+
+// 🔥 GRADIENT
 const gradient = ctx.createLinearGradient(0, 0, 0, 300);
-gradient.addColorStop(0, 'rgba(249, 115, 22, 0.3)');
+
+gradient.addColorStop(0, 'rgba(249, 115, 22, 0.35)');
 gradient.addColorStop(1, 'rgba(249, 115, 22, 0)');
 
+
+// 🔥 CHART
 new Chart(ctx, {
+
     type: 'line',
+
     data: {
-        labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun'],
+
+        labels: shipmentLabels,
+
         datasets: [{
-            data: [10, 15, 22, 18, 30, 42],
+
+            data: shipmentData,
 
             borderColor: '#f97316',
+
             backgroundColor: gradient,
 
             fill: true,
+
             tension: 0.4,
 
-            // 🔥 dots sèlman lè hover
+            borderWidth: 3,
+
             pointRadius: 0,
+
             pointHoverRadius: 6,
+
             pointBackgroundColor: '#f97316',
+
             pointHoverBorderWidth: 2,
+
             pointHoverBorderColor: '#fff',
+
         }]
     },
+
     options: {
+
         responsive: true,
 
-        // ⚡ animation smooth
+        maintainAspectRatio: false,
+
         animation: {
+
             duration: 1200,
+
             easing: 'easeInOutQuart'
+
         },
 
         interaction: {
+
             mode: 'index',
+
             intersect: false
+
         },
 
         plugins: {
+
             legend: {
+
                 display: false
+
             },
 
-            // 🔥 tooltip style
             tooltip: {
+
                 backgroundColor: '#111',
+
                 titleColor: '#fff',
+
                 bodyColor: '#fff',
+
                 padding: 10,
+
                 cornerRadius: 6,
+
                 displayColors: false,
+
                 callbacks: {
+
                     label: function(context) {
+
                         return " Shipments: " + context.parsed.y;
+
                     }
                 }
             }
         },
 
         scales: {
+
             x: {
+
                 grid: {
+
                     display: false
+
                 }
             },
+
             y: {
+
                 beginAtZero: true,
+
                 grid: {
+
                     color: '#eee'
+
                 }
             }
         }
@@ -103,6 +156,8 @@ menuItems.forEach(item => {
 
   });
 });
+
+
 
 
 
@@ -208,3 +263,483 @@ document.addEventListener("submit", function(e){
 
 
 
+
+// =====================================
+// UPDATE PROFILE
+// =====================================
+
+const updateProfileForm =
+document.getElementById(
+    "updateProfileForm"
+);
+
+
+
+if(updateProfileForm){
+
+    updateProfileForm.addEventListener(
+
+        "submit",
+
+        async function(e){
+
+        e.preventDefault();
+
+
+
+
+        const btn =
+        document.getElementById(
+            "updateProfileBtn"
+        );
+
+
+
+        btn.disabled = true;
+
+
+
+        btn.innerHTML = `
+
+            Updating...
+
+        `;
+
+
+
+
+        const formData =
+        new FormData(
+            updateProfileForm
+        );
+
+
+
+
+        try{
+
+            const response =
+            await fetch(
+
+                "/update-profile/",
+
+                {
+
+                    method:"POST",
+
+                    body:formData,
+
+                    headers:{
+
+                        "X-Requested-With":
+                        "XMLHttpRequest"
+
+                    }
+
+                }
+
+            );
+
+
+
+
+            const data =
+            await response.json();
+
+
+
+
+            if(data.status === "success"){
+
+                showAlert(
+
+                    data.message,
+
+                    "success"
+
+                );
+
+            }
+
+            else{
+
+                showAlert(
+
+                    data.message,
+
+                    "error"
+
+                );
+
+            }
+
+        }
+
+        catch(error){
+
+            console.log(error);
+
+
+
+
+            showAlert(
+
+                "Something went wrong",
+
+                "error"
+
+            );
+
+        }
+
+        finally{
+
+            btn.disabled = false;
+
+
+
+            btn.innerHTML = `
+
+                Update Information
+
+            `;
+
+        }
+
+    });
+
+}
+
+
+
+
+
+// calculator user
+
+
+// =====================================
+// USER CALCULATOR
+// =====================================
+
+document.addEventListener(
+
+    "click",
+
+    async function(e){
+
+    const btn =
+    e.target.closest(
+        "#dashCalculateBtn"
+    );
+
+
+
+    if(!btn) return;
+
+
+
+
+    // =====================================
+    // GET VALUES
+    // =====================================
+
+    const data = {
+
+        origin:
+        document.getElementById(
+            "dash_from"
+        )?.value,
+
+
+
+        destination:
+        document.getElementById(
+            "dash_to"
+        )?.value,
+
+
+
+        shipping_type:
+        document.getElementById(
+            "dash_shipping_type"
+        )?.value,
+
+
+
+        category:
+        document.getElementById(
+            "dash_category"
+        )?.value,
+
+
+
+        weight:
+        document.getElementById(
+            "dash_weight"
+        )?.value,
+
+
+
+        quantity:
+        document.getElementById(
+            "dash_quantity"
+        )?.value,
+
+
+
+        length:
+        document.getElementById(
+            "dash_length"
+        )?.value,
+
+
+
+        width:
+        document.getElementById(
+            "dash_width"
+        )?.value,
+
+
+
+        height:
+        document.getElementById(
+            "dash_height"
+        )?.value,
+
+    };
+
+
+
+
+    // =====================================
+    // VALIDATION
+    // =====================================
+
+    if(
+
+        !data.origin ||
+
+        !data.destination ||
+
+        !data.shipping_type ||
+
+        !data.weight
+
+    ){
+
+        showAlert(
+
+            "Please complete required fields",
+
+            "error"
+
+        );
+
+        return;
+
+    }
+
+
+
+
+    // =====================================
+    // LOADING
+    // =====================================
+
+    btn.innerHTML = `
+
+        <i class='bx bx-loader-alt bx-spin'></i>
+
+        Calculating...
+
+    `;
+
+
+
+
+    // =====================================
+    // FETCH
+    // =====================================
+
+    try{
+
+        const response =
+        await fetch(
+
+            "/user-calculator/",
+
+            {
+
+                method:"POST",
+
+                headers:{
+
+                    "Content-Type":
+                    "application/json",
+
+                    "X-CSRFToken":
+                    getCookie(
+                        "csrftoken"
+                    )
+
+                },
+
+                body:JSON.stringify(
+                    data
+                )
+
+            }
+
+        );
+
+
+
+
+        const result =
+        await response.json();
+
+
+
+
+        // =====================================
+        // ERROR
+        // =====================================
+
+        if(!result.success){
+
+            showAlert(
+
+                result.error,
+
+                "error"
+
+            );
+
+            return;
+
+        }
+
+
+
+
+        // =====================================
+        // UPDATE UI
+        // =====================================
+
+        document.getElementById(
+            "dash_total"
+        ).innerText =
+
+            "$" + result.total;
+
+
+
+
+        document.getElementById(
+            "dash_final_total"
+        ).innerText =
+
+            "$" + result.total;
+
+
+
+
+        document.getElementById(
+            "dash_base_price"
+        ).innerText =
+
+            "$" + result.total;
+
+
+
+
+        document.getElementById(
+            "dash_delivery"
+        ).innerText =
+
+            "Delivery Time: " +
+
+            result.delivery;
+
+
+
+
+        // =====================================
+        // SUCCESS
+        // =====================================
+
+        showAlert(
+
+            "Price calculated successfully",
+
+            "success"
+
+        );
+
+
+
+
+        // =====================================
+        // RESET INPUTS
+        // =====================================
+
+        document.getElementById(
+            "dash_weight"
+        ).value = "";
+
+
+
+        document.getElementById(
+            "dash_length"
+        ).value = "";
+
+
+
+        document.getElementById(
+            "dash_width"
+        ).value = "";
+
+
+
+        document.getElementById(
+            "dash_height"
+        ).value = "";
+
+
+
+        document.getElementById(
+            "dash_quantity"
+        ).value = 1;
+
+    }
+
+    catch(error){
+
+        console.log(error);
+
+
+
+
+        showAlert(
+
+            "Something went wrong",
+
+            "error"
+
+        );
+
+    }
+
+    finally{
+
+        btn.innerHTML = `
+
+            <i class='bx bx-calculator'></i>
+
+            Calculate Price
+
+        `;
+
+    }
+
+});

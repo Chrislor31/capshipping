@@ -1,4 +1,4 @@
-
+{% load i18n %}
 <div class="menu_bar_nav">
 
 <div class="search_menu">
@@ -14,16 +14,87 @@
 
 <div class="right_details">
     <div class="languages">
-    <i class='bx bx-globe'></i>
+
+    <div class="lang_toggle">
+
+        <i class='bx bx-globe'></i>
+
+        <span>
+            {% if request.LANGUAGE_CODE == 'fr' %}
+                FR
+            {% else %}
+                EN
+            {% endif %}
+        </span>
+
+        <i class='bx bx-chevron-down'></i>
+
     </div>
+
+
+
+    <!-- DROPDOWN -->
+
+    <div class="lang_dropdown">
+
+        <!-- ENGLISH -->
+
+        <form action="/i18n/setlang/"
+              method="post">
+
+            {% csrf_token %}
+
+            <input
+                type="hidden"
+                name="language"
+                value="en"
+            >
+
+            <button type="submit">
+
+                🇺🇸 English
+
+            </button>
+
+        </form>
+
+
+
+        <!-- FRENCH -->
+
+        <form action="/i18n/setlang/"
+              method="post">
+
+            {% csrf_token %}
+
+            <input
+                type="hidden"
+                name="language"
+                value="fr"
+            >
+
+            <button type="submit">
+
+                🇫🇷 Français
+
+            </button>
+
+        </form>
+
+    </div>
+
+</div>
 
     <div class="light-dark">
     <i id="themeIcon" class='bx bxs-brightness-half'></i>
 </div>
 
-    <div class="notifications">
-        <i class='bx bx-bell' ></i>
-    </div>
+  <div class="notifications">
+      <a href="{% url 'scan_page' %}">
+    <i class='bx bx-qr-scan'></i>
+          </a>
+
+</div>
  <div class="user_botton">
 
     <!-- OU PA CHANJE DESIGN OU -->
@@ -64,19 +135,19 @@
         <!-- ITEMS -->
         <div class="dropdown_item">
             <i class='bx bx-user'></i>
-            <span>Your Profile</span>
+            <span>{% trans 'Your Profile' %}</span>
         </div>
 
         <div class="dropdown_item">
             <i class='bx bx-cog'></i>
-            <span>Settings</span>
+            <span>{% trans 'Settings' %}</span>
         </div>
 
         <div class="dropdown_divider"></div>
 
        <div class="dropdown_item logout" id="logoutBtn" data-url="{% url 'logout' %}">
     <i class='bx bx-log-out'></i>
-    <span>Sign out</span>
+    <span>{% trans 'Sign out' %}</span>
 </div>
 
     </div>

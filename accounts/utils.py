@@ -1,55 +1,85 @@
 import random
+
 from django.core.mail import EmailMultiAlternatives
 from django.template.loader import render_to_string
+from django.utils.translation import gettext as _
+from django.utils.translation import activate
 
-def generate_otp():
-    return str(random.randint(100000, 999999))
+from django.utils.translation import activate, get_language
 
-
-def send_otp_email(user, code):
-    subject = "Your OTP Code"
-
-    html_content = render_to_string("emails/otp_email_reset.html", {
-        "code": code,
-        "user": user
-    })
-
-    email = EmailMultiAlternatives(
-        subject,
-        "",  # plain text optional
-        "pchrislor66@gmail.com",
-        [user.email],
-    )
-
-    email.attach_alternative(html_content, "text/html")
-    email.send()
-
-
-
+from capshipping import settings
 
 
 ## send email welcome
 
+def send_welcome_email(user, language):
 
-from django.core.mail import EmailMultiAlternatives
-from django.template.loader import render_to_string
+    # activate current language
+    activate(language)
 
-def send_welcome_email(user):
-    subject = "Welcome to Cap Shipping 🎉"
+    # debug
+    print("EMAIL LANGUAGE:", get_language())
 
-    html_content = render_to_string("emails/welcome_email.html", {
-        "user": user
-    })
+    # translated subject
+    subject = _("Welcome to Cap Shipping 🎉")
+
+    html_content = render_to_string(
+        "emails/welcome_email.html",
+        {
+            "user": user
+        }
+    )
+
+    email = EmailMultiAlternatives(
+
+        subject,
+
+        "",
+
+        settings.DEFAULT_FROM_EMAIL,
+
+        [user.email],
+
+    )
+
+    email.attach_alternative(html_content, "text/html")
+    email.send()
+
+
+
+def generate_otp():
+    return str(random.randint(100000, 999999))
+
+def send_otp_email(user, code, language):
+
+    # activate current language
+    activate(language)
+
+    # translated subject
+    subject = _("Your OTP Code")
+
+    html_content = render_to_string(
+        "emails/otp_email_reset.html",
+        {
+            "code": code,
+            "user": user
+        }
+    )
 
     email = EmailMultiAlternatives(
         subject,
         "",
-        "pchrislor66@gmail.com",
+        settings.DEFAULT_FROM_EMAIL,
+
         [user.email],
     )
 
     email.attach_alternative(html_content, "text/html")
     email.send()
+
+
+
+
 
 
 
@@ -68,8 +98,9 @@ def send_otp_email(user, code, title, message):
         email = EmailMultiAlternatives(
             title,
             "",
-            "pchrislor66@gmail.com",
-            [user.email],
+            settings.DEFAULT_FROM_EMAIL,
+
+        [user.email],
         )
 
         email.attach_alternative(html_content, "text/html")
@@ -126,9 +157,196 @@ def send_shipping_email(package):
     email = EmailMultiAlternatives(
         subject=title,
         body="",
-        from_email="info@capshippingdistribution.com",
+        from_email="support@capshippingdistribution.com",
         to=[package.receiver.email],
     )
 
     email.attach_alternative(html, "text/html")
+    email.send()
+
+
+
+
+
+#=====kyc message
+
+
+
+# =========================
+# KYC SUBMITTED EMAIL
+# =========================
+
+def send_kyc_submitted_email(
+    user,
+    language
+):
+
+    # activate language
+    activate(language)
+
+    # subject
+    subject = _(
+        "KYC Submitted Successfully 📄"
+    )
+
+
+
+    # html
+    html_content = render_to_string(
+
+        "emails/kyc/submitted.html",
+
+        {
+
+            "user": user
+
+        }
+
+    )
+
+
+
+    # email
+    email = EmailMultiAlternatives(
+
+        subject,
+
+        "",
+
+        settings.DEFAULT_FROM_EMAIL,
+
+        [user.email],
+        )
+
+
+
+    email.attach_alternative(
+        html_content,
+        "text/html"
+    )
+
+    email.send()
+
+
+
+
+
+# =========================
+# KYC APPROVED EMAIL
+# =========================
+
+def send_kyc_approved_email(
+    user,
+    language
+):
+
+    # activate language
+    activate(language)
+
+    # subject
+    subject = _(
+        "KYC Approved Successfully ✅"
+    )
+
+
+
+    # html
+    html_content = render_to_string(
+
+        "emails/kyc/approved.html",
+
+        {
+
+            "user": user
+
+        }
+
+    )
+
+
+
+    # email
+    email = EmailMultiAlternatives(
+
+        subject,
+
+        "",
+
+        settings.DEFAULT_FROM_EMAIL,
+
+        [user.email],
+        )
+
+
+
+    email.attach_alternative(
+        html_content,
+        "text/html"
+    )
+
+    email.send()
+
+
+
+
+# =========================
+# KYC REJECTED EMAIL
+# =========================
+
+def send_kyc_rejected_email(
+
+    user,
+
+    language,
+
+    comment=None
+
+):
+
+    # activate language
+    activate(language)
+
+    # subject
+    subject = _(
+        "KYC Verification Rejected ❌"
+    )
+
+
+
+    # html
+    html_content = render_to_string(
+
+        "emails/kyc/rejected.html",
+
+        {
+
+            "user": user,
+
+            "comment": comment
+
+        }
+
+    )
+
+
+
+    # email
+    email = EmailMultiAlternatives(
+
+        subject,
+
+        "",
+
+        settings.DEFAULT_FROM_EMAIL,
+
+        [user.email],
+        )
+
+
+
+    email.attach_alternative(
+        html_content,
+        "text/html"
+    )
+
     email.send()

@@ -1,5 +1,5 @@
 {% extends 'base.html' %}
-
+{% load i18n %}
 {% load static %}
 
 
@@ -7,6 +7,9 @@
 
 
 {% block manu_nav %}
+
+<link rel="stylesheet" href="{% static 'css/alerts.css' %}">
+
 
 
 <section class="auth-section register-page">
@@ -26,8 +29,8 @@
   <form id="loginForm">
 
   <div class="form-step active">
-    <h2 class="login_h2" style="margin:0; font-size:24px; font-weight:600">Welcome Back </h2>
-    <p> Welcome Back ! please enter your Details</p>
+    <h2 class="login_h2" style="margin:0; font-size:24px; font-weight:600">{% trans 'Welcome Back' %} </h2>
+    <p> {% trans 'Welcome Back ! please enter your Details' %}</p>
 
     <!-- EMAIL -->
     <div class="input-box">
@@ -40,7 +43,16 @@
     <div class="input-box password-box">
       <input type="password" name="password" id="password" placeholder="Password" required>
       <span class="toggle-password" id="togglePassword">👁️</span>
-      <small id="password-error" class="error-message"></small>
+      <div class="form_error hidden"
+     id="loginError">
+
+    <i class='bx bx-error-circle'></i>
+
+    <span>
+        Invalid email or password
+    </span>
+
+</div>
     </div>
 
 
@@ -48,7 +60,7 @@
     <div class="condition">
 
       <label>
-        <a href=" {% url 'reset' %}">Forget Password ?</a>
+        <a href=" {% url 'reset' %}">{% trans 'Forget Password ?' %}</a>
   </label>
     </div>
 
@@ -56,7 +68,7 @@
     <div class="btn-group">
       <button type="submit" class="submit-btn">Login</button>
     </div>
-    <p style="text-align:center;">Don’t have an account? <a href="{% url 'register' %}">Register</a></p>
+    <p style="text-align:center;">{% trans 'Don’t have an account?' %} <a href="{% url 'register' %}">{% trans 'Register' %}</a></p>
   </div>
 
 </form>
@@ -70,97 +82,246 @@
 
 
 <script>
-// 👁️ toggle password
-const togglePassword = document.getElementById("togglePassword");
-const passwordInput = document.getElementById("password");
+// 👁️ TOGGLE PASSWORD
+const togglePassword =
+    document.getElementById("togglePassword");
 
-togglePassword.addEventListener("click", function () {
-    const type = passwordInput.getAttribute("type");
+const passwordInput =
+    document.getElementById("password");
+
+
+togglePassword.addEventListener(
+    "click",
+    function () {
+
+    const type =
+        passwordInput.getAttribute("type");
 
     if (type === "password") {
-        passwordInput.setAttribute("type", "text");
+
+        passwordInput.setAttribute(
+            "type",
+            "text"
+        );
+
         this.textContent = "🙈";
+
     } else {
-        passwordInput.setAttribute("type", "password");
+
+        passwordInput.setAttribute(
+            "type",
+            "password"
+        );
+
         this.textContent = "👁️";
     }
+
 });
 
 
-document.addEventListener("DOMContentLoaded", function () {
 
-    const form = document.getElementById("loginForm");
 
-    form.addEventListener("submit", async function (e) {
+// 🔥 LOGIN ALERT BOX
+const loginError =
+    document.getElementById("loginError");
+
+
+// ✅ SHOW ALERT
+function showLoginAlert(type, message){
+
+    // SHOW
+    loginError.classList.remove(
+        "hidden"
+    );
+
+    // RESET
+    // RESET ALL STYLES
+loginError.className =
+    "form_error";
+
+    // ADD TYPE
+    loginError.classList.add(type);
+
+    // ICON
+    const icon =
+        loginError.querySelector("i");
+
+    if(type === "success"){
+
+        icon.className =
+            "bx bx-check-circle";
+
+    }
+
+    else{
+
+        icon.className =
+            "bx bx-error-circle";
+    }
+
+    // TEXT
+    loginError
+        .querySelector("span")
+        .innerText = message;
+}
+
+
+
+// ❌ HIDE ALERT
+function hideLoginAlert(){
+
+    loginError.classList.add(
+        "hidden"
+    );
+
+}
+
+
+
+// 🔥 LOGIN FORM
+document.addEventListener(
+    "DOMContentLoaded",
+    function () {
+
+    const form =
+        document.getElementById("loginForm");
+
+    form.addEventListener(
+        "submit",
+        async function (e) {
+
         e.preventDefault();
 
-        // 🧹 clear errors
-        document.querySelectorAll(".error-message").forEach(el => {
-            el.innerText = "";
-            el.classList.remove("active");
-        });
+        // HIDE OLD ALERT
+        hideLoginAlert();
 
-        document.querySelectorAll("input").forEach(el => {
-            el.classList.remove("input-error");
-        });
+        // 🔥 SAFE REMEMBER
+        const rememberInput =
+            form.querySelector(
+                '[name="remember"]'
+            );
 
-        // 🔥 safe remember (pa crash)
-        const rememberInput = form.querySelector('[name="remember"]');
-
+        // 🔥 DATA
         const data = {
-            email: form.querySelector('[name="email"]').value,
-            password: form.querySelector('[name="password"]').value,
-            remember: rememberInput ? rememberInput.checked : false
+
+            email:
+                form.querySelector(
+                    '[name="email"]'
+                ).value,
+
+            password:
+                form.querySelector(
+                    '[name="password"]'
+                ).value,
+
+            remember:
+                rememberInput
+                ? rememberInput.checked
+                : false
         };
 
         try {
-            const response = await fetch("/api/login/", {
+
+            // 🔥 API REQUEST
+            const response =
+                await fetch(
+                    "/api/login/",
+            {
+
                 method: "POST",
+
                 headers: {
-                    "Content-Type": "application/json",
-                    "X-CSRFToken": getCSRFToken(),
+
+                    "Content-Type":
+                        "application/json",
+
+                    "X-CSRFToken":
+                        getCSRFToken(),
                 },
-                body: JSON.stringify(data)
+
+                body:
+                    JSON.stringify(data)
+
             });
 
             let resData;
 
-            // 🔥 safe JSON parse
+            // 🔥 SAFE JSON
             try {
-                resData = await response.json();
-            } catch {
-                console.error("Server returned HTML (error)");
+
+                resData =
+                    await response.json();
+
+            }
+
+            catch {
+
+                showLoginAlert(
+                    "error",
+                    "Server error"
+                );
+
                 return;
             }
 
             console.log(resData);
 
-            // ❌ errors
+
+            // ❌ LOGIN ERROR
             if (!response.ok) {
 
-                for (let field in resData) {
+                let message =
+                    "Invalid email or password";
 
-                    let message = Array.isArray(resData[field])
-                        ? resData[field][0]
-                        : resData[field];
+                // 🔥 DRF ERROR
+                if (
+                    resData.non_field_errors
+                ){
 
-                    // 🔥 GLOBAL LOGIN ERROR
-                    if (field === "non_field_errors") {
-                        showError("email", message);
-                        showError("password", message);
-                    } else {
-                        showError(field, message);
-                    }
+                    message =
+                        Array.isArray(
+                            resData.non_field_errors
+                        )
+
+                        ? resData.non_field_errors[0]
+
+                        : resData.non_field_errors;
                 }
+
+                showLoginAlert(
+                    "error",
+                    message
+                );
 
                 return;
             }
 
-            // ✅ success
-            window.location.href = "/dashboard/";
 
-        } catch (error) {
-            console.error("Network error:", error);
+            // ✅ SUCCESS
+            showLoginAlert(
+                "success",
+                "Login successful"
+            );
+
+
+            // ⏳ WAIT 3 SEC
+            setTimeout(() => {
+
+                window.location.href =
+                    "/dashboard/";
+
+            }, 3000);
+
+        }
+
+        catch (error) {
+
+            console.error(error);
+
+            showLoginAlert(
+                "error",
+                "Network error. Please try again."
+            );
         }
 
     });
@@ -168,33 +329,32 @@ document.addEventListener("DOMContentLoaded", function () {
 });
 
 
-// 🔥 show error
-function showError(fieldName, message) {
-    const input = document.querySelector(`[name="${fieldName}"]`);
-    const error = document.getElementById(fieldName + "-error");
 
-    if (input) {
-        input.classList.add("input-error");
-    }
-
-    if (error) {
-        error.innerText = message;
-        error.classList.add("active");
-    }
-}
-
-
-// CSRF
+// 🔥 CSRF TOKEN
 function getCSRFToken() {
+
     let cookieValue = null;
-    const cookies = document.cookie.split(';');
+
+    const cookies =
+        document.cookie.split(';');
 
     for (let cookie of cookies) {
+
         cookie = cookie.trim();
-        if (cookie.startsWith('csrftoken=')) {
-            cookieValue = cookie.substring('csrftoken='.length);
+
+        if (
+            cookie.startsWith(
+                'csrftoken='
+            )
+        ) {
+
+            cookieValue =
+                cookie.substring(
+                    'csrftoken='.length
+                );
         }
     }
+
     return cookieValue;
 }
 </script>

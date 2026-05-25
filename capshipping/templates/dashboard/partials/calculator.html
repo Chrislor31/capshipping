@@ -1,0 +1,632 @@
+{% load i18n %}
+<section class="dashboard_add_user calculator">
+
+    <!-- HEADER -->
+    <div class="head_page">
+
+        <h2>
+           {% trans 'Shipment Price Calculator' %}
+        </h2>
+
+        <p>
+            {% trans 'dashboard > shipment calculator' %}
+        </p>
+
+    </div>
+
+
+
+    <div class="grid_layout">
+
+        <!-- LEFT -->
+        <div class="left_content_add">
+
+            <div class="user_sa_yo">
+
+                <!-- 🔥 CSRF -->
+                {% csrf_token %}
+
+
+
+                <!-- SHIPPING INFORMATION -->
+                <div class="address_information">
+
+                    <!-- TITLE -->
+                    <div class="section_title_calc">
+
+                        <h3>
+
+                            <i class='bx bx-world'></i>
+
+                            {% trans 'Shipping Information' %}
+
+                        </h3>
+
+
+
+                    </div>
+
+
+
+                    <!-- FROM / TO -->
+                    <div class="countr_state_city">
+
+                        <!-- FROM -->
+                        <div class="country origine">
+
+                            <label>
+                                {% trans 'From Country' %}
+                            </label>
+
+                            <select id="fromCountry">
+
+                                <option
+                                    value=""
+                                    disabled
+                                    selected
+                                    hidden
+                                >
+
+                                    {% trans 'Select Origin Country' %}
+
+                                </option>
+
+
+
+                                {% for warehouse in warehouses %}
+
+                                <option
+                                    value="{{ warehouse.type }}"
+                                >
+
+                                    {{ warehouse.country }}
+                                    -
+                                    {{ warehouse.name }}
+
+                                </option>
+
+                                {% endfor %}
+
+                            </select>
+
+                        </div>
+
+
+
+                        <!-- TO -->
+                        <div class="state destination">
+
+                            <label>
+                                {% trans 'Destination Country' %}
+                            </label>
+
+                            <select id="toCountry">
+
+                                <option
+                                    value=""
+                                    disabled
+                                    selected
+                                    hidden
+                                >
+
+                                    {% trans 'Select Destination' %}
+
+                                </option>
+
+
+
+                                {% for warehouse in warehouses %}
+
+                                <option
+                                    value="{{ warehouse.type }}"
+                                >
+
+                                    {{ warehouse.country }}
+                                    -
+                                    {{ warehouse.name }}
+
+                                </option>
+
+                                {% endfor %}
+
+                            </select>
+
+                        </div>
+
+                    </div>
+
+
+
+                    <!-- SHIPPING -->
+                    <div class="categori_shippingtype">
+
+                        <!-- CATEGORY -->
+                        <div class="category">
+
+                            <label>
+                                {% trans 'Package Category' %}
+                            </label>
+
+                            <select id="packageCategory">
+
+                                <option
+                                    value=""
+                                    disabled
+                                    selected
+                                    hidden
+                                >
+
+                                    {% trans 'Select category' %}
+
+                                </option>
+
+
+
+                                {% for category in categories %}
+
+                                <option value="{{ category.id }}">
+
+                                    {{ category.name }}
+
+                                </option>
+
+                                {% endfor %}
+
+                            </select>
+
+                        </div>
+
+
+
+                        <!-- SHIPPING TYPE -->
+                        <div class="shipping-type">
+
+                            <label>
+                                Shipping Type
+                            </label>
+
+                            <select id="shippingType">
+
+                                <option
+                                    value=""
+                                    disabled
+                                    selected
+                                    hidden
+                                >
+
+                                    Select shipping type
+
+                                </option>
+
+                                <option value="air">
+
+                                    ✈️ Air Cargo
+
+                                </option>
+
+                                <option value="sea">
+
+                                    🚢 Sea Cargo
+
+                                </option>
+
+                            </select>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+
+                <!-- PACKAGE DETAILS -->
+                <div class="warehouse_info">
+
+                    <div class="section_title_calc">
+
+                        <h3>
+
+                            <i class='bx bx-package'></i>
+
+                            {% trans 'Package Details' %}
+
+                        </h3>
+
+
+
+                    </div>
+
+
+
+                    <div class="Package-Details">
+
+                        <!-- WEIGHT -->
+                        <div class="pickup">
+
+                            <label>
+                                {% trans 'Weight' %} (Kg)
+                            </label>
+
+                            <input
+                                type="number"
+                                id="weight"
+                                placeholder="Ex: 15"
+                                min="0"
+                            >
+
+                        </div>
+
+
+
+                        <!-- LENGTH -->
+                        <div class="staff_warehouse">
+
+                            <label>
+                                {% trans 'Length' %} (Cm)
+                            </label>
+
+                            <input
+                                type="number"
+                                id="length"
+                                placeholder="Ex: 40"
+                                min="0"
+                            >
+
+                        </div>
+
+
+
+                        <!-- WIDTH -->
+                        <div class="staff_warehouse">
+
+                            <label>
+                                {% trans 'Width' %} (Cm)
+                            </label>
+
+                            <input
+                                type="number"
+                                id="width"
+                                placeholder="Ex: 25"
+                                min="0"
+                            >
+
+                        </div>
+
+
+
+                        <!-- HEIGHT -->
+                        <div class="staff_warehouse">
+
+                            <label>
+                                {% trans 'Height' %} (Cm)
+                            </label>
+
+                            <input
+                                type="number"
+                                id="height"
+                                placeholder="Ex: 30"
+                                min="0"
+                            >
+
+                        </div>
+
+
+
+                        <!-- QUANTITY -->
+                        <div class="staff_warehouse">
+
+                            <label>
+                                {% trans 'Quantity' %}
+                            </label>
+
+                            <input
+                                type="number"
+                                id="quantity"
+                                value="1"
+                                min="1"
+                            >
+
+                        </div>
+
+
+
+                        <!-- INSURANCE -->
+                        <div class="staff_warehouse">
+
+                            <label>
+                                {% trans 'Insurance' %}
+                            </label>
+
+                            <select id="insurance">
+
+                                <option value="no">
+
+                                    ❌ No Insurance
+
+                                </option>
+
+                                <option value="yes">
+
+                                    ✅ {% trans 'Insured Package' %}
+
+                                </option>
+
+                            </select>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+
+                <!-- BUTTONS -->
+                <div class="btn_sub_reset">
+
+                    <button
+                        type="reset"
+                        id="resetCalculator"
+                    >
+
+                        <i class='bx bx-reset'></i>
+
+                        {% trans 'Reset' %}
+
+                    </button>
+
+
+
+                    <button
+                        type="button"
+                        id="calculateShipment"
+                    >
+
+                        <i class='bx bx-calculator'></i>
+
+                        {% trans 'Calculate Price' %}
+
+                    </button>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+
+        <!-- RIGHT -->
+        <div class="right_content_add">
+
+           <!-- SUMMARY -->
+<div class="calculator_summary">
+
+    <!-- HEADER -->
+    <div class="summary_header">
+
+        <div class="icon_box">
+
+            <i class='bx bx-calculator'></i>
+
+        </div>
+
+        <div class="summary_title">
+
+            <h3>
+                {% trans 'Estimated Shipping Cost' %}
+            </h3>
+
+            <p>
+                {% trans 'Shipment pricing breakdown' %}
+            </p>
+
+        </div>
+
+    </div>
+
+
+
+    <!-- TOTAL -->
+    <div class="summary_footer">
+
+        <span>
+            {% trans 'Total Estimated Cost' %}
+        </span>
+
+        <h2 id="sum_price">
+            $0.00
+        </h2>
+
+
+
+    </div>
+
+
+
+    <!-- DETAILS -->
+    <div class="summary_details">
+
+        <!-- SHIPPING -->
+        <div class="row">
+
+            <div class="left_sum">
+
+                <i class='bx bx-package'></i>
+
+                <span>
+
+                    {% trans 'Shipping Price' %}
+
+                </span>
+
+            </div>
+
+            <strong id="basePrice">
+
+                $0.00
+
+            </strong>
+
+        </div>
+
+
+
+        <!-- INSURANCE -->
+        <div class="row">
+
+            <div class="left_sum">
+
+                <i class='bx bx-shield-quarter'></i>
+
+                <span>
+
+                    {% trans 'Insurance Fee' %}
+
+                </span>
+
+            </div>
+
+            <strong id="insurancePrice">
+
+                $0.00
+
+            </strong>
+
+        </div>
+
+
+
+        <!-- QUANTITY -->
+        <div class="row">
+
+            <div class="left_sum">
+
+                <i class='bx bx-layer'></i>
+
+                <span>
+
+                    Quantity
+
+                </span>
+
+            </div>
+
+            <strong id="qtyPrice">
+
+                1
+
+            </strong>
+
+        </div>
+
+
+
+        <!-- DELIVERY -->
+        <div class="row">
+
+            <div class="left_sum">
+
+                <i class='bx bx-time-five'></i>
+
+                <span>
+
+                    Delivery Estimate
+
+                </span>
+
+            </div>
+
+            <strong id="deliveryTime2">
+
+                N/A
+
+            </strong>
+
+        </div>
+
+
+
+        <!-- TOTAL -->
+        <div class="row total_row">
+
+            <div class="left_sum">
+
+                <i class='bx bx-dollar-circle'></i>
+
+                <span>
+
+                    {% trans 'Final Total' %}
+
+                </span>
+
+            </div>
+
+            <strong id="finalTotal">
+
+                $0.00
+
+            </strong>
+
+        </div>
+
+    </div>
+
+
+
+
+
+</div>
+
+
+
+            <!-- INFO -->
+            <div class="informations info_shipment">
+
+                <div class="warning">
+
+                    <i class='bx bx-bulb'></i>
+
+                    <h4>
+                        {% trans 'Shipping Tips' %}
+                    </h4>
+
+                </div>
+
+                <ul class="tips_list">
+
+                    <li>
+                        <i class='bx bx-check'></i>
+                        {% trans 'Weight affects final shipping cost' %}
+                    </li>
+
+                    <li>
+                        <i class='bx bx-check'></i>
+                        {% trans 'Dimensions affect volumetric weight' %}
+                    </li>
+
+                    <li>
+                        <i class='bx bx-check'></i>
+                        {% trans 'Air shipping is faster but more expensive' %}
+                    </li>
+
+                    <li>
+                        <i class='bx bx-check'></i>
+                        {% trans 'Insurance protects valuable packages' %}
+                    </li>
+
+                    <li>
+                        <i class='bx bx-check'></i>
+                        {% trans 'Final cost may vary after inspection' %}
+                    </li>
+
+                </ul>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</section>

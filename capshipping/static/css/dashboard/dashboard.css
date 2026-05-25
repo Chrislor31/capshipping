@@ -2297,3 +2297,351 @@ td {
 .dropdown_menu.active {
     display: block;
 }
+
+
+
+
+
+
+
+/* =========================
+LANGUAGES
+========================= */
+
+.languages{
+    position:relative;
+}
+
+
+
+/* TOGGLE */
+
+.lang_toggle{
+
+    display:flex;
+
+    align-items:center;
+
+    gap:8px;
+
+    cursor:pointer;
+
+    color: var(--White_Title);
+
+    font-size:16px;
+
+}
+
+
+
+.lang_toggle i{
+    font-size:22px;
+}
+
+
+
+/* DROPDOWN */
+
+.lang_dropdown{
+
+    position:absolute;
+
+    top:55px;
+    right:0;
+
+    width:180px;
+
+    background:#101935;
+
+    border:1px solid rgba(255,255,255,.08);
+
+    border-radius:20px;
+
+    padding:12px;
+
+    display:none;
+
+    flex-direction:column;
+
+    gap:8px;
+
+    z-index:9999;
+
+    box-shadow:
+    0 10px 30px rgba(0,0,0,.35);
+
+}
+
+
+
+/* SHOW */
+
+.lang_dropdown.show_lang{
+    display:flex;
+}
+
+
+
+/* BUTTONS */
+
+.lang_dropdown form button{
+
+    width:100%;
+
+    border:none;
+
+    background:none;
+
+    color:#fff;
+
+    padding:14px;
+
+    border-radius:14px;
+
+    text-align:left;
+
+    cursor:pointer;
+
+    transition:.3s;
+
+    font-size:16px;
+
+}
+
+
+
+.lang_dropdown form button:hover{
+
+    background:#1A254B;
+
+}
+
+
+
+
+/*=====for realod page not found ===*/
+
+.page_state{
+
+    width:100%;
+    min-height:70vh;
+
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    flex-direction:column;
+
+    gap:15px;
+
+    text-align:center;
+
+}
+
+
+
+.page_state i{
+
+    font-size:70px;
+    color:#ef4444;
+
+}
+
+
+
+.page_state h2{
+
+    font-size:32px;
+    color:white;
+
+}
+
+
+
+.page_state p{
+
+    color:#94a3b8;
+
+}
+
+
+
+.page_state button{
+
+    padding:12px 25px;
+
+    border:none;
+    border-radius:10px;
+
+    background:#2563eb;
+    color:white;
+
+    cursor:pointer;
+
+}
+
+
+
+.spinner_loader{
+
+    width:55px;
+    height:55px;
+
+    border-radius:50%;
+
+    border:4px solid #334155;
+    border-top-color:#3b82f6;
+
+    animation:spin .8s linear infinite;
+
+}
+
+
+
+@keyframes spin{
+
+    to{
+
+        transform:rotate(360deg);
+
+    }
+
+}
+
+
+
+
+
+
+
+
+/*====== settings ====*/
+
+
+.profile_overviews{
+    padding: 15px;
+    background-color: var(--blue_secondery);
+}
+.profile_overviews h3{
+    color: var(--White_Title);
+    display: flex;
+    gap: 10px;
+}
+.box-init-setting {
+    padding: 15px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    border-bottom: 0.5px solid var(--boder_color);
+}
+
+.Initial-settings {
+    width: 60px;
+    height: 60px;
+    background-color: var(--blue_sky);
+    color: var(--White_Title);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 24px;
+    border-radius: 50%;
+    margin: 5px 0;
+    font-weight: 600;
+}
+
+.status-settings {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.status-settings p{
+    font-weight: 500;
+    color: var(--White_Title);
+    font-size: 18px;
+}
+
+.status-settings span{
+    background:rgba(37, 99, 235, 0.12);
+    color: var(--White_Title);
+    padding: 3px 8px;
+    border-radius: 10px;
+    font-size: 12px;
+    font-weight: 200;
+}
+
+.information-initial {
+    padding: 10px 0;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.info-grid{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: nowrap;
+
+}
+
+.info-grid p{
+    color: var(--gray-light);
+    font-weight: 500;
+    font-size: 14px;
+}
+
+.submit-setting button{
+    width: 100%;
+    color: white;
+    border: none;
+    padding: 15px 0;
+  background-color: var(--blue_sky);
+  border-radius: 10px;
+  cursor: pointer;
+
+}
+
+
+
+/*======calculator =====*/
+
+
+.calculator_summary{
+
+    opacity:0;
+
+    visibility:hidden;
+
+    transform:
+    translateY(-40px);
+
+    transition:0.4s ease;
+
+    max-height:0;
+
+    overflow:hidden;
+}
+
+
+
+/* =====================================
+SHOW SUMMARY
+===================================== */
+
+.calculator_summary.active{
+
+    opacity:1;
+
+    visibility:visible;
+
+    transform:
+    translateY(0);
+
+    max-height:1200px;
+
+    overflow:visible;
+}
+

@@ -1,6 +1,6 @@
 
 {% extends 'base.html' %}
-
+{% load i18n %}
 {% load static %}
 
 
@@ -15,11 +15,11 @@
 						<div class="col-lg-12 text-center">
 							<div class="breadcumb-content">
 								<div class="breadcumb-title">
-									<h4>About Us</h4>
+									<h4>{% trans 'About Us' %}</h4>
 								</div>
 								<ul>
-									<li><a href="{% url 'home' %}">home</a></li>
-									<li>About Us</li>
+									<li><a href="{% url 'home' %}">{% trans 'home' %}</a></li>
+									<li>{% trans 'About Us' %}</li>
 								</ul>
 							</div>
 						</div>
@@ -37,11 +37,11 @@
 							<div class="sec-title">
 								<div class="section-sub-title">
 									<h1 class="sub-title"><img src="{% static 'images/main-home/sub-title-icon.png' %}"
-											alt="sub-icon">About Us</h1>
+											alt="sub-icon">{% trans 'About Us' %}</h1>
 								</div>
 								<div class="section-title">
-									<h1 class="title title-anim">Reliable Freight & Logistics</h1>
-<h1 class="title title-anim">Between the U.S. and Haiti</h1>
+									<h1 class="title title-anim">{% trans 'Reliable Freight & Logistics' %}</h1>
+<h1 class="title title-anim">{% trans 'Between the U.S. and Haiti' %}</h1>
 								</div>
 							</div>
 							<div class="about-thumb">
@@ -53,15 +53,15 @@
 							<!--about counter-->
 							<div class="about-counter-wrapper">
 								<div class="about-counter">
-								<h2 class="counter">500</h2>
+								<h2 class="about_counter" style="color:#fff;">10k</h2>
 								<span>+</span>
-								<p>Shipments Delivered Successfully</p>
+								<p>{% trans 'Shipments Delivered Successfully' %}</p>
 							</div>
 
 							<div class="about-counter two">
-								<h2 class="counter">98</h2>
+								<h2 class="about_counter" style="color:#fff;">98</h2>
 								<span>%</span>
-								<p>Customer Satisfaction Rate</p>
+								<p>{% trans 'Customer Satisfaction Rate' %}</p>
 							</div>
 							</div>
 							<div class="about-item-box">
@@ -71,15 +71,18 @@
 										<img src="{% static 'images/home2/about-icon1.png' %}" alt="icon">
 									</div>
 									<div class="title">
-										<h2>Reliable Freight Services</h2>
-									</div>
-								</div>
-								<div class="about-desc">
-									<p>
-										We provide fast, secure, and dependable shipping solutions,
-										ensuring your cargo is handled with care from origin to destination.
-									</p>
-								</div>
+    <h2>{% trans 'Reliable Freight Services' %}</h2>
+</div>
+
+</div>
+
+<div class="about-desc">
+
+    <p>
+        {% trans 'We offer reliable air and sea freight solutions with secure handling, fast delivery, and trusted logistics services between the USA, Haiti, and the Dominican Republic.' %}
+    </p>
+
+</div>
 							</div>
 
 							<div class="single-about-box two fade-in">
@@ -88,24 +91,27 @@
 										<img src="{% static 'images/home2/about-icon2.png'%}" alt="icon">
 									</div>
 									<div class="title">
-										<h2>24/7 Customer Support</h2>
-									</div>
-								</div>
-								<div class="about-desc">
-									<p>
-										Our dedicated support team is available at all times to assist you,
-										provide updates, and ensure a smooth shipping experience.
-									</p>
-								</div>
+    <h2>24/7 {% trans 'Customer Support' %}</h2>
+</div>
+
+</div>
+
+<div class="about-desc">
+
+    <p>
+        {% trans 'Our support team is always ready to assist you with shipment tracking, delivery updates, and any questions to ensure a smooth and stress-free shipping experience.' %}
+    </p>
+
+</div>
 							</div>
 
 							<div class="about-info-box fade-in">
 								<div class="about-btn">
-									<a href="about.html">More About Us<i class="fa-solid fa-arrow-right"></i></a>
+									<a>{% trans 'More About Us' %}<i class="fa-solid fa-arrow-right"></i></a>
 								</div>
 								<div class="about-call-info">
-									<h2 class="call-text">Call Us (Toll Free)</h2>
-									<h3 class="call-number">+1 (551) 795-3802</h3>
+									<h2 class="call-text">{% trans 'Call Us now' %}</h2>
+									<h3 class="call-number">+1 (682)215 6480</h3>
 								</div>
 							</div>
 						</div>
@@ -126,11 +132,11 @@
                 <div class="sec-title text-center">
                     <div class="section-sub-title">
                         <h1 class="sub-title"><img src="{% static 'images/main-home/sub-title-icon.png' %}"
-                                alt="sub-icon">Working Process</h1>
+                                alt="sub-icon">{% trans 'Working Process' %}</h1>
                     </div>
                     <div class="section-title">
-                        <h1 class="title text-white text-anime-3">Simple, Fast & Reliable</h1>
-                        <h1 class="title text-white text-anime-3">Shipping Process</h1>
+                        <h1 class="title text-white text-anime-3">{% trans 'Simple, Fast & Reliable' %}</h1>
+                        <h1 class="title text-white text-anime-3">{% trans 'Shipping Process' %}</h1>
                     </div>
                 </div>
             </div>
@@ -142,10 +148,12 @@
                         <img src="{% static 'images/main-home/process-icon.png' %}" alt="icon">
                     </div>
                     <div class="process-content">
-                        <h2>Request & Booking</h2>
+                        <h2>{% trans 'Request & Booking' %}</h2>
                         <p>
-                            Submit your shipment details and receive a clear quote.
-                            Our team ensures a smooth and transparent booking process.
+                         {% blocktrans %}
+Submit your shipment details and receive a clear quote.
+Our team ensures a smooth and transparent booking process.
+{% endblocktrans %}
                         </p>
                     </div>
                 </div>
@@ -156,10 +164,12 @@
                         <img src="{% static 'images/main-home/process-icon2.png' %}" alt="icon">
                     </div>
                     <div class="process-content">
-                        <h2>Processing & Shipping</h2>
+                        <h2>{% trans 'Processing & Shipping' %}</h2>
                         <p>
-                            We carefully handle, pack, and ship your cargo using reliable
-                            sea and air freight solutions with real-time updates.
+                            {% blocktrans %}
+We carefully handle, pack, and ship your cargo using reliable
+sea and air freight solutions with real-time updates.
+{% endblocktrans %}
                         </p>
                     </div>
                 </div>
@@ -170,10 +180,12 @@
                         <img src="{% static 'images/main-home/process-icon3.png' %}" alt="icon">
                     </div>
                     <div class="process-content">
-                        <h2>Delivery & Confirmation</h2>
+                        <h2>{% trans 'Delivery & Confirmation' %}</h2>
                         <p>
-                            Your shipment is delivered safely to its destination,
-                            with confirmation and full customer satisfaction.
+                           {% blocktrans %}
+Your shipment is delivered safely to its destination,
+with confirmation and full customer satisfaction.
+{% endblocktrans %}
                         </p>
                     </div>
                 </div>
@@ -227,5 +239,151 @@
 			</div>
 		</div>
 <!-- marquee section one -->
+
+
+
+<script>
+
+/* =========================================
+ABOUT COUNTERS
+========================================= */
+
+const aboutCounters =
+document.querySelectorAll(
+    ".about_counter"
+);
+
+
+
+const animateAboutCounter = (counter) => {
+
+    // =====================================
+    // GET FINAL VALUE
+    // =====================================
+
+    let targetText =
+    counter.innerText
+    .toLowerCase()
+    .trim();
+
+
+    let hasK =
+    targetText.includes("k");
+
+    let target =
+    parseInt(targetText);
+
+
+
+    // =====================================
+    // START
+    // =====================================
+
+    let count = 0;
+
+    const speed =
+    target / 100;
+
+
+
+    const updateCounter = () => {
+
+        if(count < target){
+
+            count += speed;
+
+
+
+            // 10K+
+            if(hasK){
+
+                counter.innerText =
+                Math.ceil(count) + "K";
+
+            }else{
+
+                counter.innerText =
+                Math.ceil(count);
+
+            }
+
+
+
+            requestAnimationFrame(
+                updateCounter
+            );
+
+        }else{
+
+            // FINAL VALUE
+            if(hasK){
+
+                counter.innerText =
+                target + "K";
+
+            }else{
+
+                counter.innerText =
+                target;
+
+            }
+
+        }
+
+    };
+
+
+
+    updateCounter();
+
+};
+
+
+
+/* =========================================
+SCROLL EFFECT
+========================================= */
+
+const aboutObserver =
+new IntersectionObserver((entries) => {
+
+    entries.forEach(entry => {
+
+        if(entry.isIntersecting){
+
+            animateAboutCounter(
+                entry.target
+            );
+
+            aboutObserver.unobserve(
+                entry.target
+            );
+
+        }
+
+    });
+
+}, {
+
+    threshold:0.5
+
+});
+
+
+
+aboutCounters.forEach(counter => {
+
+    aboutObserver.observe(
+        counter
+    );
+
+});
+
+</script>
+
 {% endblock %}
+
+
+
+
 

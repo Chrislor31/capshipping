@@ -661,6 +661,133 @@ section{
 
 
 
+/* =========================
+DOCUMENT TYPE
+========================= */
+
+.document_type{
+
+    display:inline-flex;
+
+    align-items:center;
+
+    justify-content:center;
+
+    padding:8px 14px;
+
+    border-radius:30px;
+
+    font-size:13px;
+
+    font-weight:600;
+
+}
+
+
+
+/* PASSPORT */
+
+.document_type.passport{
+
+    background:
+    rgba(59,130,246,.12);
+
+    color:#60A5FA;
+
+}
+
+
+
+/* DRIVER LICENSE */
+
+.document_type.driver_license{
+
+    background:
+    rgba(168,85,247,.12);
+
+    color:#C084FC;
+
+}
+
+
+
+/* NATIONAL ID */
+
+.document_type.national_id{
+
+    background:
+    rgba(34,197,94,.12);
+
+    color:#4ADE80;
+
+}
+
+
+
+
+
+
+/* =========================
+STATUS
+========================= */
+
+.status{
+
+    display:inline-flex;
+
+    align-items:center;
+
+    justify-content:center;
+
+    padding:8px 14px;
+
+    border-radius:30px;
+
+    font-size:13px;
+
+    font-weight:600;
+
+}
+
+
+
+/* PENDING */
+
+.status.pending{
+
+    background:
+    rgba(245,158,11,.12);
+
+    color:#F59E0B;
+
+}
+
+
+
+/* APPROVED */
+
+.status.approved{
+
+    background:
+    rgba(34,197,94,.12);
+
+    color:#22C55E;
+
+}
+
+
+
+/* REJECTED */
+
+.status.rejected{
+
+    background:
+    rgba(239,68,68,.12);
+
+    color:#EF4444;
+
+}
+
 
 
 
@@ -2439,5 +2566,649 @@ input:checked + .slider::before {
 
     opacity:1;
     visibility:visible;
+
+}
+
+
+/*======= contact list areal copde ==*/
+
+/* =====================================
+   PHONE INPUT DROPDOWN
+===================================== */
+
+.iti{
+
+    width: 100%;
+
+}
+
+
+.iti input{
+
+    width: 100%;
+
+}
+
+
+.iti__country-list{
+
+    background: #111827;
+
+    border: 1px solid #334155;
+
+    border-radius: 10px;
+
+    color: #fff;
+
+    margin-top: 8px;
+
+}
+
+
+.iti__country{
+
+    padding: 10px 12px;
+
+    color: #fff;
+
+    font-size: 14px;
+
+    transition: 0.2s;
+
+}
+
+
+.iti__country:hover{
+
+    background: #1e293b;
+
+}
+
+
+.iti__highlight{
+
+    background: #1e293b !important;
+
+}
+
+
+.iti__dial-code{
+
+    color: #94a3b8;
+
+}
+
+
+.iti__selected-flag{
+
+    padding: 0 12px;
+
+    background: transparent;
+
+}
+
+
+.iti__selected-dial-code{
+
+    color: #fff;
+
+    font-size: 14px;
+
+}
+
+
+
+
+
+
+
+/*======= kyc Verification dashboard ======*/
+
+.kyc-verify-grid{
+    display: flex;
+    flex-direction: column;
+    padding: 20px 0;
+}
+
+.KYC_verifications p{
+    color: var(--White_Title);
+    font-size: 14px;
+    padding: 3px 0;
+    font-weight: 400;
+    text-transform: capitalize;
+    opacity: 80%;
+}
+
+.KYC_verifications h3{
+   color: var(--White_Title);
+   font-size: 24px;
+   display: flex;
+   padding: 8px 0;
+}
+
+.kyc-information {
+    width: 100%;
+    padding: 30px;
+    background-color: var(--blue_secondery);
+    border-radius:10px;
+    border: 0.5px solid var(--boder_color);
+    box-shadow: var(--shadow-sm);
+
+}
+
+.kyc-information p:nth-child(1){
+    opacity: 100%;
+    font-size: 18px;
+    text-transform: capitalize;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 10px 0;
+}
+
+.kyc-information p:nth-child(1) i{
+    color: var(--blue_sky);
+}
+
+.Initial_KYC {
+   padding: 15px 0;
+    display: flex;
+    align-items: center;
+    gap: 20px;
+
+    border: 0.5px solid var(--color_blu_premey);
+}
+
+.Initial_KYC .Init-user {
+    width: 60px;
+    height: 60px;
+    background-color: var(--blue_sky);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    color: var(--White_Title);
+    font-weight: 600;
+    font-size: 18px;
+
+}
+
+.info-initial p:nth-child(1){
+    font-size: 20px;
+    display: flex;
+    padding:5px 0;
+
+}
+
+.info_boutom_users {
+    display: flex;
+    flex-direction: column;
+    padding: 10px 0;
+    gap: 15px;
+}
+
+.info_users {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.info_users  span , strong{
+    color: var(--White_Title);
+    opacity: 90%;
+    font-size: 16px;
+    font-weight: 300;
+}
+
+
+
+
+/*======= kyc-verify-header ======*/
+
+
+.kyc-verify-header {
+    display: flex;
+    gap: 15px;
+
+}
+
+
+
+.button-submit {
+    display: flex;
+    gap: 10px;
+    padding: 10px 0;
+}
+
+.button-submit button:nth-child(1){
+    width: 100%;
+    background: var(--green-bg);
+    border: 2px solid var(--green-premery);
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    color: var(--green-text);
+    cursor: pointer;
+    padding: 10px 15px;
+}
+
+.button-submit button:nth-child(1) i{
+    color: var(--green-text);
+}
+
+.button-submit button:nth-child(2){
+    width: 100%;
+    background: var(--red-bg);
+    border: 2px solid var(--red-text);
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    color: var(--red-text);
+    cursor: pointer;
+    padding: 10px 15px;
+}
+
+.button-submit button:nth-child(2) i{
+    color: var(--red-text);
+}
+
+.kyc-information h4{
+    color: var(--White_Title);
+    font-weight: 400;
+    font-size: 14px;
+}
+
+.kyc-information textarea{
+    width: 100%;
+    background-color: var(--color_blu_premey);
+    border: 0.3px solid var();
+    border-radius: 10px;
+    height: auto;
+    margin: 10px 0;
+    max-height: 70px;
+    padding: 10px;
+    color: var(--White_Title);
+}
+
+.submit-decision button {
+    width: 100%;
+    padding: 10px 15px;
+    background-color: var(--blue_sky);
+    color: var(--White_Title);
+    font-size: 16px;
+    border: none;
+    border-radius: 10px;
+    font-weight: 400;
+    text-transform: capitalize;
+    cursor: pointer;
+}
+
+
+/* =========================
+BUTTON SUBMIT
+========================= */
+
+.button-submit{
+
+    width:100%;
+
+    display:grid;
+
+    grid-template-columns:1fr 1fr;
+
+    gap:10px;
+
+    margin-top:0px;
+
+
+}
+
+
+
+/* CARD */
+
+.decision-card{
+
+    position:relative;
+
+    border:1px solid
+    rgba(255,255,255,.08);
+
+    background:#101935;
+
+    border-radius:10px;
+
+    padding:10px;
+
+    cursor:pointer;
+
+    transition:.3s;
+
+}
+
+
+
+/* HIDE RADIO */
+
+.decision-card input{
+    display:none;
+}
+
+
+
+/* CONTENT */
+
+.decision-content{
+
+    display:flex;
+
+    align-items:center;
+
+    gap:10px;
+
+}
+
+
+
+/* CHECK ICON */
+
+.check-icon{
+
+    width:25px;
+    height:25px;
+
+    border-radius:16px;
+
+    border:2px solid
+    rgba(255,255,255,.2);
+
+    display:flex;
+
+    align-items:center;
+
+    justify-content:center;
+
+    flex-shrink:0;
+
+    transition:.3s;
+
+}
+
+
+
+.check-icon i{
+
+    font-size:20px;
+
+    color:#fff;
+
+}
+
+
+
+/* TEXT */
+
+.decision-text h4{
+
+    color:#fff;
+
+    font-size:14px;
+
+    font-weight:400;
+
+}
+
+
+
+.decision-text p{
+
+    color:#9CA3AF;
+
+    margin-top:6px;
+
+    font-size:12px;
+
+}
+
+
+
+/* APPROVE ACTIVE */
+
+.approve:has(input:checked){
+
+    border-color:#22C55E;
+
+    background:
+    rgba(34,197,94,.08);
+
+}
+
+
+
+.approve:has(input:checked)
+.check-icon{
+
+    background:#2563EB;
+
+    border-color:#2563EB;
+
+}
+
+
+
+.approve:has(input:checked)
+.decision-text h4{
+
+    color:#22C55E;
+
+}
+
+
+
+/* REJECT ACTIVE */
+
+.reject:has(input:checked){
+
+    border-color:#EF4444;
+
+    background:
+    rgba(239,68,68,.08);
+
+}
+
+
+
+.reject:has(input:checked)
+.check-icon{
+
+    border-color:#fff;
+
+}
+
+
+
+.reject:has(input:checked)
+.decision-text h4{
+
+    color:#EF4444;
+
+}
+.from-image{
+
+    width:100%;
+
+    height:370px;
+
+    border-radius:10px;
+
+    border:0.5px solid
+    var(--blue_secondery);
+
+    background-color:
+    var(--blue_secondery);
+
+    display:flex;
+
+    flex-direction:column;
+
+    padding:10px;
+
+    gap:10px;
+
+}
+
+
+
+/* IMAGE BOX */
+
+.image-front{
+
+    width:100%;
+
+    height:100%;
+
+    display:flex;
+
+    align-items:center;
+
+    justify-content:center;
+
+    overflow:hidden;
+
+    border-radius:10px;
+
+    background:#0f172a;
+
+}
+
+
+
+/* IMAGE */
+
+.from-image img{
+
+    width:100%;
+
+    height:100%;
+
+    object-fit:contain;
+
+    display:block;
+
+}
+
+.from-image  p{
+    display: flex;
+    padding: 10px;
+    font-size: 18px;
+    align-items: center;
+    gap: 10px;
+}
+
+.kyc-photos-doc {
+    display: flex;
+    gap: 15px;
+}
+
+
+/*====== MEDIA KYC CLIENT ====*/
+
+@media(max-width:600px){
+
+    .kyc-verify-header {
+    display: flex;
+    gap: 15px;
+    flex-direction: column;
+
+}
+
+.kyc-photos-doc{
+    flex-direction: column;
+}
+
+}
+
+
+@media(max-width:992px){
+
+    .kyc-verify-header {
+    display: flex;
+    gap: 15px;
+    flex-direction: column;
+
+}
+
+.kyc-photos-doc{
+    flex-direction: column;
+}
+
+}
+
+@media(max-width:1200px){
+
+        .kyc-verify-header {
+    display: flex;
+    gap: 15px;
+    flex-direction: column;
+
+}
+
+.kyc-photos-doc{
+    flex-direction: column;
+}
+
+}
+
+/*===== notifikasyon kyc =====*/
+
+
+
+.notice-kyc {
+color: var(--Orange_premery);
+
+
+}
+
+.nav-items {
+    display: flex;
+    flex-wrap: nowrap;
+}
+
+
+
+
+.Package-Details{
+
+    display:grid;
+    grid-template-columns:repeat(3, 1fr);
+    gap:20px;
+
+}
+
+
+/* Tablet */
+@media(max-width:992px){
+
+    .Package-Details{
+
+        grid-template-columns:repeat(3, 1fr);
+
+    }
+
+}
+
+
+/* Telephone */
+@media(max-width:600px){
+
+    .Package-Details{
+
+        grid-template-columns:2fr;
+
+    }
 
 }

@@ -1,6 +1,6 @@
 
 
-
+{% load i18n %}
 
 <section class="dashboard_add_user">
 
@@ -17,9 +17,9 @@
 <form id="shipmentForm" data-id="{{ package.id|default:'' }}">
 
     <div class="head_page">
-        <h2>Add new Shipement / Package</h2>
+        <h2>{% blocktrans %} Add new Shipement / Package {% endblocktrans %}</h2>
 
-        <p>user > add new user </p>
+        <p>{% blocktrans %} user > add new user {% endblocktrans %}</p>
     </div>
 
 <div class="grid_layout">
@@ -28,11 +28,11 @@
     <!-- LEFT -->
     <div class="left_content_add">
 
-        <label>select user / guest</label>
+        <label>{% blocktrans %} select user / guest {% endblocktrans %}</label>
         <select id="userType">
-            <option value="">select user / guest</option>
-            <option value="user">User</option>
-            <option value="guest">Guest</option>
+            <option value="">{% blocktrans %} select user / gues {% endblocktrans %}t</option>
+            <option value="user">{% trans 'User' %}</option>
+            <option value="guest">{% trans 'Guest' %}</option>
         </select>
 
         <!-- 🔥 hidden pou Django -->
@@ -84,7 +84,7 @@
 
 <div class="fist_name sender_from">
 
-    <label>Sender (From)</label>
+    <label>{% blocktrans %} Sender (From) {% endblocktrans %}</label>
 
     <div class="sender_grid">
 
@@ -105,7 +105,7 @@
             <!-- DROPDOWN -->
             <div class="dropdown_sender">
 
-                <input type="text" class="search_sender_input" placeholder="Search sender...">
+                <input type="text" class="search_sender_input" placeholder="{% trans 'Search sender...' %}">
                 <input type="hidden" id="senderIdInput" name="sender" value="{{ package.sender_id }}">
 
 
@@ -118,7 +118,7 @@
 
         </div>
         <div class="btn_sender">
-        <button type="button">+ add</button>
+        <button type="button">+ {% trans 'add' %}</button>
         </div>
 
     </div>
@@ -131,7 +131,7 @@
 
 <div class="fist_name sender_from">
 
-    <label>Receiver (To)</label>
+    <label>{% blocktrans %} Receiver (To) {% endblocktrans %}</label>
 
     <div class="sender_grid">
 
@@ -167,7 +167,7 @@
         </div>
 
            <div class="btn_receiver">
-        <button type="button">+ add</button>
+        <button type="button">+ {% trans 'add' %}</button>
         </div>
 
     </div>
@@ -191,7 +191,7 @@
             <div class="countr_state_city">
 
                <div class="country origine">
-    <label>Origin Warehouse</label>
+    <label>{% trans 'Origin Warehouse' %}</label>
 
     <!-- 🔥 USER WÈ SA -->
   <select name="origin_warehouse" disabled>
@@ -208,7 +208,7 @@
            value="{{ request.user.staff_warehouse.id }}">
 </div>
                 <div class="state destination">
-                <label >destination Warehouse </label>
+                <label >{% trans 'destination Warehouse' %} </label>
                 <select name="destination_warehouse">
     {% for w in warehouses %}
         <option value="{{ w.id }}" {% if package.destination_warehouse_id == w.id %}selected{% endif %}>
@@ -235,7 +235,7 @@
                             </div>
 
                 <div class="shipping-type">
-                <label >Shipping Type </label>
+                <label >{% trans 'Shipping Type' %} </label>
                 <select name="shipping_type">
     {% for value,label in shipping_types %}
         <option value="{{ value }}" {% if package.shipping_type == value %}selected{% endif %}>
@@ -260,62 +260,62 @@
 
             <!-- warehouse information -->
 
-            <h3>Package Details</h3>
+            <h3>{% trans 'Package Details' %}</h3>
 
             <div class="Package-Details">
 
             <div class="pickup">
-                <label >Weight (Kg)</label>
+                <label >{% trans 'Weight' %} (Kg)</label>
                <input type="number" name="weight" value="{{ package.weight }}">
             </div>
 
             <div class="staff_warehouse">
-                <label>Length (Cm)</label>
+                <label>{% trans 'Length' %} (Cm)</label>
               <input type="number" name="height" value="{{ package.height }}">
 
             </div>
 
             <div class="staff_warehouse">
-                <label>Width (Cm)</label>
+                <label>{% trans 'Width' %} (Cm)</label>
               <input type="number" name="width" value="{{ package.width }}">
 
             </div>
 
             <div class="staff_warehouse">
-                <label >Height(Cm)</label>
+                <label >{% trans 'Height' %}(Cm)</label>
               <input type="number" name="height" value="{{ package.height }}">
 
             </div>
 
 
             <div class="staff_warehouse">
-                <label >Height(Cm)</label>
+                <label >{% trans 'Height' %}(Cm)</label>
               <input type="number" name="height" value="{{ package.height }}">
 
             </div>
 
 
              <div class="staff_warehouse">
-                <label >Quantity (Qty)</label>
+                <label >{% trans 'Quantity' %} (Qty)</label>
               <input type="number" name="quantity" value="{{ package.quantity }}">
 
             </div>
 
             <div class="staff_warehouse">
-                <label >Pirce ($)</label>
+                <label >{% trans 'Pirce' %} ($)</label>
               <input type="number" name="price" placeholder="US" value="{{ package.price }}">
 
             </div>
 
             <div class="staff_warehouse">
-                <label >Extra fee ($)</label>
+                <label >{% trans 'Extra fee' %} ($)</label>
               <input type="number" name="extra_fee" value="{{ package.extra_fee }}">
 
             </div>
 
 
                 <div class="staff_warehouse">
-                     <label >Shipment type </label>
+                     <label >{% trans 'Shipment type' %} </label>
 <select name="shipment_type">
 
     <option value="standard"
@@ -336,7 +336,7 @@
 
 
 <div class="staff_warehouse">
-    <label>Shipment status</label>
+    <label>{% trans 'Shipment status' %}</label>
 
     <select name="status">
 
@@ -369,10 +369,10 @@
 </div>
 
                  <div class="staff_warehouse">
-                     <label >payment_status</label>
+                     <label >{% trans 'payment_status' %}</label>
                 <div class="payment_toggle">
 
-    <span class="label_text">Unpaid</span>
+    <span class="label_text">{% trans 'Unpaid' %}</span>
 
     <label class="switch">
         <input type="checkbox" id="paymentSwitch"
@@ -380,7 +380,7 @@
         <span class="slider"></span>
     </label>
 
-    <span class="label_text paid">Paid</span>
+    <span class="label_text paid">{% trans 'Paid' %}</span>
 
 </div>
 
@@ -402,7 +402,7 @@
         <div class="password_confirm_par">
             <!-- password -->
 
-            <h3>Package Description </h3>
+            <h3>{% trans 'Package Description' %} </h3>
             <label >description</label>
             <textarea name="description">{{ package.description|default:'' }}</textarea>
 
@@ -415,13 +415,13 @@
 <div class="send_welcome">
     <input type="checkbox" checked>
 
-    <span>send email to Receiver</span>
+    <span>{% trans 'send email to Receiver' %}</span>
 </div>
 
 
 <div class="btn_sub_reset">
     <button>reset</button>
-    <button id="saveShipment" type="submit">Save Shipment</button>
+    <button id="saveShipment" type="submit">{% trans 'Save Shipment' %}</button>
 </div>
     </div>
 
@@ -441,10 +441,10 @@
         <h4>Tips</h4>
     </div>
 <ul class="tips_list">
-    <li><i class='bx bx-check'></i> Make sure all required fields are filled</li>
-    <li><i class='bx bx-check'></i> Double-check the warehouse locations</li>
-    <li><i class='bx bx-check'></i> Weight and dimensions affect pricing</li>
-    <li><i class='bx bx-check'></i> You can add new contacts on the go</li>
+    <li><i class='bx bx-check'></i> {% trans 'Make sure all required fields are filled' %}</li>
+    <li><i class='bx bx-check'></i> {% trans 'Double-check the warehouse locations' %}</li>
+    <li><i class='bx bx-check'></i> {% trans 'Weight and dimensions affect pricing' %}</li>
+    <li><i class='bx bx-check'></i> {% trans 'You can add new contacts on the go' %}</li>
 </ul>
 
 </div>
@@ -464,8 +464,8 @@
         </div>
 
         <div class="summary_title">
-            <h3>Shipment Created</h3>
-            <p>Review shipment details below</p>
+            <h3>{% trans 'Shipment Created' %}</h3>
+            <p>{% trans 'Review shipment details below' %}</p>
         </div>
     </div>
 
@@ -473,18 +473,18 @@
     <div class="summary_details">
 
         <div class="row">
-            <span>Tracking #</span>
+            <span>{% trans 'Tracking' %} #</span>
             <strong id="sum_tracking">TRK-000123</strong>
         </div>
 
         <div class="row">
-            <span>Package ID</span>
+            <span>{% trans 'Package' %} ID</span>
             <strong id="sum_pkg">PKG-0001</strong>
         </div>
 
         <div class="row">
-            <span>Type</span>
-            <strong id="sum_type">Air</strong>
+            <span>{% trans 'Type' %}</span>
+            <strong id="sum_type">{% trans 'Air' %]</strong>
         </div>
 
         <div class="row">

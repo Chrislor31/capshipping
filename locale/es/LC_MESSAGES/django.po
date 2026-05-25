@@ -1,37 +1,2092 @@
 msgid ""
 msgstr ""
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-05-24 22:07-0400\n"
 "Language: es\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 
-msgid "Hello"
-msgstr "Hola"
+#: accounts/utils.py:24
+msgid "Welcome to Cap Shipping 🎉"
+msgstr ""
 
-msgid "Cap Shipping Distribution LLC"
-msgstr "Cap Shipping Distribution LLC"
+#: accounts/utils.py:59
+msgid "Your OTP Code"
+msgstr ""
 
-msgid "Shipping From"
-msgstr "Envío desde"
+#: accounts/utils.py:189
+msgid "KYC Submitted Successfully 📄"
+msgstr ""
 
-msgid "the USA to Haiti"
+#: accounts/utils.py:248
+msgid "KYC Approved Successfully ✅"
+msgstr ""
+
+#: accounts/utils.py:311
+msgid "KYC Verification Rejected ❌"
+msgstr ""
+
+#: capshipping/settings.py:166
+msgid "English"
+msgstr ""
+
+#: capshipping/settings.py:167
+msgid "French"
+msgstr ""
+
+#: capshipping/settings.py:168
+msgid "Spanish"
+msgstr ""
+
+#: capshipping/settings.py:169
+msgid "Creole"
+msgstr ""
+
+#: capshipping/templates/404.html:19
+msgid "Oops! Page Not Found"
+msgstr ""
+
+#: capshipping/templates/404.html:27
+msgid "The page you are looking for doesn"
+msgstr ""
+
+#: capshipping/templates/404.html:31
+msgid ""
+" The page may have been moved, deleted,\n"
+"            or the link is incorrect.\n"
+"            "
+msgstr ""
+
+#: capshipping/templates/404.html:40
+#, fuzzy
+#| msgid "Home"
+msgid "Back Home"
+msgstr "Inicio"
+
+#: capshipping/templates/404.html:46
+msgid "Go Back"
+msgstr ""
+
+#: capshipping/templates/about.html:18 capshipping/templates/about.html:22
+#: capshipping/templates/about.html:40 capshipping/templates/base.html:341
+#: capshipping/templates/base.html:531 capshipping/templates/index.html:272
+#, fuzzy
+#| msgid "About"
+msgid "About Us"
+msgstr "Acerca de"
+
+#: capshipping/templates/about.html:21
+msgid "home"
+msgstr ""
+
+#: capshipping/templates/about.html:43
+msgid "Reliable Freight & Logistics"
+msgstr ""
+
+#: capshipping/templates/about.html:44
+#, fuzzy
+#| msgid "the USA to Haiti"
+msgid "Between the U.S. and Haiti"
 msgstr "de Estados Unidos a Haití"
 
-msgid "and Other Countries"
-msgstr "y otros países"
+#: capshipping/templates/about.html:58
+msgid "Shipments Delivered Successfully"
+msgstr ""
 
-msgid "Track Your Package"
-msgstr "Rastrea tu paquete"
+#: capshipping/templates/about.html:64
+msgid "Customer Satisfaction Rate"
+msgstr ""
 
+#: capshipping/templates/about.html:74
+msgid "Reliable Freight Services"
+msgstr ""
+
+#: capshipping/templates/about.html:82
+msgid ""
+"We offer reliable air and sea freight solutions with secure handling, fast "
+"delivery, and trusted logistics services between the USA, Haiti, and the "
+"Dominican Republic."
+msgstr ""
+
+#: capshipping/templates/about.html:94 capshipping/templates/contact.html:110
+msgid "Customer Support"
+msgstr ""
+
+#: capshipping/templates/about.html:102
+msgid ""
+"Our support team is always ready to assist you with shipment tracking, "
+"delivery updates, and any questions to ensure a smooth and stress-free "
+"shipping experience."
+msgstr ""
+
+#: capshipping/templates/about.html:110 capshipping/templates/index.html:312
+msgid "More About Us"
+msgstr ""
+
+#: capshipping/templates/about.html:113
+msgid "Call Us now"
+msgstr ""
+
+#: capshipping/templates/about.html:135
+msgid "Working Process"
+msgstr ""
+
+#: capshipping/templates/about.html:138
+msgid "Simple, Fast & Reliable"
+msgstr ""
+
+#: capshipping/templates/about.html:139
+#, fuzzy
+#| msgid "Shipping From"
+msgid "Shipping Process"
+msgstr "Envío desde"
+
+#: capshipping/templates/about.html:151
+msgid "Request & Booking"
+msgstr ""
+
+#: capshipping/templates/about.html:153
+msgid ""
+"\n"
+"Submit your shipment details and receive a clear quote.\n"
+"Our team ensures a smooth and transparent booking process.\n"
+msgstr ""
+
+#: capshipping/templates/about.html:167
+msgid "Processing & Shipping"
+msgstr ""
+
+#: capshipping/templates/about.html:169
+msgid ""
+"\n"
+"We carefully handle, pack, and ship your cargo using reliable\n"
+"sea and air freight solutions with real-time updates.\n"
+msgstr ""
+
+#: capshipping/templates/about.html:183
+msgid "Delivery & Confirmation"
+msgstr ""
+
+#: capshipping/templates/about.html:185
+msgid ""
+"\n"
+"Your shipment is delivered safely to its destination,\n"
+"with confirmation and full customer satisfaction.\n"
+msgstr ""
+
+#: capshipping/templates/base.html:113 capshipping/templates/base.html:519
+#: capshipping/templates/contact.html:19
+#: capshipping/templates/term_and_condition.html:33
 msgid "Home"
 msgstr "Inicio"
 
+#: capshipping/templates/base.html:117
+#, fuzzy
+#| msgid "Services"
+msgid "Service"
+msgstr "Servicios"
+
+#: capshipping/templates/base.html:121
+#, fuzzy
+#| msgid "About"
+msgid "About us"
+msgstr "Acerca de"
+
+#: capshipping/templates/base.html:123
+#, fuzzy
+#| msgid "About"
 msgid "About"
 msgstr "Acerca de"
 
-msgid "Services"
-msgstr "Servicios"
+#: capshipping/templates/base.html:124
+msgid "Our policy"
+msgstr ""
 
+#: capshipping/templates/base.html:130
+#: capshipping/templates/dashboard/partials/add_shipment.html:476
+#: capshipping/templates/dashboard_user/dashboard.html:223
+msgid "Tracking"
+msgstr ""
+
+#: capshipping/templates/base.html:176 capshipping/templates/contact.html:20
+#: capshipping/templates/dashboard/partials/contact_table.html:262
 msgid "Contact"
 msgstr "Contacto"
 
+#: capshipping/templates/base.html:181 capshipping/templates/base.html:185
 msgid "My Account"
 msgstr "Mi cuenta"
+
+#: capshipping/templates/base.html:234
+msgid "Call Now"
+msgstr ""
+
+#: capshipping/templates/base.html:242
+msgid "Send Email"
+msgstr ""
+
+#: capshipping/templates/base.html:343
+msgid ""
+"CapShipping Distribution provides reliable Air and Sea cargo\n"
+"\t\t\t\tservices between the USA, Haiti, and the Dominican Republic.\n"
+"\t\t\t\tWe help individuals and businesses ship packages safely,\n"
+"\t\t\t\tquickly, and efficiently through our trusted logistics network. "
+msgstr ""
+
+#: capshipping/templates/base.html:349
+#, fuzzy
+#| msgid "Contact"
+msgid "Contact Info"
+msgstr "Contacto"
+
+#: capshipping/templates/base.html:386
+msgid "Sign Up"
+msgstr ""
+
+#: capshipping/templates/base.html:387
+msgid "Sign In"
+msgstr ""
+
+#: capshipping/templates/base.html:449
+msgid "Are you sure to proceed ?"
+msgstr ""
+
+#: capshipping/templates/base.html:453
+msgid "This may be change your interface in fonctionality"
+msgstr ""
+
+#: capshipping/templates/base.html:455
+msgid " to navigate to other pages"
+msgstr ""
+
+#: capshipping/templates/base.html:462
+msgid "Confirm"
+msgstr ""
+
+#: capshipping/templates/base.html:467
+#: capshipping/templates/dashboard/base.html:287
+#: capshipping/templates/dashboard/base.html:337
+#: capshipping/templates/dashboard/partials/add_users.html:292
+#: capshipping/templates/dashboard/partials/category_table.html:484
+msgid "Cancel"
+msgstr ""
+
+#: capshipping/templates/base.html:492
+msgid ""
+"\n"
+"Cap Shipping Distribution LLC is a trusted freight forwarding and logistics "
+"company dedicated to providing fast,\n"
+"secure, and reliable cargo solutions between the United States and Haiti.\n"
+msgstr ""
+
+#: capshipping/templates/base.html:511
+msgid "Company"
+msgstr ""
+
+#: capshipping/templates/base.html:543
+#, fuzzy
+#| msgid "Services"
+msgid "Our Services"
+msgstr "Servicios"
+
+#: capshipping/templates/base.html:555 capshipping/templates/base.html:635
+#, fuzzy
+#| msgid "Contact"
+msgid "Contact Us"
+msgstr "Contacto"
+
+#: capshipping/templates/base.html:574
+msgid "Quick Links"
+msgstr ""
+
+#: capshipping/templates/base.html:582
+msgid "Track Shipment"
+msgstr ""
+
+#: capshipping/templates/base.html:594
+#, fuzzy
+#| msgid "Shipping From"
+msgid "Shipping Rates"
+msgstr "Envío desde"
+
+#: capshipping/templates/base.html:606
+msgid "Air & Sea Freight"
+msgstr ""
+
+#: capshipping/templates/base.html:618
+msgid "Warehouse Addresses"
+msgstr ""
+
+#: capshipping/templates/base.html:647
+msgid "Send E-Mail"
+msgstr ""
+
+#: capshipping/templates/base.html:698
+msgid "Cap Shipping Distribution LLC 2026. All rights reserved. Designed by"
+msgstr ""
+
+#: capshipping/templates/contact.html:44
+msgid "Trusted Happy Customers"
+msgstr ""
+
+#: capshipping/templates/contact.html:56
+msgid "Need Help? We’re Here"
+msgstr ""
+
+#: capshipping/templates/contact.html:85
+msgid "Select Subject"
+msgstr ""
+
+#: capshipping/templates/contact.html:89
+msgid "Shipment Tracking"
+msgstr ""
+
+#: capshipping/templates/contact.html:93
+msgid "Air Freight"
+msgstr ""
+
+#: capshipping/templates/contact.html:97
+msgid "Sea Cargo"
+msgstr ""
+
+#: capshipping/templates/contact.html:101
+msgid "Package Delivery"
+msgstr ""
+
+#: capshipping/templates/contact.html:105
+msgid "Warehouse Service"
+msgstr ""
+
+#: capshipping/templates/contact.html:114
+msgid "Other Inquiry"
+msgstr ""
+
+#: capshipping/templates/contact.html:127
+msgid "Send Message"
+msgstr ""
+
+#: capshipping/templates/dashboard/base.html:110
+#: capshipping/templates/dashboard/partials/contact_table.html:172
+#, fuzzy
+#| msgid "Contact"
+msgid "Add Contact"
+msgstr "Contacto"
+
+#: capshipping/templates/dashboard/base.html:125
+#: capshipping/templates/dashboard/partials/add_shipment.html:34
+msgid "User"
+msgstr ""
+
+#: capshipping/templates/dashboard/base.html:137
+msgid "select user (optional)"
+msgstr ""
+
+#: capshipping/templates/dashboard/base.html:155
+msgid "search user..."
+msgstr ""
+
+#: capshipping/templates/dashboard/base.html:191
+msgid "name"
+msgstr ""
+
+#: capshipping/templates/dashboard/base.html:211
+#: capshipping/templates/dashboard/partials/contact_table.html:263
+msgid "Phone"
+msgstr ""
+
+#: capshipping/templates/dashboard/base.html:223
+#: capshipping/templates/dashboard/partials/contact_table.html:264
+#: capshipping/templates/register.html:81
+msgid "Email"
+msgstr ""
+
+#: capshipping/templates/dashboard/base.html:241
+msgid "Full address"
+msgstr ""
+
+#: capshipping/templates/dashboard/base.html:261
+msgid "is_guest"
+msgstr ""
+
+#: capshipping/templates/dashboard/base.html:278
+#, fuzzy
+#| msgid "Contact"
+msgid "Save Contact"
+msgstr "Contacto"
+
+#: capshipping/templates/dashboard/base.html:326
+msgid "Confirm Delete"
+msgstr ""
+
+#: capshipping/templates/dashboard/base.html:331
+msgid "Are you sure you want to delete this item?"
+msgstr ""
+
+#: capshipping/templates/dashboard/base.html:333
+msgid "This action cannot be undone"
+msgstr ""
+
+#: capshipping/templates/dashboard/base.html:338
+#: capshipping/templates/dashboard/partials/category_table.html:231
+#: capshipping/templates/dashboard/partials/contact_table.html:431
+msgid "Delete"
+msgstr ""
+
+#: capshipping/templates/dashboard/login_admin.html:31
+msgid "Admin Login"
+msgstr ""
+
+#: capshipping/templates/dashboard/login_admin.html:33
+msgid "Sign in to your account"
+msgstr ""
+
+#: capshipping/templates/dashboard/login_admin.html:57
+msgid "Remember me"
+msgstr ""
+
+#: capshipping/templates/dashboard/login_admin.html:60
+msgid "Forgot password?"
+msgstr ""
+
+#: capshipping/templates/dashboard/partials/add_shipment.html:20
+msgid " Add new Shipement / Package "
+msgstr ""
+
+#: capshipping/templates/dashboard/partials/add_shipment.html:22
+msgid " user > add new user "
+msgstr ""
+
+#: capshipping/templates/dashboard/partials/add_shipment.html:31
+msgid " select user / guest "
+msgstr ""
+
+#: capshipping/templates/dashboard/partials/add_shipment.html:33
+msgid " select user / gues "
+msgstr ""
+
+#: capshipping/templates/dashboard/partials/add_shipment.html:35
+#: capshipping/templates/dashboard/partials/contact_table.html:362
+msgid "Guest"
+msgstr ""
+
+#: capshipping/templates/dashboard/partials/add_shipment.html:87
+msgid " Sender (From) "
+msgstr ""
+
+#: capshipping/templates/dashboard/partials/add_shipment.html:108
+msgid "Search sender..."
+msgstr ""
+
+#: capshipping/templates/dashboard/partials/add_shipment.html:121
+#: capshipping/templates/dashboard/partials/add_shipment.html:170
+msgid "add"
+msgstr ""
+
+#: capshipping/templates/dashboard/partials/add_shipment.html:134
+msgid " Receiver (To) "
+msgstr ""
+
+#: capshipping/templates/dashboard/partials/add_shipment.html:194
+msgid "Origin Warehouse"
+msgstr ""
+
+#: capshipping/templates/dashboard/partials/add_shipment.html:211
+msgid "destination Warehouse"
+msgstr ""
+
+#: capshipping/templates/dashboard/partials/add_shipment.html:238
+#, fuzzy
+#| msgid "Shipping From"
+msgid "Shipping Type"
+msgstr "Envío desde"
+
+#: capshipping/templates/dashboard/partials/add_shipment.html:263
+#: capshipping/templates/dashboard/partials/calculator.html:232
+msgid "Package Details"
+msgstr ""
+
+#: capshipping/templates/dashboard/partials/add_shipment.html:268
+#: capshipping/templates/dashboard/partials/calculator.html:248
+msgid "Weight"
+msgstr ""
+
+#: capshipping/templates/dashboard/partials/add_shipment.html:273
+#: capshipping/templates/dashboard/partials/calculator.html:266
+msgid "Length"
+msgstr ""
+
+#: capshipping/templates/dashboard/partials/add_shipment.html:279
+#: capshipping/templates/dashboard/partials/calculator.html:284
+msgid "Width"
+msgstr ""
+
+#: capshipping/templates/dashboard/partials/add_shipment.html:285
+#: capshipping/templates/dashboard/partials/add_shipment.html:292
+#: capshipping/templates/dashboard/partials/calculator.html:302
+msgid "Height"
+msgstr ""
+
+#: capshipping/templates/dashboard/partials/add_shipment.html:299
+#: capshipping/templates/dashboard/partials/calculator.html:320
+msgid "Quantity"
+msgstr ""
+
+#: capshipping/templates/dashboard/partials/add_shipment.html:305
+msgid "Pirce"
+msgstr ""
+
+#: capshipping/templates/dashboard/partials/add_shipment.html:311
+msgid "Extra fee"
+msgstr ""
+
+#: capshipping/templates/dashboard/partials/add_shipment.html:318
+#, fuzzy
+#| msgid "Shipping From"
+msgid "Shipment type"
+msgstr "Envío desde"
+
+#: capshipping/templates/dashboard/partials/add_shipment.html:339
+#, fuzzy
+#| msgid "Shipping From"
+msgid "Shipment status"
+msgstr "Envío desde"
+
+#: capshipping/templates/dashboard/partials/add_shipment.html:372
+msgid "payment_status"
+msgstr ""
+
+#: capshipping/templates/dashboard/partials/add_shipment.html:375
+msgid "Unpaid"
+msgstr ""
+
+#: capshipping/templates/dashboard/partials/add_shipment.html:383
+msgid "Paid"
+msgstr ""
+
+#: capshipping/templates/dashboard/partials/add_shipment.html:405
+msgid "Package Description"
+msgstr ""
+
+#: capshipping/templates/dashboard/partials/add_shipment.html:418
+msgid "send email to Receiver"
+msgstr ""
+
+#: capshipping/templates/dashboard/partials/add_shipment.html:424
+#, fuzzy
+#| msgid "Shipping From"
+msgid "Save Shipment"
+msgstr "Envío desde"
+
+#: capshipping/templates/dashboard/partials/add_shipment.html:444
+msgid "Make sure all required fields are filled"
+msgstr ""
+
+#: capshipping/templates/dashboard/partials/add_shipment.html:445
+msgid "Double-check the warehouse locations"
+msgstr ""
+
+#: capshipping/templates/dashboard/partials/add_shipment.html:446
+msgid "Weight and dimensions affect pricing"
+msgstr ""
+
+#: capshipping/templates/dashboard/partials/add_shipment.html:447
+msgid "You can add new contacts on the go"
+msgstr ""
+
+#: capshipping/templates/dashboard/partials/add_shipment.html:467
+#, fuzzy
+#| msgid "Shipping From"
+msgid "Shipment Created"
+msgstr "Envío desde"
+
+#: capshipping/templates/dashboard/partials/add_shipment.html:468
+#, fuzzy
+#| msgid "Shipping From"
+msgid "Review shipment details below"
+msgstr "Envío desde"
+
+#: capshipping/templates/dashboard/partials/add_shipment.html:481
+#, fuzzy
+#| msgid "Track Your Package"
+msgid "Package"
+msgstr "Rastrea tu paquete"
+
+#: capshipping/templates/dashboard/partials/add_shipment.html:486
+msgid "Type"
+msgstr ""
+
+#: capshipping/templates/dashboard/partials/add_users.html:44
+msgid "User information"
+msgstr ""
+
+#: capshipping/templates/dashboard/partials/add_users.html:46
+msgid "email"
+msgstr ""
+
+#: capshipping/templates/dashboard/partials/add_users.html:59
+msgid "first name"
+msgstr ""
+
+#: capshipping/templates/dashboard/partials/add_users.html:70
+msgid "last name"
+msgstr ""
+
+#: capshipping/templates/dashboard/partials/add_users.html:84
+msgid "Phone Number"
+msgstr ""
+
+#: capshipping/templates/dashboard/partials/add_users.html:126
+msgid "Address information"
+msgstr ""
+
+#: capshipping/templates/dashboard/partials/add_users.html:136
+#: capshipping/templates/register.html:99
+msgid "Select Country"
+msgstr ""
+
+#: capshipping/templates/dashboard/partials/add_users.html:142
+msgid "state / province"
+msgstr ""
+
+#: capshipping/templates/dashboard/partials/add_users.html:148
+#: capshipping/templates/register.html:106
+msgid "State / Region"
+msgstr ""
+
+#: capshipping/templates/dashboard/partials/add_users.html:160
+msgid "Select your city"
+msgstr ""
+
+#: capshipping/templates/dashboard/partials/add_users.html:171
+msgid "enter full address"
+msgstr ""
+
+#: capshipping/templates/dashboard/partials/add_users.html:181
+msgid "warehouse information"
+msgstr ""
+
+#: capshipping/templates/dashboard/partials/add_users.html:186
+msgid "Default pickup warehouse"
+msgstr ""
+
+#: capshipping/templates/dashboard/partials/add_users.html:189
+msgid "default pickup warehouse"
+msgstr ""
+
+#: capshipping/templates/dashboard/partials/add_users.html:202
+msgid " staff warehouse ( for staff users) "
+msgstr ""
+
+#: capshipping/templates/dashboard/partials/add_users.html:205
+msgid " select staff warehouse (optional) "
+msgstr ""
+
+#: capshipping/templates/dashboard/partials/add_users.html:224
+msgid "Account Security"
+msgstr ""
+
+#: capshipping/templates/dashboard/partials/add_users.html:238
+msgid "Confirm password"
+msgstr ""
+
+#: capshipping/templates/dashboard/partials/add_users.html:256
+msgid "send welcome email to user"
+msgstr ""
+
+#: capshipping/templates/dashboard/partials/add_users.html:284
+msgid "Update user"
+msgstr ""
+
+#: capshipping/templates/dashboard/partials/add_users.html:286
+msgid "Save user"
+msgstr ""
+
+#: capshipping/templates/dashboard/partials/add_users.html:297
+msgid "account status"
+msgstr ""
+
+#: capshipping/templates/dashboard/partials/add_users.html:308
+#: capshipping/templates/dashboard_user/dashboard.html:1236
+msgid "Active"
+msgstr ""
+
+#: capshipping/templates/dashboard/partials/add_users.html:315
+#: capshipping/templates/dashboard/partials/category_table.html:501
+msgid "information"
+msgstr ""
+
+#: capshipping/templates/dashboard/partials/add_users.html:319
+msgid ""
+" Please provide accurate user information before creating a new account.\n"
+"    This helps ensure secure account management and a smooth shipping "
+"experience for all customers. "
+msgstr ""
+
+#: capshipping/templates/dashboard/partials/calculator.html:8
+#: capshipping/templates/dashboard_user/dashboard.html:735
+msgid "Shipment Price Calculator"
+msgstr ""
+
+#: capshipping/templates/dashboard/partials/calculator.html:12
+msgid "dashboard > shipment calculator"
+msgstr ""
+
+#: capshipping/templates/dashboard/partials/calculator.html:41
+#, fuzzy
+#| msgid "Shipping From"
+msgid "Shipping Information"
+msgstr "Envío desde"
+
+#: capshipping/templates/dashboard/partials/calculator.html:58
+msgid "From Country"
+msgstr ""
+
+#: capshipping/templates/dashboard/partials/calculator.html:70
+msgid "Select Origin Country"
+msgstr ""
+
+#: capshipping/templates/dashboard/partials/calculator.html:100
+msgid "Destination Country"
+msgstr ""
+
+#: capshipping/templates/dashboard/partials/calculator.html:112
+msgid "Select Destination"
+msgstr ""
+
+#: capshipping/templates/dashboard/partials/calculator.html:147
+msgid "Package Category"
+msgstr ""
+
+#: capshipping/templates/dashboard/partials/calculator.html:159
+msgid "Select category"
+msgstr ""
+
+#: capshipping/templates/dashboard/partials/calculator.html:338
+msgid "Insurance"
+msgstr ""
+
+#: capshipping/templates/dashboard/partials/calculator.html:351
+#, fuzzy
+#| msgid "Track Your Package"
+msgid "Insured Package"
+msgstr "Rastrea tu paquete"
+
+#: capshipping/templates/dashboard/partials/calculator.html:375
+msgid "Reset"
+msgstr ""
+
+#: capshipping/templates/dashboard/partials/calculator.html:388
+msgid "Calculate Price"
+msgstr ""
+
+#: capshipping/templates/dashboard/partials/calculator.html:418
+msgid "Estimated Shipping Cost"
+msgstr ""
+
+#: capshipping/templates/dashboard/partials/calculator.html:422
+msgid "Shipment pricing breakdown"
+msgstr ""
+
+#: capshipping/templates/dashboard/partials/calculator.html:435
+msgid "Total Estimated Cost"
+msgstr ""
+
+#: capshipping/templates/dashboard/partials/calculator.html:460
+#, fuzzy
+#| msgid "Shipping From"
+msgid "Shipping Price"
+msgstr "Envío desde"
+
+#: capshipping/templates/dashboard/partials/calculator.html:485
+msgid "Insurance Fee"
+msgstr ""
+
+#: capshipping/templates/dashboard/partials/calculator.html:560
+msgid "Final Total"
+msgstr ""
+
+#: capshipping/templates/dashboard/partials/calculator.html:592
+#, fuzzy
+#| msgid "Shipping From"
+msgid "Shipping Tips"
+msgstr "Envío desde"
+
+#: capshipping/templates/dashboard/partials/calculator.html:601
+msgid "Weight affects final shipping cost"
+msgstr ""
+
+#: capshipping/templates/dashboard/partials/calculator.html:606
+msgid "Dimensions affect volumetric weight"
+msgstr ""
+
+#: capshipping/templates/dashboard/partials/calculator.html:611
+msgid "Air shipping is faster but more expensive"
+msgstr ""
+
+#: capshipping/templates/dashboard/partials/calculator.html:616
+msgid "Insurance protects valuable packages"
+msgstr ""
+
+#: capshipping/templates/dashboard/partials/calculator.html:621
+msgid "Final cost may vary after inspection"
+msgstr ""
+
+#: capshipping/templates/dashboard/partials/category_table.html:10
+#, fuzzy
+#| msgid "Shipping From"
+msgid "Shipment Categories"
+msgstr "Envío desde"
+
+#: capshipping/templates/dashboard/partials/category_table.html:17
+msgid "dashboard/categories"
+msgstr ""
+
+#: capshipping/templates/dashboard/partials/category_table.html:35
+msgid "Add category"
+msgstr ""
+
+#: capshipping/templates/dashboard/partials/category_table.html:64
+msgid "Search"
+msgstr ""
+
+#: capshipping/templates/dashboard/partials/category_table.html:81
+#: capshipping/templates/dashboard/partials/contact_table.html:221
+msgid "Delete Selected"
+msgstr ""
+
+#: capshipping/templates/dashboard/partials/category_table.html:93
+#: capshipping/templates/dashboard/partials/contact_table.html:234
+msgid "selected"
+msgstr ""
+
+#: capshipping/templates/dashboard/partials/category_table.html:121
+msgid "Category"
+msgstr ""
+
+#: capshipping/templates/dashboard/partials/category_table.html:122
+msgid "Surcharge"
+msgstr ""
+
+#: capshipping/templates/dashboard/partials/category_table.html:123
+#: capshipping/templates/dashboard/partials/contact_table.html:266
+msgid "Created"
+msgstr ""
+
+#: capshipping/templates/dashboard/partials/category_table.html:124
+#: capshipping/templates/dashboard/partials/contact_table.html:267
+msgid "Actions"
+msgstr ""
+
+#: capshipping/templates/dashboard/partials/category_table.html:170
+#, fuzzy
+#| msgid "Shipping From"
+msgid "Shipment category"
+msgstr "Envío desde"
+
+#: capshipping/templates/dashboard/partials/category_table.html:216
+msgid "Edit Category"
+msgstr ""
+
+#: capshipping/templates/dashboard/partials/category_table.html:251
+msgid "No categories found"
+msgstr ""
+
+#: capshipping/templates/dashboard/partials/category_table.html:283
+msgid "categories"
+msgstr ""
+
+#: capshipping/templates/dashboard/partials/category_table.html:441
+msgid "Category created"
+msgstr ""
+
+#: capshipping/templates/dashboard/partials/category_table.html:471
+msgid "Save category"
+msgstr ""
+
+#: capshipping/templates/dashboard/partials/category_table.html:508
+msgid ""
+" Categories help classify\n"
+"                            shipment packages and\n"
+"                            apply surcharges automatically.\n"
+"                            "
+msgstr ""
+
+#: capshipping/templates/dashboard/partials/contact_table.html:9
+#, fuzzy
+#| msgid "Shipping From"
+msgid "Shipment Contacts"
+msgstr "Envío desde"
+
+#: capshipping/templates/dashboard/partials/contact_table.html:13
+msgid "manage customer and guest contacts"
+msgstr ""
+
+#: capshipping/templates/dashboard/partials/contact_table.html:47
+#, fuzzy
+#| msgid "Contact"
+msgid "Total Contacts"
+msgstr "Contacto"
+
+#: capshipping/templates/dashboard/partials/contact_table.html:77
+#, fuzzy
+#| msgid "Contact"
+msgid "Guest Contacts"
+msgstr "Contacto"
+
+#: capshipping/templates/dashboard/partials/contact_table.html:107
+msgid "Registered Users"
+msgstr ""
+
+#: capshipping/templates/dashboard/partials/contact_table.html:145
+#, fuzzy
+#| msgid "Contact"
+msgid "Last Contact"
+msgstr "Contacto"
+
+#: capshipping/templates/dashboard/partials/contact_table.html:265
+#: capshipping/templates/dashboard_user/dashboard.html:225
+msgid "Status"
+msgstr ""
+
+#: capshipping/templates/dashboard/partials/contact_table.html:410
+#, fuzzy
+#| msgid "Contact"
+msgid "Edit Contact"
+msgstr "Contacto"
+
+#: capshipping/templates/dashboard/partials/contact_table.html:452
+#, fuzzy
+#| msgid "Contact"
+msgid "No contacts found"
+msgstr "Contacto"
+
+#: capshipping/templates/dashboard/partials/dashboard.html:10
+#: capshipping/templates/dashboard/sidebar.html:18
+#: capshipping/templates/dashboard_user/dashboard.html:30
+msgid "Dashboard"
+msgstr ""
+
+#: capshipping/templates/dashboard/partials/dashboard.html:11
+msgid "Welcome back"
+msgstr ""
+
+#: capshipping/templates/dashboard/partials/dashboard.html:16
+msgid "Total revenue"
+msgstr ""
+
+#: capshipping/templates/dashboard/partials/dashboard.html:22
+#: capshipping/templates/dashboard/partials/dashboard.html:34
+msgid "vs last Month"
+msgstr ""
+
+#: capshipping/templates/dashboard/partials/dashboard.html:30
+msgid "Active Users"
+msgstr ""
+
+#: capshipping/templates/dashboard/partials/dashboard.html:41
+#, fuzzy
+#| msgid "Shipping From"
+msgid "Total Shipments"
+msgstr "Envío desde"
+
+#: capshipping/templates/dashboard/partials/dashboard.html:52
+msgid "Total Delivered"
+msgstr ""
+
+#: capshipping/templates/dashboard/partials/dashboard.html:68
+msgid "Revenue Overview"
+msgstr ""
+
+#: capshipping/templates/dashboard/partials/dashboard.html:75
+msgid "Profit vs Expenses"
+msgstr ""
+
+#: capshipping/templates/dashboard/partials/kyc_details.html:5
+msgid "Dashboard / KYC Verifications"
+msgstr ""
+
+#: capshipping/templates/dashboard/partials/kyc_details.html:6
+msgid "KYC Verification Detail"
+msgstr ""
+
+#: capshipping/templates/dashboard/partials/kyc_details.html:8
+msgid "Review and verify user identify Documents"
+msgstr ""
+
+#: capshipping/templates/dashboard/partials/kyc_details.html:16
+msgid "User Information"
+msgstr ""
+
+#: capshipping/templates/dashboard/sidebar.html:26
+#, fuzzy
+#| msgid "Shipping From"
+msgid "Shipements"
+msgstr "Envío desde"
+
+#: capshipping/templates/dashboard/sidebar.html:33
+#, fuzzy
+#| msgid "Shipping From"
+msgid "All Shipements"
+msgstr "Envío desde"
+
+#: capshipping/templates/dashboard/sidebar.html:35
+#, fuzzy
+#| msgid "Shipping From"
+msgid "Add Shipment"
+msgstr "Envío desde"
+
+#: capshipping/templates/dashboard/sidebar.html:46
+#, fuzzy
+#| msgid "My Account"
+msgid "Accounts"
+msgstr "Mi cuenta"
+
+#: capshipping/templates/dashboard/sidebar.html:51
+msgid "All Users"
+msgstr ""
+
+#: capshipping/templates/dashboard/sidebar.html:52
+msgid "Add User"
+msgstr ""
+
+#: capshipping/templates/dashboard/sidebar.html:68
+msgid "Management"
+msgstr ""
+
+#: capshipping/templates/dashboard/sidebar.html:83
+msgid "Warehouses"
+msgstr ""
+
+#: capshipping/templates/dashboard/sidebar.html:92
+msgid "Categories"
+msgstr ""
+
+#: capshipping/templates/dashboard/sidebar.html:106
+#, fuzzy
+#| msgid "Contact"
+msgid "Contacts"
+msgstr "Contacto"
+
+#: capshipping/templates/dashboard/sidebar.html:122
+msgid "Pricing Rules"
+msgstr ""
+
+#: capshipping/templates/dashboard/sidebar.html:138
+msgid "Route Pricings"
+msgstr ""
+
+#: capshipping/templates/dashboard/sidebar.html:152
+msgid "KYC Users"
+msgstr ""
+
+#: capshipping/templates/dashboard/sidebar.html:166
+#: capshipping/templates/dashboard_user/dashboard.html:38
+msgid "Calculator"
+msgstr ""
+
+#: capshipping/templates/dashboard/sidebar.html:171
+msgid "Tracking Update"
+msgstr ""
+
+#: capshipping/templates/dashboard/sidebar.html:180
+#: capshipping/templates/dashboard/topbar.html:143
+#: capshipping/templates/dashboard_user/dashboard.html:47
+#: capshipping/templates/dashboard_user/dashboard.html:1222
+msgid "Settings"
+msgstr ""
+
+#: capshipping/templates/dashboard/sidebar.html:199
+msgid "Admin User"
+msgstr ""
+
+#: capshipping/templates/dashboard/sidebar.html:201
+msgid "Staff User"
+msgstr ""
+
+#: capshipping/templates/dashboard/sidebar.html:203
+msgid "Customer"
+msgstr ""
+
+#: capshipping/templates/dashboard/topbar.html:138
+msgid "Your Profile"
+msgstr ""
+
+#: capshipping/templates/dashboard/topbar.html:150
+msgid "Sign out"
+msgstr ""
+
+#: capshipping/templates/dashboard_user/dashboard.html:34
+msgid "Addresses"
+msgstr ""
+
+#: capshipping/templates/dashboard_user/dashboard.html:42
+#: capshipping/templates/index.html:36
+msgid "Track"
+msgstr ""
+
+#: capshipping/templates/dashboard_user/dashboard.html:56
+#: capshipping/templates/dashboard_user/dashboard.html:533
+#: capshipping/templates/login.html:32
+msgid "Welcome Back"
+msgstr ""
+
+#: capshipping/templates/dashboard_user/dashboard.html:57
+msgid "Here's an Overview of your shipments"
+msgstr ""
+
+#: capshipping/templates/dashboard_user/dashboard.html:108
+msgid "Received"
+msgstr ""
+
+#: capshipping/templates/dashboard_user/dashboard.html:114
+#: capshipping/templates/dashboard_user/dashboard.html:140
+#, fuzzy
+#| msgid "Shipping From"
+msgid "Shipments"
+msgstr "Envío desde"
+
+#: capshipping/templates/dashboard_user/dashboard.html:134
+#: capshipping/templates/dashboard_user/dashboard.html:292
+msgid "In Transit"
+msgstr ""
+
+#: capshipping/templates/dashboard_user/dashboard.html:160
+#: capshipping/templates/dashboard_user/dashboard.html:302
+msgid "Ready Pickup"
+msgstr ""
+
+#: capshipping/templates/dashboard_user/dashboard.html:186
+#: capshipping/templates/dashboard_user/dashboard.html:312
+msgid "Delivered"
+msgstr ""
+
+#: capshipping/templates/dashboard_user/dashboard.html:208
+msgid "Recent Shipments"
+msgstr ""
+
+#: capshipping/templates/dashboard_user/dashboard.html:209
+msgid "Your latest shipment activity"
+msgstr ""
+
+#: capshipping/templates/dashboard_user/dashboard.html:224
+#, fuzzy
+#| msgid "Shipping From"
+msgid "Shipping"
+msgstr "Envío desde"
+
+#: capshipping/templates/dashboard_user/dashboard.html:226
+msgid "Date"
+msgstr ""
+
+#: capshipping/templates/dashboard_user/dashboard.html:227
+msgid "Action"
+msgstr ""
+
+#: capshipping/templates/dashboard_user/dashboard.html:352
+msgid "No shipment found"
+msgstr ""
+
+#: capshipping/templates/dashboard_user/dashboard.html:375
+msgid "Shipment Overview"
+msgstr ""
+
+#: capshipping/templates/dashboard_user/dashboard.html:376
+msgid "Monthly shipment activity"
+msgstr ""
+
+#: capshipping/templates/dashboard_user/dashboard.html:534
+msgid "Here are shipping addresses to use when purchasing online"
+msgstr ""
+
+#: capshipping/templates/dashboard_user/dashboard.html:548
+msgid "Plane Address"
+msgstr ""
+
+#: capshipping/templates/dashboard_user/dashboard.html:582
+msgid "Copy address"
+msgstr ""
+
+#: capshipping/templates/dashboard_user/dashboard.html:644
+msgid "Additional Warehouse Addresses"
+msgstr ""
+
+#: capshipping/templates/dashboard_user/dashboard.html:647
+msgid ""
+"\n"
+"        You can also use one of our other warehouse locations\n"
+"        below for delivering packages or shopping online.\n"
+"        "
+msgstr ""
+
+#: capshipping/templates/dashboard_user/dashboard.html:741
+msgid "Enter shipment details to estimate the shipping cost"
+msgstr ""
+
+#: capshipping/templates/dashboard_user/dashboard.html:770
+#, fuzzy
+#| msgid "Shipping From"
+msgid "Shipment Details"
+msgstr "Envío desde"
+
+#: capshipping/templates/dashboard_user/dashboard.html:913
+msgid "Package Type"
+msgstr ""
+
+#: capshipping/templates/dashboard_user/dashboard.html:1125
+msgid "Breakdown of estimated shipping cost"
+msgstr ""
+
+#: capshipping/templates/dashboard_user/dashboard.html:1241
+msgid "edite"
+msgstr ""
+
+#: capshipping/templates/dashboard_user/dashboard.html:1249
+msgid "Pick up Address"
+msgstr ""
+
+#: capshipping/templates/dashboard_user/dashboard.html:1468
+msgid "Confirm New Password"
+msgstr ""
+
+#: capshipping/templates/dashboard_user/dashboard.html:1471
+msgid "Update Password"
+msgstr ""
+
+#: capshipping/templates/emails/kyc/approved.html:30
+msgid "Congratulations"
+msgstr ""
+
+#: capshipping/templates/emails/kyc/approved.html:44
+msgid ""
+"\n"
+"\n"
+"    Your identity verification has been approved successfully.\n"
+"\n"
+"    "
+msgstr ""
+
+#: capshipping/templates/emails/kyc/approved.html:56
+msgid ""
+"\n"
+"\n"
+"    Your account is now fully verified and you can access all platform "
+"features.\n"
+"\n"
+"    "
+msgstr ""
+
+#: capshipping/templates/emails/kyc/approved.html:68
+#, fuzzy
+#| msgid "Cap Shipping Distribution LLC"
+msgid "Thank you for choosing Cap Shipping Distribution."
+msgstr "Cap Shipping Distribution LLC"
+
+#: capshipping/templates/emails/kyc/approved.html:100
+#: capshipping/templates/emails/kyc/rejected.html:116
+#: capshipping/templates/emails/kyc/submitted.html:100
+#: capshipping/templates/emails/otp_email.html:87
+#: capshipping/templates/emails/otp_email_reset.html:87
+#: capshipping/templates/emails/shippment_status_update.html:91
+#: capshipping/templates/emails/welcome_email.html:78
+msgid "All rights reserved"
+msgstr ""
+
+#: capshipping/templates/emails/kyc/rejected.html:30
+#: capshipping/templates/emails/kyc/submitted.html:30
+msgid "Hello"
+msgstr "Hola"
+
+#: capshipping/templates/emails/kyc/rejected.html:44
+msgid ""
+"\n"
+"\n"
+"    Unfortunately, your KYC verification request was rejected.\n"
+"\n"
+"    "
+msgstr ""
+
+#: capshipping/templates/emails/kyc/rejected.html:59
+msgid "Reason"
+msgstr ""
+
+#: capshipping/templates/emails/kyc/rejected.html:72
+msgid ""
+"\n"
+"\n"
+"    Please upload valid and clear documents before submitting another "
+"verification request.\n"
+"\n"
+"    "
+msgstr ""
+
+#: capshipping/templates/emails/kyc/rejected.html:84
+msgid "You may now resubmit your KYC documents from your dashboard."
+msgstr ""
+
+#: capshipping/templates/emails/kyc/submitted.html:44
+msgid ""
+"\n"
+"\n"
+"    Your KYC verification request has been successfully submitted.\n"
+"\n"
+"    "
+msgstr ""
+
+#: capshipping/templates/emails/kyc/submitted.html:56
+msgid ""
+"\n"
+"\n"
+"    Our team is currently reviewing your documents.\n"
+"    This process may take some time depending on verification volume.\n"
+"\n"
+"    "
+msgstr ""
+
+#: capshipping/templates/emails/kyc/submitted.html:69
+msgid ""
+"You will receive another email once your verification has been reviewed."
+msgstr ""
+
+#: capshipping/templates/emails/otp_email.html:38
+#: capshipping/templates/emails/otp_email_reset.html:38
+msgid "One-Time Password"
+msgstr ""
+
+#: capshipping/templates/emails/otp_email.html:42
+msgid "Use the code below to Verify your account"
+msgstr ""
+
+#: capshipping/templates/emails/otp_email.html:58
+#: capshipping/templates/emails/otp_email_reset.html:58
+msgid "This code will expire in 10 minutes"
+msgstr ""
+
+#: capshipping/templates/emails/otp_email.html:63
+#: capshipping/templates/emails/otp_email_reset.html:63
+msgid ""
+"If you did not request this, please ignore this email or contact support"
+msgstr ""
+
+#: capshipping/templates/emails/otp_email_reset.html:42
+msgid "Use the code below to reset your password"
+msgstr ""
+
+#: capshipping/templates/emails/welcome_email.html:29
+msgid "Welcome"
+msgstr ""
+
+#: capshipping/templates/emails/welcome_email.html:33
+msgid ""
+"\n"
+"                        Congratulations, you have successfully created your "
+"Cap Shipping Distribution account.<br>\n"
+"                        We are happy to now have you in our big family.\n"
+"\n"
+"                        "
+msgstr ""
+
+#: capshipping/templates/emails/welcome_email.html:41
+msgid ""
+"\n"
+"                        You can now send your packages with complete peace "
+"of mind to one of our branches in Haiti or Dominican Republic.\n"
+"                        "
+msgstr ""
+
+#: capshipping/templates/emails/welcome_email.html:47
+msgid "Thank you for your trust, see you soon for your next transaction."
+msgstr ""
+
+#: capshipping/templates/index.html:23
+msgid "Cap Shipping Distribution LLC"
+msgstr "Cap Shipping Distribution LLC"
+
+#: capshipping/templates/index.html:25
+msgid "Shipping From"
+msgstr "Envío desde"
+
+#: capshipping/templates/index.html:26
+msgid "the USA to Haiti"
+msgstr "de Estados Unidos a Haití"
+
+#: capshipping/templates/index.html:27
+msgid "and Other Countries"
+msgstr "y otros países"
+
+#: capshipping/templates/index.html:51
+msgid "Successful"
+msgstr ""
+
+#: capshipping/templates/index.html:51
+msgid "Deliveries"
+msgstr ""
+
+#: capshipping/templates/index.html:62
+msgid "5+ Years Experience"
+msgstr ""
+
+#: capshipping/templates/index.html:66
+msgid "In Global Shipping"
+msgstr ""
+
+#: capshipping/templates/index.html:97
+msgid "HOW IT WORKS"
+msgstr ""
+
+#: capshipping/templates/index.html:98
+msgid "Our Working"
+msgstr ""
+
+#: capshipping/templates/index.html:98
+msgid "Process in Transport"
+msgstr ""
+
+#: capshipping/templates/index.html:100
+msgid ""
+"\n"
+"\n"
+"From Cap Shipping Distribution LLC to supply chain optimization,\n"
+"we are committed to providing the services to ensure your success.\n"
+"\n"
+msgstr ""
+
+#: capshipping/templates/index.html:122
+msgid "Receive Packages"
+msgstr ""
+
+#: capshipping/templates/index.html:127
+msgid ""
+"Shop from your favorite stores in the United States and send your packages "
+"directly to our warehouse..."
+msgstr ""
+
+#: capshipping/templates/index.html:133
+msgid ""
+"\n"
+"\n"
+"        Shop from your favorite stores in the United States and send your "
+"packages directly to our warehouse. We receive, process, and securely "
+"deliver your shipments to Haiti and the Dominican Republic with reliable air "
+"and sea cargo services. Enjoy fast delivery times, package tracking, secure "
+"handling, and a smooth shipping experience from pickup to final "
+"destination.\n"
+"\n"
+"        "
+msgstr ""
+
+#: capshipping/templates/index.html:143 capshipping/templates/index.html:184
+#: capshipping/templates/index.html:226
+msgid "Read More"
+msgstr ""
+
+#: capshipping/templates/index.html:157
+#, fuzzy
+#| msgid "Track Your Package"
+msgid "Transport Packages"
+msgstr "Rastrea tu paquete"
+
+#: capshipping/templates/index.html:166
+msgid ""
+"We provide reliable package transportation through both air freight and sea "
+"cargo services, giving you flexible and affordable shipping options..."
+msgstr ""
+
+#: capshipping/templates/index.html:173
+msgid ""
+"\n"
+"\n"
+"        We provide reliable package transportation through both air freight "
+"and sea cargo services, giving you flexible and affordable shipping options "
+"based on your needs. Whether you need fast air delivery or cost-effective "
+"ocean freight, we safely transport your packages from the USA to Haiti and "
+"the Dominican Republic with professional handling and real-time shipment "
+"support.\n"
+"\n"
+"        "
+msgstr ""
+
+#: capshipping/templates/index.html:199
+msgid "Deliver Packages"
+msgstr ""
+
+#: capshipping/templates/index.html:208
+msgid ""
+"We ensure your packages are delivered safely and on time to Haiti and the "
+"Dominican Republic..."
+msgstr ""
+
+#: capshipping/templates/index.html:215
+msgid ""
+"\n"
+"\n"
+"        We ensure your packages are delivered safely and on time to Haiti "
+"and the Dominican Republic through our trusted delivery network. From "
+"warehouse processing to final delivery, our team handles every shipment with "
+"care, providing reliable tracking, secure transportation, and fast customer "
+"support to guarantee a smooth delivery experience.\n"
+"\n"
+"        "
+msgstr ""
+
+#: capshipping/templates/index.html:257
+msgid "YEARS OF"
+msgstr ""
+
+#: capshipping/templates/index.html:257
+msgid "EXPERIENCE"
+msgstr ""
+
+#: capshipping/templates/index.html:275
+msgid "Reliable Cargo Shipping"
+msgstr ""
+
+#: capshipping/templates/index.html:276
+#, fuzzy
+#| msgid "the USA to Haiti"
+msgid "From USA to Haiti"
+msgstr "de Estados Unidos a Haití"
+
+#: capshipping/templates/index.html:286
+msgid "Freight Shipping"
+msgstr ""
+
+#: capshipping/templates/index.html:291
+msgid ""
+"Fast and secure freight shipping solutions designed to deliver your cargo "
+"safely and on time from the USA to Haiti and the Dominican Republic."
+msgstr ""
+
+#: capshipping/templates/index.html:301
+msgid "Intermodal Shipping"
+msgstr ""
+
+#: capshipping/templates/index.html:306
+msgid ""
+"Reliable air and sea shipping services that provide safe, affordable, and "
+"efficient package delivery across every destination."
+msgstr ""
+
+#: capshipping/templates/index.html:315
+msgid "Call Us"
+msgstr ""
+
+#: capshipping/templates/index.html:339 capshipping/templates/index.html:347
+msgid "FAST AIR SHIPPING"
+msgstr ""
+
+#: capshipping/templates/index.html:340 capshipping/templates/index.html:348
+msgid "GLOBAL OCEAN FREIGHT"
+msgstr ""
+
+#: capshipping/templates/index.html:341 capshipping/templates/index.html:349
+msgid "SECURE PACKAGE DELIVERY"
+msgstr ""
+
+#: capshipping/templates/index.html:342 capshipping/templates/index.html:350
+msgid "EXPRESS LOGISTICS"
+msgstr ""
+
+#: capshipping/templates/index.html:371
+msgid "Mission & Vision"
+msgstr ""
+
+#: capshipping/templates/index.html:374
+msgid "Delivering Reliable Cargo Services"
+msgstr ""
+
+#: capshipping/templates/index.html:375
+#, fuzzy
+#| msgid "the USA to Haiti"
+msgid "Between USA and Haiti"
+msgstr "de Estados Unidos a Haití"
+
+#: capshipping/templates/index.html:380
+msgid "Our Mission"
+msgstr ""
+
+#: capshipping/templates/index.html:381
+msgid "Our Vision"
+msgstr ""
+
+#: capshipping/templates/index.html:382
+msgid "Our History"
+msgstr ""
+
+#: capshipping/templates/index.html:387
+msgid ""
+"Cap Shipping Distribution is dedicated to providing fast, secure, and "
+"reliable shipping solutions between the USA, Haiti, and the Dominican "
+"Republic. Our mission is to simplify international shipping through trusted "
+"customer service, efficient logistics, and affordable delivery options by "
+"air and sea."
+msgstr ""
+
+#: capshipping/templates/index.html:394
+msgid ""
+"Our vision is to become one of the most trusted Caribbean logistics and "
+"freight forwarding companies by connecting families and businesses through "
+"innovative, secure, and professional shipping services worldwide."
+msgstr ""
+
+#: capshipping/templates/index.html:402
+msgid ""
+"Cap Shipping Distribution was created with the goal of making international "
+"shipping easier, faster, and more accessible for the Haitian and Caribbean "
+"communities. Through dedication, transparency, and customer-focused service, "
+"we continue to build a reliable logistics network customers can trust every "
+"day."
+msgstr ""
+
+#: capshipping/templates/index.html:415
+msgid "Secure Packaging & Handling"
+msgstr ""
+
+#: capshipping/templates/index.html:421
+msgid ""
+"Your goods are carefully handled, packed, and shipped with maximum safety "
+"and care."
+msgstr ""
+
+#: capshipping/templates/index.html:449 capshipping/templates/index.html:550
+msgid "Packages Delivered"
+msgstr ""
+
+#: capshipping/templates/index.html:461
+msgid "Customer Satisfaction"
+msgstr ""
+
+#: capshipping/templates/index.html:508 capshipping/templates/index.html:516
+msgid "SEA & AIR FREIGHT SOLUTIONS"
+msgstr ""
+
+#: capshipping/templates/index.html:510 capshipping/templates/index.html:518
+msgid "WAREHOUSING & DISTRIBUTION"
+msgstr ""
+
+#: capshipping/templates/index.html:511 capshipping/templates/index.html:519
+msgid "REAL-TIME TRACKING SYSTEM"
+msgstr ""
+
+#: capshipping/templates/index.html:513 capshipping/templates/index.html:521
+msgid "CUSTOM LOGISTICS SUPPORT"
+msgstr ""
+
+#: capshipping/templates/index.html:536
+msgid "Fast & Trusted Shipping"
+msgstr ""
+
+#: capshipping/templates/index.html:540
+msgid "the USA to Haiti with Trusted, Fast and"
+msgstr ""
+
+#: capshipping/templates/index.html:540
+msgid "Professional Delivery"
+msgstr ""
+
+#: capshipping/templates/index.html:551
+msgid "Whether by plane or by boat, we are there for you"
+msgstr ""
+
+#: capshipping/templates/index.html:561
+msgid "Satisfied Customers"
+msgstr ""
+
+#: capshipping/templates/index.html:562
+msgid "We guarantee the safety of packages and ensure fast delivery."
+msgstr ""
+
+#: capshipping/templates/index.html:574
+msgid "Years of experience"
+msgstr ""
+
+#: capshipping/templates/index.html:575
+msgid ""
+"We are committed to providing you with quality service by meeting your "
+"expectations."
+msgstr ""
+
+#: capshipping/templates/index.html:605 capshipping/templates/tracking.html:299
+msgid "FAQS"
+msgstr ""
+
+#: capshipping/templates/index.html:606 capshipping/templates/tracking.html:300
+msgid "Find answers to common questions"
+msgstr ""
+
+#: capshipping/templates/index.html:624 capshipping/templates/tracking.html:318
+msgid "How long does shipping from the USA to Haiti take?"
+msgstr ""
+
+#: capshipping/templates/index.html:630 capshipping/templates/tracking.html:324
+msgid ""
+"Delivery times depend on the shipping method you choose. Air freight is "
+"faster for urgent packages, while sea freight is more affordable for larger "
+"shipments. Our team always works to ensure safe and on-time delivery."
+msgstr ""
+
+#: capshipping/templates/index.html:642 capshipping/templates/tracking.html:336
+msgid "Can I track my package in real time?"
+msgstr ""
+
+#: capshipping/templates/index.html:650 capshipping/templates/tracking.html:344
+msgid ""
+"Yes, we provide real-time package tracking so you can follow your shipment "
+"from our warehouse in the USA until it arrives at its final destination."
+msgstr ""
+
+#: capshipping/templates/index.html:662 capshipping/templates/tracking.html:356
+msgid "What items are allowed for shipping?"
+msgstr ""
+
+#: capshipping/templates/index.html:670 capshipping/templates/tracking.html:364
+msgid ""
+"We ship clothing, electronics, household items, business goods, and many "
+"other products. However, restricted or prohibited items cannot be accepted "
+"for transportation."
+msgstr ""
+
+#: capshipping/templates/index.html:684 capshipping/templates/tracking.html:378
+msgid "Do you offer both air and sea cargo services?"
+msgstr ""
+
+#: capshipping/templates/index.html:692 capshipping/templates/tracking.html:386
+msgid ""
+"\n"
+"                    Yes, we offer both fast air cargo and cost-effective sea "
+"freight services to give customers flexible shipping solutions based on "
+"their needs and budget.\n"
+"                    "
+msgstr ""
+
+#: capshipping/templates/login.html:33
+msgid "Welcome Back ! please enter your Details"
+msgstr ""
+
+#: capshipping/templates/login.html:63
+msgid "Forget Password ?"
+msgstr ""
+
+#: capshipping/templates/login.html:71
+msgid "Don’t have an account?"
+msgstr ""
+
+#: capshipping/templates/login.html:71
+msgid "Register"
+msgstr ""
+
+#: capshipping/templates/register.html:53
+msgid "Personal information"
+msgstr ""
+
+#: capshipping/templates/register.html:58
+msgid "First name"
+msgstr ""
+
+#: capshipping/templates/register.html:59
+msgid "Last name"
+msgstr ""
+
+#: capshipping/templates/register.html:69
+msgid "Phone number"
+msgstr ""
+
+#: capshipping/templates/register.html:84
+msgid "Password"
+msgstr ""
+
+#: capshipping/templates/register.html:85
+msgid "Confirm Password"
+msgstr ""
+
+#: capshipping/templates/register.html:88
+#: capshipping/templates/register.html:122
+msgid "Next"
+msgstr ""
+
+#: capshipping/templates/register.html:94
+msgid "Your Addresses"
+msgstr ""
+
+#: capshipping/templates/register.html:113
+msgid "Select your city of residence"
+msgstr ""
+
+#: capshipping/templates/register.html:121
+#: capshipping/templates/register.html:163
+msgid "Back"
+msgstr ""
+
+#: capshipping/templates/register.html:129
+msgid "Delivery Address"
+msgstr ""
+
+#: capshipping/templates/register.html:133
+msgid "Delivery country"
+msgstr ""
+
+#: capshipping/templates/register.html:140
+msgid "Delivery city"
+msgstr ""
+
+#: capshipping/templates/register.html:158
+msgid "the terms and conditions"
+msgstr ""
+
+#: capshipping/templates/register.html:164
+msgid "Submit"
+msgstr ""
+
+#: capshipping/templates/register.html:173
+msgid "Enter verification code"
+msgstr ""
+
+#: capshipping/templates/register.html:174
+msgid "Enter the 6-digit code sent to your email"
+msgstr ""
+
+#: capshipping/templates/register.html:189
+msgid "Resend"
+msgstr ""
+
+#: capshipping/templates/register.html:191
+msgid "Verify"
+msgstr ""
+
+#: capshipping/templates/term_and_condition.html:26
+#, fuzzy
+#| msgid "Shipping From"
+msgid "Shipping Policy"
+msgstr "Envío desde"
+
+#: capshipping/templates/term_and_condition.html:29
+#: capshipping/templates/term_and_condition.html:37
+msgid "Terms & Conditions"
+msgstr ""
+
+#: capshipping/templates/term_and_condition.html:71
+msgid "Last Updated"
+msgstr ""
+
+#: capshipping/templates/term_and_condition.html:72
+msgid "May 24, 2026"
+msgstr ""
+
+#: capshipping/templates/term_and_condition.html:76
+msgid ""
+" Please read these Terms & Conditions carefully before using our shipping "
+"and logistics services."
+msgstr ""
+
+#: capshipping/templates/term_and_condition.html:106
+msgid "1. Introduction"
+msgstr ""
+
+#: capshipping/templates/term_and_condition.html:109
+msgid ""
+"These Terms & Conditions govern your use of our shipping services and "
+"website."
+msgstr ""
+
+#: capshipping/templates/term_and_condition.html:124
+msgid ""
+"\n"
+"    By using Cap Shipping Distribution LLC services, you agree to comply "
+"with our shipping policies, operational procedures, and delivery terms. We "
+"provide freight forwarding, package handling, and logistics solutions "
+"between the United States, Haiti, and the Dominican Republic. Customers are "
+"responsible for providing accurate shipment information, including recipient "
+"details, package contents, and contact information. Any false, prohibited, "
+"or incomplete information may result in shipment delays, refusal, or "
+"additional charges. Our team is committed to ensuring safe handling, timely "
+"transportation, and reliable customer support throughout the shipping "
+"process.\n"
+"    "
+msgstr ""
+
+#: capshipping/templates/term_and_condition.html:152
+msgid ""
+"\n"
+"    Cap Shipping Distribution LLC provides air and sea freight services for "
+"packages, personal items, commercial goods, and cargo between the United "
+"States, Haiti, and the Dominican Republic. Our services include shipment "
+"collection, package consolidation, warehouse handling, transportation, "
+"tracking updates, and delivery support. Delivery times may vary depending on "
+"the shipping method, customs clearance, weather conditions, and destination "
+"location.\n"
+"    "
+msgstr ""
+
+#: capshipping/templates/term_and_condition.html:194
+msgid "3. User Responsibilities"
+msgstr ""
+
+#: capshipping/templates/term_and_condition.html:197
+msgid ""
+"\n"
+"    Customers are responsible for providing accurate shipping information, "
+"including names, addresses, phone numbers, and package descriptions. All "
+"items must be properly packaged to ensure safe transportation. Customers "
+"must also comply with all shipping regulations and avoid sending prohibited, "
+"illegal, dangerous, or restricted items. Cap Shipping Distribution LLC is "
+"not responsible for delays, losses, or additional fees caused by incorrect "
+"information or improper packaging provided by the customer.\n"
+"    "
+msgstr ""
+
+#: capshipping/templates/term_and_condition.html:214
+msgid ""
+"\n"
+"    We are committed to providing secure, reliable, and professional "
+"shipping services while ensuring transparency, customer satisfaction, and "
+"smooth logistics operations for every shipment entrusted to our company.\n"
+"    "
+msgstr ""
+
+#: capshipping/templates/term_and_condition.html:239
+msgid "4. Delivery Time"
+msgstr ""
+
+#: capshipping/templates/term_and_condition.html:242
+msgid ""
+"\n"
+"    Delivery times provided by Cap Shipping Distribution LLC are estimated "
+"and may vary depending on customs inspections, weather conditions, "
+"transportation delays, holidays, or other circumstances beyond our control. "
+"While we work to ensure timely deliveries, we cannot guarantee exact "
+"delivery dates. The company is not responsible for damages, losses, or "
+"delays caused by customs authorities, natural events, accidents, or improper "
+"packaging by the customer. Customers are encouraged to securely package "
+"fragile or valuable items before shipment.\n"
+"    "
+msgstr ""
+
+#: capshipping/templates/term_and_condition.html:259
+msgid ""
+"\n"
+"    We continuously strive to provide reliable shipping services and clear "
+"communication to ensure every customer receives the best possible logistics "
+"experience with transparency and professionalism.\n"
+"    "
+msgstr ""
+
+#: capshipping/templates/term_and_condition.html:284
+msgid "5. Payments & Fees"
+msgstr ""
+
+#: capshipping/templates/term_and_condition.html:287
+msgid ""
+"\n"
+"    All shipping fees, service charges, customs costs, storage fees, and "
+"other applicable charges must be fully paid before shipment processing or "
+"delivery. Prices may vary depending on package size, weight, destination, "
+"shipping method, and additional services requested. Cap Shipping "
+"Distribution LLC reserves the right to refuse shipment release or delivery "
+"until all outstanding balances are cleared. Additional fees may also apply "
+"for oversized packages, restricted items, returned shipments, or extended "
+"warehouse storage.\n"
+"    "
+msgstr ""
+
+#: capshipping/templates/term_and_condition.html:304
+msgid ""
+"\n"
+"    Customers are encouraged to review all pricing details and payment "
+"conditions carefully before confirming any shipment or logistics service "
+"with our company.\n"
+"    "
+msgstr ""
+
+#: capshipping/templates/term_and_condition.html:329
+msgid "6. Prohibited Items"
+msgstr ""
+
+#: capshipping/templates/term_and_condition.html:332
+msgid ""
+"\n"
+"    Customers are strictly prohibited from shipping illegal, hazardous, "
+"flammable, explosive, counterfeit, or restricted items through Cap Shipping "
+"Distribution LLC services. This includes weapons, drugs, toxic materials, "
+"and any products prohibited by local or international shipping regulations. "
+"The company reserves the right to inspect, refuse, hold, or report "
+"suspicious shipments to the appropriate authorities when necessary. Any "
+"violation of these policies may result in shipment cancellation, legal "
+"action, fines, or permanent suspension of service access.\n"
+"    "
+msgstr ""
+
+#: capshipping/templates/term_and_condition.html:349
+msgid ""
+"\n"
+"    Our priority is to maintain safe, secure, and compliant shipping "
+"operations while protecting customers, employees, and transportation "
+"partners throughout the delivery process.\n"
+"    "
+msgstr ""
+
+#: capshipping/templates/term_and_condition.html:377
+msgid "Need Help?"
+msgstr ""
+
+#: capshipping/templates/term_and_condition.html:380
+msgid ""
+"\n"
+"                        If you have questions about our Terms & Conditions,\n"
+"                        our support team is ready to help you.\n"
+"\n"
+"                        "
+msgstr ""
+
+#: capshipping/templates/tracking.html:24
+#, fuzzy
+#| msgid "Track Your Package"
+msgid "Track your packages"
+msgstr "Rastrea tu paquete"
+
+#: capshipping/templates/tracking.html:26
+msgid "Enter your tracking number to get real-time updates"
+msgstr ""
+
+#: capshipping/templates/tracking.html:34
+#, fuzzy
+#| msgid "Track Your Package"
+msgid "Track Package"
+msgstr "Rastrea tu paquete"
+
+#: capshipping/templates/tracking.html:38
+msgid "Enter up to 10 items"
+msgstr ""
+
+#: capshipping/templates/tracking.html:106
+msgid "Received at Warehouse"
+msgstr ""
+
+#: capshipping/templates/tracking.html:144
+msgid "In Transit to"
+msgstr ""
+
+#: capshipping/templates/tracking.html:152
+msgid "Your package is on the way to the destination country."
+msgstr ""
+
+#: capshipping/templates/tracking.html:179
+msgid "Ready for Pickup"
+msgstr ""
+
+#: capshipping/templates/tracking.html:187
+msgid "Your package is ready for pickup at the local office."
+msgstr ""
+
+#: capshipping/templates/tracking.html:243
+msgid "Total Transit Time"
+msgstr ""
+
+#: capshipping/templates/tracking.html:243
+msgid "Days"
+msgstr ""
+
+#: capshipping/templates/tracking.html:259
+msgid "with your package delivery?"
+msgstr ""
+
+#: capshipping/templates/tracking.html:260
+msgid "Contact Customer support"
+msgstr ""

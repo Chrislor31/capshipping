@@ -25,7 +25,7 @@ SECRET_KEY = 'django-insecure-kt7br9@!(3--k36z5(*0sr(ha*rq@)23h_0id)qnt!_v@7iqd0
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['*']
+ALLOWED_HOSTS = ['*','www.capshippingdistribution.com','capshippingdistribution.com']
 
 
 # Application definition
@@ -124,8 +124,7 @@ AUTH_USER_MODEL = 'accounts.Accounts'
 
 
 
-
-
+LOGIN_URL = '/panel/login/'
 STATIC_URL = 'static/'
 
 
@@ -150,9 +149,9 @@ CSRF_TRUSTED_ORIGINS = [
 #===== twilo
 
 
-TWILIO_ACCOUNT_SID = "AC98863c79245c794803e4362db5522af5"
-TWILIO_AUTH_TOKEN = "285a4a19aeddd251f9198c96466db0ab"
-TWILIO_PHONE = "+16624904811"
+TWILIO_ACCOUNT_SID = "AC6292e36e80b23749f628f41a55d7c01b"
+TWILIO_AUTH_TOKEN = "17670891291b0c02673b8a9a8243d0a5"
+TWILIO_PHONE_NUMBER = "+18154474008"
 
 
 # Default primary key field type
@@ -206,12 +205,21 @@ AUTH_PASSWORD_VALIDATORS = [
 ]
 
 
-EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
-EMAIL_HOST = 'smtp.gmail.com'
+
+
+
+
+EMAIL_BACKEND = "django.core.mail.backends.smtp.EmailBackend"
+
+EMAIL_HOST = "smtp-relay.brevo.com"
+
 EMAIL_PORT = 587
+
 EMAIL_USE_TLS = True
-EMAIL_HOST_USER = 'pchrislor66@gmail.com'
-EMAIL_HOST_PASSWORD = 'dwgcjlzpedoulvzs'  # app password
-DEFAULT_FROM_EMAIL = 'pchrislor2001@gmail.com'
-ADMIN_EMAIL = 'pchrislor66@gmail.com'
+
+EMAIL_HOST_USER = "abb1fa001@smtp-brevo.com"
+
+EMAIL_HOST_PASSWORD = "Aaf7hdB2z5ZryEPU"
+
+DEFAULT_FROM_EMAIL = "Cap Shipping <support@capshippingdistribution.com>"
 

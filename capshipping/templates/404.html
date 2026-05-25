@@ -1,0 +1,314 @@
+{% extends 'base.html' %}
+
+{% load i18n %}
+{% load static %}
+
+{% block title %}404{% endblock %}
+
+{% block manu_nav %}
+
+<!-- =========================
+404 SECTION
+========================= -->
+
+<section class="error_404_section">
+
+    <div class="error_404_content">
+
+        <span class="error_badge">
+            {% trans "Oops! Page Not Found %}
+        </span>
+
+        <h1>
+            404
+        </h1>
+
+        <h2>
+            {% trans "The page you are looking for doesn't exist" %}.
+        </h2>
+
+        <p>
+            {% blocktrans %} The page may have been moved, deleted,
+            or the link is incorrect.
+            {% endblocktrans %}
+        </p>
+
+        <div class="error_actions">
+
+            <a href="{% url 'home' %}" class="back_home">
+
+                {% trans 'Back Home' %}
+
+            </a>
+
+            <button onclick="history.back()" class="go_back">
+
+                {% trans 'Go Back' %}
+
+            </button>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+
+
+<style>
+
+    /* =========================
+404 PAGE
+========================= */
+
+.error_404_section{
+
+    width:100%;
+    min-height:80vh;
+
+    display:flex;
+    justify-content:center;
+    align-items:center;
+
+    padding:80px 20px;
+
+    background:
+    linear-gradient(
+        135deg,
+        #0f172a,
+        #1e3a8a
+    );
+
+    position:relative;
+    overflow:hidden;
+}
+
+
+/* BG EFFECT */
+
+.error_404_section::before{
+
+    content:"";
+
+    position:absolute;
+
+    width:500px;
+    height:500px;
+
+    background:
+    rgba(255,255,255,0.04);
+
+    border-radius:50%;
+
+    top:-200px;
+    right:-120px;
+
+    filter:blur(10px);
+}
+
+
+.error_404_content{
+
+    width:100%;
+    max-width:700px;
+
+    text-align:center;
+
+    position:relative;
+    z-index:2;
+}
+
+
+/* BADGE */
+
+.error_badge{
+
+    display:inline-block;
+
+    padding:8px 18px;
+
+    border-radius:30px;
+
+    background:#f59e0b;
+
+    color:white;
+
+    font-size:14px;
+    font-weight:600;
+
+    margin-bottom:20px;
+}
+
+
+/* 404 */
+
+.error_404_content h1{
+
+    font-size:140px;
+
+    line-height:1;
+
+    color:white;
+
+    margin-bottom:15px;
+
+    text-shadow:
+    0 10px 40px rgba(0,0,0,.3);
+}
+
+
+/* TITLE */
+
+.error_404_content h2{
+
+    font-size:34px;
+
+    color:white;
+
+    margin-bottom:15px;
+}
+
+
+/* TEXT */
+
+.error_404_content p{
+
+    color:#dbe4ff;
+
+    font-size:17px;
+
+    line-height:1.7;
+
+    max-width:550px;
+
+    margin:auto;
+}
+
+
+/* BUTTONS */
+
+.error_actions{
+
+    margin-top:35px;
+
+    display:flex;
+    justify-content:center;
+    gap:15px;
+
+    flex-wrap:wrap;
+}
+
+
+/* HOME BTN */
+
+.back_home{
+
+    padding:15px 28px;
+
+    border-radius:14px;
+
+    background:#f59e0b;
+
+    color:white;
+
+    text-decoration:none;
+
+    font-weight:600;
+
+    transition:.3s;
+}
+
+
+.back_home:hover{
+
+    transform:translateY(-3px);
+
+    background:#ffb224;
+}
+
+
+/* BACK BTN */
+
+.go_back{
+
+    padding:15px 28px;
+
+    border:none;
+
+    border-radius:14px;
+
+    background:white;
+
+    color:#0f172a;
+
+    font-weight:600;
+
+    cursor:pointer;
+
+    transition:.3s;
+}
+
+
+.go_back:hover{
+
+    transform:translateY(-3px);
+}
+
+
+/* MOBILE */
+
+@media(max-width:768px){
+
+    .error_404_content h1{
+
+        font-size:90px;
+    }
+
+    .error_404_content h2{
+
+        font-size:26px;
+    }
+
+    .error_404_content p{
+
+        font-size:15px;
+    }
+
+}
+</style>
+
+
+<script>
+
+
+    // =========================
+// 404 SMALL ANIMATION
+// =========================
+
+const errorTitle =
+document.querySelector(
+    ".error_404_content h1"
+);
+
+if(errorTitle){
+
+    setInterval(() => {
+
+        errorTitle.style.transform =
+        "translateY(-5px)";
+
+        setTimeout(() => {
+
+            errorTitle.style.transform =
+            "translateY(0px)";
+
+        },300);
+
+    },2000);
+
+}
+</script>
+
+{% endblock %}
+

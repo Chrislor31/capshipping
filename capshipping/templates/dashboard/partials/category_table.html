@@ -1,3 +1,5 @@
+{% load i18n %}
+
 <section class="users_managements">
 
 
@@ -5,14 +7,14 @@
     <div class="title_head"
          style="padding:0px 0px 50px 0">
 
-        <p>Shipment Categories</p>
+        <p>{% trans 'Shipment Categories' %}</p>
 
         <span style="display:flex;
                      padding:10px 0px;
                      opacity:60%;
                      font-size:13px">
 
-            dashboard/categories
+            {% trans 'dashboard/categories' %}
 
         </span>
 
@@ -30,7 +32,7 @@
             <i class="bx bx-category"></i>
 
             <span>
-                Add category
+                {% trans 'Add category' %}
             </span>
 
         </button>
@@ -59,7 +61,7 @@
 
                 <button type="submit">
 
-                    Search
+                    {% trans 'Search' %}
 
                 </button>
 
@@ -70,13 +72,17 @@
             <!-- ACTIONS -->
             <div class="table_actions">
 
+                {% if request.user.role == "admin" %}
+
                 <button id="deleteSelectedCategory">
 
                     <i class='bx bxs-trash-alt'></i>
 
-                    Delete Selected
+                    {% trans 'Delete Selected' %}
 
                 </button>
+
+                {% endif %}
 
                 <span id="selectedCount">
 
@@ -84,7 +90,7 @@
 
                     {{ page_obj.paginator.count }}
 
-                    selected
+                    {% trans 'selected' %}
 
                 </span>
 
@@ -112,10 +118,10 @@
 
                         </th>
 
-                        <th>Category</th>
-                        <th>Surcharge</th>
-                        <th>Created</th>
-                        <th>Actions</th>
+                        <th>{% trans 'Category' %}</th>
+                        <th>{% trans 'Surcharge' %}</th>
+                        <th>{% trans 'Created' %}</th>
+                        <th>{% trans 'Actions' %}</th>
 
                     </tr>
 
@@ -161,7 +167,7 @@
 
             <span class="suit_code">
 
-                Shipment category
+                {% trans 'Shipment category' %}
 
             </span>
 
@@ -207,12 +213,12 @@
                 <i class='bx bx-edit'></i>
 
                 <span>
-                    Edit Category
+                    {% trans 'Edit Category' %}
                 </span>
 
             </div>
 
-
+{% if request.user.role == "admin" %}
 
             <!-- DELETE -->
             <div class="dropdown_item danger"
@@ -222,10 +228,12 @@
                 <i class='bx bx-trash'></i>
 
                 <span>
-                    Delete
+                   {% trans 'Delete' %}
                 </span>
 
             </div>
+
+            {% endif %}
 
         </div>
 
@@ -240,7 +248,7 @@
     <td colspan="5"
         style="text-align:center;">
 
-        No categories found
+        {% trans 'No categories found' %}
 
     </td>
 
@@ -272,7 +280,7 @@
 
                 {{ page_obj.paginator.count }}
 
-                categories
+                {% trans 'categories' %}
 
             </div>
 
@@ -430,7 +438,7 @@
 
                             <span id="alertMessage">
 
-                                Category created
+                                {% trans 'Category created' %}
 
                             </span>
 
@@ -460,7 +468,7 @@
 
                             <i class='bx bx-save'></i>
 
-                            Save category
+                            {% trans 'Save category' %}
 
                         </button>
 
@@ -473,7 +481,7 @@
 
                             <i class='bx bx-x'></i>
 
-                            Cancel
+                           {% trans 'Cancel' %}
 
                         </button>
 
@@ -490,16 +498,17 @@
                             <i class='bx bx-info-circle'></i>
 
                             <h4>
-                                information
+                                {% trans 'information' %}
                             </h4>
 
                         </div>
 
                         <p>
 
-                            Categories help classify
+                            {% blocktrans %} Categories help classify
                             shipment packages and
                             apply surcharges automatically.
+                            {% endblocktrans %}
 
                         </p>
 

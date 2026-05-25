@@ -36,24 +36,24 @@
 <div id="scan-data" class="scan-data hidden">
 
     <div class="scan-item">
-        <span class="icon"><i data-lucide="package-check"></i></span>
+        <span class="icon"><i data-lucide="badge-check"></i></span>
         <p><strong>TRX:</strong> <span id="trx"></span></p>
     </div>
 
     <div class="scan-item">
-        <span class="icon"><i data-lucide="package-check"></i></span>
+        <span class="icon"><i data-lucide="badge-check"></i></span>
         <p><strong>Status:</strong> <span id="status"></span></p>
     </div>
 
     <div class="scan-item">
-        <span class="icon"><i data-lucide="package-check"></i></span>
+        <span class="icon"><i data-lucide="badge-check"></i></span>
         <p><strong>Destination:</strong> <span id="destination"></span></p>
     </div>
 
 </div>
 
 <div class="barmenu_scan">
-    <button> <i data-lucide="house"></i></button>
+    <button><a href="{% url 'Panel-admin-access' %}" style="color:white"><i data-lucide="house"></i></a> </button>
 <button class="start-btn" onclick="startScanner()"><i data-lucide="scan-line"></i></button>
 
 <button><i data-lucide="shield-check"></i></button>
@@ -62,35 +62,142 @@
 
 <!---------popup delivery ---------->
 
+<!--------- DELIVERY MODAL ---------->
 
 <div id="delivery-modal" class="delivery-modal hidden">
 
     <div class="delivery-box">
 
-        <h3>Confirm Delivery</h3>
+        <!-- HEADER -->
+        <div class="delivery_header">
 
-        <p><strong>TRX:</strong> <span id="popup-trx"></span></p>
+            <div class="delivery_icon">
+                <i class='bx bx-check-circle'></i>
+            </div>
 
-        <!-- CHECKBOX -->
-        <label class="check">
-            <input type="checkbox" id="confirmCheck" required>
-            I confirm delivery
-        </label>
+            <div>
+
+                <h3>Confirm Delivery</h3>
+
+                <p>
+                    Verify package information before confirming.
+                </p>
+
+            </div>
+
+        </div>
+
+
+
+        <!-- PACKAGE INFO -->
+        <div class="delivery_info">
+
+            <div class="info_row">
+                <span>Tracking Number</span>
+                <strong id="popup-trx">TRX000</strong>
+            </div>
+
+            <div class="info_row">
+                <span>Package Code</span>
+                <strong id="popup-pkg">PKG-0001</strong>
+            </div>
+
+            <div class="info_row">
+                <span>Receiver</span>
+                <strong id="popup-receiver">
+                    Jean Max Louis
+                </strong>
+            </div>
+
+            <div class="info_row">
+                <span>Phone</span>
+                <strong id="popup-phone">
+                    +509 0000-0000
+                </strong>
+            </div>
+
+            <div class="info_row">
+
+    <span>Payment Status</span>
+
+    <strong
+    id="popup-payment"
+    class="payment_badge unpaid">
+
+        Unpaid
+
+    </strong>
+
+</div>
+
+        </div>
+
+
+
+        <!-- SWITCH -->
+        <div class="confirm_switch">
+
+            <label class="switch">
+
+                <input type="checkbox" id="confirmCheck">
+
+                <span class="slider"></span>
+
+            </label>
+
+            <p>
+                I confirm this package was delivered
+                successfully.
+            </p>
+
+        </div>
+
+
 
         <!-- SIGNATURE -->
+        <div class="signature_wrapper" style="display:none;">
+
+            <div class="signature_top">
+
+                <h4>Recipient Signature</h4>
+
+                <span id="signature-status">
+                    Not Signed
+                </span>
+
+            </div>
+
+            <canvas id="signature-pad"></canvas>
+
+        </div>
 
 
-        <canvas id="signature-pad"></canvas>
 
+        <!-- ACTIONS -->
         <div class="actions">
-            <button onclick="closeModal()">Cancel</button>
-            <button onclick="confirmDelivery()">Confirm</button>
+
+            <button class="cancel_btn"
+            onclick="closeModal()">
+
+                Cancel
+
+            </button>
+
+           <button class="confirm_btn"
+onclick="confirmDelivery()"
+id="confirmDeliveryBtn">
+
+    <i class='bx bx-check'></i>
+
+    Confirm Delivery
+
+</button>
+
         </div>
 
     </div>
 
 </div>
-
 
 <div id="success-screen" class="success-screen hidden">
 
@@ -352,91 +459,353 @@ button:hover{
 
 
 
-
-/* BACKDROP */
 .delivery-modal{
-    position:fixed;
-    top:0;
-    left:0;
-    width:100%;
-    height:100%;
-    background:rgba(0,0,0,0.7);
-    display:flex;
-    justify-content:center;
-    align-items:center;
-    z-index:9999;
+
+    position: fixed;
+
+    inset: 0;
+
+    background: rgba(0,0,0,.55);
+
+    backdrop-filter: blur(6px);
+
+    display: flex;
+
+    justify-content: center;
+
+    align-items: center;
+
+    z-index: 999999;
 }
 
-/* BOX */
-.delivery-box{
-    background:#0f172a;
-    padding:20px;
-    border-radius:15px;
-    width:90%;
-    max-width:350px;
-    color:white;
-    text-align:center;
-    animation: pop 0.3s ease;
+
+.hidden{
+
+    display: none;
 }
+
+
+.delivery-box{
+
+    width: 100%;
+
+
+    max-width: 520px;
+
+    background: #fff;
+
+    border-radius: 28px;
+
+    padding: 25px;
+
+    animation: popup .3s ease;
+
+    box-shadow:
+    0 20px 60px rgba(0,0,0,.18);
+}
+
+
+@keyframes popup{
+
+    from{
+        transform: scale(.9);
+        opacity: 0;
+    }
+
+    to{
+        transform: scale(1);
+        opacity: 1;
+    }
+
+}
+
+
+
+/* HEADER */
+
+.delivery_header{
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 15px;
+
+    margin-bottom: 25px;
+}
+
+
+.delivery_icon{
+
+    width: 60px;
+    height: 60px;
+
+    border-radius: 18px;
+
+    background: #ecfdf3;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+}
+
+
+.delivery_icon i{
+
+    font-size: 34px;
+
+    color: #22c55e;
+}
+
+
+.delivery_header h3{
+
+    font-size: 30px;
+
+    color: #101820;
+}
+
+
+.delivery_header p{
+
+    color: #666;
+
+    margin-top: 5px;
+}
+
+
+
+/* INFO */
+
+.delivery_info{
+
+    background: #f8fafc;
+
+    border-radius: 18px;
+
+    padding: 18px;
+
+    display: flex;
+
+    flex-direction: column;
+
+    gap: 14px;
+}
+
+
+.info_row{
+
+    display: flex;
+
+    justify-content: space-between;
+
+    gap: 10px;
+}
+
+
+.info_row span{
+
+    color: #666;
+}
+
+
+.info_row strong{
+
+    color: #101820;
+}
+
+
+
+/* SWITCH */
+
+.confirm_switch{
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 12px;
+
+    margin: 25px 0;
+}
+
+
+
+/* SWITCH STYLE */
+
+.switch{
+
+    position: relative;
+
+    width: 55px;
+
+    height: 30px;
+}
+
+
+.switch input{
+
+    display: none;
+}
+
+
+.slider{
+
+    position: absolute;
+
+    inset: 0;
+
+    background: #ddd;
+
+    border-radius: 40px;
+
+    cursor: pointer;
+
+    transition: .3s;
+}
+
+
+.slider::before{
+
+    content: "";
+
+    position: absolute;
+
+    width: 22px;
+    height: 22px;
+
+    left: 4px;
+    top: 4px;
+
+    background: white;
+
+    border-radius: 50%;
+
+    transition: .3s;
+}
+
+
+.switch input:checked + .slider{
+
+    background: #22c55e;
+}
+
+
+.switch input:checked + .slider::before{
+
+    transform: translateX(24px);
+}
+
+
 
 /* SIGNATURE */
-#signature-pad{
-    width:100%;
-    height:120px;
-    background:white;
-    border-radius:10px;
-    margin:10px 0;
+
+.signature_wrapper{
+
+    margin-top: 20px;
 }
 
-/* BUTTONS */
-.actions{
-    display:flex;
-    gap:10px;
-    justify-content:center;
+
+.signature_top{
+
+    display: flex;
+
+    justify-content: space-between;
+
+    margin-bottom: 10px;
 }
+
+
+#signature-status{
+
+    color: #dc2626;
+
+    font-weight: 600;
+}
+
+
+#signature-pad{
+
+    width: 100%;
+
+    height: 180px;
+
+    border: 2px dashed #dbeafe;
+
+    border-radius: 18px;
+
+    background: #fff;
+}
+
+
+
+/* ACTIONS */
+
+.actions{
+
+    display: flex;
+
+    gap: 12px;
+
+    margin-top: 25px;
+}
+
 
 .actions button{
-    padding:10px 15px;
-    border:none;
-    border-radius:10px;
-    cursor:pointer;
-}
 
-.actions button:first-child{
-    background:#ef4444;
-}
+    flex: 1;
 
-.actions button:last-child{
-    background:#22c55e;
-}
+    height: 55px;
 
-/* ANIMATION */
-@keyframes pop{
-    from{transform:scale(0.8); opacity:0;}
-    to{transform:scale(1); opacity:1;}
-}
+    border: none;
 
-/* HIDDEN */
-.hidden{
-    display:none;
+    border-radius: 16px;
+
+    font-size: 17px;
+
+    font-weight: 600;
+
+    cursor: pointer;
 }
 
 
+.cancel_btn{
 
-/* FULL SCREEN */
-.success-screen{
-    position: fixed;
-    top:0;
-    left:0;
-    width:100%;
-    height:100%;
-    background: rgba(0,0,0,0.85);
+    background: #fff1f2;
 
-    display:flex;
-    justify-content:center;
-    align-items:center;
+    color: #dc2626;
+}
 
-    z-index:10000;
+
+.confirm_btn{
+
+    background: linear-gradient(
+        135deg,
+        #22c55e,
+        #16a34a
+    );
+
+    color: white;
+}
+
+
+
+/* MOBILE */
+
+@media(max-width:600px){
+
+    .delivery-box{
+
+        padding: 20px;
+    }
+
+    .delivery_header h3{
+
+        font-size: 24px;
+    }
+
 }
 
 /* CONTENT BOX */
@@ -483,6 +852,49 @@ button:hover{
 
 
 
+    /* =========================
+PAYMENT STATUS
+========================= */
+
+.payment_badge{
+
+    padding: 6px 14px;
+
+    border-radius: 30px;
+
+    font-size: 13px;
+
+    font-weight: 700;
+
+    text-transform: uppercase;
+
+    letter-spacing: .5px;
+}
+
+
+
+/* PAID */
+.payment_badge.paid{
+
+    background: #dcfce7;
+
+    color: #16a34a;
+
+    border: 1px solid #bbf7d0;
+}
+
+
+
+/* UNPAID */
+.payment_badge.unpaid{
+
+    background: #fef2f2;
+
+    color: #dc2626;
+
+    border: 1px solid #fecaca;
+}
+
 
 </style>
 
@@ -491,230 +903,738 @@ let isScanning = false;
 let codeReader;
 
 function getCookie(name) {
+
     let cookieValue = null;
+
     if (document.cookie) {
+
         let cookies = document.cookie.split(';');
+
         for (let cookie of cookies) {
+
             cookie = cookie.trim();
-            if (cookie.startsWith(name + '=')) {
-                cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+
+            if (
+                cookie.startsWith(name + '=')
+            ) {
+
+                cookieValue = decodeURIComponent(
+                    cookie.substring(
+                        name.length + 1
+                    )
+                );
+
             }
+
         }
+
     }
+
     return cookieValue;
 }
 
+
+
+/* =========================================
+   START SCANNER
+========================================= */
+
 function startScanner() {
 
-    codeReader = new ZXing.BrowserMultiFormatReader();
+    codeReader =
+    new ZXing.BrowserMultiFormatReader();
 
-    codeReader.listVideoInputDevices()
-        .then(devices => {
+    codeReader
+    .listVideoInputDevices()
 
-            if (!devices.length) {
-                alert("No camera found");
-                return;
-            }
+    .then(devices => {
 
-            const selectedDeviceId = devices[devices.length - 1].deviceId;
+        if (!devices.length) {
 
-            codeReader.decodeFromVideoDevice(selectedDeviceId, 'reader', (result, err) => {
+            alert("No camera found");
 
+            return;
+        }
+
+        const selectedDeviceId =
+        devices[devices.length - 1]
+        .deviceId;
+
+
+        codeReader.decodeFromVideoDevice(
+
+            selectedDeviceId,
+
+            'reader',
+
+            (result, err) => {
+
+                // =====================================
                 // 🔥 HANDLE RESULT
+                // =====================================
+
                 if (result && !isScanning) {
 
                     isScanning = true;
 
-                    console.log("SCANNED:", result.text);
+                    console.log(
+                        "SCANNED:",
+                        result.text
+                    );
 
-                    document.getElementById("result").innerText =
-                        "📦 Scanned: " + result.text;
 
-                    fetch("/shipping/scan-package/", {
-                        method: "POST",
-                        headers: {
-                            "Content-Type": "application/json",
-                            "X-CSRFToken": getCookie("csrftoken")
-                        },
-                        body: JSON.stringify({
-                            barcode: result.text
-                        })
-                    })
+
+
+                    document
+                    .getElementById("result")
+                    .innerText =
+                    "📦 Scanned: " +
+                    result.text;
+
+
+                    fetch(
+                        "/shipping/scan-package/",
+                        {
+
+                            method: "POST",
+
+                            headers: {
+
+                                "Content-Type":
+                                "application/json",
+
+                                "X-CSRFToken":
+                                getCookie(
+                                    "csrftoken"
+                                )
+
+                            },
+
+                            body: JSON.stringify({
+
+                                barcode:
+                                result.text
+
+                            })
+
+                        }
+
+                    )
+
                     .then(res => res.json())
+
                     .then(data => {
+
+                        // =====================================
+                        // ✅ SUCCESS
+                        // =====================================
 
                         if (data.success) {
 
-                            // 🟢 SUCCESS SOUND
+                            // 🔊 SOUND
                             try {
-                                new Audio("{% static 'sounds/freesound_community-store-scanner-beep-90395.mp3' %}").play();
+
+                                new Audio(
+                                    "{% static 'sounds/freesound_community-store-scanner-beep-90395.mp3' %}"
+                                ).play();
+
                             } catch(e){}
 
+
                             // 🟢 GREEN FLASH
-                            document.body.style.background = "#0f0";
+                            document.body.style.background =
+                            "#0f0";
 
-                            // 👉 TEXT SIMPLE
-                            document.getElementById("result").innerText =
-                                "" + data.status;
 
-                            // 🔥 👉 DISPLAY DATA (SAN KRAZE ANYEN)
+                            // 🔥 RESULT TEXT
+                            document
+                            .getElementById("result")
+                            .innerText =
+                            data.status;
+
+
+                            // =====================================
+                            // 🔥 UPDATE SIMPLE UI
+                            // =====================================
+
                             try {
-                                document.getElementById("trx").innerText = data.trx || "N/A";
-                                document.getElementById("status").innerText = data.status || "N/A";
-                                document.getElementById("destination").innerText = data.destination || "N/A";
 
-                                document.getElementById("scan-data").classList.remove("hidden");
+                                document
+                                .getElementById("trx")
+                                .innerText =
+                                data.trx || "N/A";
 
-                                // refresh icons
+
+                                document
+                                .getElementById("status")
+                                .innerText =
+                                data.status || "N/A";
+
+
+                                document
+                                .getElementById("destination")
+                                .innerText =
+                                data.destination || "N/A";
+
+
+                                document
+                                .getElementById("scan-data")
+                                .classList.remove(
+                                    "hidden"
+                                );
+
+
                                 lucide.createIcons();
 
                             } catch(e){
-                                console.log("UI error:", e);
+
+                                console.log(
+                                    "UI error:",
+                                    e
+                                );
+
                             }
 
 
-                            if(data.status === "ready_pickup"){
-                                document.getElementById("delivery-modal").classList.remove("hidden");
-                                document.getElementById("popup-trx").innerText = data.trx;
+                            // =====================================
+                            // 🔥 OPEN DELIVERY MODAL
+                            // =====================================
+
+                            if(
+                                data.status ===
+                                "ready_pickup"
+                            ){
+
+                                console.log("MODAL DATA:", data);
+
+                                // 🔥 FORCE UPDATE
+                                openDeliveryModal({
+
+                                    tracking_number:
+                                    data.tracking_number ||
+                                    data.trx,
+
+                                    code:
+                                    data.code,
+
+                                    receiver:
+                                    data.receiver,
+
+                                    phone:
+                                    data.phone,
+
+                                    payment_status:
+                                    data.payment_status
+
+                                });
+
                             }
 
-                        } else {
-
-                            // 🔴 ERROR SOUND
-                            try {
-                                new Audio("{% static 'sounds/error.mp3' %}").play();
-                            } catch(e){}
-
-                            // 🔴 RED FLASH
-                            document.body.style.background = "#f00";
-
-                            if (navigator.vibrate) {
-                                navigator.vibrate([200,100,200]);
-                            }
-
-                            document.getElementById("result").innerText =
-                                "❌ " + data.error;
-
-                            // 👉 HIDE DATA SI ERROR
-                            try {
-                                document.getElementById("scan-data").classList.add("hidden");
-                            } catch(e){}
                         }
 
+                        // =====================================
+                        // ❌ ERROR
+                        // =====================================
+
+                        else {
+
+                            try {
+
+                                new Audio(
+                                    "{% static 'sounds/error.mp3' %}"
+                                ).play();
+
+                            } catch(e){}
+
+
+                            document.body.style.background =
+                            "#f00";
+
+
+                            if (navigator.vibrate) {
+
+                                navigator.vibrate([
+                                    200,
+                                    100,
+                                    200
+                                ]);
+
+                            }
+
+
+                            document
+                            .getElementById("result")
+                            .innerText =
+                            "❌ " + data.error;
+
+
+                            try {
+
+                                document
+                                .getElementById("scan-data")
+                                .classList.add(
+                                    "hidden"
+                                );
+
+                            } catch(e){}
+
+                        }
+
+
+                        // =====================================
+                        // RESET
+                        // =====================================
+
                         setTimeout(() => {
-                            document.body.style.background = "";
+
+                            document.body.style.background =
+                            "";
+
                             isScanning = false;
+
                         }, 2000);
 
                     });
+
                 }
 
-                // 🔥 HANDLE ERROR (METE LI NAN BON PLAS)
-                if (err && !(err instanceof ZXing.NotFoundException)) {
+
+                // =====================================
+                // 🔥 HANDLE ERROR
+                // =====================================
+
+                if (
+                    err &&
+                    !(err instanceof ZXing.NotFoundException)
+                ) {
+
                     console.error(err);
+
                 }
 
-            });
+            }
 
-        })
-        .catch(err => {
-            console.error(err);
-            alert("Camera error");
-        });
-}
+        );
 
-
-
-
-
-function confirmDelivery(){
-
-    let checked = document.getElementById("confirmCheck").checked;
-
-    if(!checked){
-        return;
-    }
-
-    const trx = document.getElementById("popup-trx").innerText;
-
-    fetch("/shipping/confirm-delivery/", {
-        method:"POST",
-        headers:{
-            "Content-Type":"application/json",
-            "X-CSRFToken": getCookie("csrftoken")
-        },
-        body: JSON.stringify({
-            trx: trx
-        })
     })
-    .then(res => res.json())
-    .then(data => {
 
-        if(data.success){
+    .catch(err => {
 
-            // 👉 FÈ POPUP LA FÈMEN
-            closeModal();
+        console.error(err);
 
-            // 👉 MONTRE ANIMASYON AN
-            document.getElementById("success-screen").classList.remove("hidden");
-
-            // 👉 APRE 2 SEGOND LI DISPARÈT
-            setTimeout(()=>{
-                document.getElementById("success-screen").classList.add("hidden");
-            },2000);
-
-        }
+        alert("Camera error");
 
     });
 
 }
 
-let canvas = document.getElementById("signature-pad");
-let ctx = canvas.getContext("2d");
+/* =========================================
+   DELIVERY MODAL
+========================================= */
 
-let drawing = false;
+function openDeliveryModal(pkg){
 
-// 👉 TOUCH START
-canvas.addEventListener("touchstart", (e) => {
-    drawing = true;
-});
+    // 🔥 OPEN MODAL
 
-// 👉 TOUCH END
-canvas.addEventListener("touchend", () => {
-    drawing = false;
-    ctx.beginPath();
-});
+    // 🔥 RESET SWITCH
+    document
+    .getElementById("confirmCheck")
+    .checked = false;
 
-// 👉 TOUCH MOVE (FIX)
-canvas.addEventListener("touchmove", (e) => {
-    if (!drawing) return;
 
-    e.preventDefault(); // 🔥 SA KI FIX PROBLEM NAN
+    // 🔥 RESET SIGNATURE STATUS
+    document
+    .getElementById("signature-status")
+    .innerText = "Not Signed";
 
-    const rect = canvas.getBoundingClientRect();
-    const touch = e.touches[0];
+    document
+    .getElementById("signature-status")
+    .style.color = "#dc2626";
 
-    const x = touch.clientX - rect.left;
-    const y = touch.clientY - rect.top;
 
-    ctx.lineWidth = 2;
-    ctx.lineCap = "round";
-    ctx.strokeStyle = "black";
+    // 🔥 CLEAR CANVAS
+    ctx.clearRect(
+        0,
+        0,
+        canvas.width,
+        canvas.height
+    );
 
-    ctx.lineTo(x, y);
-    ctx.stroke();
-    ctx.beginPath();
-    ctx.moveTo(x, y);
-}, { passive: false }); // 🔥 TRÈ ENPÒTAN
 
-// 👉 PA TOUCHE SA
-function closeModal(){
-    document.getElementById("delivery-modal").classList.add("hidden");
+    // 🔥 TRACKING NUMBER
+    document
+    .getElementById("popup-trx")
+    .innerText =
+    pkg.tracking_number || pkg.trx || "N/A";
+
+
+    // 🔥 PACKAGE CODE
+    document
+    .getElementById("popup-pkg")
+    .innerText =
+    pkg.code || "N/A";
+
+
+    // 🔥 RECEIVER
+    document
+    .getElementById("popup-receiver")
+    .innerText =
+    pkg.receiver || "N/A";
+
+
+    // 🔥 PHONE
+    document
+    .getElementById("popup-phone")
+    .innerText =
+    pkg.phone || "N/A";
+
+
+    // 🔥 PAYMENT STATUS
+    const paymentBadge =
+    document.getElementById(
+        "popup-payment"
+    );
+
+    paymentBadge.innerText =
+    pkg.payment_status || "UNPAID";
+
+
+    paymentBadge.classList.remove(
+        "paid",
+        "unpaid"
+    );
+
+
+    paymentBadge.classList.add(
+
+        (
+            pkg.payment_status || "unpaid"
+        ).toLowerCase()
+
+    );
+
+
+    document
+.getElementById("delivery-modal")
+.classList.remove("hidden");
+
 }
 
 
 
-     lucide.createIcons();
+/* =========================================
+   CONFIRM DELIVERY
+========================================= */
+async function confirmDelivery(){
+
+    let checked =
+    document.getElementById(
+        "confirmCheck"
+    ).checked;
+
+    if(!checked){
+
+        alert(
+            "Please confirm delivery first"
+        );
+
+        return;
+    }
+
+    const btn =
+    document.getElementById(
+        "confirmDeliveryBtn"
+    );
+
+    // 🔥 LOADING
+    btn.disabled = true;
+
+    btn.innerHTML =
+    "Processing...";
+
+
+    const trx =
+    document.getElementById(
+        "popup-trx"
+    ).innerText;
+
+
+    try{
+
+        const response = await fetch(
+            "/shipping/confirm-delivery/",
+            {
+
+                method:"POST",
+
+                headers:{
+
+                    "Content-Type":"application/json",
+
+                    "X-CSRFToken":
+                    getCookie("csrftoken")
+
+                },
+
+                body: JSON.stringify({
+
+                    trx: trx,
+
+                    signed: true
+
+                })
+
+            }
+
+        );
+
+        const data =
+        await response.json();
+
+        if(data.success){
+
+            // 🔥 CLOSE MODAL
+            closeModal();
+
+            // 🔥 SUCCESS SCREEN
+            document
+            .getElementById(
+                "success-screen"
+            )
+            .classList.remove(
+                "hidden"
+            );
+
+            // 🔥 CONFETTI
+            confetti({
+
+                particleCount: 120,
+
+                spread: 90,
+
+                origin: {
+                    y: 0.6
+                }
+
+            });
+
+            // 🔥 AUTO HIDE
+            setTimeout(()=>{
+
+                document
+                .getElementById(
+                    "success-screen"
+                )
+                .classList.add(
+                    "hidden"
+                );
+
+            },2000);
+
+        }
+
+    }catch(error){
+
+        alert("Network Error");
+
+        console.log(error);
+
+    }
+
+    finally{
+
+        btn.disabled = false;
+
+        btn.innerHTML =
+        "<i class='bx bx-check'></i> Confirm Delivery";
+
+    }
+
+}
+
+
+/* =========================================
+   SIGNATURE PAD
+========================================= */
+
+let canvas =
+document.getElementById(
+    "signature-pad"
+);
+
+let ctx =
+canvas.getContext("2d");
+
+let drawing = false;
+
+
+
+/* =========================================
+   FIX CANVAS SIZE
+========================================= */
+
+function resizeCanvas(){
+
+    canvas.width =
+    canvas.offsetWidth;
+
+    canvas.height =
+    canvas.offsetHeight;
+}
+
+resizeCanvas();
+
+window.addEventListener(
+    "resize",
+    resizeCanvas
+);
+
+
+
+/* =========================================
+   TOUCH START
+========================================= */
+
+canvas.addEventListener(
+    "touchstart",
+    () => {
+
+        drawing = true;
+
+    }
+);
+
+
+
+/* =========================================
+   TOUCH END
+========================================= */
+
+canvas.addEventListener(
+    "touchend",
+    () => {
+
+        drawing = false;
+
+        ctx.beginPath();
+
+    }
+);
+
+
+
+/* =========================================
+   TOUCH MOVE
+========================================= */
+
+canvas.addEventListener(
+    "touchmove",
+
+    (e) => {
+
+        if(!drawing) return;
+
+        e.preventDefault();
+
+        document
+        .getElementById(
+            "signature-status"
+        )
+        .innerText = "Signed";
+
+
+        document
+        .getElementById(
+            "signature-status"
+        )
+        .style.color = "#16a34a";
+
+
+        const rect =
+        canvas.getBoundingClientRect();
+
+        const touch =
+        e.touches[0];
+
+        const x =
+        touch.clientX - rect.left;
+
+        const y =
+        touch.clientY - rect.top;
+
+
+        ctx.lineWidth = 2;
+
+        ctx.lineCap = "round";
+
+        ctx.strokeStyle = "#111";
+
+
+        ctx.lineTo(x, y);
+
+        ctx.stroke();
+
+        ctx.beginPath();
+
+        ctx.moveTo(x, y);
+
+    },
+
+    { passive:false }
+
+);
+
+
+
+/* =========================================
+   CLOSE MODAL
+========================================= */
+
+function closeModal(){
+
+    document
+    .getElementById(
+        "delivery-modal"
+    )
+    .classList.add("hidden");
+
+}
+
+
+
+/* =========================================
+   LUCIDE
+========================================= */
+
+lucide.createIcons();
+
+
+
+
+/* =========================================
+   🔥 OPEN MODAL AFTER SCAN
+========================================= */
+
+/*
+🔥 IMPORTANT:
+
+APRÈ FETCH scan package la,
+ou dwe rele:
+
+openDeliveryModal(data)
+
+EXAMPLE:
+
+.then(data => {
+
+    if(data.success){
+
+        openDeliveryModal(data);
+
+    }
+
+})
+*/
 </script>
 
 
@@ -790,9 +1710,28 @@ function closeModal(){
                     }
 
                     if(data.status === "ready_pickup"){
-                        document.getElementById("delivery-modal").classList.remove("hidden");
-                        document.getElementById("popup-trx").innerText = data.trx;
-                    }
+
+    openDeliveryModal({
+
+        tracking_number:
+        data.tracking_number ||
+        data.trx,
+
+        code:
+        data.code,
+
+        receiver:
+        data.receiver,
+
+        phone:
+        data.phone,
+
+        payment_status:
+        data.payment_status
+
+    });
+
+}
 
                 } else {
 

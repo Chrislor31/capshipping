@@ -1,0 +1,113 @@
+{% load i18n %}
+
+<!DOCTYPE html>
+
+<html>
+<body style="margin:0; padding:0; background:#f4f7fb; font-family:Arial, sans-serif;">
+
+<table width="100%" cellpadding="0" cellspacing="0" style="padding:5px;">
+    <tr>
+    <td align="center">
+
+        <!-- MAIN BOX -->
+        <table width="100%" cellpadding="0" cellspacing="0" style="background:#ffffff; border-radius:12px; overflow:hidden; border-bottom: 5px solid orange; max-width:800px; background:#ffffff; border-radius:12px; overflow:hidden;">
+
+            <!-- HEADER -->
+            <tr>
+                <td style="padding:25px; text-align:center; background:#ffffff;">
+                    <!-- LOGO -->
+                    <img src="https://res.cloudinary.com/dplskdeel/image/upload/f_auto,q_auto/cap-shipping-blu-color_dmulkq" alt="Logo" style="margin-bottom:10px; width: 160px;">
+                    <hr style="display: inline-block; width: 100%; border: 0.5px solid #dbdbdb;">
+                </td>
+            </tr>
+
+            <!-- BODY -->
+            <tr>
+                <td style="padding:30px 25px; text-align:center;">
+
+                   <p style="color:#1f2937; font-size:20px; margin-bottom:10px; margin-top:0px; font-weight:bold;">
+
+    {% trans 'Congratulations' %}
+
+    {% if user.first_name %}
+        {{ user.first_name }}
+    {% else %}
+        User
+    {% endif %}!
+
+</p>
+
+
+
+<p style="color:#22C55E; font-size:16px; margin-bottom:15px; line-height:1.5; font-weight:bold;">
+
+    {% blocktrans %}
+
+    Your identity verification has been approved successfully.
+
+    {% endblocktrans %}
+
+</p>
+
+
+
+<p style="color:#6b7280; font-size:14px; margin-bottom:15px; line-height:1.5;">
+
+    {% blocktrans %}
+
+    Your account is now fully verified and you can access all platform features.
+
+    {% endblocktrans %}
+
+</p>
+
+
+
+<p style="color:#6b7280; font-size:14px; margin-bottom:5px;">
+
+   {% trans 'Thank you for choosing Cap Shipping Distribution.' %}
+
+</p>
+
+                 </td>
+            </tr>
+
+            <!-- FOOTER -->
+            <tr>
+                <td style="background:#21385E; padding:25px; text-align:center;">
+
+                    <p style="margin:10px 0; font-size:14px; color:#e5e7eb;">
+                        📞 +1 (609) 289-0277 <br>
+                        <p style="color:#e5e7eb;">📧 support@capshippingdistribution.com</p>
+                    </p>
+
+                    <!-- SOCIAL MEDIA ICONS - centered and smaller -->
+                    <div style="text-align:center; margin:15px 0;">
+                        <a href="https://www.facebook.com/capshipping" target="_blank" style="text-decoration:none; display:inline-block; margin:0 8px;">
+                            <img src="https://cdn-icons-png.flaticon.com/512/733/733547.png" alt="Facebook" style="width:24px; height:24px; display:inline-block;">
+                        </a>
+                        <a href="https://www.instagram.com/capshipping" target="_blank" style="text-decoration:none; display:inline-block; margin:0 8px;">
+                            <img src="https://cdn-icons-png.flaticon.com/512/733/733558.png" alt="Instagram" style="width:24px; height:24px; display:inline-block;">
+                        </a>
+                        <a href="https://www.tiktok.com/@capshipping" target="_blank" style="text-decoration:none; display:inline-block; margin:0 8px;">
+                            <img src="https://cdn-icons-png.flaticon.com/512/3046/3046126.png" alt="TikTok" style="width:24px; height:24px; display:inline-block;">
+                        </a>
+                    </div>
+
+                    <hr style="border:none; border-top:1px solid #e5e7eb; margin:20px 0;">
+
+                    <p style="font-size:12px; color:#9ca3af; margin:0;">
+                        © 2026 Cap Shipping Distribution. {% trans 'All rights reserved' %}.
+                    </p>
+
+                 </td>
+            </tr>
+
+        </table>
+
+    </table>
+    </tr>
+</table>
+
+</body>
+</html>

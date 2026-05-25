@@ -18,9 +18,9 @@ from .utils import send_shipping_email, send_shipping_sms, send_whatsapp
 def scan_page(request):
     return render(request, "shipping/scan.html")
 
-def send_notifications_async(package):
+def send_notifications_async(package,language):
     try:
-        send_shipping_email(package)
+        send_shipping_email(package,language)
         send_whatsapp(package)
         send_shipping_sms(package)
     except Exception as e:
@@ -61,12 +61,44 @@ def scan_package(request):
             })
 
         # 🚫 SI LI DEJA READY → PA RE-FÈ LI
-        if package.status == "ready_pickup" and staff_warehouse == package.destination_warehouse:
+        if (
+                package.status == "ready_pickup"
+                and
+                staff_warehouse ==
+                package.destination_warehouse
+        ):
             return JsonResponse({
+
                 "success": True,
-                "trx": package.tracking_number,
-                "status": package.status,
-                "destination": package.destination_warehouse.name if package.destination_warehouse else "N/A"
+
+                "trx":
+                    package.tracking_number,
+
+                "tracking_number":
+                    package.tracking_number,
+
+                "status":
+                    package.status,
+
+                "destination":
+                    (
+                        package.destination_warehouse.name
+                        if package.destination_warehouse
+                        else "N/A"
+                    ),
+
+                "code":
+                    package.code,
+
+                "receiver":
+                    package.receiver.name,
+
+                "phone":
+                    package.receiver.phone,
+
+                "payment_status":
+                    package.payment_status
+
             })
 
         # 🔥 NORMAL FLOW
@@ -82,9 +114,11 @@ def scan_package(request):
         package.status = new_status
         package.save()
 
+        language = request.COOKIES.get('django_language', 'en')
+
         threading.Thread(
             target=send_notifications_async,
-            args=(package,)
+            args=(package, language)
         ).start()
 
         # 🔥 TRACK HISTORY
@@ -95,11 +129,43 @@ def scan_package(request):
             updated_by=user
         )
 
+        print(package.receiver.name)
+        print(package.receiver.phone)
+        print(package.code)
+        print(package.payment_status)
         return JsonResponse({
+
             "success": True,
-            "trx": package.tracking_number,
-            "status": new_status,
-            "destination": package.destination_warehouse.name if package.destination_warehouse else "N/A"
+
+            "trx":
+                package.tracking_number,
+
+            "tracking_number":
+                package.tracking_number,
+
+            "status":
+                new_status,
+
+            "destination":
+                (
+                    package.destination_warehouse.name
+                    if package.destination_warehouse
+                    else "N/A"
+                ),
+
+            # 🔥 PACKAGE INFO
+            "code":
+                package.code,
+
+            "receiver":
+                package.receiver.name,
+
+            "phone":
+                package.receiver.phone,
+
+            "payment_status":
+                package.payment_status
+
         })
 
     except Package.DoesNotExist:
@@ -138,37 +204,67 @@ def mark_as_delivered(request, pk):
 
 
 
-
-
-
 @login_required
 def confirm_delivery(request):
 
     data = json.loads(request.body)
+
     trx = data.get("trx")
 
+    signed = data.get("signed", False)
+
     try:
-        package = Package.objects.get(tracking_number=trx)
 
-
-        package.status = "delivered"
-        package.save()
-        send_shipping_email(package)
-        send_shipping_sms(package)
-        send_whatsapp(package)
-
-        TrackingUpdate.objects.create(
-            package=package,
-            status="delivered",
-            warehouse=request.user.staff_warehouse,
-            updated_by=request.user
+        package = Package.objects.get(
+            tracking_number=trx
         )
 
-        return JsonResponse({"success": True})
+        # 🔥 UPDATE STATUS
+        package.status = "delivered"
+
+        # 🔥 AUTO PAYMENT
+        package.payment_status = "paid"
+
+        package.save()
+
+        # 🔥 CREATE TRACKING UPDATE
+        TrackingUpdate.objects.create(
+
+            package=package,
+
+            status="delivered",
+
+            warehouse=request.user.staff_warehouse,
+
+            updated_by=request.user,
+
+            note=(
+                f"Delivered successfully | "
+                f"Signed: {signed}"
+            )
+
+        )
+
+        # 🔥 NOTIFICATIONS
+        send_shipping_email(package, "fr")
+
+        send_shipping_sms(package)
+
+        send_whatsapp(package)
+
+        return JsonResponse({
+            "success": True
+        })
 
     except Package.DoesNotExist:
-        return JsonResponse({"error": "Package not found"})
 
+        return JsonResponse({
+
+            "success": False,
+
+            "error": "Package not found"
+
+        })
 
 
 
@@ -178,85 +274,287 @@ def confirm_delivery(request):
 
 
 
-# views.py
-from django.http import JsonResponse
-from .models import Package
-
-from django.http import JsonResponse
-from .models import Package
-
 
 def short_city(city):
     if city.lower() == "port-au-prince":
         return "P-au-P"
     return city
 
-
 def track_package(request):
+
     tracking_number = request.GET.get("tracking_number")
 
     try:
-        package = Package.objects.get(tracking_number__iexact=tracking_number)
+
+        package = Package.objects.get(
+            tracking_number__iexact=tracking_number
+        )
 
         updates = package.updates.all().order_by("created_at")
-
-        # 📅 DATES
-        dates = {
-            "received": package.created_at.strftime("%d/%m/%Y %H:%M") if package.created_at else "",
-            "in_transit": "",
-            "ready_pickup": "",
-            "delivered": ""
-        }
-
-        for update in updates:
-            key = update.status.lower().replace(" ", "_")
-            if key in dates:
-                dates[key] = update.created_at.strftime("%d/%m/%Y %H:%M")
-
-        # 📍 LOCATIONS
-        locations = {
-            "received": "",
-            "in_transit": "",
-            "ready_pickup": "",
-            "delivered": ""
-        }
 
         origin = package.origin_warehouse
         destination = package.destination_warehouse
 
-        # 📦 RECEIVED (USA FULL FORMAT)
+        # 🔥 STEP TITLES
+        # 🔥 SHIPPING LABEL
+        shipping_label = "Air Freight"
+
+        if package.shipping_type == "sea":
+            shipping_label = "Sea Freight"
+
+        # 🔥 DESTINATION COUNTRY
+        destination_country = "Destination"
+
+        if destination and destination.type:
+            destination_country = destination.type
+
+        # 🔥 STEP TITLES
+        status_titles = {
+            "received": "Received at Warehouse",
+
+            "in_transit":
+                f"In Transit to {destination_country} "
+                f"({shipping_label})",
+
+            "ready_pickup": "Ready for Pickup",
+
+            "delivered": "Delivered",
+
+            "canceled": "Canceled"
+        }
+
+        # 🔥 STEP NOTES
+        status_notes = {
+            "received": "Votre colis a été reçu et traité dans notre entrepôt.",
+
+            "in_transit": "Votre colis est actuellement en transit vers le pays de destination.",
+
+            "ready_pickup": "Votre colis est prêt pour le retrait au bureau local.",
+
+            "delivered": "Livré avec succès au destinataire.",
+
+            "canceled": "Cette expédition a été annulée."
+        }
+
+        # 🔥 STEP ORDER
+        steps_order = [
+            "received",
+            "in_transit",
+            "ready_pickup",
+            "delivered"
+        ]
+
+        # 🔥 CURRENT STEP INDEX
+        current_index = steps_order.index(package.status)
+
+        # 🔥 TIMELINE
+        timeline = []
+
+        # =========================
+        # 📦 RECEIVED STEP
+        # =========================
+        received_location = ""
+
         if origin:
-            zip_part = f" {origin.zip_code}" if origin.zip_code else ""
-            locations["received"] = f"{origin.type}, {origin.city}, {origin.state}{zip_part}, {origin.address}"
 
-        # 🚚 IN TRANSIT
-        if destination:
-            short = short_city(destination.city)
-            locations["in_transit"] = f"To {destination.type}, {destination.state} ({short})"
+            zip_part = (
+                f" {origin.zip_code}"
+                if origin.zip_code
+                else ""
+            )
 
-        # 📍 READY FOR PICKUP
-        if destination:
-            short = short_city(destination.city)
-            locations["ready_pickup"] = f"{short}, {destination.area}, {destination.address}"
+            received_location = (
+                f"{origin.city}, "
+                f"{origin.state}{zip_part}, "
+                f"{origin.address}"
+            )
 
-        # 📦 DELIVERED
-        if destination:
-            short = short_city(destination.city)
-            locations["delivered"] = f"{short}, {destination.area}, {destination.address}"
+        timeline.append({
 
-        return JsonResponse({
-            "success": True,
-            "status": package.status,
-            "dates": dates,
-            "locations": locations
+            "status": "received",
+
+            "title": status_titles["received"],
+
+            "note": status_notes["received"],
+
+            "location": received_location,
+
+            "date": package.created_at.strftime(
+                "%d/%m/%Y %I:%M %p"
+            ),
+
+            "active": current_index >= 0
+
         })
+
+
+
+        # =========================
+        # 🔄 OTHER STEPS
+        # =========================
+        for step in steps_order[1:]:
+
+            update = updates.filter(
+                status=step
+            ).first()
+
+            # 🔥 step active?
+            is_active = (
+                    steps_order.index(step)
+                    <= current_index
+            )
+
+            location = ""
+            date = ""
+
+            # 🔥 ONLY SHOW DATA IF STEP ACTIVE
+            if is_active and update:
+
+                date = update.created_at.strftime(
+                    "%d/%m/%Y %I:%M %p"
+                )
+
+                # 🚚 IN TRANSIT
+                if (
+                        step == "in_transit"
+                        and destination
+                ):
+
+                    short = short_city(
+                        destination.city
+                    )
+
+                    location = (
+                        f"To {destination.state} "
+                        f"({short})"
+                    )
+
+                # 📍 READY PICKUP
+                elif (
+                        step == "ready_pickup"
+                        and destination
+                ):
+
+                    short = short_city(
+                        destination.city
+                    )
+
+                    location = (
+                        f"{short}, "
+                        f"{destination.area}, "
+                        f"{destination.address}"
+                    )
+
+                # 📦 DELIVERED
+                elif (
+                        step == "delivered"
+                        and destination
+                ):
+
+                    short = short_city(
+                        destination.city
+                    )
+
+                    location = (
+                        f"{short}, "
+                        f"{destination.area}, "
+                        f"{destination.address}"
+                    )
+
+            timeline.append({
+
+                "status": step,
+
+                "title": status_titles.get(
+                    step,
+                    step
+                ),
+
+                "note": status_notes.get(
+                    step,
+                    ""
+                ),
+
+                "location": location,
+
+                "date": date,
+
+                "active": is_active
+
+            })
+
+
+
+        # 🔥 DELIVERED MESSAGE
+        delivered_message = ""
+
+        if package.status == "delivered":
+
+            delivered_message = (
+                "Delivered. "
+                "Received by recipient. "
+                "For assistance contact "
+                "Customer Service: "
+                "Support@capshippingdistribution.com"
+            )
+
+
+
+        # 🔥 TOTAL DAYS
+        total_days = ""
+
+        if updates.exists():
+
+            last_update = updates.last()
+
+            days = (
+                last_update.created_at.date()
+                - package.created_at.date()
+            ).days
+
+            total_days = f"{days} Days"
+
+
+
+        # 🔥 RESPONSE
+        return JsonResponse({
+
+            "success": True,
+
+            "tracking_number":
+                package.tracking_number,
+
+            "current_status":
+                package.status,
+
+            "delivered_message":
+                delivered_message,
+
+            "shipment_date":
+                package.created_at.strftime(
+                    "%d/%m/%Y"
+                ),
+
+            "total_transit_time":
+                total_days,
+
+            "timeline":
+                timeline
+
+        })
+
+
 
     except Package.DoesNotExist:
-        return JsonResponse({
-            "success": False,
-            "error": "Tracking number not found"
-        })
 
+        return JsonResponse({
+
+            "success": False,
+
+            "error":
+                "Tracking number not found"
+
+        })
 def tracking_page(request):
     return render(request, "tracking.html")
 

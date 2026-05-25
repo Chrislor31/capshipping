@@ -41,10 +41,15 @@
       </form>
 
         <div class="table_actions">
+
+{% if request.user.role == "admin" %}
             <button id="deleteSelected">
                 <i class='bx bxs-trash-alt'></i>
                 Delete Selected
             </button>
+
+            {% endif %}
+
 
             <span id="selectedCount">
                 0 of {{ page_obj.paginator.count }} selected
@@ -131,7 +136,7 @@
         </button>
 
         <div class="dropdown_menu">
-
+{% if request.user.role == "admin" %}
             <!-- VIEW -->
             <div class="dropdown_item edit_warehouse_btn"
      data-id="{{ warehouse.id }}">
@@ -151,6 +156,7 @@
 
 </div>
 
+
             <!-- DELETE -->
             <div class="dropdown_item danger"
                  data-action="delete"
@@ -160,6 +166,8 @@
                 <span>Delete</span>
 
             </div>
+
+            {% endif %}
 
         </div>
 

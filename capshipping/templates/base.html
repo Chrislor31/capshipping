@@ -4,6 +4,26 @@
 
 <!DOCTYPE html>
 
+
+
+<script>
+
+window.addEventListener("load", function(){
+
+    const loader =
+        document.getElementById("siteLoader");
+
+    setTimeout(() => {
+
+        loader.classList.add("hide");
+
+    }, 500);
+
+});
+
+
+
+</script>
 <html lang="en">
 
 <head>
@@ -20,6 +40,7 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
 <script src="https://unpkg.com/lucide@latest"></script>
 
 
@@ -37,14 +58,37 @@
 
 <body>
 
+{% block scrisp %}
+<!-- CRISP CHAT -->
+    <script type="text/javascript">
+    window.$crisp=[];
+    window.CRISP_WEBSITE_ID="0205c7c0-fc73-4485-ade2-9b6829a66bca";
+    (function(){
+    d=document;
+    s=d.createElement("script");
+    s.src="https://client.crisp.chat/l.js";
+    s.async=1;
+    d.getElementsByTagName("head")[0].appendChild(s);
+    })();
+    </script>
+
+{% endblock %}
+
+
+	<!-- LOADER -->
+<div id="siteLoader">
+
+    <div class="custom_loader"></div>
+
+</div>
 
 
 	<div class="page-wrapper">
 
 		<!-- Preloader -->
-		<div class="preloader">
-			<div class="loader"></div>
-		</div>
+
+
+
 
 
 		<!-- Main Header-->
@@ -65,22 +109,26 @@
 					<nav class="nav main-menu">
     <ul class="navigation">
 
-        <li class="current">
-            <a href="{% url 'home' %}">Home</a>
+        <li>
+            <a href="{% url 'home' %}">{% trans 'Home' %}</a>
         </li>
 
         <li>
-            <a href="{% url 'about' %}">About</a>
+            <a href="/#services">{% trans 'Service' %}</a>
         </li>
 
         <li class="dropdown">
-            <a href="#">Services</a>
+            <a href="{% url 'about' %}">{% trans 'About us' %}</a>
             <ul>
-                <li><a href="shipping.html">Shipping</a></li>
-                <li><a href="air-freight.html">Air Freight</a></li>
-                <li><a href="ocean-freight.html">Ocean Freight</a></li>
+                <li><a href="{% url 'about' %}">{% trans 'About' %}</a></li>
+                <li><a href="{% url 'term_condition'%}">{% trans 'Our policy' %}</a></li>
+
             </ul>
         </li>
+
+		<li>
+			<a href="{% url 'tracking_page' %}">{% trans 'Tracking' %}</a>
+		</li>
 
 
 
@@ -90,8 +138,6 @@
             🇺🇸 English
         {% elif request.LANGUAGE_CODE == 'fr' %}
             🇫🇷 Français
-        {% elif request.LANGUAGE_CODE == 'es' %}
-            🇪🇸 Español
         {% elif request.LANGUAGE_CODE == 'ht' %}
             🇭🇹 Kreyòl
         {% endif %}
@@ -117,14 +163,6 @@
         <li>
             <form action="/i18n/setlang/" method="post">
                 {% csrf_token %}
-                <input type="hidden" name="language" value="es">
-                <button type="submit">🇪🇸 Español</button>
-            </form>
-        </li>
-
-        <li>
-            <form action="/i18n/setlang/" method="post">
-                {% csrf_token %}
                 <input type="hidden" name="language" value="ht">
                 <button type="submit">🇭🇹 Kreyòl</button>
             </form>
@@ -132,17 +170,19 @@
     </ul>
 </li>
 
+
+
         <li>
-            <a href="{% url 'contact' %}">Contact</a>
+            <a href="{% url 'contact' %}">{% trans 'Contact' %}</a>
         </li>
 
 		{% if user.is_authenticated %}
-        <li class="user_log_prof">
-              <i data-lucide="circle-user-round"></i> <span> <a href=" {% url 'dashboard_user'%}">Hi, {{ user.first_name }}</a></span> <span class="profil_log_out" id="profil_log_out"><i data-lucide="log-out"></i></span>
+        <li style="display:flex; ; gap:10px; align-items: center;">
+			<a href=" {% url 'dashboard_user'%}">{% trans 'My Account' %}</a> <span id="profil_log_out"><i data-lucide="log-out" style="font-weight:600; color:orange"></i> </span>
         </li>
 {% else %}
         <li>
-            <a href="{% url 'login' %}"> My Account</a>
+            <a href="{% url 'login' %}"> {% trans 'My Account' %}</a>
         </li>
 
 		{% endif %}
@@ -155,10 +195,10 @@
 
 						<div class="outer-box">
 
-							<div class="menu-btn">
+						<!----	<div class="menu-btn">
 								<a href="{% url 'tracking_page' %}" class="theme-btn btn-style-one"><span class="btn-title">
 										Track Order<i class="fa-solid fa-arrow-right"></i></span></a>
-							</div>
+							</div>-->
 							<button class="menubars" type="button" data-bs-toggle="offcanvas" data-bs-target="#menubar">
 								<span></span>
 								<span></span>
@@ -179,7 +219,7 @@
 				<!--Here Menu Will Come Automatically Via Javascript / Same Menu as in Header-->
 				<nav class="menu-box">
 					<div class="upper-box">
-						<div class="nav-logo"><a href="index.html"><img src="{% static './images/Cargomages/logo-white-cap-shipping.png'%}" alt=""></a></div>
+						<div class="nav-logo"><a href="{% url 'home' %}"><img src="{% static './images/Cargomages/logo-white-cap-shipping.png'%}" alt=""></a></div>
 						<div class="close-btn"><i class="icon fa fa-times"></i></div>
 					</div>
 
@@ -191,35 +231,65 @@
 							<!-- Contact Info Box -->
 							<div class="contact-info-box">
 								<i class="icon lnr-icon-phone-handset"></i>
-								<span class="title">Call Now</span>
-								<a href="tel:+82880098670">+ 689 289 0277</a>
+								<span class="title">{% trans 'Call Now' %}</span>
+								<a href="tel:+862156480">+1 862 215 6480</a>
 							</div>
 						</li>
 						<li>
 							<!-- Contact Info Box -->
 							<div class="contact-info-box">
 								<span class="icon lnr-icon-envelope1"></span>
-								<span class="title">Send Email</span>
+								<span class="title">{% trans 'Send Email' %}</span>
 								<a href="mailto:help@company.com">info.Capshippingdistridution.com</a>
 							</div>
 						</li>
-						<li>
-							<!-- Contact Info Box -->
-							<div class="contact-info-box">
-								<span class="icon lnr-icon-clock"></span>
-								<span class="title">Send Email</span>
-								Mon - Sat 8:00 - 6:30, Sunday - CLOSED
-							</div>
-						</li>
+
 					</ul>
 
-
+{% if user.is_authenticated %}
 					<ul class="social-links">
-						<li><a href="#"><i class="fa-brands fa-x-twitter"></i></a></li>
-						<li><a href="#"><i class="fab fa-facebook-f"></i></a></li>
+						<div class="mobile_account_box">
 
-						<li><a href="#"><i class="fab fa-instagram"></i></a></li>
+
+
+    <div class="mobile_user_info">
+
+        <div class="mobile_avatar">
+
+            {{ user.first_name|slice:":1" }}
+
+        </div>
+
+        <div class="mobile_user_text">
+
+            <h4>
+                {{ user.first_name }} {{ user.last_name }}
+            </h4>
+
+            <p>{{ user.email }}</p>
+
+        </div>
+
+    </div>
+
+
+    <form action="{% url 'user_logout' %}" method="POST">
+
+    {% csrf_token %}
+
+    <button type="submit" class="logout_btn">
+
+        <i class="fa-regular fa-right-from-bracket"></i>
+
+        Logout
+
+    </button>
+
+</form>
+
+</div>
 					</ul>
+					{% endif %}
 				</nav>
 			</div><!-- End Mobile Menu -->
 
@@ -268,45 +338,59 @@
 			<div class="offcanvas-body sidebar__body">
 				<div class="mobile-menu overflow-hidden"></div>
 				<div class="d-none d-lg-block">
-					<h5 class="text-white mb-20">About Us</h5>
-					<p class="sidebar__text">loginet is a nonprofit main-homeal organizations maintaince and dedicated
-						to protecting planet through sustainable and renewable community empowerment moderator.We
-						leverage real main-homeal data tailor projects that maximize ecology benefit in your region</p>
+					<h5 class="text-white mb-20">{% trans 'About Us' %}</h5>
+					<p class="sidebar__text">
+						{% blocktrans %}CapShipping Distribution provides reliable Air and Sea cargo
+				services between the USA, Haiti, and the Dominican Republic.
+				We help individuals and businesses ship packages safely,
+				quickly, and efficiently through our trusted logistics network. {% endblocktrans %}</p>
 				</div>
 				<div class="sidebar__contact-info mt-30">
-    <h5 class="text-white mb-20">Contact Info</h5>
+    <h5 class="text-white mb-20">{% trans 'Contact Info' %}</h5>
     <ul>
         <li><i class="fa-solid fa-location-dot"></i>
-            <a href="#0">1125 Orwell Ave, Orlando, FL 32809, USA</a>
+            <a href="#0">904 1st Ave, Asbury Park,
+						NJ 07712, USA</a>
         </li>
-        <li class="py-2"><i class="fa-solid fa-phone-volume"></i>
-            <a href="tel:+15517953802">+1 (551) 795-3802</a>
-        </li>
+        <li class="py-2">
+
+					<i class="fa-solid fa-phone-volume"></i>
+
+					<a href="tel:+50940084021">
+
+						+509 4008 4021
+
+					</a>
+
+				</li>
+
+				<li>
+
+					<i class="fa-solid fa-phone-volume"></i>
+
+					<a href="tel:+18622156480">
+
+						+1 862 215 6480
+
+					</a>
+
+				</li>
         <li><i class="fa-solid fa-paper-plane"></i>
-            <a href="mailto:info@capshipping.com">info@capshipping.com</a>
+            <a href="mailto:info@capshipping.com">support@capshippingdistribution.com</a>
         </li>
     </ul>
 </div>
 
 				<div class="sidebar__btns my-4">
 					{% if not user.is_authenticated %}
-					<a href="{% url 'register' %}">Sign Up</a>
-					<a class="sign-in" href="{% url 'login' %}">Sign In</a>
+					<a href="{% url 'register' %}">{% trans 'Sign Up' %}</a>
+					<a class="sign-in" href="{% url 'login' %}">{% trans 'Sign In' %}</a>
 					{% endif %}
 				</div>
 
 				<div class="sidebar__socials">
 					<ul>
-						<li>
-							<a href="#0">
-								<svg width="16" height="16" viewBox="0 0 16 16" fill="none"
-									xmlns="http://www.w3.org/2000/svg">
-									<path
-										d="M7.76562 0H8.20406C9.50719 0.0371875 10.8041 0.385625 11.9359 1.03531C13.3297 1.82094 14.4756 3.03625 15.1816 4.47188C15.6875 5.49438 15.9603 6.62656 16 7.76562V8.205C15.9647 9.38344 15.6775 10.5553 15.1419 11.6069C14.6209 12.6316 13.8803 13.5447 12.9794 14.2594C12.0306 15.0175 10.9072 15.5569 9.71937 15.8141C9.22219 15.9275 8.71313 15.9788 8.20438 16H7.795C6.40844 15.9609 5.03281 15.5628 3.84875 14.8387C2.44469 13.985 1.3125 12.6919 0.659063 11.1838C0.252187 10.255 0.0365625 9.2475 0 8.23531V7.79406C0.0359375 6.53 0.366875 5.27437 0.976875 4.16594C1.73094 2.78781 2.8975 1.64031 4.28937 0.911563C5.35844 0.34625 6.55844 0.041875 7.76562 0ZM3.40094 3.29594C4.59812 5.03813 5.79531 6.78 6.99188 8.52219C5.79563 9.91344 4.59812 11.3038 3.40219 12.6953C3.6325 12.6966 3.86313 12.695 4.09344 12.6962C4.13844 12.6884 4.20125 12.7166 4.23281 12.6722C5.27312 11.4641 6.3125 10.2553 7.35219 9.04656C8.18937 10.2625 9.02344 11.4809 9.86156 12.6962C10.7741 12.695 11.6866 12.6962 12.5988 12.6956C11.3594 10.8869 10.1119 9.08313 8.87594 7.27219C10.0203 5.94969 11.1578 4.62156 12.2987 3.29625C12.0281 3.29563 11.7578 3.29563 11.4872 3.29625C10.4987 4.44875 9.50437 5.59656 8.51844 6.75094C7.72031 5.60344 6.93437 4.44688 6.14062 3.29625C5.2275 3.29563 4.31437 3.29594 3.40094 3.29594Z"
-										fill="white" />
-								</svg>
-							</a>
-						</li>
+
 						<li>
 							<a href="#0">
 								<svg width="8" height="16" viewBox="0 0 8 16" fill="none"
@@ -319,18 +403,27 @@
 						</li>
 
 						<li>
-							<a href="#0">
-								<svg width="16" height="16" viewBox="0 0 16 16" fill="none"
-									xmlns="http://www.w3.org/2000/svg">
-									<path
-										d="M3.58958 15.9911H0.222698V5.89045H3.58958V15.9911ZM3.92717 1.96389C3.92717 0.897859 3.08323 0.0361424 2.01719 0.000607979C0.933392 -0.0260429 0.0272588 0.826778 0.00060798 1.91058C-0.0260429 2.99438 0.826779 3.90051 1.91058 3.92716C3.01215 3.93605 3.9094 3.06546 3.92717 1.96389ZM15.9467 9.88807C15.9467 6.74327 13.9124 5.78383 12.1801 5.78383C10.963 5.7483 9.81701 6.34351 9.15074 7.35624V5.89932H5.89933V16H9.26622V10.7587C9.26622 10.7054 9.26622 10.6521 9.26622 10.5988C9.26622 10.5988 9.26622 10.5988 9.26622 10.5899C9.19515 9.51495 10.0124 8.58218 11.0874 8.51111C11.9668 8.51111 12.6331 9.07966 12.6331 10.6787V16H16L15.9556 9.89695L15.9467 9.88807Z"
-										fill="white" />
-								</svg>
-							</a>
-						</li>
+    <a href="https://www.tiktok.com/@cap.shipping.dist?_r=1&_t=ZP-951n5oxVSxi"
+       target="_blank"
+       rel="noopener noreferrer">
+
+        <svg xmlns="http://www.w3.org/2000/svg"
+             width="16"
+             height="16"
+             fill="white"
+             viewBox="0 0 24 24">
+
+            <path d="M19.589 6.686a4.793 4.793 0 0 1-3.77-4.228V2h-3.193v13.402c0 1.55-1.262 2.81-2.81 2.81a2.81 2.81 0 0 1 0-5.62c.298 0 .584.05.852.14V9.484a6.003 6.003 0 0 0-.852-.061A6.006 6.006 0 0 0 3.81 15.43a6.006 6.006 0 0 0 6.006 6.006 6.006 6.006 0 0 0 6.006-6.006V8.57a7.96 7.96 0 0 0 4.667 1.51V6.887a4.765 4.765 0 0 1-.9-.201z"/>
+
+        </svg>
+
+    </a>
+</li>
 
 						<li>
-							<a href="#0">
+							<a href="https://www.instagram.com/capshippingdistributionllc?igsh=MTU1dGd5dnQwNDdvaQ%3D%3D&utm_source=qr"
+target="_blank"
+rel="noopener noreferrer">
 								<svg width="16" height="16" viewBox="0 0 16 16" fill="none"
 									xmlns="http://www.w3.org/2000/svg">
 									<path
@@ -344,22 +437,42 @@
 			</div>
 		</div>
 		<!-- Sidebar area end here -->
+<form action="{% url 'user_logout' %}" method="POST">
 
-<form action="">
 <div class="logout_overlay" id="logoutPopup">
 
-	{% csrf_token %}
+    {% csrf_token %}
 
         <div class="logout_pop">
-            <h4> Are you sure to proceed ?</h4>
-            <p>This may be change your interface in fonctionality <br> to navigate to other pages</p>
+
+            <h4>
+                {% trans 'Are you sure to proceed ?' %}
+            </h4>
+
+            <p>
+                {% trans 'This may be change your interface in fonctionality' %}
+                <br>
+                {% trans ' to navigate to other pages' %}
+            </p>
+
             <div class="btn_confirm">
-                <input type="submit" value="Confirm" id="confirmLogout">
-                <a href=""> Cancel</a>
+
+                <input
+                    type="submit"
+                    value="{% trans 'Confirm' %}"
+                    id="confirmLogout"
+                >
+
+                <a href="javascript:void(0)">
+                    {% trans 'Cancel' %}
+                </a>
+
             </div>
+
         </div>
 
  </div>
+
 </form>
 {% block manu_nav %} {% endblock %}
 
@@ -374,69 +487,221 @@
 							<!--Footer Column-->
 							<div class="col-xl-3 col-lg-12 col-md-6">
 								<div class="footer-widget-content social">
-									<div class="logo"><a href="index.html"><img src="{% static './images/Cargomages/logo-white-cap-shipping.png' %}"
+									<div class="logo"><a href="{% url 'home' %}"><img src="{% static './images/Cargomages/logo-white-cap-shipping.png' %}"
 												alt="logo" style="width: 150px;"></a></div>
-									<div class="footer-desc">Cap Shipping Distribution LLC is a trusted freight forwarding and logistics company dedicated to providing fast,
-                                         secure, and reliable cargo solutions between the United States and Haiti.</p>
+									<div class="footer-desc">{% blocktrans %}
+Cap Shipping Distribution LLC is a trusted freight forwarding and logistics company dedicated to providing fast,
+secure, and reliable cargo solutions between the United States and Haiti.
+{% endblocktrans %}</p>
 									</div>
 									<ul class="footer-social">
 										<li><a href="#"><i class="fa-brands fa-facebook-f"></i></a></li>
-										<li><a href="#"><i class="fa-brands fa-x-twitter"></i></a></li>
-										<li><a href="#"><i class="fa-brands fa-tiktok"></i></a></li>
-										<li><a href="#"><i class="fa-brands fa-instagram"></i></a></li>
+
+										<li>
+    <a href="https://www.tiktok.com/@cap.shipping.dist?_r=1&_t=ZP-951n5oxVSxi"
+       target="_blank"
+       rel="noopener noreferrer">
+
+        <i class="fa-brands fa-tiktok"></i>
+
+    </a>
+</li>
+
+<li>
+    <a href="https://www.instagram.com/capshippingdistributionllc?igsh=MTU1dGd5dnQwNDdvaQ%3D%3D&utm_source=qr"
+       target="_blank"
+       rel="noopener noreferrer">
+
+        <i class="fa-brands fa-instagram"></i>
+
+    </a>
+</li>
 									</ul>
 								</div>
 							</div>
 
-							<!--Footer Column-->
-							<div class="col-xl-3 col-lg-4 col-md-6 col-sm-12">
-								<div class="footer-widget-content">
-									<h2 class="footer-title">Company</h2>
-									<ul class="footer-menu">
-										<li><a href="index.html">Home<i class="fa-solid fa-arrow-right-long"></i></a>
-										</li>
-										<li><a href="about.html">About Us<i
-													class="fa-solid fa-arrow-right-long"></i></a></li>
-										<li><a href="team.html">Our Team<i class="fa-solid fa-arrow-right-long"></i></a>
-										</li>
-										<li><a href="contact.html">Contact Us<i
-													class="fa-solid fa-arrow-right-long"></i></a></li>
-									</ul>
-								</div>
-							</div>
+<!--Footer Column-->
+<div class="col-xl-3 col-lg-4 col-md-6 col-sm-12">
+
+	<div class="footer-widget-content">
+
+		<h2 class="footer-title">{% trans 'Company' %}</h2>
+
+		<ul class="footer-menu">
+
+			<li>
+
+				<a href="#">
+
+					{% trans 'Home' %}
+
+					<i class="fa-solid fa-arrow-right-long"></i>
+
+				</a>
+
+			</li>
+
+			<li>
+
+				<a href="#">
+
+					{% trans 'About Us' %}
+
+					<i class="fa-solid fa-arrow-right-long"></i>
+
+				</a>
+
+			</li>
+
+			<li>
+
+				<a href="#">
+
+					{% trans 'Our Services' %}
+
+					<i class="fa-solid fa-arrow-right-long"></i>
+
+				</a>
+
+			</li>
+
+			<li>
+
+				<a href="#">
+
+					{% trans 'Contact Us' %}
+
+					<i class="fa-solid fa-arrow-right-long"></i>
+
+				</a>
+
+			</li>
+
+		</ul>
+
+	</div>
+
+</div>
+
+						<!--Footer Column-->
+<div class="col-xl-3 col-lg-4 col-md-6 col-sm-12">
+
+	<div class="footer-widget-content">
+
+		<h2 class="footer-title">{% trans 'Quick Links' %}</h2>
+
+		<ul class="footer-menu">
+
+			<li>
+
+				<a href="#">
+
+					{% trans 'Track Shipment' %}
+
+					<i class="fa-solid fa-arrow-right-long"></i>
+
+				</a>
+
+			</li>
+
+			<li>
+
+				<a href="#">
+
+					{% trans 'Shipping Rates' %}
+
+					<i class="fa-solid fa-arrow-right-long"></i>
+
+				</a>
+
+			</li>
+
+			<li>
+
+				<a href="#">
+
+					{% trans 'Air & Sea Freight' %}
+
+					<i class="fa-solid fa-arrow-right-long"></i>
+
+				</a>
+
+			</li>
+
+			<li>
+
+				<a href="#">
+
+					{% trans 'Warehouse Addresses' %}
+
+					<i class="fa-solid fa-arrow-right-long"></i>
+
+				</a>
+
+			</li>
+
+		</ul>
+
+	</div>
+
+</div>
 
 							<!--Footer Column-->
-							<div class="col-xl-3 col-lg-4 col-md-6 col-sm-12">
-								<div class="footer-widget-content">
-									<h2 class="footer-title">Useful Links</h2>
-									<ul class="footer-menu">
-										<li><a href="#">Pricing Plans<i class="fa-solid fa-arrow-right-long"></i></a>
-										</li>
-										<li><a href="service.html">Our Services<i
-													class="fa-solid fa-arrow-right-long"></i></a></li>
-										<li><a href="testimonial.html">Testimonials<i
-													class="fa-solid fa-arrow-right-long"></i></a></li>
-										<li><a href="blog-grid.html">Latest Blog<i
-													class="fa-solid fa-arrow-right-long"></i></a></li>
-									</ul>
-								</div>
-							</div>
+<div class="col-xl-3 col-lg-4 col-md-6 col-sm-12">
+	<div class="footer-widget-content">
+		<h2 class="footer-title">{% trans 'Contact Us' %}</h2>
 
-							<!--Footer Column-->
-							<div class="col-xl-3 col-lg-4 col-md-6 col-sm-12">
-								<div class="footer-widget-content">
-									<h2 class="footer-title">Contact Us</h2>
-									<div class="footer-content">
-										<div class="location"><span>Our Address</span>130/B alexon market street
-											Sandigo - USA</div>
-										<ul class="contact-info">
-											<li class="email-text"><a href="#">Send E-Mail</a></li>
-											<li class="email-address"><a href="tel:+8896582">info.theme@gmail.com</a>
-											</li>
-										</ul>
-									</div>
-								</div>
-							</div>
+		<div class="footer-content">
+
+
+
+			<ul class="contact-info">
+
+				<li class="email-text">
+
+					<a href="mailto:info@capshippingdistribution.com">
+
+						{% trans 'Send E-Mail' %}
+
+					</a>
+
+				</li>
+
+				<li class="email-address">
+
+					<a href="mailto:info@capshippingdistribution.com">
+
+						support@capshippingdistribution.com
+
+					</a>
+
+				</li>
+
+				<li class="email-address">
+
+					<a href="tel:+50940084021">
+
+						+509 4008 4021
+
+					</a>
+
+				</li>
+
+				<li class="email-address">
+
+					<a href="tel:+18622156480">
+
+						+1 862 215 6480
+
+					</a>
+
+				</li>
+
+			</ul>
+
+		</div>
+	</div>
+</div>
 						</div>
 					</div>
 				</div>
@@ -447,19 +712,11 @@
 						<div class="row">
 							<div class="col-lg-6">
 								<div class="copyright-text">
-    &copy; Cap Shipping Distribution LLC 2026. All rights reserved. Designed by
-    <a href="#">Cap Shipping Team</a>
+    &copy; {% trans 'Cap Shipping Distribution LLC 2026. All rights reserved. Designed by' %}
+    <a href="#">ChrislorCode.com</a>
 </div>
 							</div>
-							<div class="col-lg-6">
-								<div class="footer-bottom-menu">
-									<ul>
-										<li><a href="#">Privacy and Policy</a></li>
 
-										<li><a href="#faq-modern">FAQ’s</a></li>
-									</ul>
-								</div>
-							</div>
 						</div>
 					</div>
 				</div>
@@ -473,6 +730,8 @@
 		</footer>
 
  {% endblock %}
+
+
 <script src="{% static 'js/register.js' %}"></script>
 <script src="{% static 'js/jquery.js' %}"></script>
 <script src="{% static 'js/popper.min.js' %}"></script>
@@ -566,4 +825,177 @@ document.addEventListener("click", function(e){
 });
 
 </script>
+
+
+
+
+
+		<!==========top menu =====>
+
+		<script>
+		const langDropdown =
+document.querySelector(".language_dropdown");
+
+const langBtn =
+document.querySelector(".lang_btn");
+
+
+langBtn.addEventListener("click", function(){
+
+    langDropdown.classList.toggle("active");
+
+});
+
+
+window.addEventListener("click", function(e){
+
+    if(!langDropdown.contains(e.target)){
+
+        langDropdown.classList.remove("active");
+
+    }
+
+});
+
+
+
+
+document.addEventListener("DOMContentLoaded", function(){
+
+    const accountDropdown =
+    document.querySelector(".account_dropdown");
+
+    const accountBtn =
+    document.querySelector(".account_btn");
+
+
+    console.log(accountBtn);
+    console.log(accountDropdown);
+
+
+    if(accountBtn && accountDropdown){
+
+        accountBtn.addEventListener("click", function(e){
+
+            e.preventDefault();
+
+            e.stopPropagation();
+
+            console.log("BUTTON CLICKED 🔥");
+
+            accountDropdown.classList.toggle("active");
+
+        });
+
+
+        // CLOSE OUTSIDE
+        document.addEventListener("click", function(e){
+
+            if(
+                !accountDropdown.contains(e.target)
+            ){
+
+                accountDropdown.classList.remove("active");
+
+            }
+
+        });
+
+    }
+
+});
+</script>
 </div>
+
+	<style>
+
+.mobile_account_box{
+    padding: 10px 20px;
+}
+
+.mobile_user_info{
+    display: flex;
+    align-items: center;
+    gap: 14px;
+}
+
+.mobile_avatar{
+    min-width: 52px;
+    width: 52px;
+    height: 52px;
+
+    border-radius: 50%;
+
+    background: #f59e0b;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    color: white;
+
+    font-size: 22px;
+    font-weight: 700;
+}
+
+.mobile_user_text{
+    flex: 1;
+}
+
+.mobile_user_text h4{
+    color: white;
+
+    font-size: 18px;
+
+    margin: 0 0 3px;
+}
+
+.mobile_user_text p{
+    color: rgba(255,255,255,.65);
+
+    font-size: 14px;
+
+    margin: 0;
+
+    word-break: break-word;
+}
+
+.logout_btn{
+    margin-top: 18px;
+
+    width: 100%;
+
+    height: 48px;
+
+    border-radius: 12px;
+
+    background: rgba(255,255,255,.06);
+
+    color: white;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+
+    font-size: 15px;
+    font-weight: 500;
+
+    transition: .3s;
+}
+
+.logout_btn:hover{
+    background: rgba(255,255,255,.12);
+}
+
+
+
+
+	</style>
+
+
+
+
+
+
+
