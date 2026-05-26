@@ -94,7 +94,7 @@ DATABASES = {
         'ENGINE': 'django.db.backends.mysql',
         'NAME': 'capshipping',
         'USER': 'capuser',
-        'PASSWORD': 'Capshipping@2026',
+        'PASSWORD': 'Capshipping$18',
         'HOST': 'localhost',
         'PORT': '3306',
     }
