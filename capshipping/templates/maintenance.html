@@ -1,0 +1,212 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    	<link rel="shortcut icon" href="{% static './images/Logo_edited.png' %}" type="image/x-icon">
+	<link rel="icon" href="{% static './images/Logo_edited.png' %}" type="image/x-icon">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Maintenance Mode</title>
+
+
+    <style>
+
+        *{
+            margin:0;
+            padding:0;
+            box-sizing:border-box;
+            font-family:Arial, Helvetica, sans-serif;
+        }
+
+        body{
+            width:100%;
+            min-height:100vh;
+            background:#f5f7fb;
+            display:flex;
+            align-items:center;
+            justify-content:center;
+            padding:20px;
+        }
+
+        .maintenance-container{
+            width:100%;
+            max-width:700px;
+            background:#ffffff;
+            border-radius:10px;
+            padding:60px 40px;
+            text-align:center;
+
+        }
+
+        .maintenance-image{
+            width:100%;
+            max-width:350px;
+            margin:auto;
+            margin-bottom:30px;
+        }
+
+        .maintenance-image img{
+            width:100%;
+        }
+
+        h1{
+            font-size:45px;
+            color:#24324B;
+            margin-bottom:15px;
+            font-weight:800;
+        }
+
+        p{
+            color:#6b7280;
+            font-size:18px;
+            line-height:1.7;
+            margin-bottom:35px;
+        }
+
+        .buttons{
+            display:flex;
+            justify-content:center;
+            gap:15px;
+            flex-wrap:wrap;
+        }
+
+        .btn{
+            padding:15px 30px;
+            border-radius:10px;
+            text-decoration:none;
+            font-size:16px;
+            font-weight:600;
+            transition:0.3s;
+        }
+
+        .btn-primary{
+            background:#24324B;
+            color:#ffffff;
+        }
+
+        .btn-primary:hover{
+            background:#1b263a;
+        }
+
+        .btn-outline{
+            border:2px solid #24324B;
+            color:#24324B;
+        }
+
+        .btn-outline:hover{
+            background:#24324B;
+            color:#ffffff;
+        }
+
+        @media(max-width:768px){
+
+            h1{
+                font-size:28px;
+            }
+
+            p{
+                font-size:16px;
+            }
+
+            .maintenance-container{
+                padding:30px 15px;
+            }
+
+        }
+
+    </style>
+
+</head>
+<body>
+
+    <div class="maintenance-container">
+
+        <div class="maintenance-image">
+
+            <!-- METE IMAJ OU ISIT -->
+            <img src="{% static './images/Cargomages/Website Design.gif' %}" alt="Maintenance Image">
+
+        </div>
+
+        <h1>Site is under maintenance</h1>
+
+        <p>
+            We're currently improving our website experience.
+            Please check back again soon.
+        </p>
+
+        <div class="buttons">
+
+            <a href="#" class="btn btn-primary">
+                Contact Us
+            </a>
+
+            <a href="" class="btn btn-outline">
+                Reload
+            </a>
+
+        </div>
+
+    </div>
+
+</body>
+</html>
+
+<script>
+
+    // fade animation
+    const container = document.querySelector(".maintenance-container");
+
+    container.style.opacity = "0";
+    container.style.transform = "translateY(40px)";
+
+    setTimeout(() => {
+
+        container.style.transition = "all 1s ease";
+
+        container.style.opacity = "1";
+
+        container.style.transform = "translateY(0px)";
+
+    }, 200);
+
+
+
+    // floating image animation
+    const image = document.querySelector(".maintenance-image img");
+
+    let position = 0;
+    let direction = 1;
+
+    setInterval(() => {
+
+        position += 0.3 * direction;
+
+        if(position > 12){
+            direction = -1;
+        }
+
+        if(position < 0){
+            direction = 1;
+        }
+
+        image.style.transform = `translateY(-${position}px)`;
+
+    }, 20);
+
+
+
+    // reload button
+    const reloadBtn = document.querySelector(".btn-outline");
+
+    reloadBtn.addEventListener("click", function(e){
+
+        e.preventDefault();
+
+        location.reload();
+
+    });
+
+</script>

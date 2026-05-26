@@ -56,7 +56,7 @@ def send_otp_email(user, code, language):
     activate(language)
 
     # translated subject
-    subject = _("Your OTP Code")
+    subject = _("Your CapShipping Verification Code")
 
     html_content = render_to_string(
         "emails/otp_email_reset.html",
@@ -66,11 +66,18 @@ def send_otp_email(user, code, language):
         }
     )
 
+    plain_message = f"""
+    Your CapShipping verification code is: {code}
+
+    This code expires in 10 minutes.
+
+    If you did not request this email, please ignore it.
+    """
+
     email = EmailMultiAlternatives(
         subject,
-        "",
+        plain_message,
         settings.DEFAULT_FROM_EMAIL,
-
         [user.email],
     )
 

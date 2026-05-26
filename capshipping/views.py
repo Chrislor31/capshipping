@@ -5106,5 +5106,21 @@ def user_calculator(request):
 
 
 
+def custom_404(request, exception):
+
+    return render(
+        request,
+        "404.html",
+        status=404
+    )
 
 
+#==== maitenance page
+
+
+def maintenance(request):
+
+    return render(
+        request,
+        "maintenance.html"
+    )

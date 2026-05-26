@@ -44,14 +44,25 @@ INSTALLED_APPS = [
 ]
 
 MIDDLEWARE = [
+
     'django.middleware.security.SecurityMiddleware',
+
     'django.contrib.sessions.middleware.SessionMiddleware',
+
     'django.middleware.common.CommonMiddleware',
-     'django.middleware.locale.LocaleMiddleware',
+
+    'django.middleware.locale.LocaleMiddleware',
+
     'django.middleware.csrf.CsrfViewMiddleware',
+
     'django.contrib.auth.middleware.AuthenticationMiddleware',
+
+    'capshipping.maintenance_middleware.MaintenanceMiddleware',
+
     'django.contrib.messages.middleware.MessageMiddleware',
+
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+
 ]
 
 ROOT_URLCONF = 'capshipping.urls'
@@ -206,7 +217,7 @@ AUTH_PASSWORD_VALIDATORS = [
 
 
 
-
+MAINTENANCE_MODE = True
 
 
 EMAIL_BACKEND = "django.core.mail.backends.smtp.EmailBackend"

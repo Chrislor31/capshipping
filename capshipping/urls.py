@@ -6,22 +6,15 @@ from django.conf.urls.static import static
 from capshipping import views, settings
 from capshipping.views import logout_view, KYCAPIView
 
-from django.shortcuts import redirect, render
 
 
-def custom_404(request, exception):
 
-    return render(
-        request,
-        "404.html",
-        status=404
-    )
 
-handler404 = "capshipping.urls.custom_404"
+
 
 
 urlpatterns = [
-   # path('admin/', admin.site.urls),
+    path('admin/', admin.site.urls),
 
     path('', views.index, name='home'),
     path('about/', views.about, name='about'),
@@ -403,5 +396,9 @@ path(
 
 ),
 
+path("maintenance/", views.maintenance, name="maintenance"),
+
 ]
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+
+handler404 = "capshipping.views.custom_404"
