@@ -14,7 +14,7 @@ from capshipping.views import logout_view, KYCAPIView
 
 
 urlpatterns = [
-    path('admin/', admin.site.urls),
+    #path('admin/', admin.site.urls),
 
     path('', views.index, name='home'),
     path('about/', views.about, name='about'),

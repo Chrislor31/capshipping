@@ -12,11 +12,13 @@ class MaintenanceMiddleware:
 
         allowed_urls = [
             reverse("maintenance"),
+            "/panel/login/",
+            "/admin/login/",
         ]
 
         if settings.MAINTENANCE_MODE:
 
-            if request.user.is_superuser:
+            if request.user.is_authenticated and request.user.is_superuser:
                 return self.get_response(request)
 
             if request.path not in allowed_urls:

@@ -11,22 +11,25 @@ https://docs.djangoproject.com/en/5.1/ref/settings/
 """
 
 from pathlib import Path
+import environ
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
+
+env = environ.Env()
+environ.Env.read_env(env_file=str(BASE_DIR / "capshipping" / ".env"))
 
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/5.1/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-kt7br9@!(3--k36z5(*0sr(ha*rq@)23h_0id)qnt!_v@7iqd0'
+SECRET_KEY = env("SECRET_KEY")
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = env.bool("DEBUG", False)
 
-ALLOWED_HOSTS = ['*','www.capshippingdistribution.com','capshippingdistribution.com']
-
+ALLOWED_HOSTS = ["127.0.0.1", "localhost", "0.0.0.0", "www.capshippingdistribution.com", "capshippingdistribution.com"]
 
 # Application definition
 
@@ -88,17 +91,27 @@ WSGI_APPLICATION = 'capshipping.wsgi.application'
 
 # Database
 # https://docs.djangoproject.com/en/5.1/ref/settings/#databases
+if env("DB_ENGINE") == "django.db.backends.sqlite3":
 
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'capshipping',
-        'USER': 'capuser',
-        'PASSWORD': 'Capshipping$18',
-        'HOST': 'localhost',
-        'PORT': '3306',
+    DATABASES = {
+        'default': {
+            'ENGINE': env("DB_ENGINE"),
+            'NAME': BASE_DIR / env("DB_NAME"),
+        }
     }
-}
+
+else:
+
+    DATABASES = {
+        'default': {
+            'ENGINE': env("DB_ENGINE"),
+            'NAME': env("DB_NAME"),
+            'USER': env("DB_USER"),
+            'PASSWORD': env("DB_PASSWORD"),
+            'HOST': env("DB_HOST"),
+            'PORT': env("DB_PORT"),
+        }
+    }
 
 
 # Password validation
@@ -163,10 +176,9 @@ CSRF_TRUSTED_ORIGINS = [
 
 #===== twilo
 
-
-TWILIO_ACCOUNT_SID = "AC6292e36e80b23749f628f41a55d7c01b"
-TWILIO_AUTH_TOKEN = "17670891291b0c02673b8a9a8243d0a5"
-TWILIO_PHONE_NUMBER = "+18154474008"
+TWILIO_ACCOUNT_SID = env("TWILIO_ACCOUNT_SID")
+TWILIO_AUTH_TOKEN = env("TWILIO_AUTH_TOKEN")
+TWILIO_PHONE_NUMBER = env("TWILIO_PHONE_NUMBER")
 
 
 # Default primary key field type
@@ -224,17 +236,16 @@ AUTH_PASSWORD_VALIDATORS = [
 MAINTENANCE_MODE = True
 
 
-EMAIL_BACKEND = "django.core.mail.backends.smtp.EmailBackend"
 
-EMAIL_HOST = "smtp-relay.brevo.com"
+EMAIL_BACKEND = env("EMAIL_BACKEND")
 
-EMAIL_PORT = 587
+EMAIL_HOST = env("EMAIL_HOST")
+EMAIL_PORT = env.int("EMAIL_PORT")
 
-EMAIL_USE_TLS = True
+EMAIL_USE_TLS = env.bool("EMAIL_USE_TLS")
 
-EMAIL_HOST_USER = "abb1fa001@smtp-brevo.com"
+EMAIL_HOST_USER = env("EMAIL_HOST_USER")
+EMAIL_HOST_PASSWORD = env("EMAIL_HOST_PASSWORD")
 
-EMAIL_HOST_PASSWORD = "Aaf7hdB2z5ZryEPU"
-
-DEFAULT_FROM_EMAIL = "Cap Shipping <support@capshippingdistribution.com>"
+DEFAULT_FROM_EMAIL = env("DEFAULT_FROM_EMAIL")
 
