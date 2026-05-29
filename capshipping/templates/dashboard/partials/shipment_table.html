@@ -14,8 +14,17 @@
 
 <div class="botton_add_download">
 <button>Export</button>
+{% if user.can_create_shipments %}
 
-<button  data-url="/panel/add-shipments/"><i class="bx bx-user-plus"></i> <span>Add shipment</span></button>
+<button data-url="/panel/add-shipments/">
+
+    <i class="bx bx-user-plus"></i>
+
+    <span>Add shipment</span>
+
+</button>
+
+{% endif %}
 </div>
 <div class="statistic_grid static_shipments">
 
@@ -139,7 +148,7 @@
         <div class="table_actions">
 
 
-            {% if request.user.role == "admin" %}
+{% if request.user.can_create_shipments %}
 
 <button id="deleteSelected">
 
@@ -240,7 +249,7 @@
                 <i class='bx bx-show'></i>
                 <span>View Details</span>
             </div>
-{% if request.user.role == "admin" %}
+{% if request.user.can_create_shipments %}
 
 <div class="dropdown_item"
 

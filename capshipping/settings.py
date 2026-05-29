@@ -29,7 +29,7 @@ SECRET_KEY = env("SECRET_KEY")
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = env.bool("DEBUG", False)
 
-ALLOWED_HOSTS = ['192.168.12.122',"127.0.0.1", "localhost", "0.0.0.0", "www.capshippingdistribution.com", "capshippingdistribution.com"]
+ALLOWED_HOSTS = ['192.168.12.122',"127.0.0.1", "localhost", "0.0.0.0", "www.capshippingdistribution.com", "capshippingdistribution.com","capshipp.com","www.capshipp.com"]
 
 # Application definition
 
