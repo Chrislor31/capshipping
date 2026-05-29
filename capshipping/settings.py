@@ -35,6 +35,8 @@ ALLOWED_HOSTS = [
     "0.0.0.0",
     "capshipp.com",
     "www.capshipp.com",
+"capshippingdistribution.com",
+"www.capshippingdistribution.com",
 ]
 
 # Application definition
