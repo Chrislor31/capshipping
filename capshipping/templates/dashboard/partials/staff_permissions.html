@@ -302,7 +302,19 @@ data-user-id="{{ user.id }}"
 
         <p>
 
-            {{ user.email }}
+            <p>
+
+    {% if user.email|length > 8 %}
+
+        {{ user.email|slice:":8" }}**
+
+    {% else %}
+
+        {{ user.email }}
+
+    {% endif %}
+
+</p>
 
         </p>
 
@@ -424,7 +436,7 @@ data-user-id="{{ user.id }}"
 
        <div class="staff_permission_right">
 
-```
+
 <!-- TOP -->
 
 <div class="permission_top_section">
@@ -444,11 +456,19 @@ data-user-id="{{ user.id }}"
 
         </h2>
 
-        <p id="permissionUserEmail">
+      <p id="permissionUserEmail">
 
-            {{ selected_user.email }}
+    {% if selected_user.email|length > 8 %}
 
-        </p>
+        {{ selected_user.email|slice:":8" }}**
+
+    {% else %}
+
+        {{ selected_user.email }}
+
+    {% endif %}
+
+</p>
 
     </div>
 

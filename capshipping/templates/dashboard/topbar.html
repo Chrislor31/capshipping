@@ -116,7 +116,19 @@
                                 Customer
                             {% endif %}
                         </span>
-                    <p>{{ user.email }}</p>
+                    <p>
+
+    {% if user.email|length > 8 %}
+
+        {{ user.email|slice:":8" }}**
+
+    {% else %}
+
+        {{ user.email }}
+
+    {% endif %}
+
+</p>
         </div>
     </div>
 
