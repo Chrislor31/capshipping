@@ -1,0 +1,1450 @@
+<!-- ===================================== -->
+<!-- STAFF PERMISSIONS -->
+<!-- ===================================== -->
+
+
+<section class="staff_permissions_page">
+
+
+    <!-- ===================================== -->
+    <!-- PAGE HEADER -->
+    <!-- ===================================== -->
+
+    <div class="staff_permission_header">
+
+        <div class="staff_permission_title">
+
+            <h1>
+                Staff Permissions
+            </h1>
+
+            <p>
+                Manage staff members and their access permissions
+            </p>
+
+        </div>
+
+    </div>
+
+
+
+
+
+    <!-- ===================================== -->
+    <!-- STATS -->
+    <!-- ===================================== -->
+
+    <div class="staff_permission_stats">
+
+
+
+        <!-- CARD -->
+
+        <div class="permission_stat_card">
+
+            <div class="permission_stat_icon purple">
+
+                <i class='bx bxs-group'></i>
+
+            </div>
+
+       <div class="permission_stat_content">
+
+    <h2>
+
+        {{ total_staff }}
+
+    </h2>
+
+    <h4>
+
+        Total Staff
+
+    </h4>
+
+    <p>
+
+        All staff members
+
+    </p>
+
+</div>
+
+        </div>
+
+
+
+
+
+        <!-- CARD -->
+
+        <div class="permission_stat_card">
+
+            <div class="permission_stat_icon green">
+
+                <i class='bx bx-check-shield'></i>
+
+            </div>
+
+           <div class="permission_stat_content">
+
+    <h2>
+
+        {{ active_staff }}
+
+    </h2>
+
+    <h4>
+
+        Active Staff
+
+    </h4>
+
+    <p>
+
+        Currently active
+
+    </p>
+
+</div>
+
+        </div>
+
+
+
+
+
+        <!-- CARD -->
+
+        <div class="permission_stat_card">
+
+            <div class="permission_stat_icon blue">
+
+                <i class='bx bx-user-pin'></i>
+
+            </div>
+
+           <div class="permission_stat_content">
+
+    <h2>
+
+        {{ total_admin }}
+
+    </h2>
+
+    <h4>
+
+        Administrators
+
+    </h4>
+
+    <p>
+
+        System administrators
+
+    </p>
+
+</div>
+
+        </div>
+
+
+
+
+
+        <!-- CARD -->
+
+        <div class="permission_stat_card">
+
+            <div class="permission_stat_icon orange">
+
+                <i class='bx bx-user-x'></i>
+
+            </div>
+
+          <div class="permission_stat_content">
+
+    <h2>
+
+        {{ inactive_staff }}
+
+    </h2>
+
+    <h4>
+
+        Inactive Staff
+
+    </h4>
+
+    <p>
+
+        Currently inactive
+
+    </p>
+
+</div>
+
+        </div>
+
+
+    </div>
+
+
+
+
+
+
+    <!-- ===================================== -->
+    <!-- GRID -->
+    <!-- ===================================== -->
+
+    <div class="staff_permission_grid">
+
+
+
+
+
+        <!-- ===================================== -->
+        <!-- LEFT -->
+        <!-- ===================================== -->
+
+        <div class="staff_permission_left">
+
+
+
+
+
+            <!-- SEARCH -->
+
+            <div class="staff_permission_search">
+
+
+                <div class="staff_search_input">
+
+                    <i class='bx bx-search'></i>
+
+                    <input
+                        type="text"
+                        placeholder="Search staff..."
+                    >
+
+                </div>
+
+
+
+
+
+                <button class="staff_filter_btn">
+
+                    <i class='bx bx-filter-alt'></i>
+
+                    <span>
+                        Filter
+                    </span>
+
+                </button>
+
+            </div>
+
+
+
+
+
+
+
+            <!-- ===================================== -->
+            <!-- STAFF LIST -->
+            <!-- ===================================== -->
+
+            <div class="staff_permission_users">
+
+
+
+
+
+{% for user in users %}
+
+<!-- ITEM -->
+
+<div
+
+
+class="permission_user_item"
+
+data-user-id="{{ user.id }}"
+
+
+>
+
+
+<div class="permission_user_left">
+
+
+    <div class="permission_user_avatar">
+
+        {{ user.first_name|slice:":1" }}
+
+        {{ user.last_name|slice:":1" }}
+
+    </div>
+
+
+
+    <div class="permission_user_info">
+
+        <h3>
+
+            {{ user.first_name }}
+
+            {{ user.last_name }}
+
+        </h3>
+
+        <p>
+
+            {{ user.email }}
+
+        </p>
+
+    </div>
+
+</div>
+
+
+
+
+
+<div class="permission_user_right">
+
+
+    <span class="permission_role">
+
+        {{ user.role }}
+
+    </span>
+
+
+
+    {% if user.is_active %}
+
+    <span class="permission_status active_status">
+
+        <span class="dot"></span>
+
+        Active
+
+    </span>
+
+    {% else %}
+
+    <span class="permission_status inactive_status">
+
+        <span class="dot"></span>
+
+        Inactive
+
+    </span>
+
+    {% endif %}
+
+
+</div>
+
+
+</div>
+
+{% endfor %}
+
+
+
+
+
+
+
+
+
+
+
+
+            </div>
+
+
+
+
+
+
+            <!-- FOOTER -->
+
+            <div class="permission_footer">
+
+                <p>
+                    Showing 1 to 6 of 6 results
+                </p>
+
+
+
+                <div class="permission_pagination">
+
+                    <button>
+
+                        <i class='bx bx-chevron-left'></i>
+
+                    </button>
+
+                    <button class="active_page">
+
+                        1
+
+                    </button>
+
+                    <button>
+
+                        <i class='bx bx-chevron-right'></i>
+
+                    </button>
+
+                </div>
+
+            </div>
+
+
+        </div>
+
+
+
+
+
+
+
+
+
+        <!-- ===================================== -->
+        <!-- RIGHT -->
+        <!-- ===================================== -->
+
+       <div class="staff_permission_right">
+
+```
+<!-- TOP -->
+
+<div class="permission_top_section">
+
+
+    <div>
+
+        <span>
+            Permissions for
+        </span>
+
+        <h2 id="permissionUserName">
+
+            {{ selected_user.first_name }}
+
+            {{ selected_user.last_name }}
+
+        </h2>
+
+        <p id="permissionUserEmail">
+
+            {{ selected_user.email }}
+
+        </p>
+
+    </div>
+
+
+
+    <div class="permission_top_role">
+
+        <span>
+            Role
+        </span>
+
+        <div
+
+            class="permission_role_badge"
+
+            id="permissionUserRole"
+
+        >
+
+            {{ selected_user.role }}
+
+        </div>
+
+    </div>
+
+
+</div>
+
+
+
+
+
+
+
+<!-- SELECT ALL -->
+
+<div class="permission_select_all">
+
+
+    <div class="permission_select_left">
+
+        <div class="permission_checkbox"></div>
+
+        <div>
+
+            <h3>
+                Select All Permissions
+            </h3>
+
+            <p>
+                Grant or revoke all permissions
+            </p>
+
+        </div>
+
+    </div>
+
+
+
+   <label class="switch">
+
+    <input
+        type="checkbox"
+        id="selectAllPermissions"
+    >
+
+    <span class="slider"></span>
+
+</label>
+
+</div>
+
+
+
+
+
+
+
+
+<!-- PERMISSIONS -->
+
+<div class="permission_group_box">
+
+
+
+    <!-- TITLE -->
+
+    <h4 class="permission_group_title blue_text">
+
+        SHIPMENTS
+
+    </h4>
+
+
+
+
+
+    <!-- ITEM -->
+
+    <div class="permission_item">
+
+
+        <div class="permission_item_left">
+
+
+            <div class="permission_item_icon blue_bg">
+
+                <i class='bx bx-package'></i>
+
+            </div>
+
+
+
+            <div>
+
+                <h3>
+                    Can Create Shipments
+                </h3>
+
+                <p>
+                    Allow user to create new shipments
+                </p>
+
+            </div>
+
+        </div>
+
+
+
+        <label class="switch">
+
+            <input
+
+                type="checkbox"
+
+                id="canCreateShipments"
+
+                {% if selected_user.can_create_shipments %}
+
+                checked
+
+                {% endif %}
+
+            >
+
+            <span class="slider"></span>
+
+        </label>
+
+    </div>
+
+
+
+
+
+
+
+
+    <!-- TITLE -->
+
+    <h4 class="permission_group_title purple_text">
+
+        CUSTOMERS
+
+    </h4>
+
+
+
+
+
+    <!-- ITEM -->
+
+    <div class="permission_item">
+
+
+        <div class="permission_item_left">
+
+
+            <div class="permission_item_icon purple_bg">
+
+                <i class='bx bx-phone'></i>
+
+            </div>
+
+
+
+            <div>
+
+                <h3>
+                    Can View Customer Phone
+                </h3>
+
+                <p>
+                    Allow user to view customer phone numbers
+                </p>
+
+            </div>
+
+        </div>
+
+
+
+        <label class="switch">
+
+            <input
+
+                type="checkbox"
+
+                id="canViewPhone"
+
+                {% if selected_user.can_view_customer_phone %}
+
+                checked
+
+                {% endif %}
+
+            >
+
+            <span class="slider"></span>
+
+        </label>
+
+    </div>
+
+
+
+
+
+
+
+    <!-- ITEM -->
+
+    <div class="permission_item">
+
+
+        <div class="permission_item_left">
+
+
+            <div class="permission_item_icon purple_bg">
+
+                <i class='bx bx-envelope'></i>
+
+            </div>
+
+
+
+            <div>
+
+                <h3>
+                    Can View Customer Email
+                </h3>
+
+                <p>
+                    Allow user to view customer email addresses
+                </p>
+
+            </div>
+
+        </div>
+
+
+
+        <label class="switch">
+
+            <input
+
+                type="checkbox"
+
+                id="canViewEmail"
+
+                {% if selected_user.can_view_customer_email %}
+
+                checked
+
+                {% endif %}
+
+            >
+
+            <span class="slider"></span>
+
+        </label>
+
+    </div>
+
+
+
+
+
+
+
+
+    <!-- TITLE -->
+
+    <h4 class="permission_group_title orange_text">
+
+        ADMINISTRATION
+
+    </h4>
+
+
+
+
+
+    <!-- ITEM -->
+
+    <div class="permission_item">
+
+
+        <div class="permission_item_left">
+
+
+            <div class="permission_item_icon orange_bg">
+
+                <i class='bx bx-group'></i>
+
+            </div>
+
+
+
+            <div>
+
+                <h3>
+                    Can Manage Staff
+                </h3>
+
+                <p>
+                    Allow user to manage other staff members
+                </p>
+
+            </div>
+
+        </div>
+
+
+
+        <label class="switch">
+
+            <input
+
+                type="checkbox"
+
+                id="canManageStaff"
+
+                {% if selected_user.can_manage_staff %}
+
+                checked
+
+                {% endif %}
+
+            >
+
+            <span class="slider"></span>
+
+        </label>
+
+    </div>
+
+
+
+
+
+
+
+    <!-- ITEM -->
+
+    <div class="permission_item">
+
+
+        <div class="permission_item_left">
+
+
+            <div class="permission_item_icon orange_bg">
+
+                <i class='bx bx-trash'></i>
+
+            </div>
+
+
+
+            <div>
+
+                <h3>
+                    Can Delete Users
+                </h3>
+
+                <p>
+                    Allow user to delete staff accounts
+                </p>
+
+            </div>
+
+        </div>
+
+
+
+        <label class="switch">
+
+            <input
+
+                type="checkbox"
+
+                id="canDeleteUsers"
+
+                {% if selected_user.can_delete_users %}
+
+                checked
+
+                {% endif %}
+
+            >
+
+            <span class="slider"></span>
+
+        </label>
+
+    </div>
+
+<input
+    type="hidden"
+    id="selectedUserId"
+    value="{{ selected_user.id }}"
+>
+
+
+
+
+
+    <!-- ITEM -->
+
+    <div class="permission_item">
+
+
+        <div class="permission_item_left">
+
+
+            <div class="permission_item_icon orange_bg">
+
+                <i class='bx bx-cog'></i>
+
+            </div>
+
+
+
+            <div>
+
+                <h3>
+                    Can Access Settings
+                </h3>
+
+                <p>
+                    Allow user to access system settings
+                </p>
+
+            </div>
+
+        </div>
+
+
+
+        <label class="switch">
+
+            <input
+
+                type="checkbox"
+
+                id="canAccessSettings"
+
+                {% if selected_user.can_access_settings %}
+
+                checked
+
+                {% endif %}
+
+            >
+
+            <span class="slider"></span>
+
+        </label>
+
+    </div>
+
+
+</div>
+
+
+
+
+
+
+
+<!-- ACTIONS -->
+
+<div class="permission_action_buttons">
+
+    <button class="permission_cancel_btn">
+
+        Cancel
+
+    </button>
+
+
+
+    <button class="permission_save_btn">
+
+        <i class='bx bx-save'></i>
+
+        Save Permissions
+
+    </button>
+
+</div>
+
+
+</div>
+
+
+    </div>
+
+</section>
+
+
+<script>
+
+document.addEventListener("click", async function (e) {
+
+    const userItem = e.target.closest(
+        ".permission_user_item"
+    );
+
+    if (!userItem) return;
+
+    document
+    .querySelectorAll(
+        ".permission_user_item"
+    )
+    .forEach(item => {
+
+        item.classList.remove(
+            "active"
+        );
+
+    });
+
+    userItem.classList.add(
+        "active"
+    );
+
+    const userId =
+    userItem.dataset.userId;
+
+    try {
+
+        const response =
+        await fetch(
+
+            `/panel/staff-permission-data/${userId}/`
+
+        );
+
+        const data =
+        await response.json();
+
+        document.getElementById(
+            "permissionUserName"
+        ).textContent =
+        data.full_name;
+
+        document.getElementById(
+            "permissionUserEmail"
+        ).textContent =
+        data.email;
+
+        document.getElementById(
+            "permissionUserRole"
+        ).textContent =
+        data.role;
+
+        document.getElementById(
+            "canCreateShipments"
+        ).checked =
+        data.can_create_shipments;
+
+        document.getElementById(
+            "canViewPhone"
+        ).checked =
+        data.can_view_customer_phone;
+
+        document.getElementById(
+            "canViewEmail"
+        ).checked =
+        data.can_view_customer_email;
+
+        document.getElementById(
+            "canManageStaff"
+        ).checked =
+        data.can_manage_staff;
+
+        document.getElementById(
+            "canDeleteUsers"
+        ).checked =
+        data.can_delete_users;
+
+        document.getElementById(
+            "canAccessSettings"
+        ).checked =
+        data.can_access_settings;
+
+        document.getElementById(
+            "selectedUserId"
+        ).value =
+        data.id;
+
+        const allChecked = [
+
+            data.can_create_shipments,
+
+            data.can_view_customer_phone,
+
+            data.can_view_customer_email,
+
+            data.can_manage_staff,
+
+            data.can_delete_users,
+
+            data.can_access_settings
+
+        ].every(Boolean);
+
+        document.getElementById(
+            "selectAllPermissions"
+        ).checked =
+        allChecked;
+
+    }
+
+    catch (error) {
+
+        console.error(
+            "Error loading permissions:",
+            error
+        );
+
+    }
+
+});
+
+
+
+
+
+document.addEventListener(
+    "change",
+    function(e){
+
+        if(
+            e.target.id !==
+            "selectAllPermissions"
+        ){
+            return;
+        }
+
+        const checked =
+        e.target.checked;
+
+        [
+
+            "canCreateShipments",
+
+            "canViewPhone",
+
+            "canViewEmail",
+
+            "canManageStaff",
+
+            "canDeleteUsers",
+
+            "canAccessSettings"
+
+        ].forEach(id => {
+
+            const el =
+            document.getElementById(id);
+
+            if(el){
+
+                el.checked =
+                checked;
+
+            }
+
+        });
+
+    }
+);
+
+
+
+
+
+function updateSelectAll(){
+
+    const allChecked = [
+
+        document.getElementById(
+            "canCreateShipments"
+        )?.checked,
+
+        document.getElementById(
+            "canViewPhone"
+        )?.checked,
+
+        document.getElementById(
+            "canViewEmail"
+        )?.checked,
+
+        document.getElementById(
+            "canManageStaff"
+        )?.checked,
+
+        document.getElementById(
+            "canDeleteUsers"
+        )?.checked,
+
+        document.getElementById(
+            "canAccessSettings"
+        )?.checked
+
+    ].every(Boolean);
+
+    document.getElementById(
+        "selectAllPermissions"
+    ).checked =
+    allChecked;
+
+}
+
+
+
+
+
+document.addEventListener(
+    "change",
+    function(e){
+
+        const permissionIds = [
+
+            "canCreateShipments",
+
+            "canViewPhone",
+
+            "canViewEmail",
+
+            "canManageStaff",
+
+            "canDeleteUsers",
+
+            "canAccessSettings"
+
+        ];
+
+        if(
+
+            permissionIds.includes(
+                e.target.id
+            )
+
+        ){
+
+            updateSelectAll();
+
+        }
+
+    }
+);
+
+
+   // update staff
+
+function getCookie(name) {
+
+    let cookieValue = null;
+
+    if (
+        document.cookie &&
+        document.cookie !== ""
+    ) {
+
+        const cookies =
+        document.cookie.split(";");
+
+        for (
+            let i = 0;
+            i < cookies.length;
+            i++
+        ) {
+
+            const cookie =
+            cookies[i].trim();
+
+            if (
+
+                cookie.substring(
+                    0,
+                    name.length + 1
+                ) ===
+
+                (
+                    name + "="
+                )
+
+            ) {
+
+                cookieValue =
+                decodeURIComponent(
+
+                    cookie.substring(
+                        name.length + 1
+                    )
+
+                );
+
+                break;
+
+            }
+
+        }
+
+    }
+
+    return cookieValue;
+
+}
+
+
+
+document.addEventListener(
+    "click",
+    async function(e){
+
+        const saveBtn =
+        e.target.closest(
+            ".permission_save_btn"
+        );
+
+        if(
+            !saveBtn
+        ){
+            return;
+        }
+
+        const userId =
+        document.getElementById(
+            "selectedUserId"
+        ).value;
+
+        if(!userId){
+
+            showAlert(
+
+                "Please select a staff member",
+
+                "error"
+
+            );
+
+            return;
+
+        }
+
+        try{
+
+            const response =
+            await fetch(
+
+                `/panel/update-staff-permissions/${userId}/`,
+
+                {
+
+                    method: "POST",
+
+                    headers: {
+
+                        "Content-Type":
+                        "application/json",
+
+                        "X-CSRFToken":
+                        getCookie(
+                            "csrftoken"
+                        )
+
+                    },
+
+                    body: JSON.stringify({
+
+                        can_create_shipments:
+
+                        document.getElementById(
+                            "canCreateShipments"
+                        ).checked,
+
+
+
+                        can_view_customer_phone:
+
+                        document.getElementById(
+                            "canViewPhone"
+                        ).checked,
+
+
+
+                        can_view_customer_email:
+
+                        document.getElementById(
+                            "canViewEmail"
+                        ).checked,
+
+
+
+                        can_manage_staff:
+
+                        document.getElementById(
+                            "canManageStaff"
+                        ).checked,
+
+
+
+                        can_delete_users:
+
+                        document.getElementById(
+                            "canDeleteUsers"
+                        ).checked,
+
+
+
+                        can_access_settings:
+
+                        document.getElementById(
+                            "canAccessSettings"
+                        ).checked
+
+                    })
+
+                }
+
+            );
+
+            const data =
+            await response.json();
+
+            if(data.success){
+
+                showAlert(
+
+                    data.message ||
+
+                    "Permissions updated successfully",
+
+                    "success"
+
+                );
+
+            }
+
+            else{
+
+                showAlert(
+
+                    data.message ||
+
+                    "Failed to update permissions",
+
+                    "error"
+
+                );
+
+            }
+
+        }
+
+        catch(error){
+
+            console.error(
+                error
+            );
+
+            showAlert(
+
+                "Something went wrong",
+
+                "error"
+
+            );
+
+        }
+
+    }
+);
+
+</script>

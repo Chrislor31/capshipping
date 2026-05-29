@@ -61,6 +61,13 @@ class Accounts(AbstractUser):
     email = models.EmailField(unique=True)
     phone_number = models.CharField(max_length=20, blank=True, null=True)
 
+    can_create_shipments = models.BooleanField(default=False)
+    can_view_customer_phone = models.BooleanField(default=False)
+    can_view_customer_email = models.BooleanField(default=False)
+    can_manage_staff = models.BooleanField(default=False)
+    can_delete_users = models.BooleanField(default=False)
+    can_access_settings = models.BooleanField(default=False)
+
     # 👤 ROLE
     ROLE_CHOICES = [
         ("admin", "Admin"),

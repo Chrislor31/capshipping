@@ -14,7 +14,7 @@ from capshipping.views import logout_view, KYCAPIView
 
 
 urlpatterns = [
-    #path('admin/', admin.site.urls),
+    path('admin/', admin.site.urls),
 
     path('', views.index, name='home'),
     path('about/', views.about, name='about'),
@@ -395,6 +395,35 @@ path(
     name="save_settings"
 
 ),
+
+
+path(
+
+
+"panel/staff-permissions/",
+
+views.staff_permissions,
+
+name="staff_permissions"
+
+
+),
+
+path(
+"panel/staff-permission-data/<int:user_id>/",
+
+views.staff_permission_data,
+
+name="staff_permission_data"
+),
+
+
+path(
+    "panel/update-staff-permissions/<int:user_id>/",
+    views.update_staff_permissions,
+    name="update_staff_permissions"
+),
+
 
 path("maintenance/", views.maintenance, name="maintenance"),
 

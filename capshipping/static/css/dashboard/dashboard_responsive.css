@@ -3212,3 +3212,813 @@ color: var(--Orange_premery);
     }
 
 }
+
+
+/*---- TABLE FILTER ----*/
+
+.filter_dropdown{
+    position: relative;
+    margin-left: auto;
+    z-index: 100;
+}
+
+.gtn_tablo{
+    width: 100%;
+    padding: 8px 0;
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+}
+
+
+/* BUTTON */
+
+.filter_btn{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    min-width: 185px;
+    padding: 13px 16px;
+    border-radius: 12px;
+    border: 1px solid var(--boder_color);
+    background: var(--blue_secondery);
+    color: var(--White_Title);
+    cursor: pointer;
+    transition: 0.3s ease;
+    font-size: 14px;
+    font-weight: 500;
+}
+
+.filter_btn:hover{
+    background: #223154;
+}
+
+.filter_left{
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.filter_btn i{
+    font-size: 18px;
+}
+
+
+/* DROPDOWN */
+
+.filter_menu{
+    position: absolute;
+    top: calc(100% + 10px);
+    right: 0;
+    width: 240px;
+    background: #18233f;
+    border: 1px solid var(--boder_color);
+    border-radius: 14px;
+    padding: 8px;
+    display: none;
+    flex-direction: column;
+    gap: 2px;
+    z-index: 9999;
+    box-shadow: 0 12px 25px rgba(0,0,0,0.22);
+    animation: dropdownFade 0.2s ease;
+}
+
+.filter_dropdown.active .filter_menu{
+    display: flex;
+}
+
+
+/* FILTER ITEM */
+
+.filter_item{
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 12px 14px;
+    border-radius: 10px;
+    cursor: pointer;
+    transition: 0.25s ease;
+    color: var(--White_Title);
+    position: relative;
+    user-select: none;
+}
+
+.filter_item:hover{
+    background: rgba(255,255,255,0.04);
+}
+
+
+/* HIDE REAL CHECKBOX */
+
+.filter_item input{
+    display: none;
+}
+
+
+/* CUSTOM CHECKBOX */
+
+.checkmark{
+    width: 18px;
+    height: 18px;
+    border-radius: 6px;
+    border: 1.5px solid rgba(255,255,255,0.18);
+    background: rgba(255,255,255,0.04);
+    position: relative;
+    transition: 0.25s ease;
+    flex-shrink: 0;
+}
+
+
+/* CHECKED */
+
+.filter_item input:checked + .checkmark{
+    background: #7c5cff;
+    border-color: #7c5cff;
+}
+
+
+/* CHECK ICON */
+
+.filter_item input:checked + .checkmark::after{
+    content: "";
+    position: absolute;
+    left: 5px;
+    top: 2px;
+    width: 4px;
+    height: 8px;
+    border: solid var(--White_Title);
+    border-width: 0 2px 2px 0;
+    transform: rotate(45deg);
+}
+
+
+/* TEXT */
+
+.filter_item span{
+    font-size: 14px;
+    font-weight: 500;
+}
+
+
+/* ANIMATION */
+
+@keyframes dropdownFade{
+
+    from{
+        opacity: 0;
+        transform: translateY(-8px);
+    }
+
+    to{
+        opacity: 1;
+        transform: translateY(0);
+    }
+
+}
+
+
+
+/*========= manage staff =====*/
+/* ===================================== */
+/* STAFF PERMISSIONS */
+/* ===================================== */
+
+.staff_permissions_page{
+    width: 100%;
+}
+
+
+/* ===================================== */
+/* HEADER */
+/* ===================================== */
+
+.staff_permission_header{
+    margin-bottom: 18px;
+}
+
+.staff_permission_title h1{
+    font-size: 28px;
+    font-weight: 600;
+    color: var(--White_Title);
+}
+
+.staff_permission_title p{
+    font-size: 14px;
+    color: #9ca3af;
+    margin-top: 4px;
+}
+
+
+
+/* ===================================== */
+/* STATS */
+/* ===================================== */
+
+.staff_permission_stats{
+    display: grid;
+    grid-template-columns: repeat(4,1fr);
+    gap: 14px;
+    margin-bottom: 18px;
+}
+
+.permission_stat_card{
+    background: var(--blue_secondery);
+    border: 1px solid var(--boder_color);
+    border-radius: 14px;
+    padding: 14px;
+    display: flex;
+    align-items: center;
+    gap: 14px;
+}
+
+.permission_stat_icon{
+    width: 48px;
+    height: 48px;
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    font-size: 22px;
+}
+
+.permission_stat_icon.purple{
+    background: rgba(124,92,255,0.12);
+    color: #a78bfa;
+}
+
+.permission_stat_icon.green{
+    background: rgba(34,197,94,0.12);
+    color: var(--green-premery);
+}
+
+.permission_stat_icon.blue{
+    background: rgba(44,99,213,0.12);
+    color: #60a5fa;
+}
+
+.permission_stat_icon.orange{
+    background: rgba(222,131,51,0.12);
+    color: var(--Orange_premery);
+}
+
+.permission_stat_content h2{
+    font-size: 26px;
+    font-weight: 600;
+    color: var(--White_Title);
+}
+
+.permission_stat_content h4{
+    font-size: 15px;
+    font-weight: 500;
+    color: var(--White_Title);
+    margin-top: 2px;
+}
+
+.permission_stat_content p{
+    font-size: 12px;
+    margin-top: 5px;
+    color: #9ca3af;
+}
+
+
+
+/* ===================================== */
+/* GRID */
+/* ===================================== */
+
+.staff_permission_grid{
+    display: grid;
+    grid-template-columns: 38% 1fr;
+    gap: 16px;
+}
+
+
+
+/* ===================================== */
+/* LEFT SIDE */
+/* ===================================== */
+
+.staff_permission_left{
+    background: var(--blue_secondery);
+    border: 1px solid var(--boder_color);
+    border-radius: 14px;
+    overflow: hidden;
+}
+
+
+/* SEARCH */
+
+.staff_permission_search{
+    display: flex;
+    gap: 10px;
+    padding: 14px;
+    border-bottom: 1px solid rgba(255,255,255,0.04);
+}
+
+.staff_search_input{
+    flex: 1;
+    height: 44px;
+    border-radius: 10px;
+    background: var(--color_blu_premey);
+    border: 1px solid var(--boder_color);
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 0 14px;
+}
+
+.staff_search_input i{
+    color: #9ca3af;
+    font-size: 18px;
+}
+
+.staff_search_input input{
+    width: 100%;
+    background: transparent;
+    border: none;
+    outline: none;
+    color: var(--White_Title);
+    font-size: 14px;
+}
+
+.staff_filter_btn{
+    height: 44px;
+    padding: 0 16px;
+    border-radius: 10px;
+    border: 1px solid var(--boder_color);
+    background: var(--flat_blue);
+    color: var(--White_Title);
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 13px;
+    cursor: pointer;
+    transition: var(--transition);
+}
+
+.staff_filter_btn:hover{
+    background: #25304a;
+}
+
+
+
+/* ===================================== */
+/* USERS */
+/* ===================================== */
+
+.staff_permission_users{
+    padding: 0 14px;
+}
+
+.permission_user_item{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 14px;
+    padding: 14px 0;
+    border-bottom: 1px solid rgba(255,255,255,0.04);
+    cursor: pointer;
+    transition: var(--transition);
+}
+
+.permission_user_item.active{
+    background: rgba(44,99,213,0.08);
+    border: 1px solid rgba(44,99,213,0.25);
+    border-radius: 12px;
+    padding: 14px;
+    margin-top: 12px;
+}
+
+.permission_user_left{
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.permission_user_avatar{
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    background: #374151;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--White_Title);
+    font-size: 14px;
+    font-weight: 600;
+    flex-shrink: 0;
+}
+
+.permission_user_info h3{
+    font-size: 15px;
+    font-weight: 500;
+    color: var(--White_Title);
+}
+
+.permission_user_info p{
+    font-size: 12px;
+    color: #9ca3af;
+    margin-top: 4px;
+}
+
+.permission_user_right{
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.permission_role{
+    padding: 6px 10px;
+    border-radius: 8px;
+    background: rgba(44,99,213,0.15);
+    color: #7ea8ff;
+    font-size: 12px;
+    font-weight: 500;
+}
+
+.manager_role{
+    background: rgba(124,92,255,0.15);
+    color: #c084fc;
+}
+
+.permission_status{
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 12px;
+}
+
+.dot{
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+}
+
+.active_status{
+    color: var(--green-premery);
+}
+
+.active_status .dot{
+    background: var(--green-premery);
+}
+
+.inactive_status{
+    color: #ef4444;
+}
+
+.inactive_status .dot{
+    background: #ef4444;
+}
+
+
+
+/* ===================================== */
+/* FOOTER */
+/* ===================================== */
+
+.permission_footer{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 14px;
+}
+
+.permission_footer p{
+    font-size: 13px;
+    color: #9ca3af;
+}
+
+.permission_pagination{
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.permission_pagination button{
+    width: 34px;
+    height: 34px;
+    border-radius: 8px;
+    border: 1px solid var(--boder_color);
+    background: var(--flat_blue);
+    color: var(--White_Title);
+    cursor: pointer;
+}
+
+.active_page{
+    background: var(--blue_sky) !important;
+}
+
+
+
+/* ===================================== */
+/* RIGHT SIDE */
+/* ===================================== */
+
+.staff_permission_right{
+    background: var(--blue_secondery);
+    border: 1px solid var(--boder_color);
+    border-radius: 14px;
+    overflow: hidden;
+}
+
+
+/* TOP */
+
+.permission_top_section{
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    padding: 18px;
+    border-bottom: 1px solid rgba(255,255,255,0.04);
+}
+
+.permission_top_section span{
+    color: #9ca3af;
+    font-size: 13px;
+}
+
+.permission_top_section h2{
+    color: var(--White_Title);
+    font-size: 24px;
+    font-weight: 600;
+    margin-top: 4px;
+}
+
+.permission_top_section p{
+    color: #9ca3af;
+    font-size: 13px;
+    margin-top: 5px;
+}
+
+.permission_top_role{
+    text-align: right;
+}
+
+.permission_role_badge{
+    margin-top: 8px;
+    background: rgba(44,99,213,0.15);
+    color: #7ea8ff;
+    padding: 7px 12px;
+    border-radius: 8px;
+    font-size: 12px;
+}
+
+
+
+/* ===================================== */
+/* SELECT */
+/* ===================================== */
+
+.permission_select_all{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 18px;
+    border-bottom: 1px solid rgba(255,255,255,0.04);
+}
+
+.permission_select_left{
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.permission_checkbox{
+    width: 16px;
+    height: 16px;
+    border-radius: 4px;
+    background: #374151;
+}
+
+.permission_select_left h3{
+    color: var(--White_Title);
+    font-size: 15px;
+    font-weight: 500;
+}
+
+.permission_select_left p{
+    color: #9ca3af;
+    font-size: 12px;
+    margin-top: 4px;
+}
+
+
+
+/* ===================================== */
+/* PERMISSIONS */
+/* ===================================== */
+
+.permission_group_box{
+    padding: 18px;
+}
+
+.permission_group_title{
+    font-size: 13px;
+    font-weight: 600;
+    margin-bottom: 14px;
+}
+
+.blue_text{
+    color: #60a5fa;
+}
+
+.purple_text{
+    color: #c084fc;
+}
+
+.orange_text{
+    color: #f59e0b;
+}
+
+
+/* ITEM */
+
+.permission_item{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 14px;
+    padding: 14px 0;
+    border-bottom: 1px solid rgba(255,255,255,0.04);
+}
+
+.permission_item_left{
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.permission_item_icon{
+    width: 42px;
+    height: 42px;
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 18px;
+    flex-shrink: 0;
+}
+
+.blue_bg{
+    background: rgba(44,99,213,0.12);
+    color: #60a5fa;
+}
+
+.purple_bg{
+    background: rgba(124,92,255,0.12);
+    color: #c084fc;
+}
+
+.orange_bg{
+    background: rgba(222,131,51,0.12);
+    color: var(--Orange_premery);
+}
+
+.permission_item h3{
+    color: var(--White_Title);
+    font-size: 15px;
+    font-weight: 500;
+}
+
+.permission_item p{
+    color: #9ca3af;
+    font-size: 12px;
+    margin-top: 4px;
+}
+
+
+
+/* ===================================== */
+/* ACTION BUTTONS */
+/* ===================================== */
+
+.permission_action_buttons{
+    display: flex;
+    justify-content: flex-end;
+    gap: 10px;
+    padding: 18px;
+}
+
+.permission_cancel_btn,
+.permission_save_btn{
+    height: 44px;
+    padding: 0 18px;
+    border-radius: 10px;
+    font-size: 13px;
+    font-weight: 500;
+    border: none;
+    cursor: pointer;
+    transition: var(--transition);
+}
+
+.permission_cancel_btn{
+    background: transparent;
+    border: 1px solid var(--boder_color);
+    color: var(--White_Title);
+}
+
+.permission_save_btn{
+    background: var(--blue_sky);
+    color: var(--White_Title);
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.permission_save_btn:hover{
+    opacity: 0.9;
+}
+
+
+
+/* ===================================== */
+/* SWITCH */
+/* ===================================== */
+
+.switch{
+    position: relative;
+    width: 48px;
+    height: 26px;
+    flex-shrink: 0;
+}
+
+.switch input{
+    display: none;
+}
+
+.slider{
+    position: absolute;
+    inset: 0;
+    background: #374151;
+    border-radius: 30px;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+.slider::before{
+    content: "";
+    position: absolute;
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    background: white;
+    top: 3px;
+    left: 3px;
+    transition: 0.3s;
+}
+
+.switch input:checked + .slider{
+    background: var(--blue_sky);
+}
+
+.switch input:checked + .slider::before{
+    transform: translateX(22px);
+}
+
+
+
+/* ===================================== */
+/* RESPONSIVE */
+/* ===================================== */
+
+@media(max-width:1200px){
+
+    .staff_permission_stats{
+        grid-template-columns: repeat(2,1fr);
+    }
+
+    .staff_permission_grid{
+        grid-template-columns: 1fr;
+    }
+
+}
+
+@media(max-width:768px){
+
+    .staff_permission_stats{
+        grid-template-columns: 1fr;
+    }
+
+    .staff_permission_search{
+        flex-direction: column;
+    }
+
+    .permission_top_section{
+        flex-direction: column;
+        gap: 14px;
+    }
+
+    .permission_item{
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .permission_footer{
+        flex-direction: column;
+        gap: 12px;
+        align-items: flex-start;
+    }
+
+}

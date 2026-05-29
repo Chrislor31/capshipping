@@ -1273,6 +1273,10 @@ def shipment_list(request):
         "q",
         ""
     ).strip()
+    status = request.GET.get(
+        "status",
+        ""
+    ).strip()
 
 
 
@@ -1301,6 +1305,11 @@ def shipment_list(request):
     # =====================================
     # 🔥 SEARCH FILTER
     # =====================================
+
+    if status and status.lower() != "all":
+        packages = packages.filter(
+            status=status
+        )
 
     if(
 
@@ -5124,3 +5133,392 @@ def maintenance(request):
         request,
         "maintenance.html"
     )
+
+
+
+
+
+## staff permition
+
+
+
+# =====================================
+
+# STAFF PERMISSIONS
+@login_required
+def staff_permissions(request):
+
+# =====================================
+# SEARCH QUERY
+# =====================================
+
+    query = request.GET.get(
+
+        "q",
+
+        ""
+
+    ).strip()
+
+
+
+
+# =====================================
+# STAFF USERS
+# =====================================
+
+    users = Accounts.objects.filter(
+
+        role__in=[
+
+            "admin",
+
+            "staff"
+
+        ]
+
+    ).order_by(
+
+        "-date_joined"
+
+    )
+
+
+
+
+# =====================================
+# SEARCH FILTER
+# =====================================
+
+    if(
+
+        query
+
+        and
+
+        query.lower() != "none"
+
+    ):
+
+        users = users.filter(
+
+            Q(
+
+                first_name__icontains=query
+
+            )
+
+            |
+
+            Q(
+
+                last_name__icontains=query
+
+            )
+
+            |
+
+            Q(
+
+                email__icontains=query
+
+            )
+
+        )
+
+
+
+
+# =====================================
+# STATS
+# =====================================
+
+    total_staff = users.count()
+
+
+
+    active_staff = users.filter(
+
+        is_active=True
+
+    ).count()
+
+
+
+    total_admin = users.filter(
+
+        role="admin"
+
+    ).count()
+
+
+
+    inactive_staff = users.filter(
+
+        is_active=False
+
+    ).count()
+
+
+
+
+    # =====================================
+    # SELECTED USER
+    # =====================================
+
+    selected_user = users.first()
+
+
+
+
+    # =====================================
+    # CONTEXT
+    # =====================================
+
+    context = {
+
+        "user_obj": request.user,
+
+
+
+        "users": users,
+
+
+
+        "selected_user": selected_user,
+
+
+
+        "query": query,
+
+
+
+        "total_staff": total_staff,
+
+
+
+        "active_staff": active_staff,
+
+
+
+        "total_admin": total_admin,
+
+
+
+        "inactive_staff": inactive_staff,
+
+    }
+
+
+
+
+    # =====================================
+    # AJAX
+    # =====================================
+
+    if request.headers.get(
+
+        "x-requested-with"
+
+    ) == "XMLHttpRequest":
+
+        return render(
+
+            request,
+
+            "dashboard/partials/staff_permissions.html",
+
+            context
+
+        )
+
+
+
+
+# =====================================
+# NORMAL PAGE
+# =====================================
+
+    return render(
+
+        request,
+
+        "dashboard/base.html",
+
+        context
+
+    )
+
+
+
+
+#==== json for slecet
+
+
+@login_required
+def staff_permission_data(request, user_id):
+
+    user = Accounts.objects.get(
+
+        id=user_id
+
+    )
+
+
+
+    data = {
+
+        "id": user.id,
+
+
+
+        "full_name":
+
+        f"{user.first_name} {user.last_name}",
+
+
+
+        "email":
+
+        user.email,
+
+
+
+        "role":
+
+        user.role,
+
+
+
+        "can_create_shipments":
+
+        user.can_create_shipments,
+
+
+
+        "can_view_customer_phone":
+
+        user.can_view_customer_phone,
+
+
+
+        "can_view_customer_email":
+
+        user.can_view_customer_email,
+
+
+
+        "can_manage_staff":
+
+        user.can_manage_staff,
+
+
+
+        "can_delete_users":
+
+        user.can_delete_users,
+
+
+
+        "can_access_settings":
+
+        user.can_access_settings,
+
+    }
+
+
+
+    return JsonResponse(data)
+
+
+## update staf
+
+
+@login_required
+def update_staff_permissions(
+    request,
+    user_id
+):
+
+    if request.method != "POST":
+
+        return JsonResponse(
+            {
+                "success": False,
+                "message": "Invalid request"
+            },
+            status=400
+        )
+
+    try:
+
+        user = Accounts.objects.get(
+            id=user_id
+        )
+
+        data = json.loads(
+            request.body
+        )
+
+        user.can_create_shipments = data.get(
+            "can_create_shipments",
+            False
+        )
+
+        user.can_view_customer_phone = data.get(
+            "can_view_customer_phone",
+            False
+        )
+
+        user.can_view_customer_email = data.get(
+            "can_view_customer_email",
+            False
+        )
+
+        user.can_manage_staff = data.get(
+            "can_manage_staff",
+            False
+        )
+
+        user.can_delete_users = data.get(
+            "can_delete_users",
+            False
+        )
+
+        user.can_access_settings = data.get(
+            "can_access_settings",
+            False
+        )
+
+        user.save()
+
+        return JsonResponse({
+
+            "success": True,
+
+            "message":
+            "Permissions updated successfully"
+
+        })
+
+    except Accounts.DoesNotExist:
+
+        return JsonResponse({
+
+            "success": False,
+
+            "message":
+            "User not found"
+
+        })
+
+    except Exception as e:
+
+        return JsonResponse({
+
+            "success": False,
+
+            "message":
+            str(e)
+
+        })
