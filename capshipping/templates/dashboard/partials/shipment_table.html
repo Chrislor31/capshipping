@@ -93,41 +93,57 @@
 
     <div class="filter_menu">
 
-        <label class="filter_item">
+    <label class="filter_item">
 
-            <input type="checkbox" value="delivered" checked>
+        <input type="checkbox" value="received" checked>
 
-            <span class="checkmark"></span>
+        <span class="checkmark"></span>
 
-            <span>Delivered</span>
+        <span>Received</span>
 
-        </label>
+    </label>
 
+    <label class="filter_item">
 
+        <input type="checkbox" value="in_transit" checked>
 
-        <label class="filter_item">
+        <span class="checkmark"></span>
 
-            <input type="checkbox" value="in_transit" checked>
+        <span>In Transit</span>
 
-            <span class="checkmark"></span>
+    </label>
 
-            <span>In Transit</span>
+    <label class="filter_item">
 
-        </label>
+        <input type="checkbox" value="ready_pickup" checked>
 
+        <span class="checkmark"></span>
 
+        <span>Ready For Pickup</span>
 
-        <label class="filter_item">
+    </label>
 
-            <input type="checkbox" value="ready_pickup" checked>
+    <label class="filter_item">
 
-            <span class="checkmark"></span>
+        <input type="checkbox" value="delivered" checked>
 
-            <span>Ready For Pickup</span>
+        <span class="checkmark"></span>
 
-        </label>
+        <span>Delivered</span>
 
-    </div>
+    </label>
+
+    <label class="filter_item">
+
+        <input type="checkbox" value="canceled" checked>
+
+        <span class="checkmark"></span>
+
+        <span>Canceled</span>
+
+    </label>
+
+</div>
 
 </div>
 
@@ -414,156 +430,3 @@
 
 </section>
 
-
-<script>
-
-
-    // ================================
-// DROPDOWN
-// ================================
-
-const filterDropdown = document.querySelector(".filter_dropdown");
-const filterBtn = document.querySelector(".filter_btn");
-
-filterBtn.addEventListener("click", () => {
-
-    filterDropdown.classList.toggle("active");
-
-});
-
-
-window.addEventListener("click", (e) => {
-
-    if(!filterDropdown.contains(e.target)){
-
-        filterDropdown.classList.remove("active");
-
-    }
-
-});
-
-
-
-
-// ================================
-// FILTER SYSTEM
-// ================================
-
-const filterCheckboxes = document.querySelectorAll(
-    ".filter_item input"
-);
-
-const shipmentRows = document.querySelectorAll(
-    ".table_shipment tr[data-status]"
-);
-
-
-
-
-// LOAD SAVED FILTERS
-let savedFilters = JSON.parse(
-    localStorage.getItem("shipmentFilters")
-);
-
-
-
-// DEFAULT
-if(!savedFilters){
-
-    savedFilters = [
-        "delivered",
-        "in_transit",
-        "ready_pickup"
-    ];
-
-}
-
-
-
-// APPLY SAVED CHECKBOXES
-filterCheckboxes.forEach(checkbox => {
-
-    checkbox.checked = savedFilters.includes(
-        checkbox.value
-    );
-
-});
-
-
-
-
-// FILTER FUNCTION
-function applyFilters(){
-
-
-    // GET ACTIVE FILTERS
-    const activeFilters = [];
-
-
-
-    filterCheckboxes.forEach(checkbox => {
-
-        if(checkbox.checked){
-
-            activeFilters.push(
-                checkbox.value
-            );
-
-        }
-
-    });
-
-
-
-
-    // SAVE LOCAL STORAGE
-    localStorage.setItem(
-
-        "shipmentFilters",
-
-        JSON.stringify(activeFilters)
-
-    );
-
-
-
-
-    // FILTER ROWS
-    shipmentRows.forEach(row => {
-
-        const rowStatus = row.dataset.status;
-
-
-
-        if(activeFilters.includes(rowStatus)){
-
-            row.style.display = "";
-
-        }
-
-        else{
-
-            row.style.display = "none";
-
-        }
-
-    });
-
-}
-
-
-
-
-// EVENTS
-filterCheckboxes.forEach(checkbox => {
-
-    checkbox.addEventListener("change", applyFilters);
-
-});
-
-
-
-
-// INITIAL LOAD
-applyFilters();
-</script>

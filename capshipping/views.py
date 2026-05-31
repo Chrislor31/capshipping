@@ -3503,9 +3503,7 @@ def create_route_pricing(request):
 
         })
 
-
-
-
+    print("CREATE ROUTE PRICING CALLED")
     RoutePricing.objects.create(
 
         origin_type=
@@ -5522,3 +5520,7 @@ def update_staff_permissions(
             str(e)
 
         })
+
+
+
+

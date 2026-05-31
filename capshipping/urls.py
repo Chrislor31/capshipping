@@ -4,12 +4,7 @@ from django.urls import path, include
 
 from django.conf.urls.static import static
 from capshipping import views, settings
-from capshipping.views import logout_view, KYCAPIView
-
-
-
-
-
+from capshipping.views import logout_view, KYCAPIView, custom_404
 
 
 
@@ -426,8 +421,10 @@ path(
 
 
 path("maintenance/", views.maintenance, name="maintenance"),
+path("test404/", custom_404),
 
 ]
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 
 handler404 = "capshipping.views.custom_404"
+
