@@ -549,41 +549,48 @@
 
         </div>
 
-        <div class="details_address">
+   <div class="details_address">
 
-            <h2>
+    <h2>{{ user.first_name }} {{ user.last_name }}</h2>
 
-                {{ user.first_name }}
-                {{ user.last_name }}
+    <div class="address_row">
+        <span>Customer ID:</span>
+        <strong>{{ user.suite_code }}</strong>
+    </div>
 
-                /
+    <div class="address_row">
+        <span>Address:</span>
+        <strong>{{ air_warehouse.address }}</strong>
+    </div>
 
-                {{ user.suite_code }}
+    <div class="address_row">
+        <span>City:</span>
+        <strong>{{ air_warehouse.city }}</strong>
+    </div>
 
-            </h2>
+    <div class="address_row">
+        <span>State:</span>
+        <strong>{{ air_warehouse.state }}</strong>
+    </div>
 
-            <p>
+    {% if air_warehouse.zip_code %}
+    <div class="address_row">
+        <span>Zip Code:</span>
+        <strong>{{ air_warehouse.zip_code }}</strong>
+    </div>
+    {% endif %}
 
-                {{ air_warehouse.address }} <br>
+    <div class="address_row">
+        <span>Country:</span>
+        <strong>USA</strong>
+    </div>
 
-                {{ air_warehouse.city }},
-                {{ air_warehouse.state }}
+    <div class="copy">
+        <i data-lucide="copy"></i>
+        <span>{% trans 'Copy address' %}</span>
+    </div>
 
-                {% if air_warehouse.zip_code %}
-                    {{ air_warehouse.zip_code }}
-                {% endif %}
-
-            </p>
-
-            <div class="copy">
-
-                <i data-lucide="copy"></i>
-
-                <span>{% trans 'Copy address' %}</span>
-
-            </div>
-
-        </div>
+</div>
 
     </div>
 
@@ -600,41 +607,48 @@
 
         </div>
 
-        <div class="details_address">
+ <div class="details_address">
 
-            <h2>
+    <h2>{{ user.first_name }} {{ user.last_name }}</h2>
 
-                {{ user.first_name }}
-                {{ user.last_name }}
+    <div class="address_row">
+        <span>Customer ID:</span>
+        <strong>{{ user.suite_code }}</strong>
+    </div>
 
-                /
+    <div class="address_row">
+        <span>Address:</span>
+        <strong>{{ sea_warehouse.address }}</strong>
+    </div>
 
-                {{ user.suite_code }}
+    <div class="address_row">
+        <span>City:</span>
+        <strong>{{ sea_warehouse.city }}</strong>
+    </div>
 
-            </h2>
+    <div class="address_row">
+        <span>State:</span>
+        <strong>{{ sea_warehouse.state }}</strong>
+    </div>
 
-            <p>
+    {% if sea_warehouse.zip_code %}
+    <div class="address_row">
+        <span>Zip Code:</span>
+        <strong>{{ sea_warehouse.zip_code }}</strong>
+    </div>
+    {% endif %}
 
-                {{ sea_warehouse.address }} <br>
+    <div class="address_row">
+        <span>Country:</span>
+        <strong>USA</strong>
+    </div>
 
-                {{ sea_warehouse.city }},
-                {{ sea_warehouse.state }}
+    <div class="copy">
+        <i data-lucide="copy"></i>
+        <span>Copy address</span>
+    </div>
 
-                {% if sea_warehouse.zip_code %}
-                    {{ sea_warehouse.zip_code }}
-                {% endif %}
-
-            </p>
-
-            <div class="copy">
-
-                <i data-lucide="copy"></i>
-
-                <span>Copy address</span>
-
-            </div>
-
-        </div>
+</div>
 
     </div>
 
@@ -653,56 +667,65 @@
 
     {% for warehouse in usa_warehouses %}
 
-    <div class="warehouse_item">
+<div class="warehouse_item">
 
-        <!-- HEADER -->
-        <div class="add_address_name">
+    <!-- HEADER -->
+    <div class="add_address_name">
 
-            <div class="warehouse_title">
-
-                <i data-lucide="warehouse"></i>
-
-                <span>{{ warehouse.name }}</span>
-
-            </div>
-
-            <i data-lucide="plus"></i>
-
+        <div class="warehouse_title">
+            <i data-lucide="warehouse"></i>
+            <span>{{ warehouse.name }}</span>
         </div>
 
+        <i data-lucide="plus"></i>
 
-        <!-- CONTENT -->
-        <div class="add_address_content">
+    </div>
 
-            <p>{{ warehouse.address }}</p>
+    <!-- CONTENT -->
+    <div class="add_address_content">
 
-            <p>
+        <div class="address_row">
+            <span>Address:</span>
+            <strong>{{ warehouse.address }}</strong>
+        </div>
 
-                {{ warehouse.city }},
+        <div class="address_row">
+            <span>City:</span>
+            <strong>{{ warehouse.city }}</strong>
+        </div>
 
-                {{ warehouse.state }}
+        <div class="address_row">
+            <span>State:</span>
+            <strong>{{ warehouse.state }}</strong>
+        </div>
 
-                {% if warehouse.zip_code %}
-                    {{ warehouse.zip_code }}
-                {% endif %}
+        {% if warehouse.zip_code %}
+        <div class="address_row">
+            <span>Zip Code:</span>
+            <strong>{{ warehouse.zip_code }}</strong>
+        </div>
+        {% endif %}
 
-            </p>
-
+        <div class="address_row">
+            <span>Country:</span>
+            <strong>USA</strong>
         </div>
 
     </div>
 
-    {% empty %}
+</div>
 
-    <div class="empty_warehouse">
+{% empty %}
 
-        <i data-lucide="warehouse"></i>
+<div class="empty_warehouse">
 
-        <p>No USA warehouse available</p>
+    <i data-lucide="warehouse"></i>
 
-    </div>
+    <p>No USA warehouse available</p>
 
-    {% endfor %}
+</div>
+
+{% endfor %}
 
 </div>
 </div>
@@ -1515,4 +1538,14 @@ DASHBOARD SHIPPING CALCULATOR
     width: 100%;
     height: 320px;
 }
+
+
+
+
+
+
+
+
+
+
 </style>

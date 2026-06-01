@@ -1422,9 +1422,9 @@ document.addEventListener("click", async function(e){
             "#warehouse_id"
         ).value = data.id;
 
-        document.querySelector(
-            '[name="name"]'
-        ).value = data.name;
+        document.getElementById(
+    "warehouse_name"
+).value = data.name;
 
         document.querySelector(
             '[name="type"]'
@@ -1450,9 +1450,9 @@ document.addEventListener("click", async function(e){
             '[name="label_code"]'
         ).value = data.label_code;
 
-        document.querySelector(
-            '[name="address"]'
-        ).value = data.address;
+        document.getElementById(
+    "warehouse_address"
+).value = data.address;
 
         // CHANGE BUTTON
         document.getElementById(
