@@ -5487,6 +5487,10 @@ def update_staff_permissions(
             "can_access_settings",
             False
         )
+        user.can_manage_kyc=data.get(
+            "can_manage_kyc",
+            False
+        )
 
         user.save()
 

@@ -215,7 +215,6 @@
 
             <!-- ACTIONS -->
             <div class="table_actions">
-{% if request.user.role == "admin" %}
                 <button id="deleteSelectedContact">
 
                     <i class='bx bxs-trash-alt'></i>
@@ -224,7 +223,7 @@
 
                 </button>
 
-                {% endif %}
+
 
 
                 <span id="selectedCount">
@@ -287,7 +286,7 @@
             <input type="checkbox"
                    class="rowCheck"
                    value="{{ contact.id }}"
-                   data-url="/api/delete-contact/{{ contact.id }}/">
+                  >
 
         </td>
 
@@ -417,14 +416,14 @@
 
 
 
-                <!-- DELETE -->
+                <!-- DELETE-->
                {% if request.user.role == "admin" %}
 
 <div class="dropdown_item danger"
 
      data-action="delete"
 
-     data-url="/api/delete-contact/{{ contact.id }}/">
+     data-url="/api/delete-contact/{{ contact.id }}/"  style="display:none">
 
     <i class='bx bx-trash'></i>
 
@@ -437,6 +436,8 @@
 </div>
 
 {% endif %}
+
+
 
             </div>
 

@@ -72,17 +72,17 @@
             <!-- ACTIONS -->
             <div class="table_actions">
 
-                {% if request.user.role == "admin" %}
 
                 <button id="deleteSelectedCategory">
 
                     <i class='bx bxs-trash-alt'></i>
 
-                    {% trans 'Delete Selected' %}
+                   {% trans 'Delete Selected' %}
 
                 </button>
 
-                {% endif %}
+
+
 
                 <span id="selectedCount">
 
@@ -218,12 +218,12 @@
 
             </div>
 
-{% if request.user.role == "admin" %}
 
-            <!-- DELETE -->
+
+
             <div class="dropdown_item danger"
                  data-action="delete"
-                 data-url="/api/delete-category/{{ category.id }}/">
+                 data-url="/api/delete-category/{{ category.id }}/" style="display:none">
 
                 <i class='bx bx-trash'></i>
 
@@ -233,7 +233,9 @@
 
             </div>
 
-            {% endif %}
+
+
+
 
         </div>
 

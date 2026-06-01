@@ -3131,6 +3131,317 @@ document.addEventListener(
 
 
 
+// delete category
+
+
+// =======================
+// 🔥 CATEGORY DELETE STATE
+// =======================
+
+let categoryDeleteRows = [];
+let categoryDeleteUrls = [];
+
+
+// =======================
+// 🔓 OPEN DELETE MODAL
+// =======================
+
+function openCategoryDeleteModal(rows, urls){
+
+    categoryDeleteRows = rows;
+    categoryDeleteUrls = urls;
+
+    const modal =
+    document.getElementById(
+        "deleteModal"
+    );
+
+    const msg =
+    document.getElementById(
+        "deleteMessage"
+    );
+
+    if (!modal) return;
+
+    if (urls.length === 1){
+
+        msg.innerText =
+        "Are you sure you want to delete this category?";
+
+    }
+
+    else{
+
+        msg.innerText =
+        `Are you sure you want to delete ${urls.length} categories?`;
+
+    }
+
+    modal.classList.remove(
+        "hidden"
+    );
+
+}
+
+
+
+// =======================
+// 🔒 CLOSE DELETE MODAL
+// =======================
+
+function closeCategoryDeleteModal(){
+
+    const modal =
+    document.getElementById(
+        "deleteModal"
+    );
+
+    if (modal){
+
+        modal.classList.add(
+            "hidden"
+        );
+
+    }
+
+    categoryDeleteRows = [];
+    categoryDeleteUrls = [];
+
+}
+
+
+
+// =======================
+// 🎯 CLICK HANDLER
+// =======================
+
+document.addEventListener(
+    "click",
+    function(e){
+
+    // SINGLE DELETE
+    const singleDelete =
+    e.target.closest(
+        '.users_managements [data-action="delete"]'
+    );
+
+    if (singleDelete){
+
+        const row =
+        singleDelete.closest("tr");
+
+        const url =
+        singleDelete.dataset.url;
+
+        if (!row || !url){
+
+            console.error(
+                "Missing row or url"
+            );
+
+            return;
+
+        }
+
+        openCategoryDeleteModal(
+            [row],
+            [url]
+        );
+
+        return;
+
+    }
+
+
+    // BULK DELETE
+    const bulkDelete =
+    e.target.closest(
+        "#deleteSelectedCategory"
+    );
+
+    if (bulkDelete){
+
+        const checked =
+        document.querySelectorAll(
+            ".users_managements .rowCheck:checked"
+        );
+
+        if (checked.length === 0){
+
+            showAlert(
+                "Select at least one category",
+                "error"
+            );
+
+            return;
+
+        }
+
+        let rows = [];
+        let urls = [];
+
+        checked.forEach(cb => {
+
+            const row =
+            cb.closest("tr");
+
+            if (!row) return;
+
+            const deleteBtn =
+            row.querySelector(
+                '[data-action="delete"]'
+            );
+
+            if (!deleteBtn) return;
+
+            rows.push(row);
+
+            urls.push(
+                deleteBtn.dataset.url
+            );
+
+        });
+
+        openCategoryDeleteModal(
+            rows,
+            urls
+        );
+
+        return;
+
+    }
+
+
+    // CANCEL
+    if (
+        e.target.id ===
+        "cancelDelete"
+    ){
+
+        closeCategoryDeleteModal();
+
+    }
+
+
+    // OUTSIDE
+    if (
+        e.target.id ===
+        "deleteModal"
+    ){
+
+        closeCategoryDeleteModal();
+
+    }
+
+});
+
+
+
+// =======================
+// ❌ CONFIRM DELETE
+// =======================
+
+function initDeleteCategory(){
+
+    const btn =
+    document.getElementById(
+        "confirmDelete"
+    );
+
+    if (!btn) return;
+
+    if(btn.dataset.categoryBound) return;
+
+    btn.dataset.categoryBound = "true";
+
+    btn.addEventListener(
+        "click",
+        async function(){
+
+        if (
+            categoryDeleteUrls.length === 0
+        ){
+
+            console.warn(
+                "nothing to delete"
+            );
+
+            return;
+
+        }
+
+        try{
+
+            for (
+                const url
+                of categoryDeleteUrls
+            ){
+
+                const res =
+                await fetch(url, {
+
+                    method: "POST",
+
+                    headers: {
+
+                        "X-CSRFToken":
+                        getCookie("csrftoken"),
+
+                    }
+
+                });
+
+                await res.json();
+
+            }
+
+            categoryDeleteRows
+            .forEach(row => {
+
+                row.style.opacity = "0";
+
+                setTimeout(() => {
+
+                    row.remove();
+
+                }, 300);
+
+            });
+
+            showAlert(
+                "Category deleted successfully",
+                "success"
+            );
+
+        }
+
+        catch(err){
+
+            console.error(err);
+
+            showAlert(
+                "Delete failed",
+                "error"
+            );
+
+        }
+
+        finally{
+
+            closeCategoryDeleteModal();
+
+        }
+
+    });
+
+}
+
+
+// INIT
+initDeleteCategory();
+
+
+
 // ========================================
 // OPEN CONTACT MODAL
 // ========================================
@@ -3563,99 +3874,100 @@ document.addEventListener(
 
 
 
-    // ===================
-    // BULK DELETE
-    // ===================
-    const bulkDelete =
-    e.target.closest(
-        "#deleteSelectedContact"
+// ===================
+// BULK DELETE
+// ===================
+const bulkDelete =
+e.target.closest(
+    "#deleteSelectedContact"
+);
+
+if (bulkDelete){
+
+    const checked =
+    document.querySelectorAll(
+        ".contact_management .rowCheck:checked"
     );
 
+    if (checked.length === 0){
 
-
-    if (bulkDelete){
-
-        const checked =
-        document.querySelectorAll(
-            ".contact_management .rowCheck:checked"
+        showAlert(
+            "Select at least one contact",
+            "error"
         );
 
+        return;
 
+    }
 
-        if (checked.length === 0){
+    let rows = [];
+    let urls = [];
 
-            showAlert(
-                "Select at least one contact",
-                "error"
+    checked.forEach(cb => {
+
+        const row =
+        cb.closest("tr");
+
+        if (!row) return;
+
+        const deleteBtn =
+        row.querySelector(
+            '[data-action="delete"]'
+        );
+
+        if (!deleteBtn){
+
+            console.warn(
+                "delete button not found"
             );
 
             return;
 
         }
 
+        const url =
+        deleteBtn.dataset.url;
 
+        if (!url){
 
-        let rows = [];
+            console.warn(
+                "delete url not found"
+            );
 
-        let urls = [];
+            return;
 
+        }
 
+        rows.push(row);
 
-        checked.forEach(cb => {
+        urls.push(url);
 
-            const row =
-            cb.closest("tr");
+    });
 
+    if (urls.length === 0){
 
-
-            if (!row) return;
-
-
-
-            // 🔥 URL FROM CHECKBOX
-            const url =
-            cb.dataset.url;
-
-
-
-            if (!url){
-
-                console.warn(
-                    "url not found"
-                );
-
-                return;
-
-            }
-
-
-
-            rows.push(row);
-
-            urls.push(url);
-
-        });
-
-
-
-        console.log(
-            "CONTACT BULK URLS:",
-            urls
+        showAlert(
+            "No valid contacts selected",
+            "error"
         );
-
-
-
-        openContactDeleteModal(
-            rows,
-            urls
-        );
-
-
 
         return;
 
     }
 
+    console.log(
+        "CONTACT BULK URLS:",
+        urls
+    );
+
+    openContactDeleteModal(
+        rows,
+        urls
+    );
+
+    return;
+
+}
 
 
     // ===================
@@ -4467,100 +4779,99 @@ document.addEventListener(
 
 
 
+// ===================
+// BULK DELETE
+// ===================
+const bulkDelete =
+e.target.closest(
+    "#deleteSelectedPricing"
+);
 
-    // ===================
-    // BULK DELETE
-    // ===================
-    const bulkDelete =
-    e.target.closest(
-        "#deleteSelectedPricing"
+if (bulkDelete){
+
+    const checked =
+    document.querySelectorAll(
+        ".pricing_management .rowCheck:checked"
     );
 
+    if (checked.length === 0){
 
-
-    if (bulkDelete){
-
-        const checked =
-        document.querySelectorAll(
-            ".pricing_management .rowCheck:checked"
+        showAlert(
+            "Select at least one pricing rule",
+            "error"
         );
 
+        return;
 
+    }
 
+    let rows = [];
+    let urls = [];
 
-        if (checked.length === 0){
+    checked.forEach(cb => {
 
-            showAlert(
+        const row =
+        cb.closest("tr");
 
-                "Select at least one pricing rule",
+        if (!row) return;
 
-                "error"
+        const deleteBtn =
+        row.querySelector(
+            '[data-action="delete"]'
+        );
 
+        if (!deleteBtn){
+
+            console.warn(
+                "delete button not found"
             );
 
             return;
 
         }
 
+        const url =
+        deleteBtn.dataset.url;
 
+        if (!url){
 
+            console.warn(
+                "delete url not found"
+            );
 
-        let rows = [];
+            return;
 
-        let urls = [];
+        }
 
+        rows.push(row);
+        urls.push(url);
 
+    });
 
+    if (urls.length === 0){
 
-        checked.forEach(cb => {
-
-            const row =
-            cb.closest("tr");
-
-
-
-            if (!row) return;
-
-
-
-
-            const url =
-            cb.dataset.url;
-
-
-
-            if (!url) return;
-
-
-
-
-            rows.push(row);
-
-            urls.push(url);
-
-        });
-
-
-
-
-        console.log(
-            "PRICING BULK URLS:",
-            urls
+        showAlert(
+            "No valid pricing rules selected",
+            "error"
         );
-
-
-
-
-        openPricingDeleteModal(
-            rows,
-            urls
-        );
-
-
 
         return;
 
     }
+
+    console.log(
+        "PRICING BULK URLS:",
+        urls
+    );
+
+    openPricingDeleteModal(
+        rows,
+        urls
+    );
+
+    return;
+
+}
 
 
 
@@ -5151,66 +5462,69 @@ document.addEventListener(
 
 
 
-    // BULK
-    const bulkDelete =
-    e.target.closest(
-        "#deleteSelectedRoute"
+   // BULK
+const bulkDelete =
+e.target.closest(
+    "#deleteSelectedRoute"
+);
+
+if(bulkDelete){
+
+    const checked =
+    document.querySelectorAll(
+        ".route_pricing_management .rowCheck:checked"
     );
 
+    if(checked.length === 0){
 
-
-    if(bulkDelete){
-
-        const checked =
-        document.querySelectorAll(
-            ".route_pricing_management .rowCheck:checked"
+        showAlert(
+            "Select at least one route pricing",
+            "error"
         );
 
-
-
-        if(checked.length === 0){
-
-            showAlert(
-
-                "Select at least one route pricing",
-
-                "error"
-
-            );
-
-            return;
-
-        }
-
-
-
-        let rows = [];
-        let urls = [];
-
-
-
-        checked.forEach(cb => {
-
-            rows.push(
-                cb.closest("tr")
-            );
-
-
-
-            urls.push(
-                cb.dataset.url
-            );
-
-        });
-
-
-
-        openRouteDeleteModal(
-            rows,
-            urls
-        );
+        return;
 
     }
+
+    let rows = [];
+    let urls = [];
+
+    checked.forEach(cb => {
+
+        const row =
+        cb.closest("tr");
+
+        if(!row) return;
+
+        const deleteBtn =
+        row.querySelector(
+            '[data-action="delete"]'
+        );
+
+        if(!deleteBtn) return;
+
+        const url =
+        deleteBtn.dataset.url;
+
+        if(!url) return;
+
+        rows.push(row);
+
+        urls.push(url);
+
+    });
+
+    console.log(
+        "ROUTE URLS:",
+        urls
+    );
+
+    openRouteDeleteModal(
+        rows,
+        urls
+    );
+
+}
 
 
 
@@ -7055,5 +7369,3 @@ document.addEventListener(
 );
 
 //
-
-

@@ -241,7 +241,7 @@
        <input type="checkbox"
        class="rowCheck"
        value="{{ rule.id }}"
-       data-url="/api/delete-pricing-rule/{{ rule.id }}/">
+ >
 
     </td>
 
@@ -346,11 +346,10 @@
             </div>
 
 
-
-            <!-- DELETE -->
+ <!-- DELETE -->
             <div class="dropdown_item danger"
                  data-action="delete"
-                 data-url="/api/delete-pricing-rule/{{ rule.id }}/">
+                 data-url="/api/delete-pricing-rule/{{ rule.id }}/"  style="display:none">
 
                 <i class='bx bx-trash'></i>
 

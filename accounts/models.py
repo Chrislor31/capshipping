@@ -68,6 +68,7 @@ class Accounts(AbstractUser):
     can_delete_users = models.BooleanField(default=False)
     can_access_settings = models.BooleanField(default=False)
 
+
     # 👤 ROLE
     ROLE_CHOICES = [
         ("admin", "Admin"),

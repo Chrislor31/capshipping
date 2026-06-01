@@ -371,16 +371,17 @@
                 <i class='bx bx-show'></i>
                 <span>View Details</span>
             </div>
-
-{% if request.user.role == "admin" %}
+<!----delete---->
           <div class="dropdown_item danger"
      data-action="delete"
-     data-url="/api/delete-tracking-update/{{ update.id }}/">
+     data-url="/api/delete-tracking-update/{{ update.id }}/"  style="display:none">
     <i class='bx bx-trash'></i>
     <span>Delete</span>
 </div>
 
-            {% endif %}
+
+
+
 
         </div>
 

@@ -136,7 +136,7 @@
         </button>
 
         <div class="dropdown_menu">
-{% if request.user.role == "admin" %}
+
             <!-- VIEW -->
             <div class="dropdown_item edit_warehouse_btn"
      data-id="{{ warehouse.id }}">
@@ -157,17 +157,18 @@
 </div>
 
 
-            <!-- DELETE -->
+
             <div class="dropdown_item danger"
                  data-action="delete"
-                 data-url="/api/delete-warehouse/{{ warehouse.id }}/">
+                 data-url="/api/delete-warehouse/{{ warehouse.id }}/"  style="display:none">
 
                 <i class='bx bx-trash'></i>
                 <span>Delete</span>
 
             </div>
 
-            {% endif %}
+
+
 
         </div>
 
@@ -282,9 +283,12 @@
                         <!-- NAME -->
                         <label>Warehouse name</label>
 
-                        <input type="text"
-                               name="name"
-                               placeholder="e.g Miami warehouse">
+                        <input
+    type="text"
+    id="warehouse_name"
+    name="name"
+    placeholder="Eg. Miami warehouse"
+>
 
                         <!-- TYPE -->
                         <label>Warehouse type</label>
@@ -362,8 +366,11 @@
                         <!-- ADDRESS -->
                         <label>Full address</label>
 
-                        <textarea name="address"
-                                  placeholder="Enter full warehouse address"></textarea>
+                        <textarea
+    id="warehouse_address"
+    name="address"
+    placeholder="warehouse Full address"
+></textarea>
 
                     </div>
 

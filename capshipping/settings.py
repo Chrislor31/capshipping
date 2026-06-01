@@ -27,7 +27,7 @@ environ.Env.read_env(env_file=str(BASE_DIR / "capshipping" / ".env"))
 SECRET_KEY = env("SECRET_KEY")
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = env.bool("DEBUG", False)
+DEBUG = True
 
 ALLOWED_HOSTS = [
     "127.0.0.1",

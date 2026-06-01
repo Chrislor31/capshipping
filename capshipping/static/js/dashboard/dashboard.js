@@ -552,6 +552,8 @@ function showPageError(url){
 
 async function loadPage(url){
 
+console.log("🔥 LOADING URL:", url);
+
     const container =
     document.getElementById(
         "main-content"
@@ -836,28 +838,23 @@ async function loadPage(url){
         }
 
     }
+catch(err){
 
-    catch(err){
+    console.error("LOAD PAGE ERROR:", err);
 
-        console.error(
-            "Load page error:",
-            err
-        );
+    alert(
+        "ERROR: " +
+        err.message
+    );
 
+    container.innerHTML = oldContent;
 
+    showAlert(
+        "Failed to load page",
+        "error"
+    );
 
-        // =====================================
-        // RESTORE OLD PAGE
-        // =====================================
-
-        window.location.reload();
-
-
-
-        // 🔥 OPTIONAL
-        // showPageError(url);
-
-    }
+}
 
 }
 
@@ -1151,6 +1148,7 @@ function initDropdowns() {
 function initShipmentsPage(){
 
     const table = document.querySelector(".shipment_packages");
+
     if (!table) {
         console.log("⛔ NOT SHIPMENT PAGE");
         return;
@@ -1158,22 +1156,32 @@ function initShipmentsPage(){
 
     console.log("✅ INIT SHIPMENTS PAGE");
 
-    // 🔥 ACTION DROPDOWN CLICK (VIEW / EDIT)
     table.addEventListener("click", function(e){
 
         const item = e.target.closest(".dropdown_item");
+
         if (!item) return;
+
+        // 🔥 DELETE PA DWE CHARGE SPA PAGE
+        if (item.dataset.action === "delete") {
+            console.log("🗑️ DELETE DETECTED - STOP SPA");
+            return;
+        }
 
         const url = item.getAttribute("data-url");
 
-        if (url){
-            e.preventDefault();
-            loadPage(url);
-        }
+        if (!url) return;
+
+        e.preventDefault();
+        e.stopPropagation();
+
+        console.log("🚀 SPA LOAD:", url);
+
+        loadPage(url);
+
     });
 
 }
-
 
 
 // pagination for user tableau
@@ -1438,26 +1446,48 @@ document.getElementById("confirmDelete")?.addEventListener("click", function(){
 
 
 
-    document.addEventListener("click", function(e){
+document.addEventListener("click", function(e){
 
     const btn = e.target.closest("[data-url]");
 
-    if (btn){
+    if (!btn) return;
 
-        const url = btn.getAttribute("data-url");
+    const url = btn.getAttribute("data-url");
 
-        if (!url) return;
+    if (!url) return;
 
-        console.log("🚀 loading:", url);
+    // 🔥 PA TOUCHE DELETE YO
+    if (btn.dataset.action === "delete"){
+        return;
+    }
 
-        // 🔥 si w gen loadPage()
-        if (typeof loadPage === "function"){
-            loadPage(url);
-        } else {
-            // fallback si pa SPA
-            window.location.href = url;
-        }
+    // 🔥 PA TOUCHE CHECKBOX YO
+    if (
+        btn.tagName === "INPUT" &&
+        btn.type === "checkbox"
+    ){
+        return;
+    }
 
+    // 🔥 PA TOUCHE API ENDPOINTS YO
+    if (url.startsWith("/api/")){
+        return;
+    }
+
+    // 🔥 PA TOUCHE BOUTON DELETE KI GEN CLASS danger
+    if (btn.classList.contains("danger")){
+        return;
+    }
+
+    e.preventDefault();
+    e.stopPropagation();
+
+    console.log("🚀 SPA loading:", url);
+
+    if (typeof loadPage === "function"){
+        loadPage(url);
+    } else {
+        window.location.href = url;
     }
 
 });
@@ -2651,4 +2681,3 @@ document.addEventListener(
 );
 
 };
-

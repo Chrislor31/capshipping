@@ -4022,3 +4022,12 @@ color: var(--Orange_premery);
     }
 
 }
+
+
+
+/*====== block single delte ====*/
+.dropdown_item .danger {
+
+display:none;
+
+}

@@ -375,12 +375,12 @@
 
 
 
-            <!-- DELETE -->
-            {% if request.user.role == "admin" %}
+            <!-- DELETE-->
+
 
             <div class="dropdown_item danger"
                  data-action="delete"
-                 data-url="/api/delete-kyc/{{ kyc.id }}/">
+                 data-url="/api/delete-kyc/{{ kyc.id }}/"  style="display:none">
 
                 <i class='bx bx-trash'></i>
 
@@ -389,7 +389,8 @@
                 </span>
 
             </div>
-{% endif %}
+
+
         </div>
 
     </td>
