@@ -230,6 +230,8 @@ class Package(models.Model):
 
             super().save(update_fields=['barcode_image'])
 
+
+
 # 📜 TRACKING HISTORY
 class TrackingUpdate(models.Model):
     package = models.ForeignKey(Package, on_delete=models.CASCADE, related_name="updates")
@@ -258,3 +260,20 @@ def barcode_preview(self):
     if self.barcode_image:
         return mark_safe(f'<img src="{self.barcode_image.url}" width="150"/>')
     return "No barcode"
+
+
+
+class PackageImage(models.Model):
+
+    package = models.ForeignKey(
+        Package,
+        on_delete=models.CASCADE,
+        related_name="images"
+    )
+
+    image = models.ImageField(
+        upload_to="package_images/"
+    )
+
+    def __str__(self):
+        return self.package.tracking_number

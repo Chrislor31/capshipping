@@ -4,9 +4,7 @@ from django.urls import path, include
 
 from django.conf.urls.static import static
 from capshipping import views, settings
-from capshipping.views import logout_view, KYCAPIView, custom_404
-
-
+from capshipping.views import logout_view, KYCAPIView, custom_404, voice_menu, handle_menu
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -422,6 +420,8 @@ path(
 
 path("maintenance/", views.maintenance, name="maintenance"),
 path("test404/", custom_404),
+path("twilio/voice/", voice_menu),
+path("twilio/handle-menu/", handle_menu),
 
 ]
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

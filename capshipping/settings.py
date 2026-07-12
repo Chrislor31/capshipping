@@ -27,7 +27,8 @@ environ.Env.read_env(env_file=str(BASE_DIR / "capshipping" / ".env"))
 SECRET_KEY = env("SECRET_KEY")
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = env.bool("DEBUG", default=False)
+#DEBUG = env.bool("DEBUG", default=False)
+DEBUG=False
 
 ALLOWED_HOSTS = [
     "127.0.0.1",
@@ -37,6 +38,8 @@ ALLOWED_HOSTS = [
     "www.capshipp.com",
 "capshippingdistribution.com",
 "www.capshippingdistribution.com",
+    "192.168.12.122",
+    'ilana-deltoidal-raelene.ngrok-free.dev'
 ]
 
 # Application definition

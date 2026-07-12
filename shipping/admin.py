@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Contact, Category, Package, TrackingUpdate
+from .models import Contact, Category, Package, TrackingUpdate, PackageImage
 from .models import PricingRule,RoutePricing
 
 from django.utils.html import format_html
@@ -9,6 +9,9 @@ from django.urls import reverse
 class ContactAdmin(admin.ModelAdmin):
     list_display = ['name', 'phone', 'email']
     search_fields = ['name', 'phone', 'email']
+
+    
+admin.site.register(PackageImage)
 
 
 @admin.register(Category)

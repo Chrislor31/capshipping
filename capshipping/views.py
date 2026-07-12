@@ -5528,3 +5528,172 @@ def update_staff_permissions(
 
 
 
+# test voice call
+
+from django.http import HttpResponse
+
+from django.views.decorators.csrf import csrf_exempt
+
+@csrf_exempt
+def voice_menu(request):
+
+    return HttpResponse("""
+<Response>
+<Say>
+Welcome to CAP Shipping Distribution.
+Press 1 now.
+</Say>
+
+<Gather numDigits="1"
+action="https://ilana-deltoidal-raelene.ngrok-free.dev/twilio/handle-menu/"
+method="POST"/>
+
+</Response>
+""", content_type="text/xml")
+
+
+
+
+from django.views.decorators.csrf import csrf_exempt
+
+@csrf_exempt
+def handle_menu(request):
+
+    digit = request.POST.get("Digits")
+
+    if digit == "1":
+
+        return HttpResponse("""
+<Response>
+
+<Say>
+Please wait while we transfer your call.
+</Say>
+
+<Dial>
++15517953802
+</Dial>
+
+</Response>
+""", content_type="text/xml")
+
+    elif digit == "2":
+
+        return HttpResponse("""
+<Response>
+
+<Say>
+Tanpri rete tann pandan nap transfere apel ou.
+</Say>
+
+<Dial>
++16892172237
+</Dial>
+
+</Response>
+""", content_type="text/xml")
+
+    elif digit == "3":
+
+        return HttpResponse("""
+<Response>
+
+<Say>
+Veuillez patienter pendant le transfert.
+</Say>
+
+<Dial>
++16892172237
+</Dial>
+
+</Response>
+""", content_type="text/xml")
+
+    return HttpResponse("""
+<Response>
+<Redirect>/twilio/voice/</Redirect>
+</Response>
+""", content_type="text/xml")
+
+
+
+
+
+
+@csrf_exempt
+def handle_menu(request):
+
+    print("========== HANDLE MENU ==========")
+    print("METHOD:", request.method)
+    print("POST:", request.POST)
+
+    digit = request.POST.get("Digits")
+
+    print("DIGIT =", digit)
+
+    if digit == "1":
+
+        return HttpResponse("""
+<?xml version="1.0" encoding="UTF-8"?>
+<Response>
+
+    <Say voice="alice">
+        Please wait while we transfer your call.
+    </Say>
+
+    <Dial>
+        +15517953802
+    </Dial>
+
+</Response>
+""", content_type="text/xml")
+
+    elif digit == "2":
+
+        return HttpResponse("""
+<?xml version="1.0" encoding="UTF-8"?>
+<Response>
+
+    <Say voice="alice">
+        Tanpri rete tann pandan nap transfere apel ou.
+    </Say>
+
+    <Dial>
+        +16892172237
+    </Dial>
+
+</Response>
+""", content_type="text/xml")
+
+    elif digit == "3":
+
+        return HttpResponse("""
+<?xml version="1.0" encoding="UTF-8"?>
+<Response>
+
+    <Say voice="alice">
+        Veuillez patienter pendant le transfert.
+    </Say>
+
+    <Dial>
+        +16892172237
+    </Dial>
+
+</Response>
+""", content_type="text/xml")
+
+    return HttpResponse("""
+<?xml version="1.0" encoding="UTF-8"?>
+<Response>
+
+    <Say voice="alice">
+        Invalid option.
+        Returning to main menu.
+    </Say>
+
+    <Redirect>
+        https://ilana-deltoidal-raelene.ngrok-free.dev/twilio/voice/
+    </Redirect>
+
+</Response>
+""", content_type="text/xml")

@@ -170,41 +170,53 @@ document.addEventListener("DOMContentLoaded", function () {
   // ==============================
   // LOAD COUNTRIES (API)
   // ==============================
-  function loadCountries() {
+function loadCountries() {
+
     if (countriesLoaded) return;
 
-    fetch("https://restcountries.com/v3.1/all?fields=name")
-      .then(res => res.json())
-      .then(data => {
+    fetch("https://countriesnow.space/api/v0.1/countries")
+        .then(res => res.json())
+        .then(result => {
 
-        // 🔥 RESET SELECT
-        countrySelect.innerHTML = "";
+            countrySelect.innerHTML = "";
 
-        // 🔥 PLACEHOLDER
-        const defaultOption = document.createElement("option");
-        defaultOption.value = "";
-        defaultOption.textContent = "Select Country";
-        defaultOption.disabled = true;
-        defaultOption.selected = true;
-        defaultOption.hidden = true;
-        countrySelect.appendChild(defaultOption);
+            const defaultOption = document.createElement("option");
+            defaultOption.value = "";
+            defaultOption.textContent = "Select Country";
+            defaultOption.disabled = true;
+            defaultOption.selected = true;
+            defaultOption.hidden = true;
 
-        // 🔥 COUNTRIES
-        data
-          .sort((a, b) => a.name.common.localeCompare(b.name.common))
-          .forEach(country => {
-            const option = document.createElement("option");
-            option.value = country.name.common;
-            option.textContent = country.name.common;
-            countrySelect.appendChild(option);
-          });
+            countrySelect.appendChild(defaultOption);
 
-        countriesLoaded = true;
-      })
-      .catch(() => {
-        console.error("Error loading countries");
-      });
-  }
+            result.data
+                .sort((a, b) =>
+                    a.country.localeCompare(b.country)
+                )
+                .forEach(item => {
+
+                    const option =
+                        document.createElement("option");
+
+                    option.value = item.country;
+                    option.textContent = item.country;
+
+                    countrySelect.appendChild(option);
+                });
+
+            countriesLoaded = true;
+
+        })
+        .catch(error => {
+
+            console.error(
+                "Error loading countries:",
+                error
+            );
+
+        });
+
+}
 
   // ==============================
   // LOAD STATES
